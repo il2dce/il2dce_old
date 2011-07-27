@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -68,11 +68,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="il2dce.xml" />
+    <Content Include="IL2DCE.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\il2dce.xml" "C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\AddIns\il2dce.xml"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)\IL2DCE.xml" "C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\AddIns\IL2DCE.xml"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
