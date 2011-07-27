@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\il2dce\</OutputPath>
+    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +29,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\il2dce\</OutputPath>
+    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
