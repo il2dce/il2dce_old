@@ -31,7 +31,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\</OutputPath>
+    <OutputPath>..\Release\parts\IL2DCE\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -72,7 +72,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\IL2DCE.xml" "C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\AddIns\IL2DCE.xml"</PostBuildEvent>
+    <PostBuildEvent>mkdir ""$(TargetDir)..\..\AddIns"
+copy "$(ProjectDir)IL2DCE.xml" "$(TargetDir)..\..\AddIns\IL2DCE.xml"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
