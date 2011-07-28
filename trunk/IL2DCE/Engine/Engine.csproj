@@ -68,11 +68,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="COPYING.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="IL2DCE.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir ""$(TargetDir)..\..\AddIns"
+    <PostBuildEvent>mkdir "$(TargetDir)..\..\AddIns"
 copy "$(ProjectDir)IL2DCE.xml" "$(TargetDir)..\..\AddIns\IL2DCE.xml"
 </PostBuildEvent>
   </PropertyGroup>
