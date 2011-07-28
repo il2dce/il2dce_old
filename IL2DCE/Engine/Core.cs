@@ -26,9 +26,9 @@ namespace IL2DCE
 {
     namespace Engine
     {
-        public class Engine
+        public class Core
         {
-            public Engine()
+            public Core()
             {
 
             }
