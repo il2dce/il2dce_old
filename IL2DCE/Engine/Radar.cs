@@ -19,31 +19,27 @@ using System.Collections;
 using System.Collections.Generic;
 
 using maddox.game;
-using maddox.game.play;
-using maddox.game.page;
+using maddox.game.world;
+using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Game
+    namespace Engine
     {
-        public class GameSingle : maddox.game.GameSingleDef
+        public class Radar
         {
-            public GameSingle(GameSingleIterface game)
-                : base(game)
+            public Radar(string name, double x, double y)
             {
-                Core = new Engine.Core(this); 
+                Name = name;
+                X = x;
+                Y = y;
             }
 
-            public override maddox.game.play.PageInterface getStartPage()
-            {
-                return new Pages.SelectCampaignPage();
-            }
+            public string Name;
 
-            public Engine.Core Core
-            {
-                get;
-                set;
-            }
+            public double X;
+
+            public double Y;
         }
     }
 }

@@ -38,10 +38,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AircraftInfo.cs" />
+    <Compile Include="AirGroup.cs" />
+    <Compile Include="AirGroupInfo.cs" />
+    <Compile Include="AirGroupWaypoint.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Radar.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="core">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\core.dll</HintPath>
+    </Reference>
     <Reference Include="gamePages">
       <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePages.dll</HintPath>
       <Private>False</Private>
