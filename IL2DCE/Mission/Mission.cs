@@ -2668,9 +2668,9 @@ namespace IL2DCE
             {
                 base.Init(battle, missionNumber);
 
-                debug = GamePlay.gpLoadSectionFile("$user/missions/Dce/DceLight/DceLight.mis");
+                debug = GamePlay.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis");
 
-                radarsTemplate = GamePlay.gpLoadSectionFile("$user/missions/Dce/DceLight/__Radars.mis");
+                radarsTemplate = GamePlay.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__Radars.mis");
 
                 for (int i = 0; i < radarsTemplate.lines("Stationary"); i++)
                 {
@@ -2694,7 +2694,7 @@ namespace IL2DCE
                     }
                 }
 
-                markersTemplate = GamePlay.gpLoadSectionFile("$user/missions/Dce/DceLight/__Markers.mis");
+                markersTemplate = GamePlay.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__Markers.mis");
 
                 for (int i = 0; i < markersTemplate.lines("FrontMarker"); i++)
                 {
@@ -2728,7 +2728,7 @@ namespace IL2DCE
                     }
                 }
 
-                airGroupsTemplate = GamePlay.gpLoadSectionFile("$user/missions/Dce/DceLight/__AirGroups.mis");
+                airGroupsTemplate = GamePlay.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__AirGroups.mis");
 
                 availableAirGroups.Clear();
 
@@ -2857,7 +2857,11 @@ namespace IL2DCE
 
                 GamePlay.gpPostMissionLoad(sectionFile);
 
-                debug.save("$user/missions/Dce/DceLight/__Debug.mis");
+                #if DEBUG
+
+                debug.save("$user/missions/__Debug.mis");
+
+                #endif
             }
 
             public override void OnMissionLoaded(int missionNumber)
