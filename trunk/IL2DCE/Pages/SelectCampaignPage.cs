@@ -47,28 +47,28 @@ namespace IL2DCE
                 }
             }
 
-            private IGame Engine;
+            private IGame Game;
 
             public override void _enter(IGame play, object arg)
             {
-                Engine = play;
+                Game = play;
             }
             
             private void bBack_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Engine.gameInterface.PagePop(null);
+                Game.gameInterface.PagePop(null);
             }
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Engine.gameInterface.MissionLoad("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis");
-                Engine.gameInterface.UIMainHide();
-                Engine.gameInterface.BattleStart();
+                Game.gameInterface.MissionLoad("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis");
+                Game.gameInterface.UIMainHide();
+                Game.gameInterface.BattleStart();
             }
 
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Engine.gameInterface.PagePop(null);
+                Game.gameInterface.PagePop(null);
             }
         }
     }
