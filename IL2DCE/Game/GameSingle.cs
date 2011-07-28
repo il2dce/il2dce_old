@@ -24,17 +24,20 @@ using maddox.game.page;
 
 namespace IL2DCE
 {
-    public class GameSingle : maddox.game.GameSingleDef
+    namespace Game
     {
-        public GameSingle(GameSingleIterface game)
-            : base(game)
+        public class GameSingle : maddox.game.GameSingleDef
         {
+            public GameSingle(GameSingleIterface game)
+                : base(game)
+            {
 
-        }
+            }
 
-        public override maddox.game.play.PageInterface getStartPage()
-        {
-            return new Pages.SelectCampaignPage();
+            public override maddox.game.play.PageInterface getStartPage()
+            {
+                return new Pages.SelectCampaignPage();
+            }
         }
     }
 }
