@@ -31,7 +31,8 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                Core = new Engine.Core(this); 
+                Core = new Engine.Core(this);
+                Core.Init();
             }
 
             public override maddox.game.play.PageInterface getStartPage()

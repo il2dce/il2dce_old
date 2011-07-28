@@ -27,6 +27,7 @@ namespace IL2DCE
 {
     namespace Engine
     {
+        [Serializable] 
         public class Core
         {
             #region Public variables
@@ -65,7 +66,7 @@ namespace IL2DCE
 
             public Core(IGame game)
             {
-
+                Game = game;
             }
 
             public IGame Game
