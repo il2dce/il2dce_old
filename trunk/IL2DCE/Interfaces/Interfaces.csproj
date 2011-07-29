@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ECBA2DA0-44D1-4449-9240-E57F07460A14}</ProjectGuid>
+    <ProjectGuid>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pages</RootNamespace>
-    <AssemblyName>Pages</AssemblyName>
+    <RootNamespace>Interfaces</RootNamespace>
+    <AssemblyName>Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -38,33 +38,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ICore.cs" />
+    <Compile Include="IGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectCampaignPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="gamePages">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePages.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="gamePlay">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePlay.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\core\gamePlay.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="gameWorld">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gameWorld.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\core\gameWorld.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

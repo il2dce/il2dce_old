@@ -26,25 +26,27 @@ namespace IL2DCE
 {
     namespace Game
     {
-        public class GameSingle : maddox.game.GameSingleDef
+        public class GameSingle : maddox.game.GameSingleDef, IGame
         {
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                Core = new Engine.Core(this);
-                Core.Init();
+                _core = new Engine.Core(this);
             }
 
             public override maddox.game.play.PageInterface getStartPage()
             {
-                return new Pages.SelectCampaignPage();
+                return new Pages.SelectCampaignPage(this);
             }
 
-            public Engine.Core Core
+            public ICore Core
             {
-                get;
-                set;
+                get
+                {
+                    return _core;
+                }
             }
+            private ICore _core;
         }
     }
 }

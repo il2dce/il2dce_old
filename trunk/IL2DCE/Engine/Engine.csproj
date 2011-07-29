@@ -49,6 +49,7 @@
   <ItemGroup>
     <Reference Include="core">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="gamePages">
       <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePages.dll</HintPath>
@@ -63,6 +64,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

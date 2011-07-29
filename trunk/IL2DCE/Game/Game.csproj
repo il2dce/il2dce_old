@@ -63,6 +63,10 @@
       <Project>{22442D49-0A77-4CBE-A1F3-9806958C10AE}</Project>
       <Name>Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pages\Pages.csproj">
       <Project>{ECBA2DA0-44D1-4449-9240-E57F07460A14}</Project>
       <Name>Pages</Name>

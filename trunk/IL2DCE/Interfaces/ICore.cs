@@ -18,17 +18,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using maddox.game;
-using maddox.game.world;
-using maddox.GP;
-
 namespace IL2DCE
 {
-    namespace Mission
+    public interface ICore
     {
-        public class Mission : AMission
+        IGame Game
         {
-            
+            get;
         }
+
+        maddox.game.ISectionFile Init(string missionFileName, string templateFileName);
     }
 }
