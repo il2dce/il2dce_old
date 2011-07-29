@@ -20,20 +20,15 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface ICore
+    public interface IAirGroup
     {
-        IGame Game
+        string AirGroupKey
         {
             get;
+            set;
         }
 
-        void Init(string templateFileName);
-
-        void Generate();
-
-        void Load();
-
-        System.Collections.Generic.IList<IAirGroup> AirGroups
+        int[][] Flight
         {
             get;
         }
