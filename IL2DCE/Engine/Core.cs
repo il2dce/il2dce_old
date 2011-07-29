@@ -37,11 +37,11 @@ namespace IL2DCE
 
             public int maxRandomSpawn = 0;
 
-            private int? playerSquadronIndex = null;
-            private int? playerFlightIndex = null;
-            private int? playerAircraftIndex = null;
-            private string playerAirGroupKey = null;
-            private AirGroup playerAirGroup = null;
+            public int? playerSquadronIndex = null;
+            public int? playerFlightIndex = null;
+            public int? playerAircraftIndex = null;
+            public string playerAirGroupKey = null;
+            public AirGroup playerAirGroup = null;
 
             private List<AirGroup> redAirGroups = new List<AirGroup>();
             private List<AirGroup> blueAirGroups = new List<AirGroup>();
@@ -67,7 +67,27 @@ namespace IL2DCE
             }
             private IGame _game;
 
-            public ISectionFile Init(string templateFileName)
+            public System.Collections.Generic.IList<IAirGroup> AirGroups
+            {
+                get
+                {
+                    List<IAirGroup> airGroups = new List<IAirGroup>();
+                    airGroups.AddRange(redAirGroups);
+                    airGroups.AddRange(blueAirGroups);
+                    return airGroups;
+                }
+            }
+
+            public ISectionFile CurrentMission
+            {
+                get
+                {
+                    return _currentMission;
+                }
+            }
+            private ISectionFile _currentMission;
+
+            public void Init(string templateFileName)
             {
                 ISectionFile templateFile = Game.gpLoadSectionFile(templateFileName);
 
@@ -188,11 +208,18 @@ namespace IL2DCE
                     }
                 }
                 
+                
+                _currentMission = templateFile;
+            }
+
+
+            public void Generate()
+            {
                 if (playerAirGroup != null)
                 {
                     availableAirGroups.Remove(playerAirGroup);
 
-                    createRandomFlight(templateFile, playerAirGroup);
+                    createRandomFlight(CurrentMission, playerAirGroup);
                 }
 
                 for (int i = 0; i < maxRandomSpawn; i++)
@@ -201,10 +228,16 @@ namespace IL2DCE
                     Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
                     availableAirGroups.Remove(randomAirGroup);
 
-                    createRandomFlight(templateFile, randomAirGroup);
+                    createRandomFlight(CurrentMission, randomAirGroup);
                 }
+            }
 
-                return templateFile;
+            public void Load()
+            {
+#if DEBUG
+                CurrentMission.save("$user/missions/IL2DCE/debug.mis");
+#endif
+                Game.gameInterface.MissionLoad(CurrentMission);
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)

@@ -65,11 +65,7 @@ namespace IL2DCE
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                ISectionFile missionFile = Game.Core.Init("$home/parts/IL2DCE/Campaigns/Prototype/Template.mis");
-                missionFile.save("$user/missions/debug.mis");
-                Game.gameInterface.MissionLoad(missionFile);
-                Game.gameInterface.UIMainHide();
-                Game.gameInterface.BattleStart();
+                Game.gameInterface.PageChange(new CampaignIntoPage(Game), null);
             }
 
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)

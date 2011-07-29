@@ -26,7 +26,7 @@ namespace IL2DCE
 {
     namespace Engine
     {
-        public class AirGroup
+        public class AirGroup : IAirGroup
         {
             #region Public constructors
 
@@ -382,6 +382,11 @@ namespace IL2DCE
             #endregion
 
             #region Public methods
+
+            public override string ToString()
+            {
+                return AirGroupKey + "." + SquadronIndex;
+            }
 
             public void CreateTransferFlight(ISectionFile sectionFile, AiAirport landingAirport = null)
             {
