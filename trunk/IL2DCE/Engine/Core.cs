@@ -439,7 +439,8 @@ namespace IL2DCE
                     availableAirGroups.Remove(interceptAirGroup);
 
                     interceptAirGroup.CreateInterceptFlight(sectionFile, targetAirUnit, targetArea);
-                    //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + targetAirUnit.Name + ")", null);
+                    
+                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + targetAirUnit.Name + ")", null);
                 }
             }
 
@@ -464,7 +465,7 @@ namespace IL2DCE
 
                             createRandomInterceptFlight(sectionFile, airGroup, targetArea);
 
-                            //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                         }
                     }
                     else if (randomMissionType == AircraftInfo.MissionType.GROUND_ATTACK_AREA)
@@ -485,14 +486,13 @@ namespace IL2DCE
 
                                 airGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
                                 escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
-
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ") with " + escortAirGroup.Name + ": Escort flight(" + airGroup.Name + ")", null);
                             }
                             else
                             {
-                                airGroup.CreateGroundAttackFlight(sectionFile, targetArea);
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                                airGroup.CreateGroundAttackFlight(sectionFile, targetArea);                                
                             }
+
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);                            
 
                             createRandomInterceptFlight(sectionFile, airGroup, targetArea);
                         }
@@ -522,7 +522,7 @@ namespace IL2DCE
                             Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
                             airGroup.CreateHuntingFlight(sectionFile, targetArea);
 
-                            //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
 
                             createRandomInterceptFlight(sectionFile, airGroup, targetArea);
                         }
@@ -546,7 +546,7 @@ namespace IL2DCE
                                 escortedAirGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
                                 airGroup.CreateEscortFlight(sectionFile, escortedAirGroup);
 
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Escort flight(" + airGroup.Name + ") for " + escortedAirGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Escort flight(" + airGroup.Name + ")", null);
 
                                 createRandomInterceptFlight(sectionFile, escortedAirGroup, targetArea);
                             }
@@ -554,7 +554,7 @@ namespace IL2DCE
                             {
                                 airGroup.CreateHuntingFlight(sectionFile, targetArea);
 
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": No escort required. Instead offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No escort required. Instead offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
 
                                 createRandomInterceptFlight(sectionFile, airGroup, targetArea);
                             }
@@ -605,12 +605,14 @@ namespace IL2DCE
                                 }
 
                                 airGroup.CreateInterceptFlight(sectionFile, interceptedAirGroup, targetArea);
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Intercept flight(" + interceptedAirGroup.Name + ")", null);
+
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Intercept flight(" + interceptedAirGroup.Name + ")", null);
                             }
                             else
                             {
                                 airGroup.CreateCoverFlight(sectionFile, targetArea);
-                                //GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": No intercept required. Instead defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                                
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No intercept required. Instead defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                             }
                         }
                     }
