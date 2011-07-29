@@ -58,13 +58,6 @@ namespace IL2DCE
             }
             private IGame _game;
 
-            //public override void _enter(maddox.game.IGame play, object arg)
-            //{
-            //    base._enter(play, arg);
-
-            //    _game = play as IGame;                
-            //}
-
             private void bBack_Click(object sender, System.Windows.RoutedEventArgs e)
             {
                 Game.gameInterface.PagePop(null);
@@ -72,7 +65,7 @@ namespace IL2DCE
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                ISectionFile missionFile = Game.Core.Init("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis", "$home/parts/IL2DCE/Campaigns/Prototype/Template.mis");
+                ISectionFile missionFile = Game.Core.Init("$home/parts/IL2DCE/Campaigns/Prototype/Template.mis");
                 missionFile.save("$user/missions/debug.mis");
                 Game.gameInterface.MissionLoad(missionFile);
                 Game.gameInterface.UIMainHide();
