@@ -32,7 +32,7 @@ namespace IL2DCE
                 : base("Select campaign", new SelectCampaign())
             {
                 _game = game;
-
+                
                 FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
                 FrameworkElement.bContinue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
