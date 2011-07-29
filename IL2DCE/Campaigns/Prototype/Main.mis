@@ -1,4 +1,4 @@
-﻿[PARTS]
+[PARTS]
   core.100
   bob.100
 [MAIN]
@@ -18,5 +18,16 @@
 [splines]
 [CustomChiefs]
 [Stationary]
+  Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
+  Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
+  Static1 Stationary.Radar.EnglishRadar1 gb 217627.77 251506.53 71.00 
 [Buildings]
 [BuildingsLinks]
+[FrontMarker]
+  FrontMarker0 214637.11 236043.79 1
+  FrontMarker1 228831.93 251260.37 1
+  FrontMarker2 313118.28 192705.55 2
+  FrontMarker3 284277.76 215934.00 2
+  FrontMarker4 266612.88 189783.50 2
+  FrontMarker5 245651.14 234806.56 1
+  FrontMarker6 236996.88 229320.18 1

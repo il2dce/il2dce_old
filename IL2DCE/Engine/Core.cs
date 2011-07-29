@@ -35,7 +35,7 @@ namespace IL2DCE
 
             public List<AirGroup> availableAirGroups = new List<AirGroup>();
 
-            public int maxRandomSpawn = 1;
+            public int maxRandomSpawn = 0;
 
             private int? playerSquadronIndex = null;
             private int? playerFlightIndex = null;
