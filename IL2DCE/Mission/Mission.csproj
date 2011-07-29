@@ -56,16 +56,6 @@
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj">
-      <Project>{22442D49-0A77-4CBE-A1F3-9806958C10AE}</Project>
-      <Name>Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game\Game.csproj">
-      <Project>{8E3CAD9B-322D-4ACF-9DEE-1609814111DB}</Project>
-      <Name>Game</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)Campaigns" "$(TargetDir)Campaigns" /e /y /i /r</PostBuildEvent>

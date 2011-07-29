@@ -28,9 +28,11 @@ namespace IL2DCE
     {
         public class SelectCampaignPage : PageDefImpl
         {
-            public SelectCampaignPage()
+            public SelectCampaignPage(IGame game)
                 : base("Select campaign", new SelectCampaign())
             {
+                _game = game;
+
                 FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
                 FrameworkElement.bContinue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
@@ -47,13 +49,22 @@ namespace IL2DCE
                 }
             }
 
-            private IGame Game;
-
-            public override void _enter(IGame play, object arg)
+            private IGame Game
             {
-                Game = play;
+                get
+                {
+                    return _game;
+                }
             }
-            
+            private IGame _game;
+
+            //public override void _enter(maddox.game.IGame play, object arg)
+            //{
+            //    base._enter(play, arg);
+
+            //    _game = play as IGame;                
+            //}
+
             private void bBack_Click(object sender, System.Windows.RoutedEventArgs e)
             {
                 Game.gameInterface.PagePop(null);
@@ -61,7 +72,9 @@ namespace IL2DCE
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.gameInterface.MissionLoad("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis");
+                ISectionFile missionFile = Game.Core.Init("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis", "$home/parts/IL2DCE/Campaigns/Prototype/Template.mis");
+                missionFile.save("$user/missions/debug.mis");
+                Game.gameInterface.MissionLoad(missionFile);
                 Game.gameInterface.UIMainHide();
                 Game.gameInterface.BattleStart();
             }

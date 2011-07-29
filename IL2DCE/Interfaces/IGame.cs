@@ -18,17 +18,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using maddox.game;
-using maddox.game.world;
-using maddox.GP;
-
 namespace IL2DCE
 {
-    namespace Mission
+    public interface IGame : maddox.game.IGame
     {
-        public class Mission : AMission
+        ICore Core
         {
-            
+            get;
         }
     }
 }

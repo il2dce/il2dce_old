@@ -27,65 +27,56 @@ namespace IL2DCE
 {
     namespace Engine
     {
-        [Serializable] 
-        public class Core
+        // Looks like the mission requires the core to be serializable. As core is not used in the mission at the moment there is no need to make it serializable.
+        //[Serializable]
+        public class Core : ICore
         {
-            #region Public variables
+            private Random rand = new Random();
 
-            public static ISectionFile debug = null;
-
-            public static bool spawnParked = false;
-
-            public static Random rand = new Random();
-
-            public static List<AirGroup> availableAirGroups = new List<AirGroup>();
+            public List<AirGroup> availableAirGroups = new List<AirGroup>();
 
             public int maxRandomSpawn = 1;
 
-            public int? playerSquadronIndex = null;
-            public int? playerFlightIndex = null;
-            public int? playerAircraftIndex = null;
-            public string playerAirGroupKey = null;
-            public AirGroup playerAirGroup = null;
+            private int? playerSquadronIndex = null;
+            private int? playerFlightIndex = null;
+            private int? playerAircraftIndex = null;
+            private string playerAirGroupKey = null;
+            private AirGroup playerAirGroup = null;
 
+            private List<AirGroup> redAirGroups = new List<AirGroup>();
+            private List<AirGroup> blueAirGroups = new List<AirGroup>();
 
-            public ISectionFile airGroupsTemplate;
-            public List<AirGroup> redAirGroups = new List<AirGroup>();
-            public List<AirGroup> blueAirGroups = new List<AirGroup>();
+            private List<Point3d> redMarkers = new List<Point3d>();
+            private List<Point3d> blueMarkers = new List<Point3d>();
+            private List<Point3d> neutralMarkers = new List<Point3d>();
 
-            public ISectionFile markersTemplate;
-            public List<Point3d> redMarkers = new List<Point3d>();
-            public List<Point3d> blueMarkers = new List<Point3d>();
-            public List<Point3d> neutralMarkers = new List<Point3d>();
-
-            public ISectionFile radarsTemplate;
-            public List<Radar> redRadars = new List<Radar>();
-            public List<Radar> blueRadars = new List<Radar>();
-
-            #endregion
+            private List<Radar> redRadars = new List<Radar>();
+            private List<Radar> blueRadars = new List<Radar>();
 
             public Core(IGame game)
             {
-                Game = game;
+                _game = game;
             }
 
             public IGame Game
             {
-                get;
-                set;
+                get
+                {
+                    return _game;
+                }                
             }
+            private IGame _game;
 
-            public void Init()
+            public ISectionFile Init(string missionFileName, string templateFileName)
             {
-                debug = Game.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/Main.mis");
+                ISectionFile missionFile = Game.gpLoadSectionFile(missionFileName);                
+                ISectionFile templateFile = Game.gpLoadSectionFile(templateFileName);
 
-                radarsTemplate = Game.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__Radars.mis");
-
-                for (int i = 0; i < radarsTemplate.lines("Stationary"); i++)
+                for (int i = 0; i < templateFile.lines("Stationary"); i++)
                 {
                     string key;
                     string value;
-                    radarsTemplate.get("Stationary", i, out key, out value);
+                    templateFile.get("Stationary", i, out key, out value);
 
                     // Radar
                     string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -103,13 +94,11 @@ namespace IL2DCE
                     }
                 }
 
-                markersTemplate = Game.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__Markers.mis");
-
-                for (int i = 0; i < markersTemplate.lines("FrontMarker"); i++)
+                for (int i = 0; i < templateFile.lines("FrontMarker"); i++)
                 {
                     string key;
                     string value;
-                    markersTemplate.get("FrontMarker", i, out key, out value);
+                    templateFile.get("FrontMarker", i, out key, out value);
 
                     string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (valueParts.Length == 3)
@@ -136,18 +125,15 @@ namespace IL2DCE
                         }
                     }
                 }
-
-                airGroupsTemplate = Game.gpLoadSectionFile("$home/parts/IL2DCE/Campaigns/Prototype/__AirGroups.mis");
-
+                
                 availableAirGroups.Clear();
-
-                for (int i = 0; i < airGroupsTemplate.lines("AirGroups"); i++)
+                for (int i = 0; i < templateFile.lines("AirGroups"); i++)
                 {
                     string key;
                     string value;
-                    airGroupsTemplate.get("AirGroups", i, out key, out value);
+                    templateFile.get("AirGroups", i, out key, out value);
 
-                    AirGroup airGroup = new AirGroup(airGroupsTemplate, key);
+                    AirGroup airGroup = new AirGroup(templateFile, key);
                     availableAirGroups.Add(airGroup);
 
                     if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
@@ -160,9 +146,9 @@ namespace IL2DCE
                     }
                 }
 
-                if (airGroupsTemplate.exist("MAIN", "player"))
+                if (templateFile.exist("MAIN", "player"))
                 {
-                    string playerAircraftId = airGroupsTemplate.get("MAIN", "player");
+                    string playerAircraftId = templateFile.get("MAIN", "player");
 
                     int result;
                     int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 1, 1), out result);
@@ -201,6 +187,24 @@ namespace IL2DCE
                         }
                     }
                 }
+                
+                if (playerAirGroup != null)
+                {
+                    availableAirGroups.Remove(playerAirGroup);
+
+                    createRandomFlight(missionFile, playerAirGroup);
+                }
+
+                for (int i = 0; i < maxRandomSpawn; i++)
+                {
+                    int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
+                    Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
+                    availableAirGroups.Remove(randomAirGroup);
+
+                    createRandomFlight(missionFile, randomAirGroup);
+                }
+
+                return missionFile;
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)

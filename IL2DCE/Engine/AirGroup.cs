@@ -272,10 +272,8 @@ namespace IL2DCE
                     sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
                 }
 
-                if (Core.spawnParked == true)
-                {
-                    sectionFile.add(Name, "SetOnPark", "1");
-                }
+                //sectionFile.add(Name, "SetOnPark", "1");
+                
                 sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
 
                 foreach (AirGroupWaypoint waypoint in Waypoints)
@@ -404,7 +402,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateReconFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
@@ -420,7 +417,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateCoverFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
@@ -436,7 +432,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateHuntingFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
@@ -452,7 +447,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateGroundAttackFlight(ISectionFile sectionFile, Point3d targetArea, Point3d? rendevouzPosition = null, AiAirport landingAirport = null)
@@ -478,7 +472,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateEscortFlight(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
@@ -498,7 +491,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             public void CreateInterceptFlight(ISectionFile sectionFile, AirGroup targetAirUnit, Point3d targetArea, AiAirport landingAirport = null)
@@ -598,7 +590,6 @@ namespace IL2DCE
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
-                writeTo(Core.debug);
             }
 
             #endregion
