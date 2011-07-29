@@ -67,9 +67,8 @@ namespace IL2DCE
             }
             private IGame _game;
 
-            public ISectionFile Init(string missionFileName, string templateFileName)
+            public ISectionFile Init(string templateFileName)
             {
-                ISectionFile missionFile = Game.gpLoadSectionFile(missionFileName);                
                 ISectionFile templateFile = Game.gpLoadSectionFile(templateFileName);
 
                 for (int i = 0; i < templateFile.lines("Stationary"); i++)
@@ -145,6 +144,7 @@ namespace IL2DCE
                         getAirGroups(2).Add(airGroup);
                     }
                 }
+                templateFile.delete("AirGroups");
 
                 if (templateFile.exist("MAIN", "player"))
                 {
@@ -192,7 +192,7 @@ namespace IL2DCE
                 {
                     availableAirGroups.Remove(playerAirGroup);
 
-                    createRandomFlight(missionFile, playerAirGroup);
+                    createRandomFlight(templateFile, playerAirGroup);
                 }
 
                 for (int i = 0; i < maxRandomSpawn; i++)
@@ -201,10 +201,10 @@ namespace IL2DCE
                     Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
                     availableAirGroups.Remove(randomAirGroup);
 
-                    createRandomFlight(missionFile, randomAirGroup);
+                    createRandomFlight(templateFile, randomAirGroup);
                 }
 
-                return missionFile;
+                return templateFile;
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)

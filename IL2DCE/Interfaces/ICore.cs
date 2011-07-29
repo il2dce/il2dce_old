@@ -27,6 +27,6 @@ namespace IL2DCE
             get;
         }
 
-        maddox.game.ISectionFile Init(string missionFileName, string templateFileName);
+        maddox.game.ISectionFile Init(string templateFileName);
     }
 }
