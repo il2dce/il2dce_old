@@ -108,6 +108,14 @@ namespace IL2DCE
                 if (Waypoints.Count > 0)
                 {
                     Position = new Point3d(Waypoints[0].X, Waypoints[0].Y, Waypoints[0].Z);
+                    if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF)
+                    {
+                        Airstart = false;
+                    }
+                    else if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY)
+                    {
+                        Airstart = true;
+                    }
                 }
             }
 
@@ -151,38 +159,32 @@ namespace IL2DCE
                 set;
             }
 
-            public AiAirport Airport
-            {
-                get;
-                set;
-            }
-
             public Point3d Position
             {
                 get
                 {
-                    if (Airport != null)
-                    {
-                        return Airport.Pos();
-                    }
-                    else
-                    {
-                        return position;
-                    }
+                    return _position;                    
                 }
                 set
                 {
-                    position = value;
+                    _position = value;
                 }
             }
+            private Point3d _position;
 
             public double Speed
             {
                 get
                 {
-                    // TODO: Use aicraft to determine speed
+                    // TODO: Use aicraft info to determine speed
                     return 300.0;
                 }
+            }
+
+            public bool Airstart
+            {
+                get;
+                set;
             }
 
             public string Name
@@ -320,9 +322,9 @@ namespace IL2DCE
 
             private void createStartWaypoints(ISectionFile sectionFile)
             {
-                if (Airport != null)
+                if (!Airstart)
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF, Airport.Pos(), 0.0));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF, Position, 0.0));
                 }
                 else
                 {
@@ -332,18 +334,20 @@ namespace IL2DCE
 
             private void createEndWaypoints(ISectionFile sectionFile, AiAirport landingAirport = null)
             {
-                if (landingAirport == null)
-                {
-                    landingAirport = Airport;
-                }
-
                 if (landingAirport != null)
                 {
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.LANDING, landingAirport.Pos(), 0.0));
                 }
                 else
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Position, Speed));
+                    if (!Airstart)
+                    {
+                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.LANDING, Position, 0.0));
+                    }
+                    else
+                    {
+                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Position, Speed));
+                    }
                 }
             }
 
@@ -360,23 +364,11 @@ namespace IL2DCE
 
             private void createStartInbetweenPoints(ISectionFile sectionFile, Point3d target)
             {
-                if (Airport != null)
-                {
-                    createInbetweenWaypoints(sectionFile, Airport.Pos(), target);
-                }
-                else
-                {
-                    createInbetweenWaypoints(sectionFile, Position, target);
-                }
+                createInbetweenWaypoints(sectionFile, Position, target);
             }
 
             private void createEndInbetweenPoints(ISectionFile sectionFile, Point3d target, AiAirport landingAirport = null)
             {
-                if (landingAirport == null)
-                {
-                    landingAirport = Airport;
-                }
-
                 if (landingAirport != null)
                 {
                     createInbetweenWaypoints(sectionFile, target, landingAirport.Pos());
@@ -592,9 +584,7 @@ namespace IL2DCE
                 writeTo(sectionFile);
             }
 
-            #endregion
-
-            private Point3d position;
+            #endregion            
         }
     }
 }
