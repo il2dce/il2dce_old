@@ -1,0 +1,22 @@
+#summary Regulations for the campaign template mission file.
+#labels Phase-Requirements
+
+= Introduction =
+
+The campaign template mission file is created within the FMB of _IL-2 Sturmovik: Cliffs of Dover. There are some regulations for the template file creation which are described within this document. 
+
+= Details =
+
+== Front markers ==
+
+Front markers are used to specify important locations on the map. There are different locations depending on the ground type at the position of the front marker. If the front marker is placed above city type this is interpreted as a city. If the front marker is placed above water ground type this is interpreted as a harbour. If the front marker is placed above a railway this is interpreted as a train station. The colour of the front marker define friendly, enemy or neutral locations.
+
+== Air units ==
+
+Air units are configured (aircraft, aircraft count, squadron, weapon, skill) and placed on the map. One waypoint is sufficiant. If the first waypoint is TAKEOFF the air unit will spawn parked on the nearest airfield. If the first waypoint is NORMALFLY the air unit will spawn in the air at this specified coordinates and altitude.
+
+== Ground units ==
+
+Armours are configured (type, vehicle count, regiment) and placed on the map. The armours will spawn at the nearest friendly city and will attack the nearest neutral or enemy city.
+
+Vessels are configured (type, skill, cargo) and placed on the map. The vessels will spawn at the nearest harbout and will move to the nearest friendly harbour.
