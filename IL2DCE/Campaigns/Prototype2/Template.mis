@@ -1,4 +1,4 @@
-[PARTS]
+﻿[PARTS]
   core.100
   bob.100
 [MAIN]
@@ -19,17 +19,17 @@
 [splines]
 [AirGroups]
   BoB_RAF_F_41Sqn_Early.01
-  BoB_LW_JG27_III.11
+  BoB_RA_56St_18Gruppo_83Sq.01
   BoB_LW_KG2_I.13
   BoB_RAF_B_88Sqn.01
   BoB_RAF_F_79Sqn_Early.01
   BoB_LW_AufklGr_ObdL.01
-  BoB_LW_KG53_III.13
+  BoB_RA_13St_11Gruppo_1Sq.03
   BoB_LW_AufklGr_ObdL.02
   BoB_LW_AufklGr_ObdL.04
   BoB_LW_AufklGr_ObdL.08
   BoB_LW_KG51_III.13
-  BoB_LW_ZG2_I.11
+  BoB_LW_ErprGr210.11
   BoB_RAF_F_264Sqn_Early.01
   BoB_LW_LG1_IV.13
   BoB_RAF_F_3Sqn_Early.01
@@ -45,15 +45,15 @@
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
 [BoB_RAF_F_41Sqn_Early.01_Way]
   TAKEOFF 248422.64 259037.11 0 0
-[BoB_LW_JG27_III.11]
-  Flight0  1 2 3 4
-  Class Aircraft.Bf-109E-1
-  Formation FINGERFOUR
+[BoB_RA_56St_18Gruppo_83Sq.01]
+  Flight0  1 2 3
+  Class Aircraft.G50
+  Formation VIC3
   CallSign 32
   Fuel 100
-  Weapons 1 1
+  Weapons 1
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
-[BoB_LW_JG27_III.11_Way]
+[BoB_RA_56St_18Gruppo_83Sq.01_Way]
   TAKEOFF 281151.93 212803.68 0 0
 [BoB_LW_KG2_I.13]
   Flight0  1 2 3
@@ -98,16 +98,16 @@
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
 [BoB_LW_AufklGr_ObdL.01_Way]
   TAKEOFF 276960.53 209332.28 0 0
-[BoB_LW_KG53_III.13]
+[BoB_RA_13St_11Gruppo_1Sq.03]
   Flight0  1 2 3
   Flight1  11 12 13
-  Class Aircraft.He-111H-2
+  Class Aircraft.BR-20M
   Formation LINEABREAST
   CallSign 21
   Fuel 100
-  Weapons 1 1 1 1 1 1 4
+  Weapons 1 1 1 4
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
-[BoB_LW_KG53_III.13_Way]
+[BoB_RA_13St_11Gruppo_1Sq.03_Way]
   TAKEOFF 275961.69 207389.85 0 0
 [BoB_LW_AufklGr_ObdL.02]
   Flight1  11
@@ -150,15 +150,15 @@
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
 [BoB_LW_KG51_III.13_Way]
   TAKEOFF 291159.25 216321.09 0 0
-[BoB_LW_ZG2_I.11]
+[BoB_LW_ErprGr210.11]
   Flight0  1 2 3 4
-  Class Aircraft.Bf-110C-4
+  Class Aircraft.Bf-110C-7
   Formation FINGERFOUR
   CallSign 20
   Fuel 100
-  Weapons 1
+  Weapons 1 1 1 2
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
-[BoB_LW_ZG2_I.11_Way]
+[BoB_LW_ErprGr210.11_Way]
   TAKEOFF 272448.09 200222.16 0 0
 [BoB_RAF_F_264Sqn_Early.01]
   Flight0  1 2 3 4 5 6
