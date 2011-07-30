@@ -28,7 +28,7 @@ namespace IL2DCE
             set;
         }
 
-        int[][] Flight
+        System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
         {
             get;
         }

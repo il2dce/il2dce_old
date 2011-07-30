@@ -76,18 +76,18 @@ namespace IL2DCE
 
             private void listBoxAirGroup_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
             {
-                if(e.AddedItems.Count > 0)
+                if (e.AddedItems.Count > 0)
                 {
                     IAirGroup airGroup = e.AddedItems[0] as IAirGroup;
 
                     FrameworkElement.listBoxAircraft.Items.Clear();
-                    for (int i = 0; i < 4; i++)
+                    foreach (int flightIndex in airGroup.Flights.Keys)
                     {
-                        if (airGroup.Flight[i] != null && airGroup.Flight[i].Length > 0)
+                        if (airGroup.Flights[flightIndex].Count > 0)
                         {
-                            for (int j = 0; j < airGroup.Flight[i].Length; j++)
+                            foreach (string acNumber in airGroup.Flights[flightIndex])
                             {
-                                FrameworkElement.listBoxAircraft.Items.Add(airGroup.Flight[i][j]);
+                                FrameworkElement.listBoxAircraft.Items.Add(acNumber);
                             }
                         }
                     }

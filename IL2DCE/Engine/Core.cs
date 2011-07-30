@@ -144,7 +144,7 @@ namespace IL2DCE
                         }
                     }
                 }
-                
+
                 availableAirGroups.Clear();
                 for (int i = 0; i < templateFile.lines("AirGroups"); i++)
                 {
@@ -166,47 +166,49 @@ namespace IL2DCE
                 }
                 templateFile.delete("AirGroups");
 
-                if (templateFile.exist("MAIN", "player"))
-                {
-                    string playerAircraftId = templateFile.get("MAIN", "player");
+                //if (templateFile.exist("MAIN", "player"))
+                //{
+                //    string playerAircraftId = templateFile.get("MAIN", "player");
 
-                    int result;
-                    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 1, 1), out result);
-                    playerSquadronIndex = result;
-                    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 2, 1), out result);
-                    playerFlightIndex = result;
-                    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 3, 1), out result);
-                    playerAircraftIndex = result;
+                //    int result;
+                //    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 1, 1), out result);
+                //    playerSquadronIndex = result;
+                //    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 2, 1), out result);
+                //    playerFlightIndex = result;
+                //    int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 3, 1), out result);
+                //    playerAircraftIndex = result;
 
-                    playerAirGroupKey = playerAircraftId.Substring(playerAircraftId.IndexOf(":") + 1, playerAircraftId.LastIndexOf(".") - playerAircraftId.IndexOf(":") - 1);
+                //    playerAirGroupKey = playerAircraftId.Substring(playerAircraftId.IndexOf(":") + 1, playerAircraftId.LastIndexOf(".") - playerAircraftId.IndexOf(":") - 1);
 
-                    // Find the air group of the player.
-                    if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
-                    {
-                        foreach (AirGroup airGroup in getAirGroups(1))
-                        {
-                            if (airGroup.AirGroupKey == playerAirGroupKey &&
-                                airGroup.SquadronIndex == playerSquadronIndex &&
-                                airGroup.Flight.Length > playerFlightIndex &&
-                                airGroup.Flight[(int)playerFlightIndex] != null &&
-                                airGroup.Flight[(int)playerFlightIndex].Length > playerAircraftIndex)
-                            {
-                                playerAirGroup = airGroup;
-                            }
-                        }
-                        foreach (AirGroup airGroup in getAirGroups(2))
-                        {
-                            if (airGroup.AirGroupKey == playerAirGroupKey &&
-                                airGroup.SquadronIndex == playerSquadronIndex &&
-                                airGroup.Flight.Length > playerFlightIndex &&
-                                airGroup.Flight[(int)playerFlightIndex] != null &&
-                                airGroup.Flight[(int)playerFlightIndex].Length > playerAircraftIndex)
-                            {
-                                playerAirGroup = airGroup;
-                            }
-                        }
-                    }
-                }
+                //    // Find the air group of the player.
+                //    if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
+                //    {
+                //        foreach (AirGroup airGroup in getAirGroups(1))
+                //        {
+                //            if (airGroup.AirGroupKey == playerAirGroupKey &&
+                //                airGroup.SquadronIndex == playerSquadronIndex &&
+                //                airGroup.Flight.Count > playerFlightIndex &&
+                //                airGroup.Flight.ContainsKey((int)playerFlightIndex) &&
+                //                airGroup.Flight[(int)playerFlightIndex] != null &&
+                //                airGroup.Flight[(int)playerFlightIndex].Count > playerAircraftIndex)
+                //            {
+                //                playerAirGroup = airGroup;
+                //            }
+                //        }
+                //        foreach (AirGroup airGroup in getAirGroups(2))
+                //        {
+                //            if (airGroup.AirGroupKey == playerAirGroupKey &&
+                //                airGroup.SquadronIndex == playerSquadronIndex &&
+                //                airGroup.Flight.Count > playerFlightIndex &&
+                //                airGroup.Flight.ContainsKey((int)playerFlightIndex) &&
+                //                airGroup.Flight[(int)playerFlightIndex] != null &&
+                //                airGroup.Flight[(int)playerFlightIndex].Count > playerAircraftIndex)
+                //            {
+                //                playerAirGroup = airGroup;
+                //            }
+                //        }
+                //    }
+                //}
                 
                 
                 _currentMission = templateFile;
