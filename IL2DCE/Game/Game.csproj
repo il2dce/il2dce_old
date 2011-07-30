@@ -28,7 +28,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\parts\IL2DCE\</OutputPath>
     <DefineConstants>
@@ -43,6 +43,7 @@
     <Compile Include="Campaign.cs" />
     <Compile Include="GameSingle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="gamePages">
@@ -81,12 +82,16 @@
     <None Include="conf.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\GlobalAssemblyInfo.template" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)..\..\AddIns"
 copy "$(ProjectDir)IL2DCEGameSingle.xml" "$(TargetDir)..\..\AddIns\IL2DCEGameSingle.xml"
 </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>SubWcRev "$(ProjectDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,17 @@
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
+[assembly: AssemblyCompany("http://code.google.com/p/il2dce/")]
+[assembly: AssemblyProduct("IL2DCE")]
+[assembly: AssemblyCopyright("Copyright © Stefan Rothdach 2011")]
+[assembly: AssemblyTrademark("AGPLv3")]
+[assembly: AssemblyCulture("")]
+[assembly: ComVisible(false)]
+[assembly: AssemblyVersion("0.1.0.$WCREV$")]
+[assembly: AssemblyFileVersion("0.1.0.$WCREV$")]
