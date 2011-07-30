@@ -231,7 +231,7 @@ namespace IL2DCE
                 }
             }
 
-            public AircraftInfo AircraftInfo
+            public IAircraftInfo AircraftInfo
             {
                 get
                 {

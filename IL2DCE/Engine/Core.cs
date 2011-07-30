@@ -397,13 +397,13 @@ namespace IL2DCE
                 }
             }
 
-            public double createRandomAltitude(AircraftInfo.MissionType missionType)
+            public double createRandomAltitude(MissionType missionType)
             {
                 // TODO: Altitude range depends on mission type.
                 return (double)rand.Next(500, 6000);
             }
 
-            public AirGroup getRandomInterceptedFlight(AirGroup interceptingAirUnit, AircraftInfo.MissionType missionType)
+            public AirGroup getRandomInterceptedFlight(AirGroup interceptingAirUnit, MissionType missionType)
             {
                 List<AirGroup> airGroups = new List<AirGroup>();
                 foreach (AirGroup airGroup in availableAirGroups)
@@ -452,7 +452,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex == escortingAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(AircraftInfo.MissionType.GROUND_ATTACK_AREA))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.GROUND_ATTACK_AREA))
                         {
                             airGroups.Add(airGroup);
 
@@ -494,7 +494,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex == targetAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(AircraftInfo.MissionType.ESCORT))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.ESCORT))
                         {
                             airGroups.Add(airGroup);
 
@@ -536,7 +536,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex != targetAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(AircraftInfo.MissionType.INTERCEPT))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.INTERCEPT))
                         {
                             airGroups.Add(airGroup);
 
@@ -572,14 +572,14 @@ namespace IL2DCE
 
             public void createRandomFlight(ISectionFile sectionFile, AirGroup airGroup)
             {
-                List<AircraftInfo.MissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
+                List<MissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
                 if (missionTypes != null && missionTypes.Count > 0)
                 {
                     int randomMissionTypeIndex = rand.Next(missionTypes.Count);
-                    AircraftInfo.MissionType randomMissionType = missionTypes[randomMissionTypeIndex];
+                    MissionType randomMissionType = missionTypes[randomMissionTypeIndex];
 
                     // Bomber mission types
-                    if (randomMissionType == AircraftInfo.MissionType.RECON_AREA)
+                    if (randomMissionType == MissionType.RECON_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -594,7 +594,7 @@ namespace IL2DCE
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                         }
                     }
-                    else if (randomMissionType == AircraftInfo.MissionType.GROUND_ATTACK_AREA)
+                    else if (randomMissionType == MissionType.GROUND_ATTACK_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -638,7 +638,7 @@ namespace IL2DCE
                     //        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                     //    }
                     //}
-                    else if (randomMissionType == AircraftInfo.MissionType.OFFENSIVE_PATROL_AREA)
+                    else if (randomMissionType == MissionType.OFFENSIVE_PATROL_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -653,7 +653,7 @@ namespace IL2DCE
                             createRandomInterceptFlight(sectionFile, airGroup, targetArea);
                         }
                     }
-                    else if (randomMissionType == AircraftInfo.MissionType.ESCORT)
+                    else if (randomMissionType == MissionType.ESCORT)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -686,7 +686,7 @@ namespace IL2DCE
                             }
                         }
                     }
-                    else if (randomMissionType == AircraftInfo.MissionType.INTERCEPT)
+                    else if (randomMissionType == MissionType.INTERCEPT)
                     {
                         List<Point3d> friendlyMarkers = getFriendlyMarkers(airGroup.ArmyIndex);
                         if (friendlyMarkers.Count > 0)
@@ -695,24 +695,24 @@ namespace IL2DCE
                             Point3d marker = friendlyMarkers[markerIndex];
                             Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
 
-                            List<AircraftInfo.MissionType> subMissionTypes = new List<AircraftInfo.MissionType>() { AircraftInfo.MissionType.OFFENSIVE_PATROL_AREA, AircraftInfo.MissionType.RECON_AREA, AircraftInfo.MissionType.GROUND_ATTACK_AREA };
+                            List<MissionType> subMissionTypes = new List<MissionType>() { MissionType.OFFENSIVE_PATROL_AREA, MissionType.RECON_AREA, MissionType.GROUND_ATTACK_AREA };
                             int randomSubMissionTypeIndex = rand.Next(subMissionTypes.Count);
-                            AircraftInfo.MissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
+                            MissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
 
                             AirGroup interceptedAirGroup = getRandomInterceptedFlight(airGroup, randomSubMissionType);
                             if (interceptedAirGroup != null)
                             {
                                 availableAirGroups.Remove(interceptedAirGroup);
 
-                                if (randomSubMissionType == AircraftInfo.MissionType.OFFENSIVE_PATROL_AREA)
+                                if (randomSubMissionType == MissionType.OFFENSIVE_PATROL_AREA)
                                 {
                                     interceptedAirGroup.CreateHuntingFlight(sectionFile, targetArea);
                                 }
-                                else if (randomSubMissionType == AircraftInfo.MissionType.RECON_AREA)
+                                else if (randomSubMissionType == MissionType.RECON_AREA)
                                 {
                                     interceptedAirGroup.CreateReconFlight(sectionFile, targetArea);
                                 }
-                                else if (randomSubMissionType == AircraftInfo.MissionType.GROUND_ATTACK_AREA)
+                                else if (randomSubMissionType == MissionType.GROUND_ATTACK_AREA)
                                 {
                                     AirGroup escortAirGroup = getRandomEscortFlight(interceptedAirGroup);
                                     if (escortAirGroup != null)

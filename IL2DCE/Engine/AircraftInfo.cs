@@ -26,21 +26,26 @@ namespace IL2DCE
 {
     namespace Engine
     {
-        public class AircraftInfo
+        public class AircraftInfo : IAircraftInfo
         {
-            public enum MissionType
-            {
-                RECON_AREA,
-                GROUND_ATTACK_AREA,
-                OFFENSIVE_PATROL_AREA,
-                DEFENSIVE_PATROL_AREA,
-                ESCORT,
-                INTERCEPT,
-            };
-
             public AircraftInfo(string aircraft)
             {
                 Aircraft = aircraft;
+            }
+
+            public bool IsFlyable
+            {
+                get
+                {
+                    if(flyableAircrafts.Contains(Aircraft))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
 
             public List<MissionType> MissionTypes
@@ -94,6 +99,29 @@ namespace IL2DCE
                 get;
                 set;
             }
+
+            private List<string> flyableAircrafts = new List<string>
+        {
+            "Aircraft.HurricaneMkI_dH5-20",
+            "Aircraft.HurricaneMkI",
+            "Aircraft.SpitfireMkI",
+            "Aircraft.SpitfireMkI_Heartbreaker",
+            "Aircraft.SpitfireMkIa",
+            "Aircraft.SpitfireMkIIa", 
+            "Aircraft.Bf-109E-1",
+            "Aircraft.Bf-109E-3",
+            "Aircraft.Bf-109E-3B",
+            "Aircraft.Bf-110C-4",
+            "Aircraft.Bf-110C-7",
+            "Aircraft.CR42",
+            "Aircraft.G50",
+            "Aircraft.BlenheimMkIV",
+            "Aircraft.Ju-87B-2",
+            "Aircraft.He-111H-2",
+            "Aircraft.He-111P-2",
+            "Aircraft.Ju-88A-1",
+            "Aircraft.BR-20M", 
+        };
 
             private List<string> liaisonAircrafts = new List<string>
         {

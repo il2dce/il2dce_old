@@ -91,10 +91,13 @@ namespace IL2DCE
                     {
                         foreach (IAirGroup airGroup in Game.Core.RedAirGroups)
                         {
-                            System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
-                            itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex;
-                            itemAirGroup.Tag = airGroup;
-                            FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
+                            if (airGroup.AircraftInfo.IsFlyable)
+                            {
+                                System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
+                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft + ")";
+                                itemAirGroup.Tag = airGroup;
+                                FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
+                            }
                         }
                     }
 
@@ -102,10 +105,13 @@ namespace IL2DCE
                     {
                         foreach (IAirGroup airGroup in Game.Core.BlueAirGroups)
                         {
-                            System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
-                            itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex;
-                            itemAirGroup.Tag = airGroup;
-                            FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
+                            if (airGroup.AircraftInfo.IsFlyable)
+                            {
+                                System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
+                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft + ")";
+                                itemAirGroup.Tag = airGroup;
+                                FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
+                            }
                         }
                     }
 
