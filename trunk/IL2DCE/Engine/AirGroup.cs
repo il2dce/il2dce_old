@@ -193,6 +193,12 @@ namespace IL2DCE
                 set;
             }
 
+            public bool SetOnParked
+            {
+                get;
+                set;
+            }
+
             public string Name
             {
                 get
@@ -277,7 +283,10 @@ namespace IL2DCE
                     sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
                 }
 
-                //sectionFile.add(Name, "SetOnPark", "1");
+                if (Core.setOnPark == true)
+                {
+                    sectionFile.add(Name, "SetOnPark", "1");
+                }
                 
                 sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
 

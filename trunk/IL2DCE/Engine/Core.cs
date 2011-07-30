@@ -35,7 +35,8 @@ namespace IL2DCE
 
             private List<AirGroup> availableAirGroups = new List<AirGroup>();
 
-            private int maxRandomSpawn = 0;
+            private int randomSpawn = 0;
+            public static bool setOnPark = false;
 
             private List<Point3d> redMarkers = new List<Point3d>();
             private List<Point3d> blueMarkers = new List<Point3d>();
@@ -44,9 +45,27 @@ namespace IL2DCE
             private List<Radar> redRadars = new List<Radar>();
             private List<Radar> blueRadars = new List<Radar>();
 
-            public Core(IGame game)
+            public Core(IGame game, ISectionFile confFile)
             {
                 _game = game;
+                if (confFile.exist("Core", "setOnPark"))
+                {
+                    string value = confFile.get("Core", "setOnPark");
+                    if (value == "1")
+                    {
+                        setOnPark = true;
+                    }
+                    else
+                    {
+                        setOnPark = false;
+                    }
+                }
+
+                if (confFile.exist("Core", "randomSpawn"))
+                {
+                    string value = confFile.get("Core", "randomSpawn");
+                    int.TryParse(value, out randomSpawn);
+                }
             }
 
             public IGame Game
@@ -325,7 +344,7 @@ namespace IL2DCE
                     createRandomFlight(CurrentMission, playerAirGroup);
                 }
 
-                for (int i = 0; i < maxRandomSpawn; i++)
+                for (int i = 0; i < randomSpawn; i++)
                 {
                     int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
                     Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];

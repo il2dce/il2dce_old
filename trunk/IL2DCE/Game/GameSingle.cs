@@ -31,9 +31,10 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                core = new Engine.Core(this);
-
                 ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+
+                core = new Engine.Core(this, confFile);
+                
                 if (confFile.exist("MAIN", "campaignsFolder"))
                 {
                     string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
