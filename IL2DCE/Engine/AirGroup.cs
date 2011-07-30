@@ -38,7 +38,7 @@ namespace IL2DCE
                 AirGroupKey = airGroupId.Substring(0, airGroupId.IndexOf("."));
 
                 // SquadronIndex
-                int.TryParse(airGroupId.Substring(airGroupId.LastIndexOf(".") + 1, 1), out SquadronIndex);
+                int.TryParse(airGroupId.Substring(airGroupId.LastIndexOf(".") + 1, 1), out squadronIndex);
 
                 // Flight
                 for (int i = 0; i < 4; i++)
@@ -121,7 +121,18 @@ namespace IL2DCE
                 set;
             }
 
-            public int SquadronIndex;
+            public int SquadronIndex
+            {
+                get
+                {
+                    return squadronIndex;
+                }
+                set
+                {
+                    squadronIndex = value;
+                }
+            }
+            public int squadronIndex;
 
             public System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
             {

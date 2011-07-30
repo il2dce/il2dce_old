@@ -3,15 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" xmlns:my="clr-namespace:maddox.game.page;assembly=gamePages" xmlns:my1="clr-namespace:maddox.game.play;assembly=gamePages" d:DesignHeight="494" d:DesignWidth="990">
-    <Grid Height="489" Width="986">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="194*" />
-            <ColumnDefinition Width="792*" />
-        </Grid.ColumnDefinitions>
-        <my1:ButtonAsMenuItem Content="Fly" Height="77" HorizontalAlignment="Left" Margin="68,72,0,0" Name="Fly" VerticalAlignment="Top" Width="206" Grid.ColumnSpan="2" />
-        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,155,0,0" Name="Back" VerticalAlignment="Top" Width="206" Grid.ColumnSpan="2" />
-        <ListBox Height="339" HorizontalAlignment="Left" Margin="86,72,0,0" Name="listBoxAirGroups" VerticalAlignment="Top" Width="311" Grid.Column="1" />
-        <ListBox Height="339" HorizontalAlignment="Left" Margin="403,72,0,0" Name="listBoxAircraft" VerticalAlignment="Top" Width="311" Grid.Column="1" />
+             mc:Ignorable="d" xmlns:my="clr-namespace:maddox.game.page;assembly=gamePages" xmlns:my1="clr-namespace:maddox.game.play;assembly=gamePages" Height="914" Width="1672">
+    <Grid Height="780" Width="1366" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <my1:ButtonAsMenuItem Content="Fly" Height="77" HorizontalAlignment="Left" Margin="68,72,0,0" Name="Fly" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,155,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,142,0,0" Name="comboBoxSelectArmy" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822">
+            <ComboBox.Background>
+                <SolidColorBrush />
+            </ComboBox.Background>
+        </ComboBox>
+        <Label Content="Select army:" Height="64" HorizontalAlignment="Left" Margin="331,72,0,0" Name="labelSelectArmy" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,281,0,0" Name="comboBoxSelectAirGroup" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822">
+            <ComboBox.Background>
+                <SolidColorBrush />
+            </ComboBox.Background>
+        </ComboBox>
+        <Label Content="Select air group:" Height="64" HorizontalAlignment="Left" Margin="331,211,0,0" Name="labelSelectAirGroup" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,426,0,0" Name="comboBoxSelectAircraft" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822">
+            <ComboBox.Background>
+                <SolidColorBrush />
+            </ComboBox.Background>
+        </ComboBox>
+        <Label Content="Select aircraft:" Height="64" HorizontalAlignment="Left" Margin="331,350,0,0" Name="labelSelectAircraft" VerticalAlignment="Top" Width="398" FontSize="28" Foreground="#FF8D6822" />
     </Grid>
 </UserControl>
