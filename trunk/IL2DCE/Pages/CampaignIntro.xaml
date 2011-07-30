@@ -5,25 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" xmlns:my="clr-namespace:maddox.game.page;assembly=gamePages" xmlns:my1="clr-namespace:maddox.game.play;assembly=gamePages" Height="914" Width="1672">
     <Grid Height="780" Width="1366" HorizontalAlignment="Left" VerticalAlignment="Top">
-        <my1:ButtonAsMenuItem Content="Fly" Height="77" HorizontalAlignment="Left" Margin="68,72,0,0" Name="Fly" VerticalAlignment="Top" Width="206" />
-        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,155,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
-        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,142,0,0" Name="comboBoxSelectArmy" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A">
+        <my1:ButtonAsMenuItem Content="Fly" Height="77" HorizontalAlignment="Left" Margin="68,218,0,0" Name="Fly" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,301,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,288,0,0" Name="comboBoxSelectArmy" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />
             </ComboBox.Background>
         </ComboBox>
-        <Label Content="Select army:" Height="64" Margin="331,72,418,0" Name="labelSelectArmy" VerticalAlignment="Top" FontSize="28" Foreground="#FFA0854A" />
-        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,281,0,0" Name="comboBoxSelectAirGroup" VerticalAlignment="Top" Width="618" FontSize="28" Foreground="#FFA0854A">
+        <Label Content="Select army:" Height="64" Margin="331,218,418,0" Name="labelSelectArmy" VerticalAlignment="Top" FontSize="28" Foreground="#FFA0854A" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,427,0,0" Name="comboBoxSelectAirGroup" VerticalAlignment="Top" Width="618" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />
             </ComboBox.Background>
         </ComboBox>
-        <Label Content="Select air group:" Height="64" HorizontalAlignment="Left" Margin="331,211,0,0" Name="labelSelectAirGroup" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
-        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,426,0,0" Name="comboBoxSelectAircraft" VerticalAlignment="Top" Width="618" FontSize="28" Foreground="#FFA0854A">
+        <Label Content="Select air group:" Height="64" HorizontalAlignment="Left" Margin="331,357,0,0" Name="labelSelectAirGroup" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
+        <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,572,0,0" Name="comboBoxSelectAircraft" VerticalAlignment="Top" Width="618" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />
             </ComboBox.Background>
         </ComboBox>
-        <Label Content="Select aircraft:" Height="64" HorizontalAlignment="Left" Margin="331,350,0,0" Name="labelSelectAircraft" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
+        <Label Content="Select aircraft:" Height="64" HorizontalAlignment="Left" Margin="331,496,0,0" Name="labelSelectAircraft" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
+        <Label Content="New Campaign" Height="138" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelNewCampaign" VerticalAlignment="Top" Width="640" FontSize="64" FontWeight="Bold" Foreground="#FF791313" />
     </Grid>
 </UserControl>

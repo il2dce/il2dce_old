@@ -39,15 +39,18 @@ namespace IL2DCE
                 FrameworkElement.comboBoxSelectAirGroup.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAirGroup_SelectionChanged);
                 FrameworkElement.comboBoxSelectAircraft.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAircraft_SelectionChanged);
 
-                Game.Core.Init("$home/parts/IL2DCE/Campaigns/Prototype/Template.mis");
+                if (Game.CurrentCampaign != null)
+                {
+                    Game.Core.Init(Game.CurrentCampaign.TemplateFileName);
 
-                System.Windows.Controls.ComboBoxItem itemArmyRed = new System.Windows.Controls.ComboBoxItem();
-                itemArmyRed.Content = "Red";
-                FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyRed);
-                System.Windows.Controls.ComboBoxItem itemArmyBlue = new System.Windows.Controls.ComboBoxItem();
-                itemArmyBlue.Content = "Blue";
-                FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyBlue);
-                FrameworkElement.comboBoxSelectArmy.SelectedIndex = 0;
+                    System.Windows.Controls.ComboBoxItem itemArmyRed = new System.Windows.Controls.ComboBoxItem();
+                    itemArmyRed.Content = "Red";
+                    FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyRed);
+                    System.Windows.Controls.ComboBoxItem itemArmyBlue = new System.Windows.Controls.ComboBoxItem();
+                    itemArmyBlue.Content = "Blue";
+                    FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyBlue);
+                    FrameworkElement.comboBoxSelectArmy.SelectedIndex = 0;
+                }
             }
 
             private CampaignIntro FrameworkElement

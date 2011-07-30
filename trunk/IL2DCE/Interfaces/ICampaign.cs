@@ -20,27 +20,11 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface IGame : maddox.game.IGame
+    public interface ICampaign
     {
-        ICore Core
+        string TemplateFileName
         {
             get;
-        }
-
-        maddox.game.GameIterface GameInterface
-        {
-            get;
-        }
-
-        List<ICampaign> Campaigns
-        {
-            get;
-        }
-
-        ICampaign CurrentCampaign
-        {
-            get;
-            set;
         }
     }
 }

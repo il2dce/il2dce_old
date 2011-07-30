@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="IAircraftInfo.cs" />
     <Compile Include="IAirGroup.cs" />
+    <Compile Include="ICampaign.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

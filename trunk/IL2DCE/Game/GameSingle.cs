@@ -31,7 +31,27 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                _core = new Engine.Core(this);
+                core = new Engine.Core(this);
+
+                ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+                if (confFile.exist("MAIN", "campaignsFolder"))
+                {
+                    string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
+                    ISectionFile campaignsFile = game.SectionFileLoad(campaignsFolderName + "/campaigns.ini");
+
+                    if (campaignsFile.exist("Campaigns"))
+                    {
+                        for (int i = 0; i < campaignsFile.lines("Campaigns"); i++)
+                        {
+                            string key;
+                            string value;
+                            campaignsFile.get("Campaigns", i, out key, out value);
+
+                            Campaign campaign = new Campaign(this, campaignsFile, key);
+                            Campaigns.Add(campaign);
+                        }
+                    }
+                }
             }
 
             public override maddox.game.play.PageInterface getStartPage()
@@ -43,10 +63,41 @@ namespace IL2DCE
             {
                 get
                 {
-                    return _core;
+                    return core;
                 }
             }
-            private ICore _core;
+            private ICore core;
+
+            public GameIterface GameInterface
+            {
+                get
+                {
+                    return gameInterface;
+                }
+            }
+
+            public List<ICampaign> Campaigns
+            {
+                get
+                {
+                    return campaigns;
+                }
+            }
+            private List<ICampaign> campaigns = new List<ICampaign>();
+
+            public ICampaign CurrentCampaign
+            {
+                get
+                {
+                    return currentCampaign;
+                }
+                set
+                {
+                    currentCampaign = value as Campaign;
+                }
+
+            }
+            private Campaign currentCampaign;
         }
     }
 }
