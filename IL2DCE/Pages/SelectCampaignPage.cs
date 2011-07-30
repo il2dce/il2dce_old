@@ -32,13 +32,27 @@ namespace IL2DCE
                 : base("Select campaign", new SelectCampaign())
             {
                 _game = game;
-                
+
                 FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
                 FrameworkElement.bContinue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
 
+                FrameworkElement.ListCampaign.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(listCampaign_SelectionChanged);
+
                 // TODO: Make button visible when it is possible to continue a campaign.
+                FrameworkElement.bNew.IsEnabled = false;
                 FrameworkElement.bContinue.Visibility = System.Windows.Visibility.Hidden;
+
+                FrameworkElement.ListCampaign.ItemsSource = Game.Campaigns;
+
+                if (FrameworkElement.ListCampaign.Items.Count > 0)
+                {
+                    FrameworkElement.ListCampaign.SelectedIndex = 0;
+                }
+                else
+                {
+                    FrameworkElement.ListCampaign.SelectedIndex = -1;
+                }
             }
 
             private SelectCampaign FrameworkElement
@@ -71,6 +85,24 @@ namespace IL2DCE
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)
             {
                 Game.gameInterface.PagePop(null);
+            }
+
+            private void listCampaign_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+            {
+                if (e.AddedItems.Count > 0)
+                {
+                    ICampaign campaignSelected = e.AddedItems[0] as ICampaign;
+                    Game.CurrentCampaign = campaignSelected;
+                }
+
+                if (Game.CurrentCampaign != null)
+                {
+                    FrameworkElement.bNew.IsEnabled = true;
+                }
+                else
+                {
+                    FrameworkElement.bNew.IsEnabled = false;
+                }
             }
         }
     }

@@ -244,6 +244,15 @@ namespace IL2DCE
                         getAirGroups(2).Add(airGroup);
                     }
                 }
+
+                // Delete all air groups from the template file.
+                for (int i = 0; i < templateFile.lines("AirGroups"); i++)
+                {
+                    string key;
+                    string value;
+                    templateFile.get("AirGroups", i, out key, out value);
+                    templateFile.delete(key);
+                }
                 templateFile.delete("AirGroups");
 
                 if (templateFile.exist("MAIN", "player"))
