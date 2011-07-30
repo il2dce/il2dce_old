@@ -356,9 +356,9 @@ namespace IL2DCE
 
             private void createInbetweenWaypoints(ISectionFile sectionFile, Point3d a, Point3d b)
             {
-                Point3d p1 = new Point3d(a.x + 0.25 * (b.x - a.x), a.y + 0.25 * (b.y - a.y), a.z + 0.25 * (b.z - a.z));
-                Point3d p2 = new Point3d(a.x + 0.50 * (b.x - a.x), a.y + 0.50 * (b.y - a.y), a.z + 0.50 * (b.z - a.z));
-                Point3d p3 = new Point3d(a.x + 0.75 * (b.x - a.x), a.y + 0.75 * (b.y - a.y), a.z + 0.75 * (b.z - a.z));
+                Point3d p1 = new Point3d(a.x + 0.25 * (b.x - a.x), a.y + 0.25 * (b.y - a.y), a.z + 1.00 * (b.z - a.z));
+                Point3d p2 = new Point3d(a.x + 0.50 * (b.x - a.x), a.y + 0.50 * (b.y - a.y), a.z + 1.00 * (b.z - a.z));
+                Point3d p3 = new Point3d(a.x + 0.75 * (b.x - a.x), a.y + 0.75 * (b.y - a.y), a.z + 1.00 * (b.z - a.z));
 
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, p1, 300.0));
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, p2, 300.0));
@@ -374,11 +374,13 @@ namespace IL2DCE
             {
                 if (landingAirport != null)
                 {
-                    createInbetweenWaypoints(sectionFile, target, landingAirport.Pos());
+                    Point3d point = new Point3d(landingAirport.Pos().x, landingAirport.Pos().y, target.z);
+                    createInbetweenWaypoints(sectionFile, target, point);
                 }
                 else
                 {
-                    createInbetweenWaypoints(sectionFile, target, Position);
+                    Point3d point = new Point3d(Position.x, Position.y, target.z);
+                    createInbetweenWaypoints(sectionFile, target, point);
                 }
             }
 

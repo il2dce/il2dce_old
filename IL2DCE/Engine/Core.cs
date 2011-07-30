@@ -252,6 +252,7 @@ namespace IL2DCE
                     string value;
                     templateFile.get("AirGroups", i, out key, out value);
                     templateFile.delete(key);
+                    templateFile.delete(key + "_Way");
                 }
                 templateFile.delete("AirGroups");
 
