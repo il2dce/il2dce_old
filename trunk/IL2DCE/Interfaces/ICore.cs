@@ -37,5 +37,45 @@ namespace IL2DCE
         {
             get;
         }
+
+        System.Collections.Generic.IList<IAirGroup> RedAirGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IAirGroup> BlueAirGroups
+        {
+            get;
+        }
+
+        int? PlayerSquadronIndex
+        {
+            get;
+            set;
+        }
+
+        int? PlayerFlightIndex
+        {
+            get;
+            set;
+        }
+
+        int? PlayerAircraftIndex
+        {
+            get;
+            set;
+        }
+
+        string PlayerAirGroupKey
+        {
+            get;
+            set;
+        }
+
+        IAirGroup PlayerAirGroup
+        {
+            get;
+            set;
+        }
     }
 }

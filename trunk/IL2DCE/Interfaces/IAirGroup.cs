@@ -28,6 +28,12 @@ namespace IL2DCE
             set;
         }
 
+        int SquadronIndex
+        {
+            get;
+            set;
+        }
+
         System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
         {
             get;
