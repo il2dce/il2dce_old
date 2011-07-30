@@ -38,6 +38,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IAircraftInfo.cs" />
     <Compile Include="IAirGroup.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="IGame.cs" />

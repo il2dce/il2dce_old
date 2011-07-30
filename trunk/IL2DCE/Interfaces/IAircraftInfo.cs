@@ -20,26 +20,29 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface IAirGroup
+    public enum MissionType
     {
-        string AirGroupKey
+        RECON_AREA,
+        GROUND_ATTACK_AREA,
+        OFFENSIVE_PATROL_AREA,
+        DEFENSIVE_PATROL_AREA,
+        ESCORT,
+        INTERCEPT,
+    };
+
+    public interface IAircraftInfo
+    {
+        bool IsFlyable
         {
             get;
-            set;
         }
 
-        int SquadronIndex
-        {
-            get;
-            set;
-        }
-
-        System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
+        List<MissionType> MissionTypes
         {
             get;
         }
 
-        IAircraftInfo AircraftInfo
+        string Aircraft
         {
             get;
         }
