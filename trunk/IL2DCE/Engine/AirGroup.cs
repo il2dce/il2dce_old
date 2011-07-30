@@ -41,7 +41,6 @@ namespace IL2DCE
                 int.TryParse(airGroupId.Substring(airGroupId.LastIndexOf(".") + 1, 1), out SquadronIndex);
 
                 // Flight
-                Flight = new int[4][];
                 for (int i = 0; i < 4; i++)
                 {
                     if (sectionFile.exist(airGroupId, "Flight" + i.ToString()))
@@ -50,23 +49,16 @@ namespace IL2DCE
                         string[] acNumberList = acNumberLine.Split(new char[] { ' ' });
                         if (acNumberList != null && acNumberList.Length > 0)
                         {
-                            Flight[i] = new int[acNumberList.Length];
+                            List<string> acNumbers = new List<string>();
+                            Flights.Add(i, acNumbers);
                             for (int j = 0; j < acNumberList.Length; j++)
                             {
-                                int.TryParse(acNumberList[j], out Flight[i][j]);
+                                acNumbers.Add(acNumberList[j]);
                             }
                         }
-                        else
-                        {
-                            Flight[i] = null;
-                        }
-                    }
-                    else
-                    {
-                        Flight[i] = null;
-                    }
+                    }                    
                 }
-
+                                
                 // Class
                 Class = sectionFile.get(airGroupId, "Class");
 
@@ -131,11 +123,14 @@ namespace IL2DCE
 
             public int SquadronIndex;
 
-            public int[][] Flight
+            public System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
             {
-                get;
-                set;
+                get
+                {
+                    return flights;
+                }
             }
+            System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> flights = new Dictionary<int,List<string>>();
 
             public string Class
             {
@@ -193,15 +188,12 @@ namespace IL2DCE
                 {
                     int flightMask = 0x0;
 
-                    if (Flight != null && Flight.Length > 0)
+                    foreach (int flightIndex in Flights.Keys)
                     {
-                        for (int i = 0; i < Flight.Length; i++)
+                        if (Flights[flightIndex].Count > 0)
                         {
-                            if (Flight[i] != null && Flight[i].Length > 0)
-                            {
-                                int bit = (0x1 << i);
-                                flightMask = (flightMask | bit);
-                            }
+                            int bit = (0x1 << flightIndex);
+                            flightMask = (flightMask | bit);
                         }
                     }
 
@@ -246,16 +238,16 @@ namespace IL2DCE
             {
                 sectionFile.add("AirGroups", Name, "");
 
-                for (int i = 0; i < 4; i++)
+                foreach(int flightIndex in Flights.Keys)
                 {
-                    if (Flight[i] != null && Flight[i].Length > 0)
+                    if (Flights[flightIndex].Count > 0)
                     {
                         string acNumberLine = "";
-                        foreach (int acNumber in Flight[i])
+                        foreach (string acNumber in Flights[flightIndex])
                         {
-                            acNumberLine += acNumber.ToString() + " ";
+                            acNumberLine += acNumber + " ";
                         }
-                        sectionFile.add(Name, "Flight" + i, acNumberLine.TrimEnd());
+                        sectionFile.add(Name, "Flight" + flightIndex, acNumberLine.TrimEnd());
                     }
                 }
 
