@@ -681,7 +681,7 @@ namespace IL2DCE
                                 escortedAirGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
                                 airGroup.CreateEscortFlight(sectionFile, escortedAirGroup);
 
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Escort flight(" + airGroup.Name + ")", null);
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Escort flight(" + escortedAirGroup.Name + ")", null);
 
                                 createRandomInterceptFlight(sectionFile, escortedAirGroup, targetArea);
                             }
