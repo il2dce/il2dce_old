@@ -37,6 +37,7 @@ namespace IL2DCE
 
             private int randomSpawn = 0;
             public static bool setOnPark = false;
+            private int debug = 0;
 
             private List<Point3d> redMarkers = new List<Point3d>();
             private List<Point3d> blueMarkers = new List<Point3d>();
@@ -65,6 +66,12 @@ namespace IL2DCE
                 {
                     string value = confFile.get("Core", "randomSpawn");
                     int.TryParse(value, out randomSpawn);
+                }
+
+                if (confFile.exist("Core", "debug"))
+                {
+                    string value = confFile.get("Core", "debug");
+                    int.TryParse(value, out debug);
                 }
             }
 
@@ -357,8 +364,15 @@ namespace IL2DCE
             public void Load()
             {
 #if DEBUG
-                CurrentMission.save("$user/missions/IL2DCE/debug.mis");
+                CurrentMission.save("$user/IL2DCEDebug.mis");
+#else
+                if (debug == 1)
+                {
+                    CurrentMission.save("$user/IL2DCEDebug.mis");
+                }           
 #endif
+
+
                 Game.gameInterface.MissionLoad(CurrentMission);
             }
 

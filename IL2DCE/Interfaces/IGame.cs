@@ -27,11 +27,6 @@ namespace IL2DCE
             get;
         }
 
-        maddox.game.GameIterface GameInterface
-        {
-            get;
-        }
-
         List<ICampaign> Campaigns
         {
             get;
