@@ -1,0 +1,17 @@
+#summary Describes how IL2DCE is compiled from source.
+#labels Phase-Implementation,Phase-Deploy
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+== Software requirements ==
+
+=== IL-2 Sturmovik: Cliffs of Dover ===
+
+=== SubWcRev.exe ===
+
+== Checkout ==
