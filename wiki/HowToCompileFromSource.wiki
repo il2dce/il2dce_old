@@ -13,14 +13,25 @@ Add your content here.
 === IL-2 Sturmovik: Cliffs of Dover ===
 
 IL2DCE is an AddIn that integrates into _IL-2 Sturmovik: Cliffs of Dover_. It has dependencies to the following assemblies of _IL-2 Sturmovik: Cliffs of Dover_:
+
  * core.dll
  * gamePages.dll
  * gamePlay.dll
  * gameWorld.dll
+
 They are located at "$home\parts\core". For the default installation this is "C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core". The projects of the IL2DCE solution are configured to use a relative path to these assemblies. Therefore the source has to be placed at a specific location relative to the $home folder. See [HowToCompileFromSource#Checkout Checkout] for more details.
+
 
 === SubWcRev.exe ===
 
 
 
 == Checkout ==
+
+== Compile ==
+
+=== Debug ===
+
+=== Release ===
+
+== Run ==
