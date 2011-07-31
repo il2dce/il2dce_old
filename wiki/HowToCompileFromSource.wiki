@@ -22,8 +22,11 @@ IL2DCE is an AddIn that integrates into _IL-2 Sturmovik: Cliffs of Dover_. It ha
 They are located at "$home\parts\core". For the default installation this is "C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core". The projects of the IL2DCE solution are configured to use a relative path to these assemblies. Therefore the source has to be placed at a specific location relative to the $home folder. See [HowToCompileFromSource#Checkout Checkout] for more details.
 
 
-=== SubWcRev.exe ===
+=== SubWCRev.exe ===
 
+IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the SubWCRev.exe is used. This Windows console application is part of a TortoiseSVN installation. Make sure that the environment variable "path" contains the binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") of TortoiseSVN. 
+
+[http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN documentation]
 
 
 == Checkout ==
