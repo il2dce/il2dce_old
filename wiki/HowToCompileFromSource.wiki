@@ -12,6 +12,14 @@ Add your content here.
 
 === IL-2 Sturmovik: Cliffs of Dover ===
 
+IL2DCE has dependencies to the following assemblies of _IL-2 Sturmovik: Cliffs of Dover_:
+ * core.dll
+ * gamePages.dll
+ * gamePlay.dll
+ * gameWorld.dll
+They are located at _$home\parts\core_.
+
 === SubWcRev.exe ===
+
 
 == Checkout ==
