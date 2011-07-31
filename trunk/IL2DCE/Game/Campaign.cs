@@ -35,11 +35,11 @@ namespace IL2DCE
                     name = campaignsFile.get(campaignId, "campaignName");
                     string campaignFolderName = campaignsFile.get(campaignId, "campaignFolder");
 
-                    ISectionFile campaignFile = game.GameInterface.SectionFileLoad(campaignFolderName + "/campaign.ini");
+                    ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignFolderName + "/campaign.ini");
                     if (campaignFile.exist("Campaign", "templateFile"))
                     {
                         templateFileName = campaignFile.get("Campaign", "templateFile");
-                        templateFile = game.GameInterface.SectionFileLoad(templateFileName);
+                        templateFile = game.gameInterface.SectionFileLoad(templateFileName);
                     }
                 }
             }
