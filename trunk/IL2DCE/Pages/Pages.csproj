@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>C:\Program Files %28x86%29\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\</OutputPath>
+    <OutputPath>..\..\..\..\IL2DCE\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,15 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="gamePages">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePages.dll</HintPath>
+      <HintPath>..\..\..\..\core\gamePages.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="gamePlay">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gamePlay.dll</HintPath>
+      <HintPath>..\..\..\..\core\gamePlay.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="gameWorld">
-      <HintPath>C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\core\gameWorld.dll</HintPath>
+      <HintPath>..\..\..\..\core\gameWorld.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
