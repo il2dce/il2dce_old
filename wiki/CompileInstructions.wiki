@@ -36,11 +36,10 @@ See [CompileInstructions#Version_number Version number] for more details.
 
 === Debug ===
 
+==== Run ====
+
 === Release ===
 
 ==== Version number ====
 
 [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN documentation]
-
-
-== Run ==
