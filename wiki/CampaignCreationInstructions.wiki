@@ -11,21 +11,31 @@
 The campaign template mission file is created within the FMB of _IL-2 Sturmovik: Cliffs of Dover_. There are some regulations for the template file creation which are described in the following section. 
 
 
-=== Front markers ===
+=== FrontMarkers ===
 
-Front markers are used to specify important locations on the map. There are different locations depending on the ground type at the position of the front marker. If the front marker is placed above city type this is interpreted as a city. If the front marker is placed above water ground type this is interpreted as a harbour. If the front marker is placed above a railway this is interpreted as a train station. The colour of the front marker define friendly, enemy or neutral locations.
-
-
-=== Air units ===
-
-Air units are configured (aircraft, aircraft count, squadron, weapon, skill) and placed on the map. One waypoint is sufficiant. If the first waypoint is TAKEOFF the air unit will spawn on the nearest airfield. Use the SpawnOnPark or Scramble option to specify the stance. These options might be overwritten by the IL2DCE configuration. If the first waypoint is NORMALFLY the air unit will spawn in the air at the specified coordinates and altitude.
+FrontMarkers are used to specify important locations on the map. There are different locations depending on the ground type at the position of the front marker. If the front marker is placed above city type this is interpreted as a city. If the front marker is placed above water ground type this is interpreted as a harbour. If the front marker is placed above a railway this is interpreted as a train station. The colour of the front marker define friendly, enemy or neutral locations.
 
 
-=== Ground units ===
+=== AirGroups ===
+
+AirGroups are configured (aircraft, aircraft count, squadron, weapon, skill, ...) and placed on the map. One waypoint is sufficiant. If the first waypoint is TAKEOFF the AirGroup will spawn on the nearest airfield. Use the SpawnOnPark or Scramble option to specify the stance. These options might be overwritten by the IL2DCE configuration. If the first waypoint is NORMALFLY the AirGroup will spawn in the air at the specified coordinates and altitude.
+
+IL2DCE randomly selects one or more of these AirGroups and creates a primary mission for them. The available mission types depend on the aircraft type:
+
+  * Ground attack (Bomber)
+  * Recon (Bomber)
+  * Escort (Fighter)
+  * Intercept (Fighter)
+  * Offensive patrol (Fighter)
+  * Defensive patrol (Fighter) (temporary disabled)
+
+IL2DCE randomly selects one of the available mission types and a target area defined by a FrontMarker. Depending on the primary mission type a secondary mission (e.g. a intercept mission for a recon mission) or tertiary mission (e.g. a escort mission for a ground attack mission) is created.
+
+=== GroundGroups (not implemented) ===
 
 Armours are configured (type, vehicle count, regiment) and placed on the map. The armours will spawn at the nearest friendly city and will attack the nearest neutral or enemy city.
 
 Vessels are configured (type, skill, cargo) and placed on the map. The vessels will spawn at the nearest harbout and will move to the nearest friendly harbour.
 
 
-== Campaign configuration ==
+== Campaign configuration (not implemented) ==
