@@ -1,5 +1,5 @@
 # Define the installer name.
-outFile "IL2DCE-0.1.0.$WCREV$.exe"
+outFile "IL2DCE-0.1.0.$WCREV$$WCMODS?M:$.exe"
 
 # Set the default install directory.
 installDir "$PROGRAMFILES\Steam\steamapps\common\il-2 sturmovik cliffs of dover"
@@ -52,6 +52,16 @@ file "parts\IL2DCE\Campaigns\Prototype\Template.mis"
 
 sectionEnd
 
+section
+
+setOutPath "$INSTDIR\parts\IL2DCE\Campaigns\Prototype2"
+
+file "parts\IL2DCE\Campaigns\Prototype2\campaign.ini"
+file "parts\IL2DCE\Campaigns\Prototype2\Template.cs"
+file "parts\IL2DCE\Campaigns\Prototype2\Template.mis"
+
+sectionEnd
+
 # Uninstall section is always called "Uninstall".
 section "Uninstall"
 
@@ -61,6 +71,19 @@ delete "$INSTDIR\uninst.exe"
 delete "$INSTDIR\..\..\AddIns\IL2DCEGameServer.xml"
 delete "$INSTDIR\..\..\AddIns\IL2DCEGameSingle.xml"
 
+delete "$INSTDIR\Campaigns\Prototype\campaign.ini"
+delete "$INSTDIR\Campaigns\Prototype\Template.cs"
+delete "$INSTDIR\Campaigns\Prototype\Template.mis"
+RMDir "$INSTDIR\Campaigns\Prototype"
+
+delete "$INSTDIR\Campaigns\Prototype2\campaign.ini"
+delete "$INSTDIR\Campaigns\Prototype2\Template.cs"
+delete "$INSTDIR\Campaigns\Prototype2\Template.mis"
+RMDir "$INSTDIR\Campaigns\Prototype2"
+
+delete "$INSTDIR\Campaigns\campaigns.ini"
+RMDir "$INSTDIR\Campaigns"
+
 delete "$INSTDIR\conf.ini"
 delete "$INSTDIR\COPYING"
 delete "$INSTDIR\Engine.dll"
@@ -68,15 +91,6 @@ delete "$INSTDIR\Game.dll"
 delete "$INSTDIR\Interfaces.dll"
 delete "$INSTDIR\Mission.dll"
 delete "$INSTDIR\Pages.dll"
-
-delete "$INSTDIR\Campaigns\campaigns.ini"
-
-delete "$INSTDIR\Campaigns\Prototype\campaign.ini"
-delete "$INSTDIR\Campaigns\Prototype\Template.cs"
-delete "$INSTDIR\Campaigns\Prototype\Template.mis"
-
-RMDir "$INSTDIR\Campaigns\Prototype"
-RMDir "$INSTDIR\Campaigns"
 RMDir "$INSTDIR"
 
 sectionEnd
