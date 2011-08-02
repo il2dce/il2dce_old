@@ -37,6 +37,12 @@ namespace IL2DCE
             set;
         }
 
+        int Debug
+        {
+            get;
+            set;
+        }
+
         System.Collections.Generic.IList<IAirGroup> AirGroups
         {
             get;

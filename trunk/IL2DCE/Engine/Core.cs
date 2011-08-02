@@ -36,7 +36,6 @@ namespace IL2DCE
             private List<AirGroup> availableAirGroups = new List<AirGroup>();
 
             private int randomSpawn = 0;
-            private int debug = 0;
 
             private List<Point3d> redMarkers = new List<Point3d>();
             private List<Point3d> blueMarkers = new List<Point3d>();
@@ -70,7 +69,11 @@ namespace IL2DCE
                 if (confFile.exist("Core", "debug"))
                 {
                     string value = confFile.get("Core", "debug");
-                    int.TryParse(value, out debug);
+                    int.TryParse(value, out _debug);
+                }
+                else
+                {
+                    _debug = 0;
                 }
             }
 
@@ -94,7 +97,20 @@ namespace IL2DCE
                     _spawnParked = value;
                 }
             }
-            public static bool _spawnParked;
+            public static bool _spawnParked = false;
+
+            public int Debug
+            {
+                get
+                {
+                    return _debug;
+                }
+                set
+                {
+                    _debug = value;
+                }
+            }
+            private int _debug = 0;
 
             public System.Collections.Generic.IList<IAirGroup> AirGroups
             {
