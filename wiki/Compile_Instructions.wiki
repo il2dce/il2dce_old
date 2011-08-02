@@ -42,6 +42,18 @@ See [#Version_number Version number] for more details.
 
 ==== Version number ====
 
-[http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN documentation]
+The version number uses the format:
+
+  `<major`>.`<minor`>.`<build`>.`<revision`>
+
+The major number is increased when fundamental changes were made compared to the previous version. The minor number is increased when new features were added compared to the previous version. The build number is increased when only bugfixes were applied. The revision number is the highest revision number of the repository of the source code.
+
+With exception of the revision number they have to be increased by the developer. The revision number is updated by [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html SubWCRev.exe].
 
 ==== Create setup ===
+
+A [http://nsis.sourceforge.net/ NSIS] install script is provided to create a installer and uninstaller. The installer file has to naming covention:
+
+  IL2DCE-major.minor.build.revision.exe
+
+With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html SubWCRev.exe].
