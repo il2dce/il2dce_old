@@ -28,16 +28,26 @@ namespace IL2DCE
     {
         public class CampaignIntoPage : PageDefImpl
         {
-            public CampaignIntoPage(IGame game)
+            public CampaignIntoPage()
                 : base("Campaign into", new CampaignIntro())
             {
-                _game = game;
-
-                FrameworkElement.Fly.Click += new System.Windows.RoutedEventHandler(Fly_Click);
+                FrameworkElement.Continue.Click += new System.Windows.RoutedEventHandler(Continue_Click);
+                FrameworkElement.Next.Click += new System.Windows.RoutedEventHandler(Next_Click);
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(Back_Click);
                 FrameworkElement.comboBoxSelectArmy.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectArmy_SelectionChanged);
                 FrameworkElement.comboBoxSelectAirGroup.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAirGroup_SelectionChanged);
-                FrameworkElement.comboBoxSelectAircraft.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAircraft_SelectionChanged);
+                FrameworkElement.comboBoxSelectAircraft.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAircraft_SelectionChanged);                
+            }
+
+            public override void  _enter(maddox.game.IGame play, object arg)
+            {
+                base._enter(play, arg);
+
+                FrameworkElement.comboBoxSelectArmy.Items.Clear();
+                FrameworkElement.comboBoxSelectAirGroup.Items.Clear();
+                FrameworkElement.comboBoxSelectAircraft.Items.Clear();
+
+                _game = play as IGame;
 
                 if (Game.CurrentCampaign != null)
                 {
@@ -51,8 +61,24 @@ namespace IL2DCE
                     FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyBlue);
                     FrameworkElement.comboBoxSelectArmy.SelectedIndex = 0;
                 }
+
+                if (Game.Core.SpawnParked == true)
+                {
+                    FrameworkElement.checkBoxSpawnParked.IsChecked = true;
+                }
+                else
+                {
+                    FrameworkElement.checkBoxSpawnParked.IsChecked = false;
+                }
             }
 
+            public override void _leave(maddox.game.IGame play, object arg)
+            {
+                base._leave(play, arg);
+
+                _game = null;
+            }
+            
             private CampaignIntro FrameworkElement
             {
                 get
@@ -72,16 +98,73 @@ namespace IL2DCE
 
             private void Back_Click(object sender, System.Windows.RoutedEventArgs e)
             {
+                if (Game.gameInterface.BattleIsRun())
+                {
+                    Game.gameInterface.BattleStop();
+                }
+
                 Game.gameInterface.PagePop(null);
             }
 
-            private void Fly_Click(object sender, System.Windows.RoutedEventArgs e)
+            private void Continue_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.Core.Generate();
-                Game.Core.Load();
-                
-                Game.gameInterface.UIMainHide();
+                if (Game.gameInterface.BattleIsRun())
+                {
+                    Game.gameInterface.UIMainHide();
+                }
+                else
+                {
+                    nextMission();
+                }
+            }
+
+            private void Next_Click(object sender, System.Windows.RoutedEventArgs e)
+            {
+                nextMission();
+            }
+
+            void nextMission()
+            {
+                if (Game.gameInterface.BattleIsRun())
+                {
+                    Game.gameInterface.BattleStop();
+                }
+
+                if (FrameworkElement.checkBoxSpawnParked.IsChecked == true)
+                {
+                    Game.Core.SpawnParked = true;
+                }
+                else
+                {
+                    Game.Core.SpawnParked = false;
+                }
+
+                ISectionFile missionFile = Game.Core.Generate(Game.CurrentCampaign.TemplateFileName);
+
+#if DEBUG
+                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                if (!System.IO.Directory.Exists(debugPath))
+                {
+                    System.IO.Directory.CreateDirectory(debugPath);
+                }
+                missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+#else
+                if (debug == 1)
+                {
+                    string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                    if (!System.IO.Directory.Exists(debugPath))
+                    {
+                        System.IO.Directory.CreateDirectory(debugPath);
+                    }
+                    missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+                }
+#endif
+
+                Game.gameInterface.MissionLoad(missionFile);
+
                 Game.gameInterface.BattleStart();
+
+                Game.gameInterface.UIMainHide();
             }
 
             private void comboBoxSelectArmy_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -97,7 +180,7 @@ namespace IL2DCE
                             if (airGroup.AircraftInfo.IsFlyable)
                             {
                                 System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
-                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft + ")";
+                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft.Remove(0, 9) + ")";
                                 itemAirGroup.Tag = airGroup;
                                 FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
                             }
@@ -111,7 +194,7 @@ namespace IL2DCE
                             if (airGroup.AircraftInfo.IsFlyable)
                             {
                                 System.Windows.Controls.ComboBoxItem itemAirGroup = new System.Windows.Controls.ComboBoxItem();
-                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft + ")";
+                                itemAirGroup.Content = airGroup.AirGroupKey + "." + airGroup.SquadronIndex + "(" + airGroup.AircraftInfo.Aircraft.Remove(0, 9) + ")";
                                 itemAirGroup.Tag = airGroup;
                                 FrameworkElement.comboBoxSelectAirGroup.Items.Add(itemAirGroup);
                             }

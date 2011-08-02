@@ -57,7 +57,7 @@ namespace IL2DCE
 
             public override maddox.game.play.PageInterface getStartPage()
             {
-                return new Pages.ServerOptionsPage(this);
+                return new Pages.ServerOptionsPage();
             }
 
             public ICore Core

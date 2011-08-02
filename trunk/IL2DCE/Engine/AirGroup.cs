@@ -283,9 +283,13 @@ namespace IL2DCE
                     sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
                 }
 
-                if (Core.setOnPark == true)
+                if (Core._spawnParked == true)
                 {
                     sectionFile.add(Name, "SetOnPark", "1");
+                }
+                else
+                {
+                    sectionFile.add(Name, "SetOnPark", "0");
                 }
                 
                 sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");

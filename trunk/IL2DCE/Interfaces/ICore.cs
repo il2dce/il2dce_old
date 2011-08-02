@@ -29,9 +29,13 @@ namespace IL2DCE
 
         void Init(string templateFileName);
 
-        void Generate();
+        maddox.game.ISectionFile Generate(string missionFileName);
 
-        void Load();
+        bool SpawnParked
+        {
+            get;
+            set;
+        }
 
         System.Collections.Generic.IList<IAirGroup> AirGroups
         {

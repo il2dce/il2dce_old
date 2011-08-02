@@ -28,13 +28,25 @@ namespace IL2DCE
     {
         public class ServerOptionsPage : PageDefImpl
         {
-            public ServerOptionsPage(IGame game)
+            public ServerOptionsPage()
                 : base("Select campaign", new ServerOptions())
             {
-                _game = game;
-
                 FrameworkElement.Apply.Click += new System.Windows.RoutedEventHandler(Apply_Click);
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(Back_Click);
+            }
+
+            public override void _enter(maddox.game.IGame play, object arg)
+            {
+                base._enter(play, arg);
+
+                _game = play as IGameServer;
+            }
+
+            public override void _leave(maddox.game.IGame play, object arg)
+            {
+                base._leave(play, arg);
+
+                _game = null;
             }
 
             private ServerOptions FrameworkElement
@@ -45,14 +57,14 @@ namespace IL2DCE
                 }
             }
 
-            private IGame Game
+            private IGameServer Game
             {
                 get
                 {
                     return _game;
                 }
             }
-            private IGame _game;
+            private IGameServer _game;
 
             private void Back_Click(object sender, System.Windows.RoutedEventArgs e)
             {
@@ -61,7 +73,7 @@ namespace IL2DCE
 
             private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.gameInterface.PageChange(new SelectCampaignPage(Game), null);
+                Game.gameInterface.PageChange(new SelectCampaignPage(), null);
             }
         }
     }
