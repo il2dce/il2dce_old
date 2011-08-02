@@ -21,16 +21,6 @@ FrontMarkers are used to specify important locations on the map. There are diffe
 
 AirGroups are configured (aircraft, aircraft count, squadron, weapon, skill, ...) and placed on the map. One waypoint is sufficiant. If the first waypoint is TAKEOFF the AirGroup will spawn on the nearest airfield. Use the SpawnOnPark or Scramble option to specify the stance. These options might be overwritten by the IL2DCE configuration. If the first waypoint is NORMALFLY the AirGroup will spawn in the air at the specified coordinates and altitude.
 
-IL2DCE randomly selects one or more of these AirGroups and creates a primary mission for them. The available mission types depend on the aircraft type:
-
-  * Ground attack (Bomber)
-  * Recon (Bomber)
-  * Escort (Fighter)
-  * Intercept (Fighter)
-  * Offensive patrol (Fighter)
-  * Defensive patrol (Fighter) (temporary disabled)
-
-IL2DCE randomly selects one of the available mission types and a target area defined by a FrontMarker. Depending on the primary mission type a secondary mission (e.g. a intercept mission for a recon mission) or tertiary mission (e.g. a escort mission for a ground attack mission) is created.
 
 === GroundGroups (not implemented) ===
 
