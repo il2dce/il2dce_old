@@ -22,7 +22,7 @@ At certain development stages a binary release is provided at [http://code.googl
 
 The installer creates files within the "$home\AddIns" and "$home\parts\IL2DCE" folder.
 
-== Uninstall IL2DCE (not implemented) ==
+== Update IL2DCE (not implemented) ==
 
 == Uninstall IL2DCE ==
 
