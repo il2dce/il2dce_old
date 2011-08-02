@@ -54,6 +54,6 @@ With exception of the revision number they have to be increased by the developer
 
 A script file for the [http://nsis.sourceforge.net/ Nullsoft Scriptable Install System (NSIS)] is provided to create a installer and uninstaller. The script is copied to the $release folder. There it has to be executed by the developer. The installer file has to naming convention:
 
-  IL2DCE-<major`>.`<minor`>.`<build`>.`<revision`>.exe
+  IL2DCE-<major`>.`<minor`>.`<build`>.`<revision`[M]`>.exe
 
-With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to sufix "M" if there are local changes in the working directory that are not yet commited.
+With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to suffix "M" if there are local changes in the working directory that are not yet commited.
