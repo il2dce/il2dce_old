@@ -56,4 +56,4 @@ A script file for the [http://nsis.sourceforge.net/ Nullsoft Scriptable Install 
 
   IL2DCE-<major`>.`<minor`>.`<build`>.`<revision`>.exe
 
-With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to sufix "M" if not all local changes were commited during the compilation.
+With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to sufix "M" if there are local changes in the working directory that are not yet commited.
