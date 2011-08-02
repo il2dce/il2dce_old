@@ -28,11 +28,9 @@ namespace IL2DCE
     {
         public class SelectCampaignPage : PageDefImpl
         {
-            public SelectCampaignPage(IGame game)
+            public SelectCampaignPage()
                 : base("Select campaign", new SelectCampaign())
             {
-                _game = game;
-
                 FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
                 FrameworkElement.bContinue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
@@ -41,7 +39,14 @@ namespace IL2DCE
 
                 // TODO: Make button visible when it is possible to continue a campaign.
                 FrameworkElement.bNew.IsEnabled = false;
-                FrameworkElement.bContinue.Visibility = System.Windows.Visibility.Hidden;
+                FrameworkElement.bContinue.Visibility = System.Windows.Visibility.Hidden;                
+            }
+
+            public override void _enter(maddox.game.IGame play, object arg)
+            {
+                base._enter(play, arg);
+
+                _game = play as IGame;
 
                 FrameworkElement.ListCampaign.ItemsSource = Game.Campaigns;
 
@@ -53,6 +58,15 @@ namespace IL2DCE
                 {
                     FrameworkElement.ListCampaign.SelectedIndex = -1;
                 }
+            }
+
+            public override void _leave(maddox.game.IGame play, object arg)
+            {
+                base._leave(play, arg);
+
+                _game = null;
+
+                //FrameworkElement.ListCampaign.ItemsSource = null;
             }
 
             private SelectCampaign FrameworkElement
@@ -79,7 +93,7 @@ namespace IL2DCE
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.gameInterface.PageChange(new CampaignIntoPage(Game), null);
+                Game.gameInterface.PagePush(new CampaignIntoPage(), null);
             }
 
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)

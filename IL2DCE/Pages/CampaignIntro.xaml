@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" xmlns:my="clr-namespace:maddox.game.page;assembly=gamePages" xmlns:my1="clr-namespace:maddox.game.play;assembly=gamePages" Height="914" Width="1672">
-    <Grid Height="780" Width="1366" HorizontalAlignment="Left" VerticalAlignment="Top">
-        <my1:ButtonAsMenuItem Content="Fly" Height="77" HorizontalAlignment="Left" Margin="68,218,0,0" Name="Fly" VerticalAlignment="Top" Width="206" />
-        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,301,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
+    <Grid Height="897" Width="1652" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Label Content="Campaign Into" Height="138" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelCampaignInto" VerticalAlignment="Top" Width="640" FontSize="64" FontWeight="Bold" Foreground="#FF791313" />
+        <my1:ButtonAsMenuItem Content="Continue" Height="77" HorizontalAlignment="Left" Margin="68,218,0,0" Name="Continue" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Next" Height="77" HorizontalAlignment="Left" Margin="68,301,0,0" Name="Next" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,384,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
         <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,288,0,0" Name="comboBoxSelectArmy" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />
@@ -25,6 +27,6 @@
             </ComboBox.Background>
         </ComboBox>
         <Label Content="Select aircraft:" Height="64" HorizontalAlignment="Left" Margin="331,496,0,0" Name="labelSelectAircraft" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
-        <Label Content="New Campaign" Height="138" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelNewCampaign" VerticalAlignment="Top" Width="640" FontSize="64" FontWeight="Bold" Foreground="#FF791313" />
+        <my1:CheckBoxAsMenuItem Content="Spawn parked" Height="40" HorizontalAlignment="Left" Margin="331,641,0,0" Name="checkBoxSpawnParked" VerticalAlignment="Top" Width="267" />
     </Grid>
 </UserControl>

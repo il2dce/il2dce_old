@@ -36,7 +36,6 @@ namespace IL2DCE
             private List<AirGroup> availableAirGroups = new List<AirGroup>();
 
             private int randomSpawn = 0;
-            public static bool setOnPark = false;
             private int debug = 0;
 
             private List<Point3d> redMarkers = new List<Point3d>();
@@ -54,11 +53,11 @@ namespace IL2DCE
                     string value = confFile.get("Core", "setOnPark");
                     if (value == "1")
                     {
-                        setOnPark = true;
+                        SpawnParked = true;
                     }
                     else
                     {
-                        setOnPark = false;
+                        SpawnParked = false;
                     }
                 }
 
@@ -83,6 +82,19 @@ namespace IL2DCE
                 }                
             }
             private IGame _game;
+
+            public bool SpawnParked
+            {
+                get
+                {
+                    return _spawnParked;
+                }
+                set
+                {
+                    _spawnParked = value;
+                }
+            }
+            public static bool _spawnParked;
 
             public System.Collections.Generic.IList<IAirGroup> AirGroups
             {
@@ -183,18 +195,21 @@ namespace IL2DCE
             public int? playerAircraftIndex = null;
             public string playerAirGroupKey = null;
             public AirGroup playerAirGroup = null;
-            
-            public ISectionFile CurrentMission
-            {
-                get
-                {
-                    return _currentMission;
-                }
-            }
-            private ISectionFile _currentMission;
 
             public void Init(string templateFileName)
             {
+                redRadars.Clear();
+                blueRadars.Clear();
+                redMarkers.Clear();
+                blueMarkers.Clear();
+                redAirGroups.Clear();
+                blueAirGroups.Clear();
+                playerSquadronIndex = null;
+                playerFlightIndex = null;
+                playerAircraftIndex = null;
+                playerAirGroupKey = null;
+                playerAirGroup = null;
+
                 ISectionFile templateFile = Game.gpLoadSectionFile(templateFileName);
 
                 for (int i = 0; i < templateFile.lines("Stationary"); i++)
@@ -271,17 +286,6 @@ namespace IL2DCE
                     }
                 }
 
-                // Delete all air groups from the template file.
-                for (int i = 0; i < templateFile.lines("AirGroups"); i++)
-                {
-                    string key;
-                    string value;
-                    templateFile.get("AirGroups", i, out key, out value);
-                    templateFile.delete(key);
-                    templateFile.delete(key + "_Way");
-                }
-                templateFile.delete("AirGroups");
-
                 if (templateFile.exist("MAIN", "player"))
                 {
                     string playerAircraftId = templateFile.get("MAIN", "player");
@@ -325,22 +329,39 @@ namespace IL2DCE
                         }
                     }                    
                 }                
-                
-                _currentMission = templateFile;
             }
 
 
-            public void Generate()
+            public ISectionFile Generate(string templateFileName)
             {
+                availableAirGroups.Clear();
+                foreach (AirGroup airGroup in AirGroups)
+                {
+                    availableAirGroups.Add(airGroup);
+                }
+                
+                ISectionFile missionFile = Game.gpLoadSectionFile(templateFileName);
+
+                // Delete all air groups from the template file.
+                for (int i = 0; i < missionFile.lines("AirGroups"); i++)
+                {
+                    string key;
+                    string value;
+                    missionFile.get("AirGroups", i, out key, out value);
+                    missionFile.delete(key);
+                    missionFile.delete(key + "_Way");
+                }
+                missionFile.delete("AirGroups");
+
                 if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
                 {
-                    if (CurrentMission.exist("MAIN", "player"))
+                    if (missionFile.exist("MAIN", "player"))
                     {
-                        CurrentMission.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                        missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
                     }
                     else
                     {
-                        CurrentMission.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                        missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
                     }
                 }
 
@@ -348,7 +369,7 @@ namespace IL2DCE
                 {
                     availableAirGroups.Remove(playerAirGroup);
 
-                    createRandomFlight(CurrentMission, playerAirGroup);
+                    createRandomFlight(missionFile, playerAirGroup);
                 }
 
                 for (int i = 0; i < randomSpawn; i++)
@@ -357,33 +378,10 @@ namespace IL2DCE
                     Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
                     availableAirGroups.Remove(randomAirGroup);
 
-                    createRandomFlight(CurrentMission, randomAirGroup);
+                    createRandomFlight(missionFile, randomAirGroup);
                 }
-            }
 
-            public void Load()
-            {
-#if DEBUG
-                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
-                if (!System.IO.Directory.Exists(debugPath))
-                {
-                    System.IO.Directory.CreateDirectory(debugPath);
-                }
-                CurrentMission.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-#else
-                if (debug == 1)
-                {
-                    string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
-                    if (!System.IO.Directory.Exists(debugPath))
-                    {
-                        System.IO.Directory.CreateDirectory(debugPath);
-                    }
-                    CurrentMission.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-                }           
-#endif
-
-
-                Game.gameInterface.MissionLoad(CurrentMission);
+                return missionFile;
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)
