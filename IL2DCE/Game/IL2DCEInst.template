@@ -4,10 +4,13 @@ outFile "IL2DCE-0.1.0.$WCREV$$WCMODS?M:$.exe"
 # Set the default install directory.
 installDir "$PROGRAMFILES\Steam\steamapps\common\il-2 sturmovik cliffs of dover"
 
+Page license
 Page directory
 Page instfiles
 UninstPage uninstConfirm
 UninstPage instfiles
+
+LicenseData "parts\IL2DCE\COPYING"
 
 section
 
