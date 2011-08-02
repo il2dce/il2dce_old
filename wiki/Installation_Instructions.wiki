@@ -30,4 +30,4 @@ The installer creates files within the "$home\AddIns" and "$home\parts\IL2DCE" f
   # Confirm the uninstall path.
   # Finish the uninstall process.
 
-The uninstaller removes the files that were created during the install process.
+The uninstaller removes the files that were created during the install process. It does not remove customer campaigns that were installed by the user.
