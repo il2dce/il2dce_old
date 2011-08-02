@@ -27,7 +27,7 @@ See [#Checkout Checkout] for more details.
 
 IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the SubWCRev.exe is used. This Windows console application is part of a TortoiseSVN installation. IL2DCE projects call SubWCRev.exe without a specified path. This is possible because TortoiseSVN adds its binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") to the environment variable "path". 
 
-See [#Version_number Version number] for more details.
+See the [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN Documentation] for more details.
 
 
 == Checkout ==
@@ -48,12 +48,12 @@ The version number uses the format:
 
 The major number is increased when fundamental changes were made compared to the previous version. The minor number is increased when new features were added compared to the previous version. The build number is increased when only bugfixes were applied. The revision number is the highest revision number of the repository of the source code.
 
-With exception of the revision number they have to be increased by the developer. The revision number is updated by [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html SubWCRev.exe].
+With exception of the revision number they have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe].
 
 ==== Create setup ===
 
-A [http://nsis.sourceforge.net/ NSIS] install script is provided to create a installer and uninstaller. The installer file has to naming covention:
+A script file for the [http://nsis.sourceforge.net/ Nullsoft Scriptable Install System (NSIS)] is provided to create a installer and uninstaller. The script is copied to the $release folder. There it has to be executed by the developer. The installer file has to naming convention:
 
   IL2DCE-major.minor.build.revision.exe
 
-With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html SubWCRev.exe].
+With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe].
