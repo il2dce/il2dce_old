@@ -3,7 +3,7 @@
 
 = Introduction =
 
-
+A campaign for IL2DCE consists of a campaign template mission and a campaign configuration file.
 
 = Details =
 
@@ -29,4 +29,4 @@ Armours are configured (type, vehicle count, regiment) and placed on the map. Th
 Vessels are configured (type, skill, cargo) and placed on the map. The vessels will spawn at the nearest harbout and will move to the nearest friendly harbour.
 
 
-== Campaign configuration (not implemented) ==
+== Campaign configuration file (not implemented) ==
