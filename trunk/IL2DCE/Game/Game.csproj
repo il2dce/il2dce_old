@@ -99,8 +99,8 @@ if $(ConfigurationName) == Release copy "$(ProjectDir)IL2DCEInst.nsi" "$(TargetD
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>SubWcRev "$(ProjectDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"
-SubWcRev "$(ProjectDir)." "$(ProjectDir)Il2DCEInst.template" "$(ProjectDir)IL2DCEInst.nsi"</PreBuildEvent>
+    <PreBuildEvent>SubWcRev "$(SolutionDir)ProjectDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"
+SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCEInst.template" "$(ProjectDir)IL2DCEInst.nsi"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
