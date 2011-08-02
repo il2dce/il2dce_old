@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("http://code.google.com/p/il2dce/")]
 [assembly: AssemblyProduct("IL2DCE")]
 [assembly: AssemblyCopyright("Copyright © Stefan Rothdach 2011")]
-[assembly: AssemblyTrademark("AGPLv3")]
+[assembly: AssemblyTrademark("AGPLv3, or (at your option) any later version")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("0.1.0.$WCREV$")]
