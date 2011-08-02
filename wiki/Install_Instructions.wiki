@@ -1,0 +1,13 @@
+#summary How to install a binary release of IL2DCE.
+#labels Phase-Deploy,Phase-Support
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+== Install ==
+
+== Uninstall ==
