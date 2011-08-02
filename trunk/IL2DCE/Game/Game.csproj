@@ -78,6 +78,9 @@
   <ItemGroup>
     <Content Include="IL2DCEGameServer.xml" />
     <Content Include="IL2DCEGameSingle.xml" />
+    <None Include="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="conf.ini">
