@@ -1,5 +1,5 @@
 #summary How to install a binary release of IL2DCE.
-#labels Phase-Deploy,Phase-Support
+#labels Phase-Deploy,Phase-Support,Featured
 
 = Introduction =
 
@@ -23,6 +23,7 @@ At certain development stages a binary release is provided at [http://code.googl
 The installer creates files within the "$home\AddIns" and "$home\parts\IL2DCE" folder.
 
 == Update IL2DCE (not implemented) ==
+Execute the uninstall process before you install another version of IL2DCE.
 
 == Uninstall IL2DCE ==
 
