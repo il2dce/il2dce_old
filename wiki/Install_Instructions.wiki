@@ -3,11 +3,23 @@
 
 = Introduction =
 
-Add your content here.
+
+
+At certain development stages a binary release is provided at [http://code.google.com/p/il2dce/downloads/list http://code.google.com/p/il2dce/downloads/list]. 
 
 
 = Details =
 
-== Install ==
+== Install IL2DCE ==
 
-== Uninstall ==
+  # Download the latest binary release at [http://code.google.com/p/il2dce/downloads/list http://code.google.com/p/il2dce/downloads/list] into a folder of your choice.
+  # Navigate to this folder and execute the downloaded file (e.g. IL2DCE-a.b.c.d.exe)
+  # Accept the license agreement (not implemented)
+  # Select the root path of your _IL-2 Sturmovik: Cliffs of Dover_ installation ($home). This path depends on the root path of your Steam installation ($steam). The root path of _IL-2 Sturmovik: Cliffs of Dover_ is always at "$steam\steamapps\common\il-2 sturmovik cliffs of dover\". For a default installation the path is
+    * "C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\" for _Windows 7 (64 Bit)_ or
+    * "C:\Program Files\Steam\steamapps\common\il-2 sturmovik cliffs of dover\" for _Windows 7 (32 Bit)_.
+  # Finish the install process.
+
+The installer places files within the "$home\AddIns" and "$home\parts\IL2DCE" folder.
+
+== Uninstall IL2DCE ==
