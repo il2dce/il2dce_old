@@ -20,6 +20,14 @@ At certain development stages a binary release is provided at [http://code.googl
     * "C:\Program Files\Steam\steamapps\common\il-2 sturmovik cliffs of dover\" for _Windows 7 (32 Bit)_.
   # Finish the install process.
 
-The installer places files within the "$home\AddIns" and "$home\parts\IL2DCE" folder.
+The installer creates files within the "$home\AddIns" and "$home\parts\IL2DCE" folder.
+
+== Uninstall IL2DCE (not implemented) ==
 
 == Uninstall IL2DCE ==
+
+  # Navigate to folder "$home\parts\IL2DCE" and execute the uninstaller (uninst.exe)
+  # Confirm the uninstall path.
+  # Finish the uninstall process.
+
+The uninstaller removes the files that were created during the install process.
