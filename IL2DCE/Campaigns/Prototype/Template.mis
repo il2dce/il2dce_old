@@ -1,4 +1,4 @@
-[PARTS]
+﻿[PARTS]
   core.100
   bob.100
 [MAIN]
@@ -212,6 +212,31 @@
 [BoB_LW_JG51_II.31_Way]
   TAKEOFF 296388.78 217347.10 0 0
 [CustomChiefs]
+[Chiefs]
+  0_Chief Vehicle.GB_Tank_Transport_Column gb 
+  1_Chief Armor.Cruiser_Mk_IVA gb /num_units 5
+  2_Chief Vehicle.GER_HAAA_Transport_Column de 
+  3_Chief Armor.Pz_IIIF de /num_units 4
+  5_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
+  4_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+[0_Chief_Road]
+  215545.77 236971.05 38.40  0 2 1.00
+  215575.22 237035.53 38.40
+[1_Chief_Road]
+  230219.38 249029.97 38.40  0 2 6.39
+  230227.08 249064.67 38.40
+[2_Chief_Road]
+  310925.91 193966.63 38.40  0 2 1.00
+  310897.53 193955.98 38.40
+[3_Chief_Road]
+  267959.22 191874.25 38.40  0 2 7.14
+  268000.94 191852.67 38.40
+[5_Chief_Road]
+  265358.19 190142.11 38.40  0 2 5.56
+  265596.53 190269.11 38.40
+[4_Chief_Road]
+  245943.64 233571.89 38.40  0 2 5.56
+  246093.13 233500.98 38.40
 [Stationary]
   Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
   Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
