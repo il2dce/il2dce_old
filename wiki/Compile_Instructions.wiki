@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This document contains instructions on how to compile IL2DCE from source. Users should follow the [Installation_Instructions Installation Instructions].
+This document contains instructions on how to compile IL2DCE from source. Users should follow the [Install_Instructions Install Instructions].
 
 
 = Details =
