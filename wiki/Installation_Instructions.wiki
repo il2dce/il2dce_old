@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This document contains instructions on how to install a binary release IL2DCE.
+This document contains instructions on how to install a binary release IL2DCE. Developers should follow the [Compile_Instructions Compile Instructions].
 
 
 = Details =
