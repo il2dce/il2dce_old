@@ -46,6 +46,7 @@
     <Compile Include="ICampaign.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="IGame.cs" />
+    <Compile Include="IGroundGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

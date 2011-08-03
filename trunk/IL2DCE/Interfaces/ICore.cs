@@ -58,6 +58,21 @@ namespace IL2DCE
             get;
         }
 
+        System.Collections.Generic.IList<IGroundGroup> GroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> RedGroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> BlueGroundGroups
+        {
+            get;
+        }
+
         int? PlayerSquadronIndex
         {
             get;

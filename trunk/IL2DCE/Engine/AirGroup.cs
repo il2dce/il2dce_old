@@ -577,31 +577,6 @@ namespace IL2DCE
                     }
                 }
 
-                //createStartInbetweenPoints(sectionFile, targetArea);
-
-                //AirGroupWaypoint lastInterceptWaypoint = null;
-                //for (int i = targetAirUnit.Waypoints.Count - 1; i >= 0; i--)
-                //{
-                //    AirGroupWaypoint waypoint = targetAirUnit.Waypoints[i];
-                //    if (waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.HUNTING || waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.RECON || waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_POINT || waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG)
-                //    {
-                //        lastInterceptWaypoint = waypoint;
-                //        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, waypoint.X, waypoint.Y, waypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(waypoint)));
-                //    }
-                //}
-                //if (lastInterceptWaypoint != null)
-                //{
-                //    for (int i = 1; i < 2; i++)
-                //    {
-                //        if (targetAirUnit.Waypoints.IndexOf(lastInterceptWaypoint) - i >= 0)
-                //        {
-                //            AirGroupWaypoint previousWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(lastInterceptWaypoint) - i];
-                //            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, previousWaypoint.X, previousWaypoint.Y, previousWaypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(previousWaypoint)));
-                //        }
-                //    }
-                //}
-
-                //createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
                 createEndWaypoints(sectionFile, landingAirport);
 
                 writeTo(sectionFile);
