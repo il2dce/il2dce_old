@@ -33,7 +33,7 @@ Vessels are configured (type, skill, cargo) and placed on the map. The vessels w
 
 === AircraftInfo.ini (not implemented) ===
 
-The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available aircraft and defines the AircraftType. The [`<Aircraft`>] section lists the available MissionTypes for the aircraft. The [`<Aircraft`>`_`<MissionType`>] section lists the available loadouts for the Aircraft for that MissionType.
+The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available aircraft and defines the AircraftType. The [`<Aircraft>`] section lists the available MissionTypes for the aircraft. The [`<Aircraft>_<MissionType>`] section lists the available loadouts for the Aircraft for that MissionType.
 
 Example:
 {{{
