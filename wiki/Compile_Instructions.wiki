@@ -8,6 +8,9 @@ This document contains instructions on how to compile IL2DCE from source. Users 
 
 = Details =
 
+The source of the current development path is available within the trunk. The sources for releases are available within as tags. Parallel development paths are available as branches.
+
+
 == Software requirements ==
 
 === IL-2 Sturmovik: Cliffs of Dover ===
