@@ -30,3 +30,24 @@ Vessels are configured (type, skill, cargo) and placed on the map. The vessels w
 
 
 == Campaign configuration file (not implemented) ==
+
+=== Aircrafts.ini (not implemented) ===
+
+The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available aircraft and defines the AircraftType. The [`<Aircraft`>] section lists the available MissionTypes for the aircraft. The [`<Aircraft`>_`<MissionType`>] section lists the available loadouts for the Aircraft for that MissionType.
+
+Example:
+{{{
+[Aircrafts]
+  Aircraft.BlenheimMkIV /Bomber
+  ...
+[Aircraft.BlenheimMkIV]
+  MissionType0 RECON
+  MissionType1 GROUND_ATTACK_AREA
+  ...
+[Aircraft.BlenheimMkIV_RECON]
+  loadout0 Weapons 1 1 0 0 0
+[Aircraft.BlenheimMkIV_GROUND_ATTACK_AREA]
+  loadout0 Weapons 1 1 1 0 0
+  loadout1 Weapons 1 1 2 0 0
+  ...
+}}}
