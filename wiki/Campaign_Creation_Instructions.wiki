@@ -52,4 +52,4 @@ Example:
   ...
 }}}
 
-There is a global "AircraftInfo.ini" file. A campaign can provide a local "AircraftInfo.ini" file where sections of the global file can be overwritten.
+There is a global "AircraftInfo.ini" file. A campaign can provide a local "AircraftInfo.ini" file where the information of the global file can be overwritten for selected aircraft.
