@@ -31,9 +31,9 @@ Vessels are configured (type, skill, cargo) and placed on the map. The vessels w
 
 == Campaign configuration file (not implemented) ==
 
-=== Aircrafts.ini (not implemented) ===
+=== AircraftInfo.ini (not implemented) ===
 
-The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available aircraft and defines the AircraftType. The [`<Aircraft`>] section lists the available MissionTypes for the aircraft. The [`<Aircraft`>_`<MissionType`>] section lists the available loadouts for the Aircraft for that MissionType.
+The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available aircraft and defines the AircraftType. The [`<Aircraft`>] section lists the available MissionTypes for the aircraft. The [`<Aircraft`>`_`<MissionType`>] section lists the available loadouts for the Aircraft for that MissionType.
 
 Example:
 {{{
@@ -51,3 +51,5 @@ Example:
   loadout1 Weapons 1 1 2 0 0
   ...
 }}}
+
+There is a global "AircraftInfo.ini" file. A campaign can provide a local "AircraftInfo.ini" file where sections of the global file can be overwritten.
