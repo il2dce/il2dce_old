@@ -34,11 +34,39 @@ See the [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html T
 
 == Compile ==
 
-=== Debug ===
+After a clean checkout the files "GlobalAssemblyInfo.cs" and "IL2DCEInst.nsi" are marked to be missing. As these files contain the highest revision number they cannot added to the SVN repository. The files are created during the first compilation by [#SubWCRev.exe SubWCRev.exe] based on "GlobalAssemblyInfo.template" and "IL2DCEInst.template". This compilation will fail because the files are not available at the beginning. Therefore after a clean checkout the solution has to be compiled two times.
+
+
+=== Debug configuration ===
+
+==== Output path ====
+
+The AddIn configuration files are copied in:
+
+  $home\AddIns\
+
+The assemblies are created in:
+
+  $home\parts\IL2DCE\
+
 
 ==== Run ====
 
-=== Release ===
+To directly execute _IL-2 Sturmovik: Cliffs of Dover_ from Visual Studio the Game project is configured to execute the "$home\Launcher.exe" if the user starts debugging of the solution (Shortcut: F5). Therefore the Game project has to be set as startup project.
+
+
+=== Release configuration ===
+
+==== Output path ====
+
+The AddIn configuration files are copied in:
+
+  $solution\Release\AddIns\
+
+The assemblies are created in:
+
+  $solution\Release\parts\IL2DCE\
+
 
 ==== Version number ====
 
@@ -48,12 +76,13 @@ The version number uses the format:
 
 The major number is increased when fundamental changes were made compared to the previous version. The minor number is increased when new features were added compared to the previous version. The build number is increased when only bugfixes were applied. The revision number is the highest revision number of the repository of the source code.
 
-With exception of the revision number they have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe].
+With exception of the revision number they have to be increased by the developer within the "GlobalAssemblyInfo.template" file that is included in the Game project. The revision number is updated by [#SubWCRev.exe SubWCRev.exe].
+
 
 ==== Installer ===
 
-A script file for the [http://nsis.sourceforge.net/ Nullsoft Scriptable Install System (NSIS)] is provided to create a installer and uninstaller. The script is copied to the $release folder. There it has to be executed by the developer. The installer file has to naming convention:
+The "IL2DCEInst.nsi" script file for the [http://nsis.sourceforge.net/ Nullsoft Scriptable Install System (NSIS)] is provided to create a installer. If the solution is build in release configuration the script is copied to the folder "$solution\Release" as a post-build event. There it has to be executed by the developer. The created installer has to naming convention:
 
   IL2DCE-<major`>.`<minor`>.`<build`>.`<revision`[M]`>.exe
 
-With exception of the revision number the version numbers have to be increased by the developer. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to suffix "M" if there are local changes in the working directory that are not yet commited.
+With exception of the revision number the version numbers have to be increased by the developer within the "IL2DCEInst.template" file that is included in the Game project. The revision number is updated by [#SubWCRev.exe SubWCRev.exe]. Note that the revision number has to suffix "M" if there are local changes in the working directory that are not yet commited.
