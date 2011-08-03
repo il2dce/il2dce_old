@@ -38,18 +38,25 @@ The "AircraftInfo.ini" file has the [Aircrafts] section that lists all available
 Example:
 {{{
 [Aircrafts]
-  Aircraft.BlenheimMkIV /Bomber
+  Aircraft.BlenheimMkIV
   ...
 [Aircraft.BlenheimMkIV]
-  MissionType0 RECON
-  MissionType1 GROUND_ATTACK_AREA
+  type Bomber
+  missionType0 RECON
+  missionType1 GROUND_ATTACK_AREA
   ...
 [Aircraft.BlenheimMkIV_RECON]
+  altitudeMin 2000.0
+  altitudeMax 9000.0
   loadout0 Weapons 1 1 0 0 0
 [Aircraft.BlenheimMkIV_GROUND_ATTACK_AREA]
+  altitudeMin 500.0
+  altitudeMax 6000.0
   loadout0 Weapons 1 1 1 0 0
   loadout1 Weapons 1 1 2 0 0
   ...
+  fuel0 100
+  fuel1 100
 }}}
 
 There is a global "AircraftInfo.ini" file. A campaign can provide a local "AircraftInfo.ini" file where the information of the global file can be overwritten for selected aircraft.
