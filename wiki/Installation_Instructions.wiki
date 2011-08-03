@@ -5,10 +5,11 @@
 
 This document contains instructions on how to install a binary release IL2DCE.
 
-At certain development stages a binary release is provided at [http://code.google.com/p/il2dce/downloads/list http://code.google.com/p/il2dce/downloads/list]. 
-
 
 = Details =
+
+At certain development stages a binary release is provided at [http://code.google.com/p/il2dce/downloads/list http://code.google.com/p/il2dce/downloads/list]. 
+
 
 == Install IL2DCE ==
 
