@@ -146,6 +146,40 @@ namespace IL2DCE
             private List<AirGroup> redAirGroups = new List<AirGroup>();
             private List<AirGroup> blueAirGroups = new List<AirGroup>();
 
+            public System.Collections.Generic.IList<IGroundGroup> GroundGroups
+            {
+                get
+                {
+                    List<IGroundGroup> groundGroups = new List<IGroundGroup>();
+                    groundGroups.AddRange(redGroundGroups);
+                    groundGroups.AddRange(blueGroundGroups);
+                    return groundGroups;
+                }
+            }
+
+            public System.Collections.Generic.IList<IGroundGroup> RedGroundGroups
+            {
+                get
+                {
+                    List<IGroundGroup> groundGroups = new List<IGroundGroup>();
+                    groundGroups.AddRange(redGroundGroups);
+                    return groundGroups;
+                }
+            }
+
+            public System.Collections.Generic.IList<IGroundGroup> BlueGroundGroups
+            {
+                get
+                {
+                    List<IGroundGroup> groundGroups = new List<IGroundGroup>();
+                    groundGroups.AddRange(blueGroundGroups);
+                    return groundGroups;
+                }
+            }
+
+            private List<GroundGroup> redGroundGroups = new List<GroundGroup>();
+            private List<GroundGroup> blueGroundGroups = new List<GroundGroup>();
+
             public int? PlayerSquadronIndex
             {
                 get
@@ -220,6 +254,8 @@ namespace IL2DCE
                 blueMarkers.Clear();
                 redAirGroups.Clear();
                 blueAirGroups.Clear();
+                redGroundGroups.Clear();
+                blueGroundGroups.Clear();
                 playerSquadronIndex = null;
                 playerFlightIndex = null;
                 playerAircraftIndex = null;
@@ -302,6 +338,25 @@ namespace IL2DCE
                     }
                 }
 
+
+                for (int i = 0; i < templateFile.lines("Chiefs"); i++)
+                {
+                    string key;
+                    string value;
+                    templateFile.get("Chiefs", i, out key, out value);
+
+                    GroundGroup groundGroup = new GroundGroup(templateFile, key);
+
+                    if (groundGroup.Army == 1)
+                    {
+                        redGroundGroups.Add(groundGroup);
+                    }
+                    else if (groundGroup.Army == 2)
+                    {
+                        blueGroundGroups.Add(groundGroup);
+                    }
+                }
+
                 if (templateFile.exist("MAIN", "player"))
                 {
                     string playerAircraftId = templateFile.get("MAIN", "player");
@@ -369,6 +424,16 @@ namespace IL2DCE
                 }
                 missionFile.delete("AirGroups");
 
+                // Delete all ground groups from the template file.
+                for (int i = 0; i < missionFile.lines("Chiefs"); i++)
+                {
+                    string key;
+                    string value;
+                    missionFile.get("Chiefs", i, out key, out value);
+                    missionFile.delete(key + "_Road");
+                }
+                missionFile.delete("Chiefs");
+
                 if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
                 {
                     if (missionFile.exist("MAIN", "player"))
@@ -397,6 +462,39 @@ namespace IL2DCE
                     createRandomFlight(missionFile, randomAirGroup);
                 }
 
+
+                foreach (GroundGroup redGroundGroup in redGroundGroups)
+                {
+                    List<Point3d> friendlyMarkers = redMarkers;
+                    if (friendlyMarkers.Count > 0)
+                    {
+                        int markerIndex = rand.Next(friendlyMarkers.Count);
+                        Point3d marker = friendlyMarkers[markerIndex];
+                        Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+
+                        GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
+                        redGroundGroup.Waypoints.Add(waypoint);
+
+                        redGroundGroup.writeTo(missionFile);
+                    }
+                }
+
+                foreach (GroundGroup blueGroundGroup in blueGroundGroups)
+                {
+                    List<Point3d> friendlyMarkers = blueMarkers;
+                    if (friendlyMarkers.Count > 0)
+                    {
+                        int markerIndex = rand.Next(friendlyMarkers.Count);
+                        Point3d marker = friendlyMarkers[markerIndex];
+                        Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+
+                        GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
+                        blueGroundGroup.Waypoints.Add(waypoint);
+
+                        blueGroundGroup.writeTo(missionFile);
+                    }
+                }
+                
                 return missionFile;
             }
 
