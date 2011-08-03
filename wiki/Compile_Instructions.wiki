@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Add your content here.
+This document contains instructions on how to compile IL2DCE from source.
 
 
 = Details =
@@ -25,12 +25,27 @@ See [#Checkout Checkout] for more details.
 
 === SubWCRev.exe ===
 
-IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the SubWCRev.exe is used. This Windows console application is part of a TortoiseSVN installation. IL2DCE projects call SubWCRev.exe without a specified path. This is possible because TortoiseSVN adds its binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") to the environment variable "path". 
+IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the "SubWCRev.exe" is used. This Windows console application is part of a _TortoiseSVN_ installation. IL2DCE projects call "SubWCRev.exe" without a specified path. This is possible because _TortoiseSVN_ adds its binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") to the environment variable "path". 
 
 See the [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN Documentation] for more details.
 
 
 == Checkout ==
+
+Because of the dependencies to [#IL-2_Sturmovik:_Cliffs_of_Dover IL-2 Sturmovik: Cliffs of Dover] the solution has to be placed relative to the "$home" folder. The "$solution" folder that contains the "IL2DCE.sln" has to be at:
+
+  $home\parts\IL2DCE\`<folder`>\IL2DCE\
+
+Note that `<folder`> can be a folder of any name. It is recommended to use this folder to indicate the working copy of the trunk or a specific tag or branch.
+
+To checkout the trunk you have to checkout:
+
+  https://il2dce.googlecode.com/svn/trunk/ to   $home\parts\IL2DCE\trunk\
+
+So for the default installation "IL2DCE.sln" has to be located at:
+
+ C:\Program Files (x86)\Steam\SteamApps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\trunk\IL2DCE.sln
+
 
 == Compile ==
 
