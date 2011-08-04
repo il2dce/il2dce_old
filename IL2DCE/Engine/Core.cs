@@ -465,33 +465,39 @@ namespace IL2DCE
 
                 foreach (GroundGroup redGroundGroup in redGroundGroups)
                 {
-                    List<Point3d> friendlyMarkers = redMarkers;
-                    if (friendlyMarkers.Count > 0)
+                    if (redGroundGroup.Type != GroundGroup.EType.Ship)
                     {
-                        int markerIndex = rand.Next(friendlyMarkers.Count);
-                        Point3d marker = friendlyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+                        List<Point3d> friendlyMarkers = redMarkers;
+                        if (friendlyMarkers.Count > 0)
+                        {
+                            int markerIndex = rand.Next(friendlyMarkers.Count);
+                            Point3d marker = friendlyMarkers[markerIndex];
+                            Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
 
-                        GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
-                        redGroundGroup.Waypoints.Add(waypoint);
+                            GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
+                            redGroundGroup.Waypoints.Add(waypoint);
 
-                        redGroundGroup.writeTo(missionFile);
+                            redGroundGroup.writeTo(missionFile);
+                        }
                     }
                 }
 
                 foreach (GroundGroup blueGroundGroup in blueGroundGroups)
                 {
-                    List<Point3d> friendlyMarkers = blueMarkers;
-                    if (friendlyMarkers.Count > 0)
+                    if (blueGroundGroup.Type != GroundGroup.EType.Ship)
                     {
-                        int markerIndex = rand.Next(friendlyMarkers.Count);
-                        Point3d marker = friendlyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+                        List<Point3d> friendlyMarkers = blueMarkers;
+                        if (friendlyMarkers.Count > 0)
+                        {
+                            int markerIndex = rand.Next(friendlyMarkers.Count);
+                            Point3d marker = friendlyMarkers[markerIndex];
+                            Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
 
-                        GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
-                        blueGroundGroup.Waypoints.Add(waypoint);
+                            GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
+                            blueGroundGroup.Waypoints.Add(waypoint);
 
-                        blueGroundGroup.writeTo(missionFile);
+                            blueGroundGroup.writeTo(missionFile);
+                        }
                     }
                 }
                 

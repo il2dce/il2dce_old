@@ -53,12 +53,22 @@ namespace IL2DCE
                 sectionFile.get(groundGroupId + "_Road", line, out key, out value);
 
                 string[] valueList = value.Split(new char[] { ' ' });
-                if (valueList != null && valueList.Length >= 3)
+                if (valueList != null && valueList.Length >= 5)
                 {
-                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
-                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
-                    double.TryParse(valueList[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
-                    // double.TryParse(valueList[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out V);
+                    double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
+                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
+                    double v;
+                    if (double.TryParse(valueList[4], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out v))
+                    {
+                        V = v;
+                    }
+                }
+                else if (valueList != null && valueList.Length == 2)
+                {
+                    double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
+                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
                 }
             }
 
@@ -80,7 +90,18 @@ namespace IL2DCE
 
             public double Z;
 
-            public double V;
+            public double? V
+            {
+                get
+                {
+                    return _v;
+                }
+                set
+                {
+                    _v = value;
+                }
+            }
+            public double? _v;
 
             #endregion
         }
