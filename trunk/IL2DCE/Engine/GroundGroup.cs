@@ -166,7 +166,11 @@ namespace IL2DCE
                 {
                     if(Waypoints.IndexOf(waypoint) != Waypoints.Count - 1)
                     {
-                        sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        if (waypoint.V.HasValue)
+                        {
+                            sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + waypoint.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        }
+                        // TODO: Use the default V.
                     }
                     else
                     {
