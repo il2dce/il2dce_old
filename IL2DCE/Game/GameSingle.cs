@@ -26,7 +26,7 @@ namespace IL2DCE
 {
     namespace Game
     {
-        public class GameSingle : maddox.game.GameSingleDef, IGame
+        public class GameSingle : maddox.game.GameSingleDef, IGameSingle
         {
             public GameSingle(GameSingleIterface game)
                 : base(game)
@@ -68,14 +68,6 @@ namespace IL2DCE
                 }
             }
             private ICore core;
-
-            public GameIterface GameInterface
-            {
-                get
-                {
-                    return gameInterface;
-                }
-            }
 
             public List<ICampaign> Campaigns
             {

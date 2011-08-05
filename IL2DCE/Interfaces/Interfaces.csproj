@@ -46,6 +46,8 @@
     <Compile Include="ICampaign.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="IGame.cs" />
+    <Compile Include="IGameServer.cs" />
+    <Compile Include="IGameSingle.cs" />
     <Compile Include="IGroundGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +69,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="WSteam, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8b6839725e48404f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\core\WSteam.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

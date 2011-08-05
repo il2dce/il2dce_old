@@ -22,19 +22,22 @@ using maddox.game;
 using maddox.game.play;
 using maddox.game.page;
 
+using maddox.steam;
+
 namespace IL2DCE
 {
     namespace Game
     {
-        public class GameServer : maddox.game.GameServerDef, IGame
+        public class GameServer : maddox.game.GameServerDef, IGameServer
         {
             public GameServer(GameServerIterface game, bool dedicated)
                 : base(game, dedicated)
             {
                 ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+                                
+                _server = new WServer();
 
-                core = new Engine.Core(this, confFile);
-
+                _core = new Engine.Core(this, confFile);
                 if (confFile.exist("MAIN", "campaignsFolder"))
                 {
                     string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
@@ -60,45 +63,46 @@ namespace IL2DCE
                 return new Pages.ServerOptionsPage();
             }
 
+            public WServer Server
+            {
+                get
+                {
+                    return _server;
+                }
+            }
+            private WServer _server;
+
             public ICore Core
             {
                 get
                 {
-                    return core;
+                    return _core;
                 }
             }
-            private ICore core;
-
-            public GameIterface GameInterface
-            {
-                get
-                {
-                    return gameInterface;
-                }
-            }
+            private ICore _core;
 
             public List<ICampaign> Campaigns
             {
                 get
                 {
-                    return campaigns;
+                    return _campaigns;
                 }
             }
-            private List<ICampaign> campaigns = new List<ICampaign>();
+            private List<ICampaign> _campaigns = new List<ICampaign>();
 
             public ICampaign CurrentCampaign
             {
                 get
                 {
-                    return currentCampaign;
+                    return _currentCampaign;
                 }
                 set
                 {
-                    currentCampaign = value as Campaign;
+                    _currentCampaign = value as Campaign;
                 }
 
             }
-            private Campaign currentCampaign;
+            private Campaign _currentCampaign;
         }
     }
 }
