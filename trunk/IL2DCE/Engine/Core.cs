@@ -31,15 +31,11 @@ namespace IL2DCE
         //[Serializable]
         public class Core : ICore
         {
-            private Random rand = new Random();
+            public Random rand = new Random();
 
             private List<AirGroup> availableAirGroups = new List<AirGroup>();
 
             private int randomSpawn = 0;
-
-            private List<Point3d> redMarkers = new List<Point3d>();
-            private List<Point3d> blueMarkers = new List<Point3d>();
-            private List<Point3d> neutralMarkers = new List<Point3d>();
 
             private List<Radar> redRadars = new List<Radar>();
             private List<Radar> blueRadars = new List<Radar>();
@@ -111,6 +107,25 @@ namespace IL2DCE
                 }
             }
             private int _debug = 0;
+
+            public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
+            {
+                get
+                {
+                    return redFrontMarkers;
+                }
+            }
+
+            public System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
+            {
+                get
+                {
+                    return blueFrontMarkers;
+                }
+            }
+            private List<Point3d> redFrontMarkers = new List<Point3d>();
+            private List<Point3d> blueFrontMarkers = new List<Point3d>();
+            private List<Point3d> neutralFrontMarkers = new List<Point3d>();
 
             public System.Collections.Generic.IList<IAirGroup> AirGroups
             {
@@ -250,8 +265,8 @@ namespace IL2DCE
             {
                 redRadars.Clear();
                 blueRadars.Clear();
-                redMarkers.Clear();
-                blueMarkers.Clear();
+                redFrontMarkers.Clear();
+                blueFrontMarkers.Clear();
                 redAirGroups.Clear();
                 blueAirGroups.Clear();
                 redGroundGroups.Clear();
@@ -304,15 +319,15 @@ namespace IL2DCE
                         {
                             if (army == 0)
                             {
-                                neutralMarkers.Add(new Point3d(x, y, 0.0));
+                                neutralFrontMarkers.Add(new Point3d(x, y, 0.0));
                             }
                             else if (army == 1)
                             {
-                                redMarkers.Add(new Point3d(x, y, 0.0));
+                                redFrontMarkers.Add(new Point3d(x, y, 0.0));
                             }
                             else if (army == 2)
                             {
-                                blueMarkers.Add(new Point3d(x, y, 0.0));
+                                blueFrontMarkers.Add(new Point3d(x, y, 0.0));
                             }
                         }
                     }
@@ -462,46 +477,74 @@ namespace IL2DCE
                     createRandomFlight(missionFile, randomAirGroup);
                 }
 
+                return missionFile;
+            }
+
+            public ISectionFile PostGenerate()
+            {
+                ISectionFile groundGroupsFile = Game.gpCreateSectionFile();
 
                 foreach (GroundGroup redGroundGroup in redGroundGroups)
                 {
-                    if (redGroundGroup.Type != GroundGroup.EType.Ship)
+                    if (redGroundGroup.Type != EGroundGroupType.Ship)
                     {
-                        List<Point3d> friendlyMarkers = redMarkers;
+                        List<Point3d> friendlyMarkers = redFrontMarkers;
                         if (friendlyMarkers.Count > 0)
                         {
                             int markerIndex = rand.Next(friendlyMarkers.Count);
-                            Point3d marker = friendlyMarkers[markerIndex];
-                            Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+                            Point2d start = new Point2d(redGroundGroup.Position.x, redGroundGroup.Position.y);
+                            Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
 
-                            GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
-                            redGroundGroup.Waypoints.Add(waypoint);
+                            IRecalcPathParams pathParams = Game.gpFindPath(start, 1000000.0, end, 1000000.0, PathType.GROUND, 1);
 
-                            redGroundGroup.writeTo(missionFile);
+                            if (pathParams != null && pathParams.Path != null && pathParams.Path.Length > 0)
+                            {
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "pathParams" , null);
+                                redGroundGroup.Waypoints.Clear();
+                                foreach(maddox.game.world.AiWayPoint aiWaypoint in pathParams.Path)
+                                {
+                                    Point3d point = new Point3d(aiWaypoint.P.x, aiWaypoint.P.y, 38.40);
+                                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(point, 5.0);
+                                    redGroundGroup.Waypoints.Add(waypoint);
+                                }
+
+                                redGroundGroup.writeTo(groundGroupsFile);
+                            }
                         }
                     }
                 }
 
                 foreach (GroundGroup blueGroundGroup in blueGroundGroups)
                 {
-                    if (blueGroundGroup.Type != GroundGroup.EType.Ship)
+                    if (blueGroundGroup.Type != EGroundGroupType.Ship)
                     {
-                        List<Point3d> friendlyMarkers = blueMarkers;
+                        List<Point3d> friendlyMarkers = blueFrontMarkers;
                         if (friendlyMarkers.Count > 0)
                         {
                             int markerIndex = rand.Next(friendlyMarkers.Count);
-                            Point3d marker = friendlyMarkers[markerIndex];
-                            Point3d targetArea = new Point3d(marker.x, marker.y, 38.40);
+                            Point2d start = new Point2d(blueGroundGroup.Position.x, blueGroundGroup.Position.y);
+                            Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
 
-                            GroundGroupWaypoint waypoint = new GroundGroupWaypoint(targetArea, 5.0);
-                            blueGroundGroup.Waypoints.Add(waypoint);
+                            IRecalcPathParams pathParams = Game.gpFindPath(start, 1000000.0, end, 1000000.0, PathType.GROUND, 2);
 
-                            blueGroundGroup.writeTo(missionFile);
+                            if (pathParams != null && pathParams.Path != null && pathParams.Path.Length > 0)
+                            {
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "pathParams", null);
+                                blueGroundGroup.Waypoints.Clear();
+                                foreach (maddox.game.world.AiWayPoint aiWaypoint in pathParams.Path)
+                                {
+                                    Point3d point = new Point3d(aiWaypoint.P.x, aiWaypoint.P.y, 38.40);
+                                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(point, 5.0);
+                                    blueGroundGroup.Waypoints.Add(waypoint);
+                                }
+
+                                blueGroundGroup.writeTo(groundGroupsFile);
+                            }
                         }
                     }
                 }
-                
-                return missionFile;
+
+                return groundGroupsFile;
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)
@@ -540,11 +583,11 @@ namespace IL2DCE
             {
                 if (armyIndex == 1)
                 {
-                    return redMarkers;
+                    return redFrontMarkers;
                 }
                 else if (armyIndex == 2)
                 {
-                    return blueMarkers;
+                    return blueFrontMarkers;
                 }
                 else
                 {
@@ -556,11 +599,11 @@ namespace IL2DCE
             {
                 if (armyIndex == 1)
                 {
-                    return blueMarkers;
+                    return blueFrontMarkers;
                 }
                 else if (armyIndex == 2)
                 {
-                    return redMarkers;
+                    return redFrontMarkers;
                 }
                 else
                 {
@@ -568,13 +611,13 @@ namespace IL2DCE
                 }
             }
 
-            public double createRandomAltitude(MissionType missionType)
+            public double createRandomAltitude(EMissionType missionType)
             {
                 // TODO: Altitude range depends on mission type.
                 return (double)rand.Next(500, 6000);
             }
 
-            public AirGroup getRandomInterceptedFlight(AirGroup interceptingAirUnit, MissionType missionType)
+            public AirGroup getRandomInterceptedFlight(AirGroup interceptingAirUnit, EMissionType missionType)
             {
                 List<AirGroup> airGroups = new List<AirGroup>();
                 foreach (AirGroup airGroup in availableAirGroups)
@@ -623,7 +666,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex == escortingAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.GROUND_ATTACK_AREA))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
                         {
                             airGroups.Add(airGroup);
 
@@ -665,7 +708,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex == targetAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.ESCORT))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(EMissionType.ESCORT))
                         {
                             airGroups.Add(airGroup);
 
@@ -707,7 +750,7 @@ namespace IL2DCE
                 {
                     if (airGroup.ArmyIndex != targetAirUnit.ArmyIndex)
                     {
-                        if (airGroup.AircraftInfo.MissionTypes.Contains(MissionType.INTERCEPT))
+                        if (airGroup.AircraftInfo.MissionTypes.Contains(EMissionType.INTERCEPT))
                         {
                             airGroups.Add(airGroup);
 
@@ -743,14 +786,14 @@ namespace IL2DCE
 
             public void createRandomFlight(ISectionFile sectionFile, AirGroup airGroup)
             {
-                List<MissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
+                List<EMissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
                 if (missionTypes != null && missionTypes.Count > 0)
                 {
                     int randomMissionTypeIndex = rand.Next(missionTypes.Count);
-                    MissionType randomMissionType = missionTypes[randomMissionTypeIndex];
+                    EMissionType randomMissionType = missionTypes[randomMissionTypeIndex];
 
                     // Bomber mission types
-                    if (randomMissionType == MissionType.RECON_AREA)
+                    if (randomMissionType == EMissionType.RECON_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -765,7 +808,7 @@ namespace IL2DCE
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                         }
                     }
-                    else if (randomMissionType == MissionType.GROUND_ATTACK_AREA)
+                    else if (randomMissionType == EMissionType.GROUND_ATTACK_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -809,7 +852,7 @@ namespace IL2DCE
                     //        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                     //    }
                     //}
-                    else if (randomMissionType == MissionType.OFFENSIVE_PATROL_AREA)
+                    else if (randomMissionType == EMissionType.OFFENSIVE_PATROL_AREA)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -824,7 +867,7 @@ namespace IL2DCE
                             createRandomInterceptFlight(sectionFile, airGroup, targetArea);
                         }
                     }
-                    else if (randomMissionType == MissionType.ESCORT)
+                    else if (randomMissionType == EMissionType.ESCORT)
                     {
                         List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
                         if (enemyMarkers.Count > 0)
@@ -857,7 +900,7 @@ namespace IL2DCE
                             }
                         }
                     }
-                    else if (randomMissionType == MissionType.INTERCEPT)
+                    else if (randomMissionType == EMissionType.INTERCEPT)
                     {
                         List<Point3d> friendlyMarkers = getFriendlyMarkers(airGroup.ArmyIndex);
                         if (friendlyMarkers.Count > 0)
@@ -866,24 +909,24 @@ namespace IL2DCE
                             Point3d marker = friendlyMarkers[markerIndex];
                             Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
 
-                            List<MissionType> subMissionTypes = new List<MissionType>() { MissionType.OFFENSIVE_PATROL_AREA, MissionType.RECON_AREA, MissionType.GROUND_ATTACK_AREA };
+                            List<EMissionType> subMissionTypes = new List<EMissionType>() { EMissionType.OFFENSIVE_PATROL_AREA, EMissionType.RECON_AREA, EMissionType.GROUND_ATTACK_AREA };
                             int randomSubMissionTypeIndex = rand.Next(subMissionTypes.Count);
-                            MissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
+                            EMissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
 
                             AirGroup interceptedAirGroup = getRandomInterceptedFlight(airGroup, randomSubMissionType);
                             if (interceptedAirGroup != null)
                             {
                                 availableAirGroups.Remove(interceptedAirGroup);
 
-                                if (randomSubMissionType == MissionType.OFFENSIVE_PATROL_AREA)
+                                if (randomSubMissionType == EMissionType.OFFENSIVE_PATROL_AREA)
                                 {
                                     interceptedAirGroup.CreateHuntingFlight(sectionFile, targetArea);
                                 }
-                                else if (randomSubMissionType == MissionType.RECON_AREA)
+                                else if (randomSubMissionType == EMissionType.RECON_AREA)
                                 {
                                     interceptedAirGroup.CreateReconFlight(sectionFile, targetArea);
                                 }
-                                else if (randomSubMissionType == MissionType.GROUND_ATTACK_AREA)
+                                else if (randomSubMissionType == EMissionType.GROUND_ATTACK_AREA)
                                 {
                                     AirGroup escortAirGroup = getRandomEscortFlight(interceptedAirGroup);
                                     if (escortAirGroup != null)

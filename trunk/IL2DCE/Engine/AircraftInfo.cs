@@ -48,45 +48,45 @@ namespace IL2DCE
                 }
             }
 
-            public List<MissionType> MissionTypes
+            public List<EMissionType> MissionTypes
             {
                 get
                 {
-                    List<MissionType> missionTypes = new List<MissionType>();
+                    List<EMissionType> missionTypes = new List<EMissionType>();
 
                     if (reconAircrafts.Contains(Aircraft))
                     {
-                        if (!missionTypes.Contains(MissionType.RECON_AREA))
+                        if (!missionTypes.Contains(EMissionType.RECON_AREA))
                         {
-                            missionTypes.Add(MissionType.RECON_AREA);
+                            missionTypes.Add(EMissionType.RECON_AREA);
                         }
                     }
 
                     if (bomberAircrafts.Contains(Aircraft))
                     {
-                        if (!missionTypes.Contains(MissionType.GROUND_ATTACK_AREA))
+                        if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
                         {
-                            missionTypes.Add(MissionType.GROUND_ATTACK_AREA);
+                            missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
                         }
                     }
 
                     if (fighterAircrafts.Contains(Aircraft))
                     {
-                        if (!missionTypes.Contains(MissionType.OFFENSIVE_PATROL_AREA))
+                        if (!missionTypes.Contains(EMissionType.OFFENSIVE_PATROL_AREA))
                         {
-                            missionTypes.Add(MissionType.OFFENSIVE_PATROL_AREA);
+                            missionTypes.Add(EMissionType.OFFENSIVE_PATROL_AREA);
                         }
                         //if (!missionTypes.Contains(MissionType.DEFENSIVE_PATROL_AREA))
                         //{
                         //    missionTypes.Add(MissionType.DEFENSIVE_PATROL_AREA);
                         //}
-                        if (!missionTypes.Contains(MissionType.ESCORT))
+                        if (!missionTypes.Contains(EMissionType.ESCORT))
                         {
-                            missionTypes.Add(MissionType.ESCORT);
+                            missionTypes.Add(EMissionType.ESCORT);
                         }
-                        if (!missionTypes.Contains(MissionType.INTERCEPT))
+                        if (!missionTypes.Contains(EMissionType.INTERCEPT))
                         {
-                            missionTypes.Add(MissionType.INTERCEPT);
+                            missionTypes.Add(EMissionType.INTERCEPT);
                         }
                     }
 

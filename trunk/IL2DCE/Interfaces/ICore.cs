@@ -22,14 +22,16 @@ namespace IL2DCE
 {
     public interface ICore
     {
-        IGame Game
-        {
-            get;
-        }
+        //IGame Game
+        //{
+        //    get;
+        //}
 
         void Init(string templateFileName);
 
         maddox.game.ISectionFile Generate(string missionFileName);
+
+        maddox.game.ISectionFile PostGenerate();
 
         bool SpawnParked
         {
@@ -43,6 +45,16 @@ namespace IL2DCE
             set;
         }
 
+        System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
+        {
+            get;
+        }
+        
         System.Collections.Generic.IList<IAirGroup> AirGroups
         {
             get;

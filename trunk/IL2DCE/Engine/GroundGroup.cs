@@ -28,19 +28,6 @@ namespace IL2DCE
     {
         public class GroundGroup : IGroundGroup
         {
-            public enum ECountry
-            {
-                gb,
-                de,
-            }
-
-            public enum EType
-            {
-                Vehicle,
-                Armor,
-                Ship,
-            }
-
             public GroundGroup(ISectionFile sectionFile, string groundGroupId)
             {
                 _id = groundGroupId;
@@ -52,7 +39,7 @@ namespace IL2DCE
                 value = value.Remove(0, Class.Length + 1);
 
                 // Army
-                Country = (ECountry)Enum.Parse(typeof(ECountry), value.Substring(0, 2));
+                Country = (EGroundGroupCountry)Enum.Parse(typeof(EGroundGroupCountry), value.Substring(0, 2));
                 value = value.Remove(0, 2);
 
                 // Options
@@ -72,22 +59,22 @@ namespace IL2DCE
                 }
             }
 
-            public EType Type
+            public EGroundGroupType Type
             {
                 get
                 {
                     // Type
                     if (Class.StartsWith("Vehicle"))
                     {
-                        return EType.Vehicle;
+                        return EGroundGroupType.Vehicle;
                     }
                     else if (Class.StartsWith("Armor"))
                     {
-                        return EType.Armor;
+                        return EGroundGroupType.Armor;
                     }
                     else if (Class.StartsWith("Ship"))
                     {
-                        return EType.Ship;
+                        return EGroundGroupType.Ship;
                     }
                     else
                     {
@@ -124,7 +111,7 @@ namespace IL2DCE
                 set;
             }
 
-            public ECountry Country
+            public EGroundGroupCountry Country
             {
                 get;
                 set;
@@ -134,11 +121,11 @@ namespace IL2DCE
             {
                 get
                 {
-                    if (Country == ECountry.gb)
+                    if (Country == EGroundGroupCountry.gb)
                     {
                         return 1;
                     }
-                    else if (Country == ECountry.de)
+                    else if (Country == EGroundGroupCountry.de)
                     {
                         return 2;
                     }

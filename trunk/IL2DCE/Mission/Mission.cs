@@ -28,34 +28,7 @@ namespace IL2DCE
     {
         public class Mission : AMission
         {
-            public override void OnMissionLoaded(int missionNumber)
-            {
-                base.OnMissionLoaded(missionNumber);
-
-                //if(GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                //{
-                //    foreach (int armyIndex in GamePlay.gpArmies())
-                //    {
-                //        if (GamePlay.gpGroundGroups(armyIndex) != null && GamePlay.gpGroundGroups(armyIndex).Length > 0)
-                //        {
-                //            foreach (AiGroundGroup aiGroundGroup in GamePlay.gpGroundGroups(armyIndex))
-                //            {
-                //                if (aiGroundGroup.GetWay() != null && aiGroundGroup.GetWay().Length > 0)
-                //                {
-                //                    Point3d startPoint;
-                //                    Point3d endPoint;
-                //                    aiGroundGroup.GetPos(out startPoint);
-                //                    AiWayPoint waypoint = aiGroundGroup.GetWay()[aiGroundGroup.GetWay().Length - 1];
-                //                    endPoint = waypoint.P;
-
-                //                    IRecalcPathParams pathParams = GamePlay.gpFindPath(new Point2d(startPoint.x, startPoint.y), 1.0, new Point2d(endPoint.x, endPoint.y), 1.0, PathType.GROUND, armyIndex);
-                //                    aiGroundGroup.SetWay(pathParams.Path);
-                //                }
-                //            }
-                //        }
-                //    }
-                //}                
-            }
+            
         }
     }
 }
