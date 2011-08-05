@@ -73,6 +73,9 @@ namespace IL2DCE
 
             private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
             {
+                //maddox.steam.WServer server = new maddox.steam.WServer();
+                //server.init(false, 1, 1, 1, false, "hello");
+
                 Game.gameInterface.PageChange(new SelectCampaignPage(), null);
             }
         }

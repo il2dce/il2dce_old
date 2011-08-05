@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public enum MissionType
+    public enum EMissionType
     {
         RECON_AREA,
         GROUND_ATTACK_AREA,
@@ -37,7 +37,7 @@ namespace IL2DCE
             get;
         }
 
-        List<MissionType> MissionTypes
+        List<EMissionType> MissionTypes
         {
             get;
         }

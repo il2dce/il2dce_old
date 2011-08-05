@@ -20,6 +20,19 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
+    public enum EGroundGroupCountry
+    {
+        gb,
+        de,
+    }
+
+    public enum EGroundGroupType
+    {
+        Vehicle,
+        Armor,
+        Ship,
+    }
+
     public interface IGroundGroup
     {
         
