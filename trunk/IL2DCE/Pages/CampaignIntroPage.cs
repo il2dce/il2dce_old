@@ -149,9 +149,10 @@ namespace IL2DCE
                 }
                 missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
 #else
+                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
                 if (Game.Core.Debug == 1)
                 {
-                    string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                    debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
                     if (!System.IO.Directory.Exists(debugPath))
                     {
                         System.IO.Directory.CreateDirectory(debugPath);
@@ -175,7 +176,7 @@ namespace IL2DCE
                 }
                 postMissionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebugPost.mis");
 #else
-                if (game.Core.Debug == 1)
+                if (Game.Core.Debug == 1)
                 {
                     if (!System.IO.Directory.Exists(debugPath))
                     {
