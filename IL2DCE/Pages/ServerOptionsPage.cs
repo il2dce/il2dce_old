@@ -73,12 +73,16 @@ namespace IL2DCE
 
             private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                //Game.init("");
-                //Game.Server.init(Game.dedicated, Game.Server.getPublicIP(), 27018, 27018, true, "0.1.0.129");
-                //Game.Server.sendBasicServerData(false, "Hello World", 12);
-                
-                //if (Game.Server.bConnected)
+                // Init password
+                Game.init("");
+
+
+                if (Game.Server.init(Game.dedicated, 1591395874, 27018, 27018, true, "0.1.0.129"))
                 {
+                    Game.Server.localClientBeginAuthentication(Game.Server.getSteamID(), Game.Server.getPublicIP());
+
+                    //Game.Server.sendBasicServerData(false, "Hello World", 12);
+
                     Game.gameInterface.PageChange(new SelectCampaignPage(), null);
                 }
             }

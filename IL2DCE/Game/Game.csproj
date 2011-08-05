@@ -63,6 +63,7 @@
     <Reference Include="WSteam, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8b6839725e48404f, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\core\WSteam.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
