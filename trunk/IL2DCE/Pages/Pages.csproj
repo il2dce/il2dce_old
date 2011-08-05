@@ -69,6 +69,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="WSteam">
       <HintPath>..\..\..\..\core\WSteam.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
