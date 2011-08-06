@@ -50,6 +50,7 @@
     <Compile Include="GroundGroupWaypoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radar.cs" />
+    <Compile Include="Road.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="core">

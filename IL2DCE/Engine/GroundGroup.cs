@@ -143,27 +143,51 @@ namespace IL2DCE
             }
 
             public List<GroundGroupWaypoint> Waypoints;
-
-
-            public void writeTo(ISectionFile sectionFile)
+            
+            public void writeTo(ISectionFile sectionFile, IList<Road> roads)
             {
                 sectionFile.add("Chiefs", Id,  Class + " " + Country.ToString() + " " + Options);
-
-                foreach (GroundGroupWaypoint waypoint in Waypoints)
+                GroundGroupWaypoint waypoint = null;
+                for (int i = 0; i < Waypoints.Count - 1; i++)
                 {
-                    if(Waypoints.IndexOf(waypoint) != Waypoints.Count - 1)
+                    waypoint = Waypoints[i];
+
+                    if (waypoint.V.HasValue)
                     {
-                        if (waypoint.V.HasValue)
-                        {
-                            sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + waypoint.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                        }
-                        // TODO: Use the default V.
+                        sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + waypoint.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
-                    else
+                    // TODO: Use the default V.
+
+                    Road closestRoad = null;
+                    double closestRoadDistance = 0.0;
+                    foreach (Road road in roads)
                     {
-                        sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        Point3d pStart = new Point3d(road.Start.Position.x, road.Start.Position.y, road.Start.Position.z);
+                        double distanceStart = Waypoints[i].Position.distance(ref pStart);
+                        Point3d pEnd = new Point3d(road.End.Position.x, road.End.Position.y, road.End.Position.z);
+                        double distanceEnd = Waypoints[i + 1].Position.distance(ref pEnd);
+                        if (closestRoad == null || distanceStart + distanceEnd < closestRoadDistance)
+                        {
+                            closestRoad = road;
+                            closestRoadDistance = distanceStart + distanceEnd;
+                        }                        
+                    }
+
+                    if (closestRoad != null)
+                    {
+                        sectionFile.add(Id + "_Road", closestRoad.Start.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.Start.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.Start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + closestRoad.Start.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+
+                        foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
+                        {
+                            sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
+                        }
+
+                        sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 2 " + closestRoad.End.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
                 }
+
+                waypoint = Waypoints[Waypoints.Count - 1];
+                sectionFile.add(Id + "_Road", waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             }
         }
     }

@@ -108,6 +108,15 @@ namespace IL2DCE
             }
             private int _debug = 0;
 
+            public System.Collections.Generic.IList<Road> Roads
+            {
+                get
+                {
+                    return _roads;
+                }
+            }
+            System.Collections.Generic.List<Road> _roads = new System.Collections.Generic.List<Road>();
+
             public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
             {
                 get
@@ -508,7 +517,7 @@ namespace IL2DCE
                                     redGroundGroup.Waypoints.Add(waypoint);
                                 }
 
-                                redGroundGroup.writeTo(groundGroupsFile);
+                                redGroundGroup.writeTo(groundGroupsFile, Roads);
                             }
                         }
                     }
@@ -538,7 +547,7 @@ namespace IL2DCE
                                     blueGroundGroup.Waypoints.Add(waypoint);
                                 }
 
-                                blueGroundGroup.writeTo(groundGroupsFile);
+                                blueGroundGroup.writeTo(groundGroupsFile, Roads);
                             }
                         }
                     }
