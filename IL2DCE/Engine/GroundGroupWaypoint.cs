@@ -58,6 +58,11 @@ namespace IL2DCE
                     double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
                     double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
                     double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
+                    int type;
+                    if (int.TryParse(new string(value[3], 1), out type))
+                    {
+                        Type = type;
+                    }
                     double v;
                     if (double.TryParse(valueList[4], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out v))
                     {
@@ -89,6 +94,19 @@ namespace IL2DCE
             public double Y;
 
             public double Z;
+
+            public int? Type
+            {
+                get
+                {
+                    return _type;
+                }
+                set
+                {
+                    _type = value;
+                }
+            }
+            public int? _type;
 
             public double? V
             {

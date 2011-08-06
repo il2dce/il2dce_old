@@ -379,6 +379,11 @@ namespace IL2DCE
                     {
                         blueGroundGroups.Add(groundGroup);
                     }
+                    else
+                    {
+                        Road road = new Road(templateFile, key);
+                        _roads.Add(road);
+                    }
                 }
 
                 if (templateFile.exist("MAIN", "player"))
@@ -486,13 +491,13 @@ namespace IL2DCE
                     createRandomFlight(missionFile, randomAirGroup);
                 }
 
+                createGroundGroups(missionFile);
+
                 return missionFile;
             }
 
-            public ISectionFile PostGenerate()
+            public void createGroundGroups(ISectionFile missionFile)
             {
-                ISectionFile groundGroupsFile = Game.gpCreateSectionFile();
-
                 foreach (GroundGroup redGroundGroup in redGroundGroups)
                 {
                     if (redGroundGroup.Type != EGroundGroupType.Ship)
@@ -504,21 +509,16 @@ namespace IL2DCE
                             Point2d start = new Point2d(redGroundGroup.Position.x, redGroundGroup.Position.y);
                             Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
 
-                            IRecalcPathParams pathParams = Game.gpFindPath(start, 1000000.0, end, 1000000.0, PathType.GROUND, 1);
+                            redGroundGroup.Waypoints.Clear();
+                            Point3d startPoint = new Point3d(start.x, start.y, 38.40);
+                            GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0);
+                            redGroundGroup.Waypoints.Add(startWaypoint);
 
-                            if (pathParams != null && pathParams.Path != null && pathParams.Path.Length > 0)
-                            {
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "pathParams" , null);
-                                redGroundGroup.Waypoints.Clear();
-                                foreach(maddox.game.world.AiWayPoint aiWaypoint in pathParams.Path)
-                                {
-                                    Point3d point = new Point3d(aiWaypoint.P.x, aiWaypoint.P.y, 38.40);
-                                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(point, 5.0);
-                                    redGroundGroup.Waypoints.Add(waypoint);
-                                }
+                            Point3d endPoint = new Point3d(end.x, end.y, 38.40);
+                            GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0);
+                            redGroundGroup.Waypoints.Add(endWaypoint);
 
-                                redGroundGroup.writeTo(groundGroupsFile, Roads);
-                            }
+                            redGroundGroup.writeTo(missionFile, Roads);
                         }
                     }
                 }
@@ -534,26 +534,19 @@ namespace IL2DCE
                             Point2d start = new Point2d(blueGroundGroup.Position.x, blueGroundGroup.Position.y);
                             Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
 
-                            IRecalcPathParams pathParams = Game.gpFindPath(start, 1000000.0, end, 1000000.0, PathType.GROUND, 2);
+                            blueGroundGroup.Waypoints.Clear();
+                            Point3d startPoint = new Point3d(start.x, start.y, 38.40);
+                            GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0);
+                            blueGroundGroup.Waypoints.Add(startWaypoint);
 
-                            if (pathParams != null && pathParams.Path != null && pathParams.Path.Length > 0)
-                            {
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "pathParams", null);
-                                blueGroundGroup.Waypoints.Clear();
-                                foreach (maddox.game.world.AiWayPoint aiWaypoint in pathParams.Path)
-                                {
-                                    Point3d point = new Point3d(aiWaypoint.P.x, aiWaypoint.P.y, 38.40);
-                                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(point, 5.0);
-                                    blueGroundGroup.Waypoints.Add(waypoint);
-                                }
+                            Point3d endPoint = new Point3d(end.x, end.y, 38.40);
+                            GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0);
+                            blueGroundGroup.Waypoints.Add(endWaypoint);
 
-                                blueGroundGroup.writeTo(groundGroupsFile, Roads);
-                            }
+                            blueGroundGroup.writeTo(missionFile, Roads);
                         }
                     }
                 }
-
-                return groundGroupsFile;
             }
 
             public List<AirGroup> getAirGroups(int armyIndex)

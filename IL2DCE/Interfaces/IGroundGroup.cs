@@ -22,6 +22,7 @@ namespace IL2DCE
 {
     public enum EGroundGroupCountry
     {
+        nn,
         gb,
         de,
     }

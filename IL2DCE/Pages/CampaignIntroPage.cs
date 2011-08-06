@@ -165,27 +165,6 @@ namespace IL2DCE
 
                 Game.gameInterface.BattleStart();
 
-                ISectionFile postMissionFile = Game.Core.PostGenerate();
-
-                Game.gpPostMissionLoad(postMissionFile);
-
-#if DEBUG
-                if (!System.IO.Directory.Exists(debugPath))
-                {
-                    System.IO.Directory.CreateDirectory(debugPath);
-                }
-                postMissionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebugPost.mis");
-#else
-                if (Game.Core.Debug == 1)
-                {
-                    if (!System.IO.Directory.Exists(debugPath))
-                    {
-                        System.IO.Directory.CreateDirectory(debugPath);
-                    }
-                    postMissionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebugPost.mis");
-                }
-#endif
-
                 Game.gameInterface.UIMainHide();
             }
 
