@@ -1,8 +1,10 @@
-#summary One-sentence summary of this page.
+#summary Draft: Vision and requirements.
 
 = Introduction =
 
-Add your content here.
+The air war is simulated at the tactical level. The units involved are of squadron and wing size.
+
+The ground war is simulated at the operational level. The units involved are of battalion and division size.
 
 
 = Details =
