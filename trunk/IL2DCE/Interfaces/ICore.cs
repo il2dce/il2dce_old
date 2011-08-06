@@ -31,8 +31,6 @@ namespace IL2DCE
 
         maddox.game.ISectionFile Generate(string missionFileName);
 
-        maddox.game.ISectionFile PostGenerate();
-
         bool SpawnParked
         {
             get;
