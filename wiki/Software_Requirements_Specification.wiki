@@ -1,0 +1,23 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+== Requirments ==
+ * Player level
+The experience of the player is reflected by his position within the squadron. 
+   * Section leader
+   * Flight leader
+   * Squadron leader
+ * Squadron management
+The player can become the CO of a squadron and can then influence the mission parameters. 
+   * Select aircraft and loadouts
+   * Assign pilot
+   * Modify waypoints
+ * Rank system
+ * Medals and Decoration system
+ * Single-player and cooperative multiplayer support
