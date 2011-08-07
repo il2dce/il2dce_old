@@ -34,25 +34,6 @@ namespace IL2DCE
                 ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
 
                 core = new Core.Core(this, confFile);
-                
-                if (confFile.exist("MAIN", "campaignsFolder"))
-                {
-                    string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
-                    ISectionFile campaignsFile = game.SectionFileLoad(campaignsFolderName + "/campaigns.ini");
-
-                    if (campaignsFile.exist("Campaigns"))
-                    {
-                        for (int i = 0; i < campaignsFile.lines("Campaigns"); i++)
-                        {
-                            string key;
-                            string value;
-                            campaignsFile.get("Campaigns", i, out key, out value);
-
-                            Campaign campaign = new Campaign(this, campaignsFile, key);
-                            Campaigns.Add(campaign);
-                        }
-                    }
-                }
             }
 
             public override maddox.game.play.PageInterface getStartPage()
@@ -68,29 +49,6 @@ namespace IL2DCE
                 }
             }
             private ICore core;
-
-            public List<ICampaign> Campaigns
-            {
-                get
-                {
-                    return campaigns;
-                }
-            }
-            private List<ICampaign> campaigns = new List<ICampaign>();
-
-            public ICampaign CurrentCampaign
-            {
-                get
-                {
-                    return currentCampaign;
-                }
-                set
-                {
-                    currentCampaign = value as Campaign;
-                }
-
-            }
-            private Campaign currentCampaign;
         }
     }
 }

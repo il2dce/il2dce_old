@@ -40,7 +40,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Campaign.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="GameSingle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

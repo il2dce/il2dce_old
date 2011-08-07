@@ -24,23 +24,20 @@ using maddox.game.page;
 
 namespace IL2DCE
 {
-    namespace Game
+    namespace Core
     {
         public class Campaign : ICampaign
         {
-            public Campaign(IGame game, ISectionFile campaignsFile, string campaignId)
+            public Campaign(ISectionFile campaignFile)
             {
-                if (campaignsFile.exist(campaignId) && campaignsFile.exist(campaignId, "campaignName") && campaignsFile.exist(campaignId, "campaignFolder"))
+                if (campaignFile.exist("Campaign", "name"))
                 {
-                    name = campaignsFile.get(campaignId, "campaignName");
-                    string campaignFolderName = campaignsFile.get(campaignId, "campaignFolder");
+                    name = campaignFile.get("Campaign", "name");
+                }
 
-                    ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignFolderName + "/campaign.ini");
-                    if (campaignFile.exist("Campaign", "templateFile"))
-                    {
-                        templateFileName = campaignFile.get("Campaign", "templateFile");
-                        templateFile = game.gameInterface.SectionFileLoad(templateFileName);
-                    }
+                if (campaignFile.exist("Campaign", "templateFile"))
+                {
+                    templateFileName = campaignFile.get("Campaign", "templateFile");
                 }
             }
 
@@ -57,15 +54,6 @@ namespace IL2DCE
                 }
             }
             string name;
-
-            public ISectionFile TemplateFile
-            {
-                get
-                {
-                    return templateFile;
-                }
-            }
-            private ISectionFile templateFile;
 
             public string TemplateFileName
             {

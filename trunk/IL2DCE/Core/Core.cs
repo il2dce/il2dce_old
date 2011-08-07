@@ -71,7 +71,54 @@ namespace IL2DCE
                 {
                     _debug = 0;
                 }
+
+                if (confFile.exist("MAIN", "campaignsFolder"))
+                {
+                    string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
+                    string campaignsFolderFullName = game.gameInterface.ToFileSystemPath(campaignsFolderName);
+
+                    System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderFullName);
+                    if (campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
+                    {
+                        foreach (System.IO.DirectoryInfo campaignFolder in campaignsFolder.GetDirectories())
+                        {
+                            if (campaignFolder.GetFiles("campaign.ini") != null && campaignFolder.GetFiles("campaign.ini").Length == 1)
+                            {
+                                ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderName + "/" + campaignsFolder.Name + "/campaign.ini");
+
+                                Campaign campaign = new Campaign(campaignFile);
+                                Campaigns.Add(campaign);
+                            }
+                        }
+                    }
+                }
             }
+
+            public ICampaign CurrentCampaign
+            {
+                get
+                {
+                    return _currentCampaign;
+                }
+                set
+                {
+                    if (_currentCampaign != value)
+                    {
+                        _currentCampaign = value;
+                        init(_currentCampaign.TemplateFileName);
+                    }
+                }
+            }
+            private ICampaign _currentCampaign;
+
+            public List<ICampaign> Campaigns
+            {
+                get
+                {
+                    return campaigns;
+                }
+            }
+            private List<ICampaign> campaigns = new List<ICampaign>();
 
             public IGame Game
             {
@@ -270,8 +317,41 @@ namespace IL2DCE
             public string playerAirGroupKey = null;
             public AirGroup playerAirGroup = null;
 
-            public void Init(string templateFileName)
+            public ISectionFile StartCampaign()
             {
+                return ContinueCampaign();
+            }
+
+            public ISectionFile ContinueCampaign()
+            {
+                ISectionFile missionFile = generate(CurrentCampaign.TemplateFileName);
+
+#if DEBUG
+                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                if (!System.IO.Directory.Exists(debugPath))
+                {
+                    System.IO.Directory.CreateDirectory(debugPath);
+                }
+                missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+#else
+                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                if (Game.Core.Debug == 1)
+                {
+                    debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
+                    if (!System.IO.Directory.Exists(debugPath))
+                    {
+                        System.IO.Directory.CreateDirectory(debugPath);
+                    }
+                    missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+                }
+#endif
+
+                return missionFile;
+            }
+
+            private void init(string templateFileName)
+            {
+                _roads.Clear();
                 redRadars.Clear();
                 blueRadars.Clear();
                 redFrontMarkers.Clear();
@@ -432,7 +512,7 @@ namespace IL2DCE
             }
 
 
-            public ISectionFile Generate(string templateFileName)
+            public ISectionFile generate(string templateFileName)
             {
                 availableAirGroups.Clear();
                 foreach (AirGroup airGroup in AirGroups)
