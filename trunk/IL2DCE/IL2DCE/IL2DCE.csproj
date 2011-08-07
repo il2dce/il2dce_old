@@ -84,15 +84,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="conf.ini" />
+    <None Include="COPYING" />
+    <None Include="IL2DCE.Inst.nsi" />
+    <None Include="IL2DCE.Inst.template" />
     <None Include="Properties\GlobalAssemblyInfo.template" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release copy "$(ProjectDir)IL2DCE.Inst.nsi" "$(TargetDir)..\..\IL2DCE.Inst.nsi"
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>SubWcRev "$(SolutionDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>SubWcRev "$(SolutionDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"
+
+SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCE.Inst.template" "$(ProjectDir)IL2DCE.Inst.nsi"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
