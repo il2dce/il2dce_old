@@ -78,33 +78,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="IL2DCEGameServer.xml" />
-    <Content Include="IL2DCEGameSingle.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="conf.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="COPYING">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="IL2DCEInst.nsi" />
-    <None Include="IL2DCEInst.template" />
+    <Content Include="IL2DCE.GameServer.xml" />
+    <Content Include="IL2DCE.GameSingle.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)..\..\AddIns"
 
-copy "$(ProjectDir)IL2DCEGameSingle.xml" "$(TargetDir)..\..\AddIns\IL2DCEGameSingle.xml"
+copy "$(ProjectDir)IL2DCE.GameSingle.xml" "$(TargetDir)..\..\AddIns\IL2DCE.GameSingle.xml"
 
-copy "$(ProjectDir)IL2DCEGameServer.xml" "$(TargetDir)..\..\AddIns\IL2DCEGameServer.xml"
+copy "$(ProjectDir)IL2DCE.GameServer.xml" "$(TargetDir)..\..\AddIns\IL2DCE.GameServer.xml"
 
-if $(ConfigurationName) == Release copy "$(ProjectDir)IL2DCEInst.nsi" "$(TargetDir)..\..\IL2DCEInst.nsi"
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
-SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCEInst.template" "$(ProjectDir)IL2DCEInst.nsi"</PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
