@@ -74,19 +74,19 @@ namespace IL2DCE
 
                 if (confFile.exist("MAIN", "campaignsFolder"))
                 {
-                    string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
-                    string campaignsFolderFullName = game.gameInterface.ToFileSystemPath(campaignsFolderName);
+                    string campaignsFolderPath = confFile.get("MAIN", "campaignsFolder");
+                    string campaignsFolderSystemPath = game.gameInterface.ToFileSystemPath(campaignsFolderPath);
 
-                    System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderFullName);
+                    System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderSystemPath);
                     if (campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
                     {
                         foreach (System.IO.DirectoryInfo campaignFolder in campaignsFolder.GetDirectories())
                         {
                             if (campaignFolder.GetFiles("campaign.ini") != null && campaignFolder.GetFiles("campaign.ini").Length == 1)
                             {
-                                ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderName + "/" + campaignsFolder.Name + "/campaign.ini");
+                                ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignsFolder.Name + "/campaign.ini");
 
-                                Campaign campaign = new Campaign(campaignFile);
+                                Campaign campaign = new Campaign(campaignsFolderPath + "/" + campaignsFolder.Name + "/", campaignFile);
                                 Campaigns.Add(campaign);
                             }
                         }
@@ -105,7 +105,7 @@ namespace IL2DCE
                     if (_currentCampaign != value)
                     {
                         _currentCampaign = value;
-                        init(_currentCampaign.TemplateFileName);
+                        init(_currentCampaign.TemplateFilePath);
                     }
                 }
             }
@@ -324,7 +324,7 @@ namespace IL2DCE
 
             public ISectionFile ContinueCampaign()
             {
-                ISectionFile missionFile = generate(CurrentCampaign.TemplateFileName);
+                ISectionFile missionFile = generate(CurrentCampaign.TemplateFilePath);
 
 #if DEBUG
                 string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");

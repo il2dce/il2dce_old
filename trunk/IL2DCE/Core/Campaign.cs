@@ -28,7 +28,7 @@ namespace IL2DCE
     {
         public class Campaign : ICampaign
         {
-            public Campaign(ISectionFile campaignFile)
+            public Campaign(string campaignFolderPath, ISectionFile campaignFile)
             {
                 if (campaignFile.exist("Campaign", "name"))
                 {
@@ -37,7 +37,7 @@ namespace IL2DCE
 
                 if (campaignFile.exist("Campaign", "templateFile"))
                 {
-                    templateFileName = campaignFile.get("Campaign", "templateFile");
+                    templateFilePath = campaignFolderPath + campaignFile.get("Campaign", "templateFile");
                 }
             }
 
@@ -55,14 +55,14 @@ namespace IL2DCE
             }
             string name;
 
-            public string TemplateFileName
+            public string TemplateFilePath
             {
                 get
                 {
-                    return templateFileName;
+                    return templateFilePath;
                 }
             }
-            private string templateFileName;
+            private string templateFilePath;
         }
     }
 }

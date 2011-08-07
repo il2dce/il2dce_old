@@ -22,7 +22,7 @@ namespace IL2DCE
 {
     public interface ICampaign
     {
-        string TemplateFileName
+        string TemplateFilePath
         {
             get;
         }
