@@ -25,7 +25,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Engine
+    namespace Core
     {
         // Looks like the mission requires the core to be serializable. As core is not used in the mission at the moment there is no need to make it serializable.
         //[Serializable]
@@ -485,7 +485,7 @@ namespace IL2DCE
                 for (int i = 0; i < randomSpawn; i++)
                 {
                     int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
-                    Engine.AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
+                    AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
                     availableAirGroups.Remove(randomAirGroup);
 
                     createRandomFlight(missionFile, randomAirGroup);

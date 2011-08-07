@@ -37,7 +37,7 @@ namespace IL2DCE
                                 
                 _server = new WServer();
 
-                _core = new Engine.Core(this, confFile);
+                _core = new Core.Core(this, confFile);
                 if (confFile.exist("MAIN", "campaignsFolder"))
                 {
                     string campaignsFolderName = confFile.get("MAIN", "campaignsFolder");
