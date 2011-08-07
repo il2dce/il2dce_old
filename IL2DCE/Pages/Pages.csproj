@@ -8,7 +8,7 @@
     <ProjectGuid>{ECBA2DA0-44D1-4449-9240-E57F07460A14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pages</RootNamespace>
+    <RootNamespace>IL2DCE.Pages</RootNamespace>
     <AssemblyName>Pages</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

@@ -8,7 +8,7 @@
     <ProjectGuid>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Interfaces</RootNamespace>
+    <RootNamespace>IL2DCE.Interfaces</RootNamespace>
     <AssemblyName>Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
