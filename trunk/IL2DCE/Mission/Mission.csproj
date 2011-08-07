@@ -8,7 +8,7 @@
     <ProjectGuid>{75E92407-3D44-4802-A09A-5ED7E6FEBC12}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mission</RootNamespace>
+    <RootNamespace>IL2DCE.Mission</RootNamespace>
     <AssemblyName>Mission</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
