@@ -147,7 +147,7 @@ namespace IL2DCE
                     System.IO.Directory.CreateDirectory(missionPath);
                 }
 
-                string missionFileName = string.Format(String.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
+                string missionFileName = string.Format(string.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
                 missionFile.save(missionFileName);
 
                 if (Game is IGameSingle)
