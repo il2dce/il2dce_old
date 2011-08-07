@@ -33,7 +33,7 @@ namespace IL2DCE
             {
                 ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
 
-                core = new Core.Core(this, confFile);
+                core = new Core(this, confFile);
             }
 
             public override maddox.game.play.PageInterface getStartPage()

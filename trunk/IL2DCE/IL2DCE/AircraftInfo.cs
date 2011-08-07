@@ -24,83 +24,81 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+    public class AircraftInfo : IAircraftInfo
     {
-        public class AircraftInfo : IAircraftInfo
+        public AircraftInfo(string aircraft)
         {
-            public AircraftInfo(string aircraft)
-            {
-                Aircraft = aircraft;
-            }
+            Aircraft = aircraft;
+        }
 
-            public bool IsFlyable
+        public bool IsFlyable
+        {
+            get
             {
-                get
+                if (flyableAircrafts.Contains(Aircraft))
                 {
-                    if(flyableAircrafts.Contains(Aircraft))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
+        }
 
-            public List<EMissionType> MissionTypes
+        public List<EMissionType> MissionTypes
+        {
+            get
             {
-                get
+                List<EMissionType> missionTypes = new List<EMissionType>();
+
+                if (reconAircrafts.Contains(Aircraft))
                 {
-                    List<EMissionType> missionTypes = new List<EMissionType>();
-
-                    if (reconAircrafts.Contains(Aircraft))
+                    if (!missionTypes.Contains(EMissionType.RECON_AREA))
                     {
-                        if (!missionTypes.Contains(EMissionType.RECON_AREA))
-                        {
-                            missionTypes.Add(EMissionType.RECON_AREA);
-                        }
+                        missionTypes.Add(EMissionType.RECON_AREA);
                     }
-
-                    if (bomberAircrafts.Contains(Aircraft))
-                    {
-                        if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
-                        {
-                            missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
-                        }
-                    }
-
-                    if (fighterAircrafts.Contains(Aircraft))
-                    {
-                        if (!missionTypes.Contains(EMissionType.OFFENSIVE_PATROL_AREA))
-                        {
-                            missionTypes.Add(EMissionType.OFFENSIVE_PATROL_AREA);
-                        }
-                        //if (!missionTypes.Contains(MissionType.DEFENSIVE_PATROL_AREA))
-                        //{
-                        //    missionTypes.Add(MissionType.DEFENSIVE_PATROL_AREA);
-                        //}
-                        if (!missionTypes.Contains(EMissionType.ESCORT))
-                        {
-                            missionTypes.Add(EMissionType.ESCORT);
-                        }
-                        if (!missionTypes.Contains(EMissionType.INTERCEPT))
-                        {
-                            missionTypes.Add(EMissionType.INTERCEPT);
-                        }
-                    }
-
-                    return missionTypes;
                 }
-            }
 
-            public string Aircraft
-            {
-                get;
-                set;
-            }
+                if (bomberAircrafts.Contains(Aircraft))
+                {
+                    if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
+                    {
+                        missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
+                    }
+                }
 
-            private List<string> flyableAircrafts = new List<string>
+                if (fighterAircrafts.Contains(Aircraft))
+                {
+                    if (!missionTypes.Contains(EMissionType.OFFENSIVE_PATROL_AREA))
+                    {
+                        missionTypes.Add(EMissionType.OFFENSIVE_PATROL_AREA);
+                    }
+                    //if (!missionTypes.Contains(MissionType.DEFENSIVE_PATROL_AREA))
+                    //{
+                    //    missionTypes.Add(MissionType.DEFENSIVE_PATROL_AREA);
+                    //}
+                    if (!missionTypes.Contains(EMissionType.ESCORT))
+                    {
+                        missionTypes.Add(EMissionType.ESCORT);
+                    }
+                    if (!missionTypes.Contains(EMissionType.INTERCEPT))
+                    {
+                        missionTypes.Add(EMissionType.INTERCEPT);
+                    }
+                }
+
+                return missionTypes;
+            }
+        }
+
+        public string Aircraft
+        {
+            get;
+            set;
+        }
+
+        private List<string> flyableAircrafts = new List<string>
         {
             "Aircraft.HurricaneMkI_dH5-20",
             "Aircraft.HurricaneMkI",
@@ -123,14 +121,14 @@ namespace IL2DCE
             "Aircraft.BR-20M", 
         };
 
-            private List<string> liaisonAircrafts = new List<string>
+        private List<string> liaisonAircrafts = new List<string>
         {
             "Aircraft.AnsonMkI",
             "Aircraft.DH82A",
             "Aircraft.Bf-108B-2",
         };
 
-            private List<string> reconAircrafts = new List<string>
+        private List<string> reconAircrafts = new List<string>
         {
             "Aircraft.BlenheimMkI",
             "Aircraft.BlenheimMkIV",
@@ -149,7 +147,7 @@ namespace IL2DCE
             "Aircraft.BR-20M", 
         };
 
-            private List<string> fighterAircrafts = new List<string>
+        private List<string> fighterAircrafts = new List<string>
         {
             "Aircraft.BeaufighterMkIF",
             "Aircraft.DefiantMkI",
@@ -169,7 +167,7 @@ namespace IL2DCE
             "Aircraft.G50",  
         };
 
-            private List<string> bomberAircrafts = new List<string>
+        private List<string> bomberAircrafts = new List<string>
         {
             "Aircraft.BlenheimMkI",
             "Aircraft.BlenheimMkIV",
@@ -187,6 +185,5 @@ namespace IL2DCE
             //"Aircraft.He-115B-2"
             "Aircraft.BR-20M", 
         };
-        }
     }
 }

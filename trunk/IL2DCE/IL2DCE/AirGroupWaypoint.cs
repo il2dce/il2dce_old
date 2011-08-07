@@ -24,101 +24,99 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+
+    public class AirGroupWaypoint
     {
-        public class AirGroupWaypoint
+        # region Public enums
+
+        public enum AirGroupWaypointTypes
         {
-            # region Public enums
+            NORMFLY,
+            TAKEOFF,
+            LANDING,
+            COVER,
+            HUNTING,
+            RECON,
+            GATTACK_POINT,
+            GATTACK_TARG,
+            ESCORT,
+            AATTACK_FIGHTERS,
+            AATTACK_BOMBERS,
+        };
 
-            public enum AirGroupWaypointTypes
-            {
-                NORMFLY,
-                TAKEOFF,
-                LANDING,
-                COVER,
-                HUNTING,
-                RECON,
-                GATTACK_POINT,
-                GATTACK_TARG,
-                ESCORT,
-                AATTACK_FIGHTERS,
-                AATTACK_BOMBERS,
-            };
+        #endregion
 
-            #endregion
+        #region Public constructors
 
-            #region Public constructors
-
-            public AirGroupWaypoint(AirGroupWaypointTypes type, Point3d position, double v, string target = null)
-            {
-                Type = type;
-                X = position.x;
-                Y = position.y;
-                Z = position.z;
-                V = v;
-                Target = target;
-            }
-
-            public AirGroupWaypoint(AirGroupWaypointTypes type, double x, double y, double z, double v, string target = null)
-            {
-                Type = type;
-                X = x;
-                Y = y;
-                Z = z;
-                V = v;
-                Target = target;
-            }
-
-            public AirGroupWaypoint(ISectionFile sectionFile, string airGroupName, int line)
-            {
-                string key;
-                string value;
-                sectionFile.get(airGroupName + "_Way", line, out key, out value);
-
-                string[] valueList = value.Split(new char[] { ' ' });
-                if (valueList != null && valueList.Length == 4)
-                {
-                    Type = (AirGroupWaypointTypes)Enum.Parse(typeof(AirGroupWaypointTypes), key);
-                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
-                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
-                    double.TryParse(valueList[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
-                    double.TryParse(valueList[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out V);
-                }
-            }
-
-            #endregion
-
-            #region Public properties
-
-            public AirGroupWaypointTypes Type
-            {
-                get;
-                set;
-            }
-
-            public Point3d Position
-            {
-                get
-                {
-                    return new Point3d(X, Y, Z);
-                }
-            }
-
-            public double X;
-            
-            public double Y;
-            
-            public double Z;
-
-            public double V;
-            
-            public string Target
-            {
-                get;
-                set;
-            }
-
-            #endregion
+        public AirGroupWaypoint(AirGroupWaypointTypes type, Point3d position, double v, string target = null)
+        {
+            Type = type;
+            X = position.x;
+            Y = position.y;
+            Z = position.z;
+            V = v;
+            Target = target;
         }
+
+        public AirGroupWaypoint(AirGroupWaypointTypes type, double x, double y, double z, double v, string target = null)
+        {
+            Type = type;
+            X = x;
+            Y = y;
+            Z = z;
+            V = v;
+            Target = target;
+        }
+
+        public AirGroupWaypoint(ISectionFile sectionFile, string airGroupName, int line)
+        {
+            string key;
+            string value;
+            sectionFile.get(airGroupName + "_Way", line, out key, out value);
+
+            string[] valueList = value.Split(new char[] { ' ' });
+            if (valueList != null && valueList.Length == 4)
+            {
+                Type = (AirGroupWaypointTypes)Enum.Parse(typeof(AirGroupWaypointTypes), key);
+                double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
+                double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                double.TryParse(valueList[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
+                double.TryParse(valueList[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out V);
+            }
+        }
+
+        #endregion
+
+        #region Public properties
+
+        public AirGroupWaypointTypes Type
+        {
+            get;
+            set;
+        }
+
+        public Point3d Position
+        {
+            get
+            {
+                return new Point3d(X, Y, Z);
+            }
+        }
+
+        public double X;
+
+        public double Y;
+
+        public double Z;
+
+        public double V;
+
+        public string Target
+        {
+            get;
+            set;
+        }
+
+        #endregion
     }
 }

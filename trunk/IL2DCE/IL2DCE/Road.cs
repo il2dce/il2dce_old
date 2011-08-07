@@ -24,54 +24,51 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+    public class Road
     {
-        public class Road
+        public Road(ISectionFile sectionFile, string groundGroupId)
         {
-            public Road(ISectionFile sectionFile, string groundGroupId)
+            if (sectionFile.lines(groundGroupId + "_Road") > 2)
             {
-                if (sectionFile.lines(groundGroupId + "_Road") > 2)
-                {
-                    _start = new GroundGroupWaypoint(sectionFile, groundGroupId, 0);
-                    
-                    for (int i = 1; i < sectionFile.lines(groundGroupId + "_Road") - 1; i++)
-                    {
-                        string key;
-                        string value;
-                        sectionFile.get(groundGroupId + "_Road", i, out key, out value);
-                        _roadPoints.Add(new Tuple<string, string>(key, value));
-                    }
+                _start = new GroundGroupWaypoint(sectionFile, groundGroupId, 0);
 
-                    _end = new GroundGroupWaypoint(sectionFile, groundGroupId, sectionFile.lines(groundGroupId + "_Road") - 1);
-                }
-            }
-
-            public GroundGroupWaypoint Start
-            {
-                get
+                for (int i = 1; i < sectionFile.lines(groundGroupId + "_Road") - 1; i++)
                 {
-                    return _start;
+                    string key;
+                    string value;
+                    sectionFile.get(groundGroupId + "_Road", i, out key, out value);
+                    _roadPoints.Add(new Tuple<string, string>(key, value));
                 }
-            }
-            private GroundGroupWaypoint _start;
 
-            public GroundGroupWaypoint End
-            {
-                get
-                {
-                    return _end;
-                }
+                _end = new GroundGroupWaypoint(sectionFile, groundGroupId, sectionFile.lines(groundGroupId + "_Road") - 1);
             }
-            private GroundGroupWaypoint _end;
-
-            public List<Tuple<string, string>> RoadPoints
-            {
-                get
-                {
-                    return _roadPoints;
-                }
-            }
-            private List<Tuple<string, string>> _roadPoints = new List<Tuple<string, string>>();
         }
+
+        public GroundGroupWaypoint Start
+        {
+            get
+            {
+                return _start;
+            }
+        }
+        private GroundGroupWaypoint _start;
+
+        public GroundGroupWaypoint End
+        {
+            get
+            {
+                return _end;
+            }
+        }
+        private GroundGroupWaypoint _end;
+
+        public List<Tuple<string, string>> RoadPoints
+        {
+            get
+            {
+                return _roadPoints;
+            }
+        }
+        private List<Tuple<string, string>> _roadPoints = new List<Tuple<string, string>>();
     }
 }
