@@ -40,7 +40,7 @@ namespace IL2DCE
             private List<Radar> redRadars = new List<Radar>();
             private List<Radar> blueRadars = new List<Radar>();
 
-            public Core(IGame game, ISectionFile confFile)
+            public Core(maddox.game.IGame game, ISectionFile confFile)
             {
                 _game = game;
                 if (confFile.exist("Core", "setOnPark"))
@@ -120,14 +120,14 @@ namespace IL2DCE
             }
             private List<ICampaign> campaigns = new List<ICampaign>();
 
-            public IGame Game
+            private maddox.game.IGame Game
             {
                 get
                 {
                     return _game;
                 }                
             }
-            private IGame _game;
+            private maddox.game.IGame _game;
 
             public bool SpawnParked
             {
