@@ -87,12 +87,14 @@
     <None Include="conf.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="COPYING">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="IL2DCE.Inst.nsi" />
     <None Include="IL2DCE.Inst.template" />
     <None Include="Properties\GlobalAssemblyInfo.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="COPYING.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

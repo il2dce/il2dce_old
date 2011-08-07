@@ -10,7 +10,7 @@ Page instfiles
 UninstPage uninstConfirm
 UninstPage instfiles
 
-LicenseData "parts\IL2DCE\COPYING"
+LicenseData "parts\IL2DCE\COPYING.txt"
 
 section
 
@@ -26,7 +26,7 @@ section
 setOutPath "$INSTDIR\parts\IL2DCE"
 
 file "parts\IL2DCE\conf.ini"
-file "parts\IL2DCE\COPYING"
+file "parts\IL2DCE\COPYING.txt"
 file "parts\IL2DCE\IL2DCE.dll"
 file "parts\IL2DCE\IL2DCE.Game.dll"
 file "parts\IL2DCE\IL2DCE.Mission.dll"
@@ -76,7 +76,7 @@ RMDir "$INSTDIR\Campaigns\Prototype2"
 RMDir "$INSTDIR\Campaigns"
 
 delete "$INSTDIR\conf.ini"
-delete "$INSTDIR\COPYING"
+delete "$INSTDIR\COPYING.txt"
 delete "$INSTDIR\IL2DCE.dll"
 delete "$INSTDIR\IL2DCE.Game.dll"
 delete "$INSTDIR\IL2DCE.Mission.dll"
