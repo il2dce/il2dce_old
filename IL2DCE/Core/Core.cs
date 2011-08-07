@@ -84,9 +84,9 @@ namespace IL2DCE
                         {
                             if (campaignFolder.GetFiles("campaign.ini") != null && campaignFolder.GetFiles("campaign.ini").Length == 1)
                             {
-                                ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignsFolder.Name + "/campaign.ini");
+                                ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/campaign.ini");
 
-                                Campaign campaign = new Campaign(campaignsFolderPath + "/" + campaignsFolder.Name + "/", campaignFile);
+                                Campaign campaign = new Campaign(campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignFile);
                                 Campaigns.Add(campaign);
                             }
                         }

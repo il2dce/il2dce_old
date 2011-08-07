@@ -28,6 +28,5 @@
         </ComboBox>
         <Label Content="Select aircraft:" Height="64" HorizontalAlignment="Left" Margin="331,496,0,0" Name="labelSelectAircraft" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A" />
         <my1:CheckBoxAsMenuItem Content="Spawn parked" Height="40" HorizontalAlignment="Left" Margin="331,641,0,0" Name="checkBoxSpawnParked" VerticalAlignment="Top" Width="267" />
-        <my:ServerOptions Height="616" HorizontalAlignment="Left" Margin="754,113,0,0" Name="serverOptions1" VerticalAlignment="Top" Width="700" />
     </Grid>
 </UserControl>
