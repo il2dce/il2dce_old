@@ -40,10 +40,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\IL2DCE\Properties\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="GameServer.cs" />
     <Compile Include="GameSingle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="gamePages">
@@ -74,10 +76,6 @@
       <Project>{22442D49-0A77-4CBE-A1F3-9806958C10AE}</Project>
       <Name>IL2DCE</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{34E6EEFF-8967-420F-849B-2E0EB594DC61}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="IL2DCEGameServer.xml" />
@@ -92,18 +90,20 @@
     </None>
     <None Include="IL2DCEInst.nsi" />
     <None Include="IL2DCEInst.template" />
-    <None Include="Properties\GlobalAssemblyInfo.template" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)..\..\AddIns"
+
 copy "$(ProjectDir)IL2DCEGameSingle.xml" "$(TargetDir)..\..\AddIns\IL2DCEGameSingle.xml"
+
 copy "$(ProjectDir)IL2DCEGameServer.xml" "$(TargetDir)..\..\AddIns\IL2DCEGameServer.xml"
+
 if $(ConfigurationName) == Release copy "$(ProjectDir)IL2DCEInst.nsi" "$(TargetDir)..\..\IL2DCEInst.nsi"
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>SubWcRev "$(SolutionDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"
+    <PreBuildEvent>
 SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCEInst.template" "$(ProjectDir)IL2DCEInst.nsi"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

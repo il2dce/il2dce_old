@@ -24,104 +24,101 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+    public class GroundGroupWaypoint
     {
-        public class GroundGroupWaypoint
+        #region Public constructors
+
+        public GroundGroupWaypoint(Point3d position, double v)
         {
-            #region Public constructors
-
-            public GroundGroupWaypoint(Point3d position, double v)
-            {
-                X = position.x;
-                Y = position.y;
-                Z = position.z;
-                V = v;                
-            }
-
-            public GroundGroupWaypoint(double x, double y, double z, double v)
-            {
-                X = x;
-                Y = y;
-                Z = z;
-                V = v;
-            }
-
-            public GroundGroupWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
-            {
-                string key;
-                string value;
-                sectionFile.get(groundGroupId + "_Road", line, out key, out value);
-
-                string[] valueList = value.Split(new char[] { ' ' });
-                if (valueList != null && valueList.Length >= 5)
-                {
-                    double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
-                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
-                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
-                    int type;
-                    if (int.TryParse(new string(value[3], 1), out type))
-                    {
-                        Type = type;
-                    }
-                    double v;
-                    if (double.TryParse(valueList[4], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out v))
-                    {
-                        V = v;
-                    }
-                }
-                else if (valueList != null && valueList.Length == 2)
-                {
-                    double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
-                    double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
-                    double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
-                }
-            }
-
-            #endregion
-
-            #region Public properties
-
-            public Point3d Position
-            {
-                get
-                {
-                    return new Point3d(X, Y, Z);
-                }
-            }
-
-            public double X;
-
-            public double Y;
-
-            public double Z;
-
-            public int? Type
-            {
-                get
-                {
-                    return _type;
-                }
-                set
-                {
-                    _type = value;
-                }
-            }
-            public int? _type;
-
-            public double? V
-            {
-                get
-                {
-                    return _v;
-                }
-                set
-                {
-                    _v = value;
-                }
-            }
-            public double? _v;
-
-            #endregion
+            X = position.x;
+            Y = position.y;
+            Z = position.z;
+            V = v;
         }
+
+        public GroundGroupWaypoint(double x, double y, double z, double v)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            V = v;
+        }
+
+        public GroundGroupWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
+        {
+            string key;
+            string value;
+            sectionFile.get(groundGroupId + "_Road", line, out key, out value);
+
+            string[] valueList = value.Split(new char[] { ' ' });
+            if (valueList != null && valueList.Length >= 5)
+            {
+                double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
+                double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
+                int type;
+                if (int.TryParse(new string(value[3], 1), out type))
+                {
+                    Type = type;
+                }
+                double v;
+                if (double.TryParse(valueList[4], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out v))
+                {
+                    V = v;
+                }
+            }
+            else if (valueList != null && valueList.Length == 2)
+            {
+                double.TryParse(key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
+                double.TryParse(valueList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                double.TryParse(valueList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Z);
+            }
+        }
+
+        #endregion
+
+        #region Public properties
+
+        public Point3d Position
+        {
+            get
+            {
+                return new Point3d(X, Y, Z);
+            }
+        }
+
+        public double X;
+
+        public double Y;
+
+        public double Z;
+
+        public int? Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
+        }
+        public int? _type;
+
+        public double? V
+        {
+            get
+            {
+                return _v;
+            }
+            set
+            {
+                _v = value;
+            }
+        }
+        public double? _v;
+
+        #endregion
     }
 }

@@ -24,22 +24,19 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+    public class Radar
     {
-        public class Radar
+        public Radar(string name, double x, double y)
         {
-            public Radar(string name, double x, double y)
-            {
-                Name = name;
-                X = x;
-                Y = y;
-            }
-
-            public string Name;
-
-            public double X;
-
-            public double Y;
+            Name = name;
+            X = x;
+            Y = y;
         }
+
+        public string Name;
+
+        public double X;
+
+        public double Y;
     }
 }

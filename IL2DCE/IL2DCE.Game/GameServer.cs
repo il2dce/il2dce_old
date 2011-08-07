@@ -37,7 +37,7 @@ namespace IL2DCE
                                 
                 _server = new WServer();
 
-                _core = new Core.Core(this, confFile);
+                _core = new Core(this, confFile);
             }
 
             public override maddox.game.play.PageInterface getStartPage()

@@ -24,97 +24,95 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Core
+    public abstract class AirGroupInfo
     {
-        public abstract class AirGroupInfo
+        #region Public properties
+
+        public abstract List<string> Aircrafts
         {
-            #region Public properties
+            get;
+        }
 
-            public abstract List<string> Aircrafts
+        public abstract List<string> AirGroupKeys
+        {
+            get;
+        }
+
+        public abstract int SquadronCount
+        {
+            get;
+        }
+
+        public abstract int FlightCount
+        {
+            get;
+        }
+
+        public abstract int FlightSize
+        {
+            get;
+        }
+
+        public int AircraftMaxCount
+        {
+            get { return FlightCount * FlightSize; }
+        }
+
+        #endregion
+
+        static public AirGroupInfo[] GetAirGroupInfos(int armyIndex)
+        {
+            if (armyIndex == 1)
             {
-                get;
+                return RedAirGroupInfos;
             }
-
-            public abstract List<string> AirGroupKeys
+            else if (armyIndex == 2)
             {
-                get;
+                return BlueAirGroupInfos;
             }
-
-            public abstract int SquadronCount
+            else
             {
-                get;
+                return new AirGroupInfo[] { };
             }
+        }
 
-            public abstract int FlightCount
+        static public AirGroupInfo GetAirGroupInfo(int armyIndex, string airGroupKey)
+        {
+            foreach (AirGroupInfo airGroupInfo in GetAirGroupInfos(armyIndex))
             {
-                get;
-            }
-
-            public abstract int FlightSize
-            {
-                get;
-            }
-
-            public int AircraftMaxCount
-            {
-                get { return FlightCount * FlightSize; }
-            }
-
-            #endregion
-
-            static public AirGroupInfo[] GetAirGroupInfos(int armyIndex)
-            {
-                if (armyIndex == 1)
+                List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
+                if (airGroupKeys.Contains(airGroupKey))
                 {
-                    return RedAirGroupInfos;
-                }
-                else if (armyIndex == 2)
-                {
-                    return BlueAirGroupInfos;
-                }
-                else
-                {
-                    return new AirGroupInfo[] { };
+                    return airGroupInfo;
                 }
             }
 
-            static public AirGroupInfo GetAirGroupInfo(int armyIndex, string airGroupKey)
+            return null;
+        }
+
+        static public AirGroupInfo GetAirGroupInfo(string airGroupKey)
+        {
+            foreach (AirGroupInfo airGroupInfo in RedAirGroupInfos)
             {
-                foreach (AirGroupInfo airGroupInfo in GetAirGroupInfos(armyIndex))
+                List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
+                if (airGroupKeys.Contains(airGroupKey))
                 {
-                    List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                    if (airGroupKeys.Contains(airGroupKey))
-                    {
-                        return airGroupInfo;
-                    }
+                    return airGroupInfo;
                 }
-
-                return null;
             }
-
-            static public AirGroupInfo GetAirGroupInfo(string airGroupKey)
+            foreach (AirGroupInfo airGroupInfo in BlueAirGroupInfos)
             {
-                foreach (AirGroupInfo airGroupInfo in RedAirGroupInfos)
+                List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
+                if (airGroupKeys.Contains(airGroupKey))
                 {
-                    List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                    if (airGroupKeys.Contains(airGroupKey))
-                    {
-                        return airGroupInfo;
-                    }
+                    return airGroupInfo;
                 }
-                foreach (AirGroupInfo airGroupInfo in BlueAirGroupInfos)
-                {
-                    List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                    if (airGroupKeys.Contains(airGroupKey))
-                    {
-                        return airGroupInfo;
-                    }
-                }
-
-                return null;
             }
 
-            static public AirGroupInfo[] RedAirGroupInfos = new AirGroupInfo[]
+            return null;
+        }
+
+        static public AirGroupInfo[] RedAirGroupInfos = new AirGroupInfo[]
     {
         new RafFighterCommandEarlyAirGroupInfo(),
         new RafFighterCommandLateAirGroupInfo(),
@@ -123,7 +121,7 @@ namespace IL2DCE
         new RafFlyingTrainingSchoolLateAirGroupInfo(),
     };
 
-            static public AirGroupInfo[] BlueAirGroupInfos = new AirGroupInfo[]
+        static public AirGroupInfo[] BlueAirGroupInfos = new AirGroupInfo[]
     {
         new LwFighterStabAirGroupInfo(),
         new LwFighterAirGroupInfo(),
@@ -138,13 +136,13 @@ namespace IL2DCE
         new RaFighterAirGroupInfo(),
         new RaBomberAirGroupInfo(),
     };
-        }
+    }
 
-        public class RafFighterCommandEarlyAirGroupInfo : AirGroupInfo
-        {
-            #region Private members
+    public class RafFighterCommandEarlyAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
 
-            public List<string> aircrafts = new List<string>
+        public List<string> aircrafts = new List<string>
         {
             "Aircraft.BeaufighterMkIF",
             "Aircraft.DefiantMkI",
@@ -157,7 +155,7 @@ namespace IL2DCE
             "Aircraft.SpitfireMkIIa",            
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"gb01", /* Generic Fighter Command Early */
             "BoB_RAF_F_1Sqn_Early",
@@ -229,49 +227,49 @@ namespace IL2DCE
             //"BoB_RAF_F_FatCat_Early", /* Fiction Early */
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 2; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 6; }
-            }
-
-            #endregion
         }
 
-        public class RafFighterCommandLateAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 2; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 6; }
+        }
+
+        #endregion
+    }
+
+    public class RafFighterCommandLateAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.BeaufighterMkIF",
             "Aircraft.DefiantMkI",
@@ -284,7 +282,7 @@ namespace IL2DCE
             "Aircraft.SpitfireMkIIa",            
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"gb01_Late", /* Generic Fighter Command Late */
             "BoB_RAF_F_1Sqn_Late",
@@ -356,49 +354,49 @@ namespace IL2DCE
             //"BoB_RAF_F_FatCat_Late", /* Fiction Early */
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class RafBomberCommandAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class RafBomberCommandAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.AnsonMkI",
             "Aircraft.BlenheimMkI",
@@ -408,7 +406,7 @@ namespace IL2DCE
             "Aircraft.WellingtonMkIc",           
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"gb02", /* Generic Command Bomber */
             "BoB_RAF_B_10Sqn",
@@ -463,162 +461,162 @@ namespace IL2DCE
             "BoB_RAF_B_99Sqn",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 2; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 6; }
-            }
-
-            #endregion
         }
 
-        public class RafFlyingTrainingSchoolEarlyAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 2; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 6; }
+        }
+
+        #endregion
+    }
+
+    public class RafFlyingTrainingSchoolEarlyAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.AnsonMkI",
             "Aircraft.DH82A",           
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "LONDON",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 2; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 6; }
-            }
-
-            #endregion
         }
 
-        public class RafFlyingTrainingSchoolLateAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 2; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 6; }
+        }
+
+        #endregion
+    }
+
+    public class RafFlyingTrainingSchoolLateAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.AnsonMkI",
             "Aircraft.DH82A",           
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "LONDON_Late",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class LwFighterStabAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class LwFighterStabAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Bf-109E-1",
             "Aircraft.Bf-109E-3",
             "Aircraft.Bf-109E-3B",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_JG2_Stab",
             "BoB_LW_JG27_Stab",
@@ -629,56 +627,56 @@ namespace IL2DCE
             "BoB_LW_JG54_Stab",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class LwFighterAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> fighterAircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class LwFighterAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> fighterAircrafts = new List<string>
         {
             "Aircraft.Bf-109E-1",
             "Aircraft.Bf-109E-3",
             "Aircraft.Bf-109E-3B",
         };
 
-            private List<string> fighterAirGroupKeys = new List<string>
+        private List<string> fighterAirGroupKeys = new List<string>
         {
             //"g01", /* Generic Fighter */
             //"g04", /* Generic Fighter Bomber */
@@ -712,109 +710,109 @@ namespace IL2DCE
             "BoB_LW_LG1_V"
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return fighterAircrafts;
-                }
+                return fighterAircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return fighterAirGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 4; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class LwZerstoererStabAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return fighterAirGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 4; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class LwZerstoererStabAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Bf-110C-4",
             "Aircraft.Bf-110C-7",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_ZG2_Stab",
             "BoB_LW_ZG26_Stab",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class LwZerstoererAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class LwZerstoererAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Bf-110C-4",
             "Aircraft.Bf-110C-7",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_ErprGr210",
             "BoB_LW_ZG2_I",
@@ -826,54 +824,54 @@ namespace IL2DCE
             "BoB_LW_ZG76_III",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 4; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 4; }
-            }
-
-            #endregion
         }
 
-        public class LwStukaStabAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 4; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 4; }
+        }
+
+        #endregion
+    }
+
+    public class LwStukaStabAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Ju-87B-2",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_StG1_Stab",
             "BoB_LW_StG2_Stab",
@@ -881,54 +879,54 @@ namespace IL2DCE
             "BoB_LW_StG77_Stab",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class LwStukaAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class LwStukaAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Ju-87B-2",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"g03", /* Generic Stuka */
             "BoB_LW_StG1_I",
@@ -945,49 +943,49 @@ namespace IL2DCE
             "BoB_LW_LG1_IV",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 4; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class LwBomberStabAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 4; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class LwBomberStabAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Do-17Z-1",
             "Aircraft.Do-17Z-2",
@@ -998,7 +996,7 @@ namespace IL2DCE
             "Aircraft.Ju-88A-1"
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_KGr_100",
             "BoB_LW_KGr_806",
@@ -1019,49 +1017,49 @@ namespace IL2DCE
             "BoB_LW_KG76_Stab",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class LwBomberAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class LwBomberAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Do-17Z-1",
             "Aircraft.Do-17Z-2",
@@ -1072,7 +1070,7 @@ namespace IL2DCE
             "Aircraft.Ju-88A-1"
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"g02", /* Generic Bomber */
             //"g05", /* Generic Training */
@@ -1123,54 +1121,54 @@ namespace IL2DCE
             "BoB_LW_KG3_IV",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 4; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class LwTransportAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 4; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class LwTransportAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.FW-200C-1",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_KGzbV1_I",
             "BoB_LW_KGzbV1_II",
@@ -1178,49 +1176,49 @@ namespace IL2DCE
             "BoB_LW_KGzbV1_IV",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 5; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class LwReconAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 5; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class LwReconAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.Do-17Z-1",
             "Aircraft.Do-17Z-2",
@@ -1231,7 +1229,7 @@ namespace IL2DCE
             "Aircraft.Ju-88A-1",
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             "BoB_LW_AufklGr_120",
             "BoB_LW_AufklGr_121",
@@ -1247,55 +1245,55 @@ namespace IL2DCE
             "BoB_LW_Wekusta_ObdL",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 4; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 1; }
-            }
-
-            #endregion
         }
 
-        public class RaFighterAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 4; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 1; }
+        }
+
+        #endregion
+    }
+
+    public class RaFighterAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.CR42",
             "Aircraft.G50",            
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"it02", /* Generic Fighter */
             "BoB_RA_56St_18Gruppo_83Sq",
@@ -1306,54 +1304,54 @@ namespace IL2DCE
             "BoB_RA_56St_20Gruppo_353Sq",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
 
-        public class RaBomberAirGroupInfo : AirGroupInfo
+        public override List<string> AirGroupKeys
         {
-            #region Private members
+            get
+            {
+                return airGroupKeys;
+            }
+        }
 
-            private List<string> aircrafts = new List<string>
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
+    }
+
+    public class RaBomberAirGroupInfo : AirGroupInfo
+    {
+        #region Private members
+
+        private List<string> aircrafts = new List<string>
         {
             "Aircraft.BR-20M",         
         };
 
-            private List<string> airGroupKeys = new List<string>
+        private List<string> airGroupKeys = new List<string>
         {
             //"it01", /* Generic Bomber */
             "BoB_RA_13St_11Gruppo_1Sq",
@@ -1366,42 +1364,41 @@ namespace IL2DCE
             "BoB_RA_43St_99Gruppo_243Sq",
         };
 
-            #endregion
+        #endregion
 
-            #region Public properties
+        #region Public properties
 
-            public override List<string> Aircrafts
+        public override List<string> Aircrafts
+        {
+            get
             {
-                get
-                {
-                    return aircrafts;
-                }
+                return aircrafts;
             }
-
-            public override List<string> AirGroupKeys
-            {
-                get
-                {
-                    return airGroupKeys;
-                }
-            }
-
-            public override int SquadronCount
-            {
-                get { return 1; }
-            }
-
-            public override int FlightCount
-            {
-                get { return 3; }
-            }
-
-            public override int FlightSize
-            {
-                get { return 3; }
-            }
-
-            #endregion
         }
+
+        public override List<string> AirGroupKeys
+        {
+            get
+            {
+                return airGroupKeys;
+            }
+        }
+
+        public override int SquadronCount
+        {
+            get { return 1; }
+        }
+
+        public override int FlightCount
+        {
+            get { return 3; }
+        }
+
+        public override int FlightSize
+        {
+            get { return 3; }
+        }
+
+        #endregion
     }
 }
