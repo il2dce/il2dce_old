@@ -24,7 +24,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace Engine
+    namespace Core
     {
         public class GroundGroup : IGroundGroup
         {

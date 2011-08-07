@@ -33,7 +33,7 @@ namespace IL2DCE
             {
                 ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
 
-                core = new Engine.Core(this, confFile);
+                core = new Core.Core(this, confFile);
                 
                 if (confFile.exist("MAIN", "campaignsFolder"))
                 {
