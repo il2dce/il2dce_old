@@ -141,6 +141,15 @@ namespace IL2DCE
 
                 ISectionFile missionFile = Game.Core.Generate(Game.CurrentCampaign.TemplateFileName);
 
+                string missionPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
+                if (!System.IO.Directory.Exists(missionPath))
+                {
+                    System.IO.Directory.CreateDirectory(missionPath);
+                }
+
+                string missionFileName = string.Format(String.Format("$user/mission/IL2DCE/IL2DCEDebug_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
+                missionFile.save(missionFileName);
+
 #if DEBUG
                 string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
                 if (!System.IO.Directory.Exists(debugPath))
@@ -161,11 +170,20 @@ namespace IL2DCE
                 }
 #endif
 
-                Game.gameInterface.MissionLoad(missionFile);
+                if (Game is IGameSingle)
+                {
+                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("SingleMissGame"), "mission " + missionFileName);
+                }
+                else if (Game is IGameServer)
+                {
+                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
+                }
 
-                Game.gameInterface.BattleStart();
+                //Game.gameInterface.MissionLoad(missionFile);
 
-                Game.gameInterface.UIMainHide();
+                //Game.gameInterface.BattleStart();
+
+                //Game.gameInterface.UIMainHide();
             }
 
             private void comboBoxSelectArmy_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
