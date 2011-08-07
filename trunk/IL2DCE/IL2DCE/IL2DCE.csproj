@@ -84,8 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="conf.ini" />
-    <None Include="COPYING" />
+    <None Include="conf.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="COPYING">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="IL2DCE.Inst.nsi" />
     <None Include="IL2DCE.Inst.template" />
     <None Include="Properties\GlobalAssemblyInfo.template" />
