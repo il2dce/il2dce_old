@@ -46,9 +46,9 @@
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
     <Compile Include="Campaign.cs" />
-    <Compile Include="Core.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />
+    <Compile Include="IL2DCE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radar.cs" />
     <Compile Include="Road.cs" />
