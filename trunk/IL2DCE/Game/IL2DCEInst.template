@@ -1,7 +1,7 @@
-# Define the installer name.
+# Define the installer name
 outFile "IL2DCE-0.1.0.$WCREV$$WCMODS?M:$.exe"
 
-# Set the default install directory.
+# Set the default install directory
 installDir "$PROGRAMFILES\Steam\steamapps\common\il-2 sturmovik cliffs of dover"
 
 Page license
@@ -35,6 +35,9 @@ file "parts\IL2DCE\Pages.dll"
 
 writeUninstaller "$INSTDIR\parts\IL2DCE\uninst.exe"
 
+createShortCut "$SMPROGRAMS\IL2DCE\Uninstall.lnk" "$INSTDIR\parts\IL2DCE\uninst.exe"
+createShortCut "$SMPROGRAMS\IL2DCE\COPYING.lnk" "$INSTDIR\parts\IL2DCE\COPYING"
+
 sectionEnd
 
 section
@@ -65,11 +68,17 @@ file "parts\IL2DCE\Campaigns\Prototype2\Template.mis"
 
 sectionEnd
 
-# Uninstall section is always called "Uninstall".
+# Uninstall section is always called "Uninstall"
 section "Uninstall"
 
-# Always delete uninst.exe first.
+# First delete uninst.exe
 delete "$INSTDIR\uninst.exe"
+
+# Second delete link
+delete "$SMPROGRAMS\IL2DCE\Uninstall.lnk"
+delete "$SMPROGRAMS\IL2DCE\COPYING.lnk"
+
+RMDir "$SMPROGRAMS\IL2DCE"
 
 delete "$INSTDIR\..\..\AddIns\IL2DCEGameServer.xml"
 delete "$INSTDIR\..\..\AddIns\IL2DCEGameSingle.xml"
