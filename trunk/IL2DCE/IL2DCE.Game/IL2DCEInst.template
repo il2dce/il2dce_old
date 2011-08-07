@@ -27,11 +27,10 @@ setOutPath "$INSTDIR\parts\IL2DCE"
 
 file "parts\IL2DCE\conf.ini"
 file "parts\IL2DCE\COPYING"
-file "parts\IL2DCE\Core.dll"
-file "parts\IL2DCE\Game.dll"
-file "parts\IL2DCE\Interfaces.dll"
-file "parts\IL2DCE\Mission.dll"
-file "parts\IL2DCE\Pages.dll"
+file "parts\IL2DCE\IL2DCE.dll"
+file "parts\IL2DCE\IL2DCE.Game.dll"
+file "parts\IL2DCE\IL2DCE.Mission.dll"
+file "parts\IL2DCE\IL2DCE.Pages.dll"
 
 writeUninstaller "$INSTDIR\parts\IL2DCE\uninst.exe"
 
@@ -98,11 +97,10 @@ RMDir "$INSTDIR\Campaigns"
 
 delete "$INSTDIR\conf.ini"
 delete "$INSTDIR\COPYING"
-delete "$INSTDIR\Core.dll"
-delete "$INSTDIR\Game.dll"
-delete "$INSTDIR\Interfaces.dll"
-delete "$INSTDIR\Mission.dll"
-delete "$INSTDIR\Pages.dll"
+delete "$INSTDIR\IL2DCE.dll"
+delete "$INSTDIR\IL2DCE.Game.dll"
+delete "$INSTDIR\IL2DCE.Mission.dll"
+delete "$INSTDIR\IL2DCE.Pages.dll"
 RMDir "$INSTDIR"
 
 sectionEnd
