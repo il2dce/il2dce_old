@@ -42,6 +42,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Mission.cs" />
+    <Compile Include="MissionServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IL2DCE\IL2DCE.csproj">
+      <Project>{22442D49-0A77-4CBE-A1F3-9806958C10AE}</Project>
+      <Name>IL2DCE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
