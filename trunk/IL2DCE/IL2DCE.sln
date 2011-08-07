@@ -5,11 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mission", "Mission\Mission.csproj", "{75E92407-3D44-4802-A09A-5ED7E6FEBC12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{22442D49-0A77-4CBE-A1F3-9806958C10AE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pages", "Pages\Pages.csproj", "{ECBA2DA0-44D1-4449-9240-E57F07460A14}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{34E6EEFF-8967-420F-849B-2E0EB594DC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{22442D49-0A77-4CBE-A1F3-9806958C10AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{75E92407-3D44-4802-A09A-5ED7E6FEBC12}.Debug|x86.Build.0 = Debug|x86
 		{75E92407-3D44-4802-A09A-5ED7E6FEBC12}.Release|x86.ActiveCfg = Release|x86
 		{75E92407-3D44-4802-A09A-5ED7E6FEBC12}.Release|x86.Build.0 = Release|x86
-		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Debug|x86.ActiveCfg = Debug|x86
-		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Debug|x86.Build.0 = Debug|x86
-		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Release|x86.ActiveCfg = Release|x86
-		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Release|x86.Build.0 = Release|x86
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Debug|x86.ActiveCfg = Debug|x86
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Debug|x86.Build.0 = Debug|x86
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Release|x86.ActiveCfg = Release|x86
@@ -37,6 +33,10 @@ Global
 		{34E6EEFF-8967-420F-849B-2E0EB594DC61}.Debug|x86.Build.0 = Debug|x86
 		{34E6EEFF-8967-420F-849B-2E0EB594DC61}.Release|x86.ActiveCfg = Release|x86
 		{34E6EEFF-8967-420F-849B-2E0EB594DC61}.Release|x86.Build.0 = Release|x86
+		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Debug|x86.ActiveCfg = Debug|x86
+		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Debug|x86.Build.0 = Debug|x86
+		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Release|x86.ActiveCfg = Release|x86
+		{22442D49-0A77-4CBE-A1F3-9806958C10AE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
