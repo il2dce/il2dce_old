@@ -26,16 +26,5 @@ namespace IL2DCE
         {
             get;
         }
-
-        List<ICampaign> Campaigns
-        {
-            get;
-        }
-
-        ICampaign CurrentCampaign
-        {
-            get;
-            set;
-        }
     }
 }

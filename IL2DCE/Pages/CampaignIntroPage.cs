@@ -49,10 +49,8 @@ namespace IL2DCE
 
                 _game = play as IGame;
 
-                if (Game.CurrentCampaign != null)
+                if (Game.Core.CurrentCampaign != null)
                 {
-                    Game.Core.Init(Game.CurrentCampaign.TemplateFileName);
-
                     System.Windows.Controls.ComboBoxItem itemArmyRed = new System.Windows.Controls.ComboBoxItem();
                     itemArmyRed.Content = "Red";
                     FrameworkElement.comboBoxSelectArmy.Items.Add(itemArmyRed);
@@ -139,7 +137,9 @@ namespace IL2DCE
                     Game.Core.SpawnParked = false;
                 }
 
-                ISectionFile missionFile = Game.Core.Generate(Game.CurrentCampaign.TemplateFileName);
+
+
+                ISectionFile missionFile = Game.Core.ContinueCampaign();
 
                 string missionPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
                 if (!System.IO.Directory.Exists(missionPath))
@@ -147,28 +147,8 @@ namespace IL2DCE
                     System.IO.Directory.CreateDirectory(missionPath);
                 }
 
-                string missionFileName = string.Format(String.Format("$user/mission/IL2DCE/IL2DCEDebug_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
+                string missionFileName = string.Format(String.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
                 missionFile.save(missionFileName);
-
-#if DEBUG
-                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
-                if (!System.IO.Directory.Exists(debugPath))
-                {
-                    System.IO.Directory.CreateDirectory(debugPath);
-                }
-                missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-#else
-                string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
-                if (Game.Core.Debug == 1)
-                {
-                    debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
-                    if (!System.IO.Directory.Exists(debugPath))
-                    {
-                        System.IO.Directory.CreateDirectory(debugPath);
-                    }
-                    missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-                }
-#endif
 
                 if (Game is IGameSingle)
                 {

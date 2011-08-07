@@ -48,7 +48,7 @@ namespace IL2DCE
 
                 _game = play as IGame;
 
-                FrameworkElement.ListCampaign.ItemsSource = Game.Campaigns;
+                FrameworkElement.ListCampaign.ItemsSource = Game.Core.Campaigns;
 
                 if (FrameworkElement.ListCampaign.Items.Count > 0)
                 {
@@ -106,10 +106,10 @@ namespace IL2DCE
                 if (e.AddedItems.Count > 0)
                 {
                     ICampaign campaignSelected = e.AddedItems[0] as ICampaign;
-                    Game.CurrentCampaign = campaignSelected;
+                    Game.Core.CurrentCampaign = campaignSelected;
                 }
 
-                if (Game.CurrentCampaign != null)
+                if (Game.Core.CurrentCampaign != null)
                 {
                     FrameworkElement.bNew.IsEnabled = true;
                 }

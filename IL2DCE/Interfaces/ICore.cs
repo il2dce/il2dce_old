@@ -22,14 +22,20 @@ namespace IL2DCE
 {
     public interface ICore
     {
-        //IGame Game
-        //{
-        //    get;
-        //}
+        ICampaign CurrentCampaign
+        {
+            get;
+            set;
+        }
 
-        void Init(string templateFileName);
+        List<ICampaign> Campaigns
+        {
+            get;
+        }
 
-        maddox.game.ISectionFile Generate(string missionFileName);
+        maddox.game.ISectionFile StartCampaign();
+
+        maddox.game.ISectionFile ContinueCampaign();
 
         bool SpawnParked
         {
