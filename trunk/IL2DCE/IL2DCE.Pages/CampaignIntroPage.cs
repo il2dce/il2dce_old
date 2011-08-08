@@ -156,7 +156,8 @@ namespace IL2DCE
                 }
                 else if (Game is IGameServer)
                 {
-                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
+                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerOptions"), null);
+                    //Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
                 }
 
                 //Game.gameInterface.MissionLoad(missionFile);
