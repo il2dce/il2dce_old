@@ -36,9 +36,12 @@ namespace IL2DCE
         private List<Radar> redRadars = new List<Radar>();
         private List<Radar> blueRadars = new List<Radar>();
 
-        public Core(maddox.game.IGame game, ISectionFile confFile)
+        public Core(maddox.game.IGame game)
         {
             _game = game;
+
+            ISectionFile confFile = game.gameInterface.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+
             if (confFile.exist("Core", "setOnPark"))
             {
                 string value = confFile.get("Core", "setOnPark");
