@@ -33,11 +33,9 @@ namespace IL2DCE
             public GameServer(GameServerIterface game, bool dedicated)
                 : base(game, dedicated)
             {
-                ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
-                                
                 _server = new WServer();
 
-                _core = new Core(this, confFile);
+                _core = new Core(this);
             }
 
             public override maddox.game.play.PageInterface getStartPage()

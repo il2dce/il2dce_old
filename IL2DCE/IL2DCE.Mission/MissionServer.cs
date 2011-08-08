@@ -20,24 +20,7 @@ namespace IL2DCE
     {
         public class MissionServer : Mission
         {
-            private IL2DCE.Core _core;
-
-            public override void OnBattleInit()
-            {
-                base.OnBattleInit();
-
-                maddox.game.ISectionFile confFile = GamePlay.gpLoadSectionFile("$home/parts/IL2DCE/conf.ini");
-                _core = new IL2DCE.Core(GamePlay as IL2DCE.IGame, confFile);
-
-                _core.CurrentCampaign = _core.Campaigns[0];
-
-                maddox.game.ISectionFile missionFile = _core.ContinueCampaign();
-
-                string missionFileName = string.Format(string.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", System.DateTime.Now.ToString("yyyyMMddHHmmssffff")));
-                missionFile.save(missionFileName);
-
-                GamePlay.gpPostMissionLoad(missionFileName);
-            }
+            
         }
     }
 }
