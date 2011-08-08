@@ -137,8 +137,6 @@ namespace IL2DCE
                     Game.Core.SpawnParked = false;
                 }
 
-
-
                 ISectionFile missionFile = Game.Core.ContinueCampaign();
 
                 string missionPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
@@ -156,15 +154,8 @@ namespace IL2DCE
                 }
                 else if (Game is IGameServer)
                 {
-                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerOptions"), null);
-                    //Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
+                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
                 }
-
-                //Game.gameInterface.MissionLoad(missionFile);
-
-                //Game.gameInterface.BattleStart();
-
-                //Game.gameInterface.UIMainHide();
             }
 
             private void comboBoxSelectArmy_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
