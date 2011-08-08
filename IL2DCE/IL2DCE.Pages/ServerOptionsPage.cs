@@ -73,6 +73,8 @@ namespace IL2DCE
 
             private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
             {
+                Game.init("1234");
+
                 Game.gameInterface.PageChange(new SelectCampaignPage(), null);
             }
         }

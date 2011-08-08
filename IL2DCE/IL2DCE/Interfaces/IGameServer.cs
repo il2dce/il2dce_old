@@ -22,9 +22,6 @@ namespace IL2DCE
 {
     public interface IGameServer : maddox.game.IGameServer, IGame
     {
-        maddox.steam.WServer Server
-        {
-            get;
-        }
+        
     }
 }

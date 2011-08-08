@@ -33,8 +33,6 @@ namespace IL2DCE
             public GameServer(GameServerIterface game, bool dedicated)
                 : base(game, dedicated)
             {
-                _server = new WServer();
-
                 _core = new Core(this);
             }
 
@@ -42,16 +40,7 @@ namespace IL2DCE
             {
                 return new Pages.ServerOptionsPage();
             }
-
-            public WServer Server
-            {
-                get
-                {
-                    return _server;
-                }
-            }
-            private WServer _server;
-
+                        
             public ICore Core
             {
                 get
