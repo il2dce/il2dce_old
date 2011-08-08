@@ -36,9 +36,11 @@ namespace IL2DCE
         private List<Radar> redRadars = new List<Radar>();
         private List<Radar> blueRadars = new List<Radar>();
 
-        public Core(maddox.game.IGame game)
+        public Core(GameDef game)
         {
             _game = game;
+
+            Game.EventChat += new GameDef.Chat(Game_EventChat);
 
             ISectionFile confFile = game.gameInterface.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
 
@@ -93,6 +95,14 @@ namespace IL2DCE
             }
         }
 
+        void Game_EventChat(IPlayer from, string msg)
+        {
+            if(msg.Contains("!hello"))
+            {
+                Game.gpLogServer(new Player[] { from }, "Hello World!", null);
+            }
+        }
+
         public ICampaign CurrentCampaign
         {
             get
@@ -119,14 +129,14 @@ namespace IL2DCE
         }
         private List<ICampaign> campaigns = new List<ICampaign>();
 
-        private maddox.game.IGame Game
+        private GameDef Game
         {
             get
             {
                 return _game;
             }
         }
-        private maddox.game.IGame _game;
+        private GameDef _game;
 
         public bool SpawnParked
         {
