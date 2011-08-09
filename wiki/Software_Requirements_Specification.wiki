@@ -36,11 +36,11 @@ The ground operations are simulated at the operational level of war. The element
 
 ==== Pilot experience ====
 The experience of a pilot is reflected by his position within the squadron. 
-   * Section leader
-   * Flight leader
-   * Squadron leader
+   * Section Leader
+   * Flight Leader
+   * Commanding Officer
 
-==== Commanding officer ====
+==== Commanding Officer ====
 The pilot can become the commanding officer of a squadron and can then influence the mission parameters. 
    * Select aircraft that take part in the mission
    * Select the loadout for the mission
