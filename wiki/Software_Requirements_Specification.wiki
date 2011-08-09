@@ -3,24 +3,39 @@
 
 = Introduction =
 
-The air war is simulated at the tactical level. The units involved are of squadron and wing size.
-
-The ground war is simulated at the operational level. The units involved are of battalion and division size.
-
 
 = Details =
 
-== Requirments ==
- * Player level
-The experience of the player is reflected by his position within the squadron. 
+== Functional Requirments ==
+
+=== Air war ===
+The air war is simulated at the tactical level. The units involved are of squadron and wing size.
+
+=== Ground war ===
+The ground war is simulated at the operational level. The units involved are of battalion and division size.
+
+=== Squadron managment ===
+
+==== Medals and Decoration ===
+
+==== Rank ====
+
+==== Pilot experience level ====
+The experience of a pilot is reflected by his position within the squadron. 
    * Section leader
    * Flight leader
    * Squadron leader
- * Squadron management
-The player can become the CO of a squadron and can then influence the mission parameters. 
+
+==== Commanding Officer ====
+The player can become the Commanding Officer of a squadron and can then influence the mission parameters. 
    * Select aircraft and loadouts
    * Assign pilot
    * Modify waypoints
- * Rank system
- * Medals and Decoration system
- * Single-player and cooperative multiplayer support
+
+=== Game Modes ===
+
+==== Single-player ====
+
+
+==== Multiplayer ====
+
