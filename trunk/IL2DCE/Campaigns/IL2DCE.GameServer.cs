@@ -35,7 +35,7 @@ public class Mission : AMission
 
             core.CurrentCampaign = core.Campaigns[0];
 
-            maddox.game.ISectionFile missionFile = _core.StartCampaign();
+            maddox.game.ISectionFile missionFile = core.StartCampaign();
 
             GamePlay.gpPostMissionLoad(missionFile);
         }
