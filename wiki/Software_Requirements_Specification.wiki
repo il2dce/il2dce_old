@@ -19,7 +19,7 @@
 
 
 === Air operations ===
-The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission. involved are of squadron and wing size. 
+The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
 
 ==== Mission types ====
 
@@ -28,7 +28,7 @@ The air operations are simulated at the tactical level of war. The elementary un
 
 
 === Ground operations ===
-The ground operations are simulated at the operational level of war. The elementary unit is the battalion.
+The ground operations are simulated at the operational level of war. The elementary unit is the battalion. 
 
 
 === Squadron managment ===
