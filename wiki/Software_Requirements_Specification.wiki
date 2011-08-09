@@ -16,7 +16,6 @@
 === Air operations ===
 The air operations are simulated at the tactical level war. The units involved are of squadron and wing size. 
 
-The term _mission_ is used for a task performed by a elemental unit. The term operation is used 
 
 ==== Mission types ====
 
