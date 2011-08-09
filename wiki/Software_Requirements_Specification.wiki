@@ -36,5 +36,4 @@ The player can become the Commanding Officer of a squadron and can then influenc
 
 ==== Single-player ====
 
-
 ==== Multiplayer ====
