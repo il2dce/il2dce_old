@@ -7,9 +7,9 @@ A campaign for IL2DCE consists of a campaign template mission and a campaign con
 
 = Details =
 
-== Campaign template mission ==
+== Campaign template file ==
 
-The campaign template mission file is created within the FMB of _IL-2 Sturmovik: Cliffs of Dover_. There are some regulations for the template file creation which are described in the following section. 
+The campaign template file is created within the FMB of _IL-2 Sturmovik: Cliffs of Dover_. There are some regulations for the template file creation which are described in the following section. 
 
 
 === FrontMarkers ===
