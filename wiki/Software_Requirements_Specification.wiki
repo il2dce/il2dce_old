@@ -20,6 +20,7 @@ The air operations are simulated at the tactical level of war. The elementary un
 
 ==== Mission types ====
 
+
 ==== Special events ====
 
 
@@ -50,8 +51,16 @@ The pilot can become the commanding officer of a squadron and can then influence
 === Game Modes ===
 
 ==== Single-player ====
+A single-player mode is provided where the player selects his unit at the beginning of the campaign. Every battle of the campaign contains at least a operation with a primary mission for the player's unit and optionally additional operations depending on the configuration. The battle ends when the primary mission of the player's unit is completed.
 
 ==== Multiplayer ====
+A multiplayer mode is provided where remote players connect to the server that is running IL2DCE.
+
+===== Cooperative =====
+Same as single-player mode but allows remote players to select the army, the air group and the aircraft.
+
+===== Dogfight =====
+The battle that is lasting over several operations.
 
 == Non-functional Requirments ==
 
