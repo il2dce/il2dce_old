@@ -6,9 +6,13 @@
 == Glossary ==
 
 || *Term* || *Meaning* ||
-|| Mission || A task given to a elementary unit. ||
-|| Operation || A combination of connected missions of different units. ||
-|| Battle || A combination of unconnected operations that take place at the same time and on the same map. ||
+|| Mission || The task given to a elementary unit. ||
+|| Primary mission || The mission that is the main goal of the operation. ||
+|| Secondary mission || A mission that supports the main goal of the 
+operation. ||
+|| Opposing mission || A mission that tries to prevent the achievment of the main goal of the operation. ||
+|| Operation || The combination of a primary mission and optionally secondary missions and opposing missions of different units. ||
+|| Battle || A closed set of one or more operations that take place at the same map. ||
 
 = Details =
 
