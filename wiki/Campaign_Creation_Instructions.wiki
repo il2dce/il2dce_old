@@ -1,5 +1,5 @@
 #summary How to create a campaign for IL2DCE.
-#labels Phase-Deploy,Phase-Support
+#labels Phase-Deploy,Phase-Support,Draft
 
 = Introduction =
 
