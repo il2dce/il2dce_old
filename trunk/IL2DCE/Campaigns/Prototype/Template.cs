@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//$reference parts/il2dce/Mission.dll
+//$reference parts/IL2DCE/IL2DCE.Mission.dll
 //$debug
 
 public class Mission : IL2DCE.Mission.Mission
