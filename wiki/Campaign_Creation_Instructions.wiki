@@ -60,3 +60,20 @@ Example:
 }}}
 
 There is a global "AircraftInfo.ini" file. A campaign can provide a local "AircraftInfo.ini" file where the information of the global file can be overwritten for selected aircraft.
+
+=== TOE.ini (not implemented) ===
+{{{
+[Placeholders]
+  Armor.Cruiser_Mk_IVA
+  Artillery.40mm_2pdr_AT_Gun_Mk_II
+  
+  ...
+[Armor.Cruiser_Mk_IVA]
+  type Armor
+  templateFile Artillery.40mm_2pdr_AT_Gun_Mk_II.mis
+[Artillery.40mm_2pdr_AT_Gun_Mk_II]
+  type Artillery
+  templateFile Artillery.40mm_2pdr_AT_Gun_Mk_II.mis
+}}}
+
+There is a global "TOE.ini" file. A campaign can provide a local "TOE.ini" file where the information of the global file can be overwritten for selected TOE.
