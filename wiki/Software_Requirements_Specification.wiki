@@ -56,7 +56,7 @@ The pilot can become the commanding officer of a squadron and can then influence
 == Non-functional Requirments ==
 
 === Campaign Creation ===
-
+New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_. Configuration files can be provided optionally to overwrite the global configuration.
 
 === Rapid release cycle ===
 New versions are released frequently.
@@ -67,4 +67,4 @@ New versions are released frequently.
 Only the units that are involved in an operation are visible in the 3D engine. The amount of operations in each battle can be scaled to the available hardware.
 
 ==== Aircraft, vehicles, statics, maps ====
-New Aircraft, vehicles, statics, maps can be added.
+New Aircraft, vehicles, statics, maps can be added with little effort.
