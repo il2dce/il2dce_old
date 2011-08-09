@@ -3,12 +3,20 @@
 
 = Introduction =
 
+== Glossary ==
+
+|| *Term* || *Meaning* ||
+|| Mission || A task given to a single unit. ||
+|| Operation || A combination of connected missions of different units. ||
+
 = Details =
 
 == Functional requirments ==
 
 === Air operations ===
-The air operations are simulated at the tactical level war. The units involved are of squadron and wing size.
+The air operations are simulated at the tactical level war. The units involved are of squadron and wing size. 
+
+The term _mission_ is used for a task performed by a elemental unit. The term operation is used 
 
 ==== Mission types ====
 
@@ -48,3 +56,7 @@ The pilot can become the commanding officer of a squadron and can then influence
 == Non-functional Requirments ==
 
 === Campaign Creation ===
+
+=== Rapid release cycle ===
+
+=== Scalable performance ===
