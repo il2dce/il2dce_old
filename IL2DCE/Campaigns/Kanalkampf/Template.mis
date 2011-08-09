@@ -214,18 +214,17 @@
 [CustomChiefs]
 [Chiefs]
   0_Chief Vehicle.GB_Tank_Transport_Column gb 
-  1_Chief Armor.Cruiser_Mk_IVA gb_1_ad /num_units 5/pax_skin0 mixed/marker0 rhomb_red
+  1_Chief Armor.Cruiser_Mk_IVA gb /num_units 5
   2_Chief Vehicle.GER_HAAA_Transport_Column de 
   3_Chief Armor.Pz_IIIF de /num_units 4
   5_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
   4_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
-  6_Chief Armor.Bataille_B1_Bis fr 
 [0_Chief_Road]
   215545.77 236971.05 38.40  0 2 1.00
   215575.22 237035.53 38.40
 [1_Chief_Road]
-  230234.80 249029.97 38.40  0 2 6.39
-  229810.50 249056.89 38.40
+  230219.38 249029.97 38.40  0 2 6.39
+  230227.08 249064.67 38.40
 [2_Chief_Road]
   310925.91 193966.63 38.40  0 2 1.00
   310897.53 193955.98 38.40
@@ -238,14 +237,10 @@
 [4_Chief_Road]
   245943.64 233571.89 38.40  0 2 5.56
   246093.13 233500.98 38.40
-[6_Chief_Road]
-  229560.30 248589.55 38.40  0 2 4.17
-  229992.30 248311.83 38.40
 [Stationary]
   Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
   Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
   Static1 Stationary.Radar.EnglishRadar1 gb 217627.77 251506.53 71.00 
-  Static3 Artillery.40mm_2pdr_AT_Gun_Mk_II gb 231037.19 248249.73 0.00 /timeout 0/radius_hide 0
 [Buildings]
 [BuildingsLinks]
 [FrontMarker]
