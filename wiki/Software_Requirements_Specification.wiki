@@ -5,37 +5,38 @@
 
 = Details =
 
-== Functional Requirments ==
+== Functional requirments ==
 
-=== Air Operations ===
+=== Air operations ===
 The air operations are simulated at the tactical level war. The units involved are of squadron and wing size.
 
-==== Mission Types ====
+==== Mission types ====
 
-==== Special Events ====
+==== Special events ====
 
 
-=== Ground Operations ===
+=== Ground operations ===
 The ground operations are simulated at the operational level of war. The units involved are of battalion and division size.
 
 
-=== Squadron Managment ===
+=== Squadron managment ===
 
-==== Medals and Decoration ===
+==== Medals and decoration ===
 
 ==== Rank ====
 
-==== Pilot Experience Level ====
+==== Pilot experience ====
 The experience of a pilot is reflected by his position within the squadron. 
    * Section leader
    * Flight leader
    * Squadron leader
 
-==== Commanding Officer ====
-The player can become the Commanding Officer of a squadron and can then influence the mission parameters. 
-   * Select aircraft and loadouts
-   * Assign pilot
-   * Modify waypoints
+==== Commanding officer ====
+The pilot can become the commanding officer of a squadron and can then influence the mission parameters. 
+   * Select aircraft that take part in the mission
+   * Select the loadout for the mission
+   * Select the pilots that take part in the mission
+   * Modify waypoints to a certain degree
 
 
 === Game Modes ===
@@ -44,5 +45,6 @@ The player can become the Commanding Officer of a squadron and can then influenc
 
 ==== Multiplayer ====
 
+== Non-functional Requirments ==
 
 === Campaign Creation ===
