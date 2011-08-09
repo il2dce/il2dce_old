@@ -1,5 +1,5 @@
-#summary Draft: Vision and requirements.
-#labels Phase-Requirements,Deprecated
+#summary Vision and requirements.
+#labels Phase-Requirements,Draft
 
 = Introduction =
 
@@ -38,4 +38,3 @@ The player can become the Commanding Officer of a squadron and can then influenc
 
 
 ==== Multiplayer ====
-
