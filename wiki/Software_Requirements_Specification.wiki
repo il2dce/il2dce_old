@@ -7,11 +7,17 @@
 
 == Functional Requirments ==
 
-=== Air War ===
-The air war is simulated at the tactical level. The units involved are of squadron and wing size.
+=== Air Operations ===
+The air operations are simulated at the tactical level war. The units involved are of squadron and wing size.
 
-=== Ground War ===
-The ground war is simulated at the operational level. The units involved are of battalion and division size.
+==== Mission Types ====
+
+==== Special Events ====
+
+
+=== Ground Operations ===
+The ground operations are simulated at the operational level of war. The units involved are of battalion and division size.
+
 
 === Squadron Managment ===
 
@@ -31,10 +37,12 @@ The player can become the Commanding Officer of a squadron and can then influenc
    * Assign pilot
    * Modify waypoints
 
+
 === Game Modes ===
 
 ==== Single-player ====
 
 ==== Multiplayer ====
+
 
 === Campaign Creation ===
