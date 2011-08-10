@@ -28,20 +28,22 @@ namespace IL2DCE
     {
         #region Public constructors
 
-        public GroundGroupWaypoint(Point3d position, double v)
+        public GroundGroupWaypoint(Point3d position, double v, int type)
         {
             X = position.x;
             Y = position.y;
             Z = position.z;
             V = v;
+            Type = type;
         }
 
-        public GroundGroupWaypoint(double x, double y, double z, double v)
+        public GroundGroupWaypoint(double x, double y, double z, double v, int type)
         {
             X = x;
             Y = y;
             Z = z;
             V = v;
+            Type = type;
         }
 
         public GroundGroupWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
