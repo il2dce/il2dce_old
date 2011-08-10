@@ -186,16 +186,16 @@ namespace IL2DCE
                         if (closestRoad.Start.V.HasValue && closestRoad.Start.Type.HasValue)
                         {
                             sectionFile.add(Id + "_Road", closestRoad.Start.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.Start.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.Start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + closestRoad.Start.Type.Value.ToString() + " " + closestRoad.Start.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                        }
 
-                        if (closestRoad.RoadPoints != null && closestRoad.RoadPoints.Count > 0)
-                        {
-                            foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
+                            if (closestRoad.RoadPoints != null && closestRoad.RoadPoints.Count > 0)
                             {
-                                sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
+                                foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
+                                {
+                                    sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
+                                }
                             }
-                        }
-                        sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                            sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        }                        
                     }
                 }
             }
