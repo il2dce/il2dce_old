@@ -173,6 +173,15 @@ namespace IL2DCE
         }
         System.Collections.Generic.List<Road> _roads = new System.Collections.Generic.List<Road>();
 
+        public System.Collections.Generic.IList<Road> Routes
+        {
+            get
+            {
+                return _routes;
+            }
+        }
+        System.Collections.Generic.List<Road> _routes = new System.Collections.Generic.List<Road>();
+
         public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
             get
@@ -471,7 +480,14 @@ namespace IL2DCE
                 else
                 {
                     Road road = new Road(templateFile, key);
-                    _roads.Add(road);
+                    if (value.StartsWith("Vehicle") || value.StartsWith("Armor"))
+                    {
+                        _roads.Add(road);
+                    }
+                    else if (value.StartsWith("Ship"))
+                    {
+                        _routes.Add(road);
+                    }
                 }
             }
 
@@ -589,52 +605,63 @@ namespace IL2DCE
         {
             foreach (GroundGroup redGroundGroup in redGroundGroups)
             {
-                if (redGroundGroup.Type != EGroundGroupType.Ship)
+
+                List<Point3d> friendlyMarkers = redFrontMarkers;
+                if (friendlyMarkers.Count > 0)
                 {
-                    List<Point3d> friendlyMarkers = redFrontMarkers;
-                    if (friendlyMarkers.Count > 0)
+                    int markerIndex = rand.Next(friendlyMarkers.Count);
+                    Point2d start = new Point2d(redGroundGroup.Position.x, redGroundGroup.Position.y);
+                    Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
+
+                    redGroundGroup.Waypoints.Clear();
+                    Point3d startPoint = new Point3d(start.x, start.y, 38.40);
+                    GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0, 2);
+                    redGroundGroup.Waypoints.Add(startWaypoint);
+
+                    Point3d endPoint = new Point3d(end.x, end.y, 38.40);
+                    GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0, 2);
+                    redGroundGroup.Waypoints.Add(endWaypoint);
+
+                    if (redGroundGroup.Type != EGroundGroupType.Ship)
                     {
-                        int markerIndex = rand.Next(friendlyMarkers.Count);
-                        Point2d start = new Point2d(redGroundGroup.Position.x, redGroundGroup.Position.y);
-                        Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
-
-                        redGroundGroup.Waypoints.Clear();
-                        Point3d startPoint = new Point3d(start.x, start.y, 38.40);
-                        GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0);
-                        redGroundGroup.Waypoints.Add(startWaypoint);
-
-                        Point3d endPoint = new Point3d(end.x, end.y, 38.40);
-                        GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0);
-                        redGroundGroup.Waypoints.Add(endWaypoint);
-
                         redGroundGroup.writeTo(missionFile, Roads);
+                    }
+                    else
+                    {
+                        redGroundGroup.writeTo(missionFile, Routes);
                     }
                 }
             }
 
             foreach (GroundGroup blueGroundGroup in blueGroundGroups)
             {
-                if (blueGroundGroup.Type != EGroundGroupType.Ship)
+
+                List<Point3d> friendlyMarkers = blueFrontMarkers;
+                if (friendlyMarkers.Count > 0)
                 {
-                    List<Point3d> friendlyMarkers = blueFrontMarkers;
-                    if (friendlyMarkers.Count > 0)
+                    int markerIndex = rand.Next(friendlyMarkers.Count);
+                    Point2d start = new Point2d(blueGroundGroup.Position.x, blueGroundGroup.Position.y);
+                    Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
+
+                    blueGroundGroup.Waypoints.Clear();
+                    Point3d startPoint = new Point3d(start.x, start.y, 38.40);
+                    GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0, 2);
+                    blueGroundGroup.Waypoints.Add(startWaypoint);
+
+                    Point3d endPoint = new Point3d(end.x, end.y, 38.40);
+                    GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0, 2);
+                    blueGroundGroup.Waypoints.Add(endWaypoint);
+
+                    if (blueGroundGroup.Type != EGroundGroupType.Ship)
                     {
-                        int markerIndex = rand.Next(friendlyMarkers.Count);
-                        Point2d start = new Point2d(blueGroundGroup.Position.x, blueGroundGroup.Position.y);
-                        Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
-
-                        blueGroundGroup.Waypoints.Clear();
-                        Point3d startPoint = new Point3d(start.x, start.y, 38.40);
-                        GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0);
-                        blueGroundGroup.Waypoints.Add(startWaypoint);
-
-                        Point3d endPoint = new Point3d(end.x, end.y, 38.40);
-                        GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0);
-                        blueGroundGroup.Waypoints.Add(endWaypoint);
-
                         blueGroundGroup.writeTo(missionFile, Roads);
                     }
+                    else
+                    {
+                        blueGroundGroup.writeTo(missionFile, Routes);
+                    }
                 }
+
             }
         }
 

@@ -147,55 +147,60 @@ namespace IL2DCE
             sectionFile.add("Chiefs", Id, Class + " " + Country.ToString() + " " + Options);
             for (int i = 0; i < Waypoints.Count - 1; i++)
             {
-                if (Waypoints[i].V.HasValue && Waypoints[i].Type.HasValue)
-                {
-                    sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 " + Waypoints[i].Type.Value.ToString() + " " + Waypoints[i].V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                }
+                //if (Waypoints[i].V.HasValue && Waypoints[i].Type.HasValue)
+                //{
+                //    sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + Waypoints[i].Type.Value.ToString() + " " + Waypoints[i].V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                //}
                 // TODO: Use the default V.
 
-                Road closestRoad = null;
-                double closestRoadDistance = 0.0;
-                foreach (Road road in roads)
+                if (roads != null && roads.Count > 0)
                 {
-                    Point3d pStart = new Point3d(road.Start.Position.x, road.Start.Position.y, road.Start.Position.z);
-                    double distanceStart = Waypoints[i].Position.distance(ref pStart);
-                    Point3d pEnd = new Point3d(road.End.Position.x, road.End.Position.y, road.End.Position.z);
-                    double distanceEnd = Waypoints[i + 1].Position.distance(ref pEnd);
-                    if (closestRoad == null)
+                    Road closestRoad = null;
+                    double closestRoadDistance = 0.0;
+                    foreach (Road road in roads)
                     {
-                        closestRoad = road;
-                        closestRoadDistance = distanceStart + distanceEnd;
-                    }
-                    else
-                    {
-                        if (distanceStart + distanceEnd < closestRoadDistance)
+                        if (road.Start != null && road.End != null)
                         {
-                            closestRoad = road;
-                            closestRoadDistance = distanceStart + distanceEnd;
+                            Point3d pStart = new Point3d(road.Start.Position.x, road.Start.Position.y, road.Start.Position.z);
+                            double distanceStart = Waypoints[i].Position.distance(ref pStart);
+                            Point3d pEnd = new Point3d(road.End.Position.x, road.End.Position.y, road.End.Position.z);
+                            double distanceEnd = Waypoints[i + 1].Position.distance(ref pEnd);
+                            if (closestRoad == null)
+                            {
+                                closestRoad = road;
+                                closestRoadDistance = distanceStart + distanceEnd;
+                            }
+                            else
+                            {
+                                if (distanceStart + distanceEnd < closestRoadDistance)
+                                {
+                                    closestRoad = road;
+                                    closestRoadDistance = distanceStart + distanceEnd;
+                                }
+                            }
                         }
                     }
-                }
 
-                if (closestRoad != null)
-                {
-                    if (closestRoad.Start.V.HasValue && closestRoad.Start.Type.HasValue)
+                    if (closestRoad != null)
                     {
-                        sectionFile.add(Id + "_Road", closestRoad.Start.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.Start.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.Start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 " + closestRoad.Start.Type.Value.ToString() + " " + closestRoad.Start.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                    }
+                        if (closestRoad.Start.V.HasValue && closestRoad.Start.Type.HasValue)
+                        {
+                            sectionFile.add(Id + "_Road", closestRoad.Start.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.Start.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.Start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + closestRoad.Start.Type.Value.ToString() + " " + closestRoad.Start.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        }
 
-                    foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
-                    {
-                        sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
-                    }
-
-                    if (closestRoad.End.V.HasValue && closestRoad.End.Type.HasValue)
-                    {
-                        sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " 0 " + closestRoad.End.Type.Value.ToString() + " " + closestRoad.End.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        if (closestRoad.RoadPoints != null && closestRoad.RoadPoints.Count > 0)
+                        {
+                            foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
+                            {
+                                sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
+                            }
+                        }
+                        sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
                 }
             }
 
-            sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            //sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         }
     }
 }
