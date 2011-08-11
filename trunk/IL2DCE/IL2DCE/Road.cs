@@ -28,47 +28,53 @@ namespace IL2DCE
     {
         public Road(ISectionFile sectionFile, string groundGroupId)
         {
-            if (sectionFile.lines(groundGroupId + "_Road") > 2)
+            // Waypoints
+            GroundGroupWaypoint lastWaypoint = null;
+            for (int i = 0; i < sectionFile.lines(groundGroupId + "_Road"); i++)
             {
-                _start = new GroundGroupWaypoint(sectionFile, groundGroupId, 0);
-
-                for (int i = 1; i < sectionFile.lines(groundGroupId + "_Road") - 1; i++)
+                string key;
+                string value;
+                sectionFile.get(groundGroupId + "_Road", i, out key, out value);
+                if (!key.Contains("S"))
                 {
-                    string key;
-                    string value;
-                    sectionFile.get(groundGroupId + "_Road", i, out key, out value);
-                    _roadPoints.Add(new Tuple<string, string>(key, value));
+                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, groundGroupId, i);
+                    lastWaypoint = waypoint;
+                    Waypoints.Add(waypoint);
                 }
-
-                _end = new GroundGroupWaypoint(sectionFile, groundGroupId, sectionFile.lines(groundGroupId + "_Road") - 1);
+                else if (key.Contains("S"))
+                {
+                    if (lastWaypoint != null)
+                    {
+                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, groundGroupId, i);
+                        lastWaypoint.SubWaypoints.Add(subWaypoint);
+                    }
+                }
             }
         }
+
+        public List<GroundGroupWaypoint> Waypoints
+        {
+            get
+            {
+                return _waypoints;
+            }
+        }
+        private List<GroundGroupWaypoint> _waypoints = new List<GroundGroupWaypoint>();
 
         public GroundGroupWaypoint Start
         {
             get
             {
-                return _start;
+                return Waypoints[0];
             }
         }
-        private GroundGroupWaypoint _start;
 
         public GroundGroupWaypoint End
         {
             get
             {
-                return _end;
+                return Waypoints[Waypoints.Count - 1];
             }
         }
-        private GroundGroupWaypoint _end;
-
-        public List<Tuple<string, string>> RoadPoints
-        {
-            get
-            {
-                return _roadPoints;
-            }
-        }
-        private List<Tuple<string, string>> _roadPoints = new List<Tuple<string, string>>();
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="AirGroupWaypoint.cs" />
     <Compile Include="Campaign.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="GroundGroupSubWaypoint.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />
