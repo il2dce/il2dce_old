@@ -601,67 +601,120 @@ namespace IL2DCE
             return missionFile;
         }
 
-        public void createGroundGroups(ISectionFile missionFile)
+        public void FindPath(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
         {
-            foreach (GroundGroup redGroundGroup in redGroundGroups)
+            if (roads != null && roads.Count > 0)
             {
-
-                List<Point3d> friendlyMarkers = redFrontMarkers;
-                if (friendlyMarkers.Count > 0)
+                Road closestRoad = null;
+                double closestRoadDistance = 0.0;
+                foreach (Road road in roads)
                 {
-                    int markerIndex = rand.Next(friendlyMarkers.Count);
-                    Point2d start = new Point2d(redGroundGroup.Position.x, redGroundGroup.Position.y);
-                    Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
-
-                    redGroundGroup.Waypoints.Clear();
-                    Point3d startPoint = new Point3d(start.x, start.y, 38.40);
-                    GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0, 2);
-                    redGroundGroup.Waypoints.Add(startWaypoint);
-
-                    Point3d endPoint = new Point3d(end.x, end.y, 38.40);
-                    GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0, 2);
-                    redGroundGroup.Waypoints.Add(endWaypoint);
-
-                    if (redGroundGroup.Type != EGroundGroupType.Ship)
+                    if (road.Start != null && road.End != null)
                     {
-                        redGroundGroup.writeTo(missionFile, Roads);
+                        Point2d roadStart = new Point2d(road.Start.Position.x, road.Start.Position.y);
+                        double distanceStart = start.distance(ref roadStart);
+                        Point2d roadEnd = new Point2d(road.End.Position.x, road.End.Position.y);
+                        double distanceEnd = end.distance(ref roadEnd);
+                        if (closestRoad == null)
+                        {
+                            closestRoad = road;
+                            closestRoadDistance = distanceStart + distanceEnd;
+                        }
+                        else
+                        {
+                            if (distanceStart + distanceEnd < closestRoadDistance)
+                            {
+                                closestRoad = road;
+                                closestRoadDistance = distanceStart + distanceEnd;
+                            }
+                        }
                     }
-                    else
-                    {
-                        redGroundGroup.writeTo(missionFile, Routes);
-                    }
+                }
+
+                if (closestRoad != null)
+                {
+                    groundGroup.Waypoints.AddRange(closestRoad.Waypoints);                    
                 }
             }
 
-            foreach (GroundGroup blueGroundGroup in blueGroundGroups)
+        }
+
+        public void createGroundGroups(ISectionFile missionFile, int armyIndex)
+        {
+            if (getGroundGroups(armyIndex) != null && getGroundGroups(armyIndex).Count > 0)
             {
-
-                List<Point3d> friendlyMarkers = blueFrontMarkers;
-                if (friendlyMarkers.Count > 0)
+                foreach (GroundGroup groundGroup in getGroundGroups(armyIndex))
                 {
-                    int markerIndex = rand.Next(friendlyMarkers.Count);
-                    Point2d start = new Point2d(blueGroundGroup.Position.x, blueGroundGroup.Position.y);
-                    Point2d end = new Point2d(friendlyMarkers[markerIndex].x, friendlyMarkers[markerIndex].y);
-
-                    blueGroundGroup.Waypoints.Clear();
-                    Point3d startPoint = new Point3d(start.x, start.y, 38.40);
-                    GroundGroupWaypoint startWaypoint = new GroundGroupWaypoint(startPoint, 5.0, 2);
-                    blueGroundGroup.Waypoints.Add(startWaypoint);
-
-                    Point3d endPoint = new Point3d(end.x, end.y, 38.40);
-                    GroundGroupWaypoint endWaypoint = new GroundGroupWaypoint(endPoint, 5.0, 2);
-                    blueGroundGroup.Waypoints.Add(endWaypoint);
-
-                    if (blueGroundGroup.Type != EGroundGroupType.Ship)
+                    List<Point3d> friendlyMarkers = getFriendlyMarkers(armyIndex);
+                    if (friendlyMarkers.Count > 0)
                     {
-                        blueGroundGroup.writeTo(missionFile, Roads);
-                    }
-                    else
-                    {
-                        blueGroundGroup.writeTo(missionFile, Routes);
+                        List<Point3d> availableFriendlyMarkers = new List<Point3d>(friendlyMarkers);
+
+                        // Find closest friendly marker
+                        Point3d? closestMarker = null;
+                        foreach (Point3d marker in availableFriendlyMarkers)
+                        {
+                            if (closestMarker == null)
+                            {
+                                closestMarker = marker;
+                            }
+                            else if (closestMarker.HasValue)
+                            {
+                                Point3d p1 = new Point3d(marker.x, marker.y, marker.z);
+                                Point3d p2 = new Point3d(closestMarker.Value.x, closestMarker.Value.y, closestMarker.Value.z);
+                                if (groundGroup.Position.distance(ref p1) < groundGroup.Position.distance(ref p2))
+                                {
+                                    closestMarker = marker;
+                                }
+                            }
+                        }
+
+                        if (closestMarker != null && closestMarker.HasValue)
+                        {
+                            availableFriendlyMarkers.Remove(closestMarker.Value);
+
+                            if (availableFriendlyMarkers.Count > 0)
+                            {
+                                int markerIndex = rand.Next(availableFriendlyMarkers.Count);
+
+                                groundGroup.Waypoints.Clear();
+
+                                if (groundGroup.Type != EGroundGroupType.Ship)
+                                {
+                                    FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Roads);
+                                }
+                                else
+                                {
+                                    FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Routes);
+                                }
+
+                                groundGroup.writeTo(missionFile, Roads);
+                            }
+                        }
                     }
                 }
+            }
+        }
 
+        public void createGroundGroups(ISectionFile missionFile)
+        {
+            createGroundGroups(missionFile, 1);
+            createGroundGroups(missionFile, 2);
+        }
+
+        public List<GroundGroup> getGroundGroups(int armyIndex)
+        {
+            if (armyIndex == 1)
+            {
+                return redGroundGroups;
+            }
+            else if (armyIndex == 2)
+            {
+                return blueGroundGroups;
+            }
+            else
+            {
+                return new List<GroundGroup>();
             }
         }
 

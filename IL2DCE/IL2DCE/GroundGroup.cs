@@ -1,4 +1,4 @@
-﻿// IL2DCE: A dynamic campaign engine for IL-2 Sturmovik: Cliffs of Dover
+﻿// IL2DCE: A dyn    amic campaign engine for IL-2 Sturmovik: Cliffs of Dover
 // Copyright (C) 2011 Stefan Rothdach
 //
 // This program is free software: you can redistribute it and/or modify
@@ -44,11 +44,26 @@ namespace IL2DCE
             Options = value.Trim();
 
             // Waypoints
-            Waypoints = new List<GroundGroupWaypoint>();
+            GroundGroupWaypoint lastWaypoint = null;
             for (int i = 0; i < sectionFile.lines(groundGroupId + "_Road"); i++)
             {
-                GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, groundGroupId, i);
-                Waypoints.Add(waypoint);
+                string key;
+                sectionFile.get(groundGroupId + "_Road", i, out key, out value);
+                                
+                if (!key.Contains("S"))
+                {
+                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, groundGroupId, i);
+                    lastWaypoint = waypoint;
+                    Waypoints.Add(waypoint);
+                }
+                else if (key.Contains("S"))
+                {
+                    if (lastWaypoint != null)
+                    {
+                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, groundGroupId, i);
+                        lastWaypoint.SubWaypoints.Add(subWaypoint);
+                    }
+                }
             }
 
             if (Waypoints.Count > 0)
@@ -140,67 +155,41 @@ namespace IL2DCE
             set;
         }
 
-        public List<GroundGroupWaypoint> Waypoints;
+        public List<GroundGroupWaypoint> Waypoints
+        {
+            get
+            {
+                return _waypoints;
+            }
+        }
+        private List<GroundGroupWaypoint> _waypoints = new List<GroundGroupWaypoint>();
 
         public void writeTo(ISectionFile sectionFile, IList<Road> roads)
         {
             sectionFile.add("Chiefs", Id, Class + " " + Country.ToString() + " " + Options);
+            double? _lastV = null;
             for (int i = 0; i < Waypoints.Count - 1; i++)
             {
-                //if (Waypoints[i].V.HasValue && Waypoints[i].Type.HasValue)
-                //{
-                //    sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + Waypoints[i].Type.Value.ToString() + " " + Waypoints[i].V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                //}
-                // TODO: Use the default V.
-
-                if (roads != null && roads.Count > 0)
+                if (Waypoints[i].V.HasValue)
                 {
-                    Road closestRoad = null;
-                    double closestRoadDistance = 0.0;
-                    foreach (Road road in roads)
+                    _lastV = Waypoints[i].V.Value;
+                    sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + (Waypoints[i].SubWaypoints.Count + 2).ToString() + " " + Waypoints[i].V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    foreach (GroundGroupSubWaypoint subWaypoint in Waypoints[i].SubWaypoints)
                     {
-                        if (road.Start != null && road.End != null)
-                        {
-                            Point3d pStart = new Point3d(road.Start.Position.x, road.Start.Position.y, road.Start.Position.z);
-                            double distanceStart = Waypoints[i].Position.distance(ref pStart);
-                            Point3d pEnd = new Point3d(road.End.Position.x, road.End.Position.y, road.End.Position.z);
-                            double distanceEnd = Waypoints[i + 1].Position.distance(ref pEnd);
-                            if (closestRoad == null)
-                            {
-                                closestRoad = road;
-                                closestRoadDistance = distanceStart + distanceEnd;
-                            }
-                            else
-                            {
-                                if (distanceStart + distanceEnd < closestRoadDistance)
-                                {
-                                    closestRoad = road;
-                                    closestRoadDistance = distanceStart + distanceEnd;
-                                }
-                            }
-                        }
+                        sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
-
-                    if (closestRoad != null)
+                }
+                else if (_lastV != null && _lastV.HasValue)
+                {
+                    sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + (Waypoints[i].SubWaypoints.Count + 2).ToString() + " " + _lastV.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    foreach (GroundGroupSubWaypoint subWaypoint in Waypoints[i].SubWaypoints)
                     {
-                        if (closestRoad.Start.V.HasValue && closestRoad.Start.Type.HasValue)
-                        {
-                            sectionFile.add(Id + "_Road", closestRoad.Start.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.Start.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.Start.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + closestRoad.Start.Type.Value.ToString() + " " + closestRoad.Start.V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-
-                            if (closestRoad.RoadPoints != null && closestRoad.RoadPoints.Count > 0)
-                            {
-                                foreach (Tuple<string, string> tuple in closestRoad.RoadPoints)
-                                {
-                                    sectionFile.add(Id + "_Road", tuple.Item1, tuple.Item2);
-                                }
-                            }
-                            sectionFile.add(Id + "_Road", closestRoad.End.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), closestRoad.End.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + closestRoad.End.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                        }                        
+                        sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
                 }
             }
 
-            //sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         }
     }
 }
