@@ -66,6 +66,10 @@ namespace IL2DCE
                     {
                         missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
                     }
+                    if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_TARGET))
+                    {
+                        missionTypes.Add(EMissionType.GROUND_ATTACK_TARGET);
+                    }
                 }
 
                 if (fighterAircrafts.Contains(Aircraft))

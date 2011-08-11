@@ -487,6 +487,36 @@ namespace IL2DCE
             writeTo(sectionFile);
         }
 
+        public void CreateGroundAttackTargetMission(ISectionFile sectionFile, GroundGroup groundGroup, double altitude, Point3d? rendevouzPosition = null, AiAirport landingAirport = null)
+        {
+            Waypoints.Clear();
+
+            createStartWaypoints(sectionFile);
+
+            if (rendevouzPosition == null)
+            {
+                Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
+                createStartInbetweenPoints(sectionFile, pStart);
+            }
+            else
+            {
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
+                Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
+                createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, pStart);
+            }
+            
+            foreach (GroundGroupWaypoint groundGroupWaypoint in groundGroup.Waypoints)
+            {
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, groundGroup.Id));
+            }
+
+            Point3d pEnd = new Point3d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Position.x, groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Position.y, altitude);
+            createEndInbetweenPoints(sectionFile, pEnd, landingAirport);
+            createEndWaypoints(sectionFile, landingAirport);
+
+            writeTo(sectionFile);
+        }
+
         public void CreateEscortFlight(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
         {
             Waypoints.Clear();
@@ -506,7 +536,7 @@ namespace IL2DCE
             writeTo(sectionFile);
         }
 
-        public void CreateInterceptFlight(ISectionFile sectionFile, AirGroup targetAirUnit, Point3d targetArea, AiAirport landingAirport = null)
+        public void CreateInterceptFlight(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
         {
             Waypoints.Clear();
 
@@ -579,7 +609,7 @@ namespace IL2DCE
 
             writeTo(sectionFile);
         }
-
-        #endregion
+        
+        #endregion        
     }
 }
