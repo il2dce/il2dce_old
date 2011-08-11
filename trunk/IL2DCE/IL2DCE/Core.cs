@@ -615,17 +615,22 @@ namespace IL2DCE
                         double distanceStart = start.distance(ref roadStart);
                         Point2d roadEnd = new Point2d(road.End.Position.x, road.End.Position.y);
                         double distanceEnd = end.distance(ref roadEnd);
-                        if (closestRoad == null)
+
+                        Point2d p = new Point2d(end.x, end.y);
+                        if (distanceEnd < start.distance(ref p))
                         {
-                            closestRoad = road;
-                            closestRoadDistance = distanceStart + distanceEnd;
-                        }
-                        else
-                        {
-                            if (distanceStart + distanceEnd < closestRoadDistance)
+                            if (closestRoad == null)
                             {
                                 closestRoad = road;
                                 closestRoadDistance = distanceStart + distanceEnd;
+                            }
+                            else
+                            {
+                                if (distanceStart + distanceEnd < closestRoadDistance)
+                                {
+                                    closestRoad = road;
+                                    closestRoadDistance = distanceStart + distanceEnd;
+                                }
                             }
                         }
                     }
@@ -633,8 +638,13 @@ namespace IL2DCE
 
                 if (closestRoad != null)
                 {
-                    groundGroup.Waypoints.AddRange(closestRoad.Waypoints);                    
-                }
+                    groundGroup.Waypoints.AddRange(closestRoad.Waypoints);
+
+                    List<Road> availableRoads = new List<Road>(roads);
+                    availableRoads.Remove(closestRoad);
+
+                    FindPath(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
+                }                
             }
 
         }
