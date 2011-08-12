@@ -563,26 +563,32 @@ namespace IL2DCE
 
             ISectionFile missionFile = Game.gpLoadSectionFile(templateFileName);
 
-            // Delete all air groups from the template file.
-            for (int i = 0; i < missionFile.lines("AirGroups"); i++)
+            if(missionFile.exist("AirGroups"))
             {
-                string key;
-                string value;
-                missionFile.get("AirGroups", i, out key, out value);
-                missionFile.delete(key);
-                missionFile.delete(key + "_Way");
+                // Delete all air groups from the template file.
+                for (int i = 0; i < missionFile.lines("AirGroups"); i++)
+                {
+                    string key;
+                    string value;
+                    missionFile.get("AirGroups", i, out key, out value);
+                    missionFile.delete(key);
+                    missionFile.delete(key + "_Way");
+                }
+                missionFile.delete("AirGroups");
             }
-            missionFile.delete("AirGroups");
 
-            // Delete all ground groups from the template file.
-            for (int i = 0; i < missionFile.lines("Chiefs"); i++)
+            if (missionFile.exist("Chiefs"))
             {
-                string key;
-                string value;
-                missionFile.get("Chiefs", i, out key, out value);
-                missionFile.delete(key + "_Road");
+                // Delete all ground groups from the template file.
+                for (int i = 0; i < missionFile.lines("Chiefs"); i++)
+                {
+                    string key;
+                    string value;
+                    missionFile.get("Chiefs", i, out key, out value);
+                    missionFile.delete(key + "_Road");
+                }
+                missionFile.delete("Chiefs");
             }
-            missionFile.delete("Chiefs");
 
             if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
             {
@@ -603,23 +609,29 @@ namespace IL2DCE
                 createRandomAirOperation(missionFile, playerAirGroup);
             }
 
-            for (int i = 0; i < additionalAirOperations; i++)
+            if (availableAirGroups != null && availableAirGroups.Count > 0)
             {
-                int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
-                AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
-                availableAirGroups.Remove(randomAirGroup);
+                for (int i = 0; i < additionalAirOperations; i++)
+                {
+                    int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
+                    AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
+                    availableAirGroups.Remove(randomAirGroup);
 
-                createRandomAirOperation(missionFile, randomAirGroup);
+                    createRandomAirOperation(missionFile, randomAirGroup);
+                }
             }
 
-            for (int i = 0; i < additionalGroundOperations; i++)
+            if (availableGroundGroups != null && availableGroundGroups.Count > 0)
             {
-                int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
-                GroundGroup randomGroundGroup = availableGroundGroups[randomGroundGroupIndex];
-                availableGroundGroups.Remove(randomGroundGroup);
+                for (int i = 0; i < additionalGroundOperations; i++)
+                {
+                    int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
+                    GroundGroup randomGroundGroup = availableGroundGroups[randomGroundGroupIndex];
+                    availableGroundGroups.Remove(randomGroundGroup);
 
-                createRandomGroundOperation(missionFile, randomGroundGroup);
-            }            
+                    createRandomGroundOperation(missionFile, randomGroundGroup);
+                }
+            }
 
             return missionFile;
         }
