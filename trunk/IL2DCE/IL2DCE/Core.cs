@@ -181,14 +181,14 @@ namespace IL2DCE
         }
         System.Collections.Generic.List<Road> _roads = new System.Collections.Generic.List<Road>();
 
-        public System.Collections.Generic.IList<Road> Routes
+        public System.Collections.Generic.IList<Road> Waterways
         {
             get
             {
-                return _routes;
+                return _waterways;
             }
         }
-        System.Collections.Generic.List<Road> _routes = new System.Collections.Generic.List<Road>();
+        System.Collections.Generic.List<Road> _waterways = new System.Collections.Generic.List<Road>();
 
         public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
@@ -378,6 +378,7 @@ namespace IL2DCE
         private void init(string templateFileName)
         {
             _roads.Clear();
+            _waterways.Clear();
             redRadars.Clear();
             blueRadars.Clear();
             redFrontMarkers.Clear();
@@ -494,7 +495,7 @@ namespace IL2DCE
                     }
                     else if (value.StartsWith("Ship"))
                     {
-                        _routes.Add(road);
+                        _waterways.Add(road);
                     }
                 }
             }
@@ -713,7 +714,7 @@ namespace IL2DCE
                         }
                         else
                         {
-                            FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Routes);
+                            FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
                         }
 
                         groundGroup.writeTo(missionFile, Roads);
