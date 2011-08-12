@@ -507,7 +507,7 @@ namespace IL2DCE
             
             foreach (GroundGroupWaypoint groundGroupWaypoint in groundGroup.Waypoints)
             {
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, groundGroup.Id));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, groundGroup.Id + " " + groundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
             }
 
             Point3d pEnd = new Point3d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Position.x, groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Position.y, altitude);

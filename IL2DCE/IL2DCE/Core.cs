@@ -613,11 +613,14 @@ namespace IL2DCE
             {
                 for (int i = 0; i < additionalAirOperations; i++)
                 {
-                    int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
-                    AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
-                    availableAirGroups.Remove(randomAirGroup);
+                    if (availableAirGroups.Count > 0)
+                    {
+                        int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
+                        AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
+                        availableAirGroups.Remove(randomAirGroup);
 
-                    createRandomAirOperation(missionFile, randomAirGroup);
+                        createRandomAirOperation(missionFile, randomAirGroup);
+                    }
                 }
             }
 
@@ -625,11 +628,14 @@ namespace IL2DCE
             {
                 for (int i = 0; i < additionalGroundOperations; i++)
                 {
-                    int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
-                    GroundGroup randomGroundGroup = availableGroundGroups[randomGroundGroupIndex];
-                    availableGroundGroups.Remove(randomGroundGroup);
+                    if (availableGroundGroups.Count > 0)
+                    {
+                        int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
+                        GroundGroup randomGroundGroup = availableGroundGroups[randomGroundGroupIndex];
+                        availableGroundGroups.Remove(randomGroundGroup);
 
-                    createRandomGroundOperation(missionFile, randomGroundGroup);
+                        createRandomGroundOperation(missionFile, randomGroundGroup);
+                    }
                 }
             }
 
