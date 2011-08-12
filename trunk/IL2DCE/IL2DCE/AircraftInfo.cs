@@ -62,10 +62,10 @@ namespace IL2DCE
 
                 if (bomberAircrafts.Contains(Aircraft))
                 {
-                    if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
-                    {
-                        missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
-                    }
+                    //if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
+                    //{
+                    //    missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
+                    //}
                     if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_TARGET))
                     {
                         missionTypes.Add(EMissionType.GROUND_ATTACK_TARGET);
@@ -164,9 +164,8 @@ namespace IL2DCE
             "Aircraft.SpitfireMkIIa", 
             "Aircraft.Bf-109E-1",
             "Aircraft.Bf-109E-3",
-            "Aircraft.Bf-109E-3B",
             "Aircraft.Bf-110C-4",
-            "Aircraft.Bf-110C-7",
+
             "Aircraft.CR42",
             "Aircraft.G50",  
         };
@@ -188,6 +187,8 @@ namespace IL2DCE
             "Aircraft.Ju-88A-1",
             //"Aircraft.He-115B-2"
             "Aircraft.BR-20M", 
+            "Aircraft.Bf-109E-3B",
+            "Aircraft.Bf-110C-7",
         };
     }
 }
