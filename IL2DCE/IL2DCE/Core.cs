@@ -735,7 +735,58 @@ namespace IL2DCE
                             findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
                         }
 
-                        groundGroup.writeTo(missionFile, Roads);
+                        if (groundGroup.Waypoints.Count > 2)
+                        {
+                            groundGroup.writeTo(missionFile);
+
+                            for (int i = 1; i < 3; i++)
+                            {
+                                double xOffset = 0.0;
+                                double yOffset = 0.0;
+
+                                Point2d p1 = new Point2d(groundGroup.Waypoints[0].X, groundGroup.Waypoints[0].Y);
+                                if (groundGroup.Waypoints[0].SubWaypoints.Count > 0)
+                                {
+                                    Point2d p2 = new Point2d(groundGroup.Waypoints[0].SubWaypoints[0].X, groundGroup.Waypoints[0].SubWaypoints[0].Y);
+                                    double distance = p1.distance(ref p2);
+                                    xOffset = 500 * ((p2.x - p1.x) / distance);
+                                    yOffset = 500 * ((p2.y - p1.y) / distance);
+                                }
+                                else
+                                {
+                                    Point2d p2 = new Point2d(groundGroup.Waypoints[1].X, groundGroup.Waypoints[1].Y);
+                                    double distance = p1.distance(ref p2);
+                                    xOffset = 500 * ((p2.x - p1.x) / distance);
+                                    yOffset = 500 * ((p2.y - p1.y) / distance);
+                                }
+
+                                groundGroup.Waypoints[0].X += xOffset;
+                                groundGroup.Waypoints[0].Y += yOffset;
+
+                                p1 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Y);
+                                if (groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count > 0)
+                                {
+                                    Point2d p2 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints[groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count - 1].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints[groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count - 1].Y);
+                                    double distance = p1.distance(ref p2);
+                                    xOffset = 500 * ((p2.x - p1.x) / distance);
+                                    yOffset = 500 * ((p2.y - p1.y) / distance);
+                                }
+                                else
+                                {
+                                    Point2d p2 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].Y);
+                                    double distance = p1.distance(ref p2);
+                                    xOffset = 500 * ((p2.x - p1.x) / distance);
+                                    yOffset = 500 * ((p2.y - p1.y) / distance);
+                                }
+
+                                groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].X -= xOffset;
+                                groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Y -= yOffset;
+
+                                groundGroup._id = i * 1000 + groundGroup.Id;
+
+                                groundGroup.writeTo(missionFile);
+                            }
+                        }
                     }
                 }
             }
