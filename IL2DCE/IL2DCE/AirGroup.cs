@@ -251,56 +251,59 @@ namespace IL2DCE
 
         private void writeTo(ISectionFile sectionFile)
         {
-            sectionFile.add("AirGroups", Name, "");
-
-            foreach (int flightIndex in Flights.Keys)
+            if (Waypoints.Count > 0)
             {
-                if (Flights[flightIndex].Count > 0)
+                sectionFile.add("AirGroups", Name, "");
+
+                foreach (int flightIndex in Flights.Keys)
                 {
-                    string acNumberLine = "";
-                    foreach (string acNumber in Flights[flightIndex])
+                    if (Flights[flightIndex].Count > 0)
                     {
-                        acNumberLine += acNumber + " ";
+                        string acNumberLine = "";
+                        foreach (string acNumber in Flights[flightIndex])
+                        {
+                            acNumberLine += acNumber + " ";
+                        }
+                        sectionFile.add(Name, "Flight" + flightIndex, acNumberLine.TrimEnd());
                     }
-                    sectionFile.add(Name, "Flight" + flightIndex, acNumberLine.TrimEnd());
                 }
-            }
 
-            sectionFile.add(Name, "Class", Class);
-            sectionFile.add(Name, "Formation", Formation);
-            sectionFile.add(Name, "CallSign", CallSign.ToString());
-            sectionFile.add(Name, "Fuel", Fuel.ToString());
+                sectionFile.add(Name, "Class", Class);
+                sectionFile.add(Name, "Formation", Formation);
+                sectionFile.add(Name, "CallSign", CallSign.ToString());
+                sectionFile.add(Name, "Fuel", Fuel.ToString());
 
-            if (Weapons != null && Weapons.Length > 0)
-            {
-                string weaponsLine = "";
-                foreach (int weapon in Weapons)
+                if (Weapons != null && Weapons.Length > 0)
                 {
-                    weaponsLine += weapon.ToString() + " ";
+                    string weaponsLine = "";
+                    foreach (int weapon in Weapons)
+                    {
+                        weaponsLine += weapon.ToString() + " ";
+                    }
+                    sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
                 }
-                sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
-            }
 
-            if (Core._spawnParked == true)
-            {
-                sectionFile.add(Name, "SetOnPark", "1");
-            }
-            else
-            {
-                sectionFile.add(Name, "SetOnPark", "0");
-            }
-
-            sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
-
-            foreach (AirGroupWaypoint waypoint in Waypoints)
-            {
-                if (waypoint.Target == null)
+                if (Core._spawnParked == true)
                 {
-                    sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    sectionFile.add(Name, "SetOnPark", "1");
                 }
                 else
                 {
-                    sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
+                    sectionFile.add(Name, "SetOnPark", "0");
+                }
+
+                sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
+
+                foreach (AirGroupWaypoint waypoint in Waypoints)
+                {
+                    if (waypoint.Target == null)
+                    {
+                        sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    }
+                    else
+                    {
+                        sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
+                    }
                 }
             }
         }
