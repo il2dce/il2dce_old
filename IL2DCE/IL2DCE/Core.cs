@@ -642,7 +642,7 @@ namespace IL2DCE
             return missionFile;
         }
 
-        public void FindPath(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
+        private void findPath(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
         {
             if (roads != null && roads.Count > 0)
             {
@@ -684,7 +684,7 @@ namespace IL2DCE
                     List<Road> availableRoads = new List<Road>(roads);
                     availableRoads.Remove(closestRoad);
 
-                    FindPath(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
+                    findPath(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
                 }                
             }
 
@@ -728,11 +728,11 @@ namespace IL2DCE
 
                         if (groundGroup.Type != EGroundGroupType.Ship)
                         {
-                            FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Roads);
+                            findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Roads);
                         }
                         else
                         {
-                            FindPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
+                            findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
                         }
 
                         groundGroup.writeTo(missionFile, Roads);
