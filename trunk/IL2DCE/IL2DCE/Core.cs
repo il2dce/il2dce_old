@@ -904,8 +904,13 @@ namespace IL2DCE
             }
         }
 
-        public double createRandomAltitude(EMissionType missionType)
+        public double createRandomAltitude(EMissionType missionType, IAircraftInfo aircraftInfo)
         {
+            if (missionType == EMissionType.GROUND_ATTACK_TARGET && aircraftInfo.Aircraft == "Aircraft.Ju-87B-2")
+            {
+                return (double)rand.Next(2000, 6000);
+            }
+
             // TODO: Altitude range depends on mission type.
             return (double)rand.Next(500, 6000);
         }
@@ -1035,7 +1040,7 @@ namespace IL2DCE
                     {
                         int markerIndex = rand.Next(enemyMarkers.Count);
                         Point3d marker = enemyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
+                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
                         airGroup.CreateReconFlight(sectionFile, targetArea);
 
                         createRandomInterceptMission(sectionFile, airGroup);
@@ -1050,7 +1055,7 @@ namespace IL2DCE
                     {
                         int markerIndex = rand.Next(enemyMarkers.Count);
                         Point3d marker = enemyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
+                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
 
                         AirGroup escortAirGroup = getRandomEscortMission(airGroup);
                         if (escortAirGroup != null)
@@ -1081,8 +1086,8 @@ namespace IL2DCE
                         GroundGroup groundGroup = enemyGroundGroups[groundGroupIndex];
                         availableGroundGroups.Remove(groundGroup);
                         createRandomGroundOperation(sectionFile, groundGroup);
-                        
-                        double altitude = createRandomAltitude(randomMissionType);
+
+                        double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
 
                         AirGroup escortAirGroup = getRandomEscortMission(airGroup);
                         if (escortAirGroup != null)
@@ -1126,7 +1131,7 @@ namespace IL2DCE
                     {
                         int markerIndex = rand.Next(enemyMarkers.Count);
                         Point3d marker = enemyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
+                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
                         airGroup.CreateHuntingFlight(sectionFile, targetArea);
 
                         Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
@@ -1141,7 +1146,7 @@ namespace IL2DCE
                     {
                         int markerIndex = rand.Next(enemyMarkers.Count);
                         Point3d marker = enemyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
+                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
 
                         AirGroup escortedAirGroup = getRandomEscortedMission(airGroup);
                         if (escortedAirGroup != null)
@@ -1174,7 +1179,7 @@ namespace IL2DCE
                     {
                         int markerIndex = rand.Next(friendlyMarkers.Count);
                         Point3d marker = friendlyMarkers[markerIndex];
-                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
+                        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
 
                         List<EMissionType> subMissionTypes = new List<EMissionType>() { EMissionType.OFFENSIVE_PATROL_AREA, EMissionType.RECON_AREA, EMissionType.GROUND_ATTACK_AREA };
                         int randomSubMissionTypeIndex = rand.Next(subMissionTypes.Count);
