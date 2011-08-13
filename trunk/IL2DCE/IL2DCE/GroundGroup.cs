@@ -164,7 +164,7 @@ namespace IL2DCE
         }
         private List<GroundGroupWaypoint> _waypoints = new List<GroundGroupWaypoint>();
 
-        public void writeTo(ISectionFile sectionFile, IList<Road> roads)
+        public void writeTo(ISectionFile sectionFile)
         {
             if (Waypoints.Count > 1)
             {
