@@ -37,6 +37,11 @@ namespace IL2DCE
             {
                 templateFilePath = campaignFolderPath + campaignFile.get("Campaign", "templateFile");
             }
+
+            if (campaignFile.exist("Campaign", "briefingFile"))
+            {
+                briefingFilePath = campaignFolderPath + campaignFile.get("Campaign", "briefingFile");
+            }
         }
 
         public override string ToString()
@@ -61,5 +66,14 @@ namespace IL2DCE
             }
         }
         private string templateFilePath;
+
+        public string BriefingFilePath
+        {
+            get
+            {
+                return briefingFilePath;
+            }
+        }
+        private string briefingFilePath;
     }
 }
