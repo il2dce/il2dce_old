@@ -178,7 +178,14 @@ namespace IL2DCE
                         sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + (Waypoints[i].SubWaypoints.Count + 2).ToString() + " " + Waypoints[i].V.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                         foreach (GroundGroupSubWaypoint subWaypoint in Waypoints[i].SubWaypoints)
                         {
-                            sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                            if (subWaypoint.P.HasValue)
+                            {
+                                sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.Value.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.Value.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                            }
+                            else
+                            {
+                                sectionFile.add(Id + "_Road", "S", subWaypoint.S);
+                            }
                         }
                     }
                     else if (_lastV != null && _lastV.HasValue)
@@ -186,7 +193,14 @@ namespace IL2DCE
                         sectionFile.add(Id + "_Road", Waypoints[i].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[i].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[i].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "  0 " + (Waypoints[i].SubWaypoints.Count + 2).ToString() + " " + _lastV.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                         foreach (GroundGroupSubWaypoint subWaypoint in Waypoints[i].SubWaypoints)
                         {
-                            sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                            if (subWaypoint.P.HasValue)
+                            {
+                                sectionFile.add(Id + "_Road", "S", subWaypoint.S + " P " + subWaypoint.P.Value.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + subWaypoint.P.Value.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                            }
+                            else
+                            {
+                                sectionFile.add(Id + "_Road", "S", subWaypoint.S);
+                            }
                         }
                     }
                 }

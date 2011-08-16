@@ -28,26 +28,46 @@ namespace IL2DCE
     {
         #region Public constructors
 
+        public GroundGroupSubWaypoint(string s, Point2d? p)
+        {
+            _s = s;
+            _p = p;
+        }
+
         public GroundGroupSubWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
         {
             string key;
             string value;
             sectionFile.get(groundGroupId + "_Road", line, out key, out value);
 
-            System.Text.RegularExpressions.Regex subWaypoint = new System.Text.RegularExpressions.Regex(@"^([0-9]+) ([0-9]+) ([0-9]+[.0-9]*) ([0-9]+[.0-9]*) P ([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");
+            System.Text.RegularExpressions.Regex subWaypointLong = new System.Text.RegularExpressions.Regex(@"^([0-9]+) ([0-9]+) ([0-9]+[.0-9]*) ([0-9]+[.0-9]*) P ([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");
+            System.Text.RegularExpressions.Regex subWaypointShort = new System.Text.RegularExpressions.Regex(@"^([0-9]+) ([0-9]+) ([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");
 
-            if (subWaypoint.IsMatch(value))
+            if (subWaypointLong.IsMatch(value))
             {
-                System.Text.RegularExpressions.Match match = subWaypoint.Match(value);
+                System.Text.RegularExpressions.Match match = subWaypointLong.Match(value);
 
                 if (match.Groups.Count == 7)
                 {
                     _s = match.Groups[1].Value + " " + match.Groups[2].Value + " " + match.Groups[3].Value + " " + match.Groups[4].Value;
 
-                    double.TryParse(match.Groups[5].Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out X);
-                    double.TryParse(match.Groups[6].Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Y);
+                    double x;
+                    double y;
+                    double.TryParse(match.Groups[5].Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x);
+                    double.TryParse(match.Groups[6].Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y);
+                    _p = new Point2d(x, y);
                 }
-            }            
+            }
+            if (subWaypointLong.IsMatch(value))
+            {
+                System.Text.RegularExpressions.Match match = subWaypointLong.Match(value);
+
+                if (match.Groups.Count == 5)
+                {
+                    _s = match.Groups[1].Value + " " + match.Groups[2].Value + " " + match.Groups[3].Value + " " + match.Groups[4].Value;
+                    _p = null;
+                }
+            }
         }
 
         #endregion
@@ -63,17 +83,14 @@ namespace IL2DCE
         }
         private string _s;
 
-        public Point2d P
+        public Point2d? P
         {
             get
             {
-                return new Point2d(X, Y);
+                return _p;
             }
         }
-
-        public double X;
-
-        public double Y;
+        private Point2d? _p;
 
         #endregion
     }
