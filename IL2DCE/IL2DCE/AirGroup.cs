@@ -240,7 +240,7 @@ namespace IL2DCE
                 }
             }
         }
-
+        
         public IAircraftInfo AircraftInfo
         {
             get
@@ -315,7 +315,6 @@ namespace IL2DCE
                 if (Briefing != null)
                 {
                     sectionFile.add(Name, "Briefing", Briefing);
-                    
                 }
             }
         }
