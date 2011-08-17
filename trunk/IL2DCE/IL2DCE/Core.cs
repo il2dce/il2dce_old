@@ -671,47 +671,58 @@ namespace IL2DCE
 
         private void findPath(GroundGroup groundGroup, Point2d start, Point2d end)
         {
-            IRecalcPathParams pathParams = Game.gpFindPath(start, 10.0, end, 20.0, PathType.GROUND, groundGroup.Army);
-
-            while (pathParams.State == RecalcPathState.WAIT)
+            IRecalcPathParams pathParams = null;
+            if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
             {
-                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait for path.", null);
-                System.Threading.Thread.Sleep(100);
+                pathParams = Game.gpFindPath(start, 10.0, end, 20.0, PathType.GROUND, groundGroup.Army);
+            }
+            else if (groundGroup.Type == EGroundGroupType.Ship)
+            {
+                pathParams = Game.gpFindPath(start, 10.0, end, 20.0, PathType.WATER, groundGroup.Army);
             }
 
-            if (pathParams.State == RecalcPathState.SUCCESS)
+            if (pathParams != null)
             {
-                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait found (" + pathParams.Path.Length.ToString() + ").", null);
-
-                GroundGroupWaypoint lastGroundGroupWaypoint = null;
-                foreach (maddox.game.world.AiWayPoint aiWayPoint in pathParams.Path)
+                while (pathParams.State == RecalcPathState.WAIT)
                 {
-                    if (aiWayPoint is maddox.game.world.AiGroundWayPoint)
-                    {
-                        maddox.game.world.AiGroundWayPoint aiGroundWayPoint = aiWayPoint as maddox.game.world.AiGroundWayPoint;
+                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait for path.", null);
+                    System.Threading.Thread.Sleep(100);
+                }
 
-                        if (aiGroundWayPoint.P.z == -1)
+                if (pathParams.State == RecalcPathState.SUCCESS)
+                {
+                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path found (" + pathParams.Path.Length.ToString() + ").", null);
+
+                    GroundGroupWaypoint lastGroundGroupWaypoint = null;
+                    foreach (maddox.game.world.AiWayPoint aiWayPoint in pathParams.Path)
+                    {
+                        if (aiWayPoint is maddox.game.world.AiGroundWayPoint)
                         {
-                            GroundGroupWaypoint groundGroupWaypoint = new GroundGroupWaypoint(aiGroundWayPoint.P.x, aiGroundWayPoint.P.y, aiGroundWayPoint.roadWidth, aiGroundWayPoint.Speed);
-                            lastGroundGroupWaypoint = groundGroupWaypoint;
-                            groundGroup.Waypoints.Add(groundGroupWaypoint);
+                            maddox.game.world.AiGroundWayPoint aiGroundWayPoint = aiWayPoint as maddox.game.world.AiGroundWayPoint;
+
+                            if (aiGroundWayPoint.P.z == -1)
+                            {
+                                GroundGroupWaypoint groundGroupWaypoint = new GroundGroupWaypoint(aiGroundWayPoint.P.x, aiGroundWayPoint.P.y, aiGroundWayPoint.roadWidth, aiGroundWayPoint.Speed);
+                                lastGroundGroupWaypoint = groundGroupWaypoint;
+                                groundGroup.Waypoints.Add(groundGroupWaypoint);
+                            }
+                            else if (lastGroundGroupWaypoint != null)
+                            {
+                                string s = aiGroundWayPoint.P.x.ToString() + " " + aiGroundWayPoint.P.y.ToString() + " " + aiGroundWayPoint.P.z.ToString() + " " + aiGroundWayPoint.roadWidth.ToString();
+                                GroundGroupSubWaypoint groundGroupSubWaypoint = new GroundGroupSubWaypoint(s, null);
+                                lastGroundGroupWaypoint.SubWaypoints.Add(groundGroupSubWaypoint);
+                            }
                         }
-                        else if(lastGroundGroupWaypoint != null)
-                        {
-                            string s = aiGroundWayPoint.P.x.ToString() + " " + aiGroundWayPoint.P.y.ToString() + " " + aiGroundWayPoint.P.z.ToString() + " " + aiGroundWayPoint.roadWidth.ToString();
-                            GroundGroupSubWaypoint groundGroupSubWaypoint = new GroundGroupSubWaypoint(s, null);
-                            lastGroundGroupWaypoint.SubWaypoints.Add(groundGroupSubWaypoint);
-                        }                        
                     }
                 }
-            }
-            else if(pathParams.State == RecalcPathState.FAILED)
-            {
-                Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait not found.", null);
+                else if (pathParams.State == RecalcPathState.FAILED)
+                {
+                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path not found.", null);
+                }
             }
         }
 
-        private void findPath(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
+        private void findRoad(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
         {
             if (roads != null && roads.Count > 0)
             {
@@ -753,8 +764,8 @@ namespace IL2DCE
                     List<Road> availableRoads = new List<Road>(roads);
                     availableRoads.Remove(closestRoad);
 
-                    findPath(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
-                }                
+                    findRoad(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
+                }
             }
         }
 
@@ -794,25 +805,24 @@ namespace IL2DCE
 
                         groundGroup.Waypoints.Clear();
 
-                        if (groundGroup.Type != EGroundGroupType.Ship)
+                        if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
                         {
-                            //findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Roads);
                             findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y));
                             groundGroup.writeTo(missionFile);
                         }
                         else
                         {
-                            findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
+                            findRoad(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
 
                             if (groundGroup.Waypoints.Count > 2)
                             {
                                 int startIndex = rand.Next(groundGroup.Waypoints.Count - 2); // do not start at the last waypoint
 
-                                groundGroup.Waypoints.RemoveRange(0, startIndex);
+                                //groundGroup.Waypoints.RemoveRange(0, startIndex);
 
                                 groundGroup.writeTo(missionFile);
 
-                                for (int i = 1; i < 3; i++)
+                                /*for (int i = 1; i < 3; i++)
                                 {
                                     double xOffset = 0.0;
                                     double yOffset = 0.0;
@@ -858,7 +868,7 @@ namespace IL2DCE
                                     groundGroup._id = i.ToString() + "0" + groundGroup.Id;
 
                                     groundGroup.writeTo(missionFile);
-                                }
+                                }*/
                             }
                         }
                     }
@@ -1119,7 +1129,7 @@ namespace IL2DCE
 
                         createRandomInterceptMission(sectionFile, airGroup);
 
-                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);                        
                     }
                 }
                 else if (randomMissionType == EMissionType.GROUND_ATTACK_AREA)
