@@ -999,7 +999,7 @@ namespace IL2DCE
             return (double)rand.Next(500, 6000);
         }
 
-        public AirGroup getRandomInterceptedMission(AirGroup interceptingAirUnit, EMissionType missionType)
+        public AirGroup getRandomInterceptedAirGroup(AirGroup interceptingAirUnit, EMissionType missionType)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1015,10 +1015,10 @@ namespace IL2DCE
 
             if (airGroups.Count > 0)
             {
-                int escortedAirGroupIndex = rand.Next(airGroups.Count);
-                AirGroup escortedAirGroup = airGroups[escortedAirGroupIndex];
+                int interceptedAirGroupIndex = rand.Next(airGroups.Count);
+                AirGroup interceptedAirGroup = airGroups[interceptedAirGroupIndex];
 
-                return escortedAirGroup;
+                return interceptedAirGroup;
             }
             else
             {
@@ -1026,7 +1026,7 @@ namespace IL2DCE
             }
         }
 
-        public AirGroup getRandomEscortedMission(AirGroup escortingAirUnit)
+        public AirGroup getRandomEscortedAirGroup(AirGroup escortingAirUnit)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1054,7 +1054,7 @@ namespace IL2DCE
             }
         }
 
-        public AirGroup getRandomEscortMission(AirGroup targetAirUnit)
+        public AirGroup getRandomEscortAirGroup(AirGroup targetAirUnit)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1081,7 +1081,31 @@ namespace IL2DCE
             }
         }
 
-        public void createRandomInterceptMission(ISectionFile sectionFile, AirGroup targetAirUnit)
+        public GroundGroup getRandomGroundGroup(AirGroup attackingAirUnit)
+        {
+            List<GroundGroup> groundGroups = new List<GroundGroup>();
+            foreach (GroundGroup groundGroup in availableGroundGroups)
+            {
+                if (groundGroup.Army != attackingAirUnit.ArmyIndex)
+                {
+                    groundGroups.Add(groundGroup);
+                }
+            }
+
+            if (groundGroups.Count > 0)
+            {
+                int groundGroupIndex = rand.Next(groundGroups.Count);
+                GroundGroup targetGroundGroup = groundGroups[groundGroupIndex];
+
+                return targetGroundGroup;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public AirGroup getRandomInterceptAirGroup(AirGroup targetAirUnit)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1100,11 +1124,11 @@ namespace IL2DCE
                 int interceptAirGroupIndex = rand.Next(airGroups.Count);
                 AirGroup interceptAirGroup = airGroups[interceptAirGroupIndex];
 
-                availableAirGroups.Remove(interceptAirGroup);
-
-                interceptAirGroup.CreateInterceptFlight(sectionFile, targetAirUnit);
-
-                Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + targetAirUnit.Name + ")", null);
+                return interceptAirGroup;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -1127,9 +1151,16 @@ namespace IL2DCE
                         Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
                         airGroup.CreateReconFlight(sectionFile, targetArea);
 
-                        createRandomInterceptMission(sectionFile, airGroup);
-
                         Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);                        
+
+                        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                        if (interceptAirGroup != null)
+                        {
+                            availableAirGroups.Remove(interceptAirGroup);
+                            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                        }                        
                     }
                 }
                 else if (randomMissionType == EMissionType.GROUND_ATTACK_AREA)
@@ -1141,7 +1172,7 @@ namespace IL2DCE
                         Point3d marker = enemyMarkers[markerIndex];
                         Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
 
-                        AirGroup escortAirGroup = getRandomEscortMission(airGroup);
+                        AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
                         if (escortAirGroup != null)
                         {
                             availableAirGroups.Remove(escortAirGroup);
@@ -1155,42 +1186,46 @@ namespace IL2DCE
                         {
                             airGroup.CreateGroundAttackFlight(sectionFile, targetArea);
                         }
-
                         Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
 
-                        createRandomInterceptMission(sectionFile, airGroup);
+                        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                        if (interceptAirGroup != null)
+                        {
+                            availableAirGroups.Remove(interceptAirGroup);
+                            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                        }
                     }
                 }
                 else if (randomMissionType == EMissionType.GROUND_ATTACK_TARGET)
                 {
-                    List<GroundGroup> enemyGroundGroups = getEnemyGroundGroups(airGroup.ArmyIndex);
-                    if (enemyGroundGroups.Count > 0)
+                    GroundGroup groundGroup = getRandomGroundGroup(airGroup);
+                    availableGroundGroups.Remove(groundGroup);
+                    createRandomGroundOperation(sectionFile, groundGroup);
+
+                    double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
+
+                    AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
+                    if (escortAirGroup != null)
                     {
-                        int groundGroupIndex = rand.Next(enemyGroundGroups.Count);
-                        GroundGroup groundGroup = enemyGroundGroups[groundGroupIndex];
-                        availableGroundGroups.Remove(groundGroup);
-                        createRandomGroundOperation(sectionFile, groundGroup);
+                        availableAirGroups.Remove(escortAirGroup);
+                        Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), altitude);
+                        airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude, rendevouzPosition);
+                        escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
+                    }
+                    else
+                    {
+                        airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude);
+                    }
 
-                        double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
+                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + groundGroup.Id + ")", null);
 
-                        AirGroup escortAirGroup = getRandomEscortMission(airGroup);
-                        if (escortAirGroup != null)
-                        {
-                            availableAirGroups.Remove(escortAirGroup);
-
-                            Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), altitude);
-
-                            airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude, rendevouzPosition);
-                            escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
-                        }
-                        else
-                        {
-                            airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude);
-                        }
-
-                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + groundGroup.Id + ")", null);
-
-                        createRandomInterceptMission(sectionFile, airGroup);
+                    AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                    if (interceptAirGroup != null)
+                    {
+                        availableAirGroups.Remove(interceptAirGroup);
+                        interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
                     }
                 }
 
@@ -1220,7 +1255,13 @@ namespace IL2DCE
 
                         Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
 
-                        createRandomInterceptMission(sectionFile, airGroup);
+                        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                        if (interceptAirGroup != null)
+                        {
+                            availableAirGroups.Remove(interceptAirGroup);
+                            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                        }
                     }
                 }
                 else if (randomMissionType == EMissionType.ESCORT)
@@ -1232,7 +1273,7 @@ namespace IL2DCE
                         Point3d marker = enemyMarkers[markerIndex];
                         Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
 
-                        AirGroup escortedAirGroup = getRandomEscortedMission(airGroup);
+                        AirGroup escortedAirGroup = getRandomEscortedAirGroup(airGroup);
                         if (escortedAirGroup != null)
                         {
                             availableAirGroups.Remove(escortedAirGroup);
@@ -1244,7 +1285,13 @@ namespace IL2DCE
 
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Escort flight(" + escortedAirGroup.Name + ")", null);
 
-                            createRandomInterceptMission(sectionFile, escortedAirGroup);
+                            AirGroup interceptAirGroup = getRandomInterceptAirGroup(escortedAirGroup);
+                            if (interceptAirGroup != null)
+                            {
+                                availableAirGroups.Remove(interceptAirGroup);
+                                interceptAirGroup.CreateInterceptFlight(sectionFile, escortedAirGroup);
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + escortedAirGroup.Name + ")", null);
+                            }
                         }
                         else
                         {
@@ -1252,7 +1299,13 @@ namespace IL2DCE
 
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No escort required. Instead offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
 
-                            createRandomInterceptMission(sectionFile, airGroup);
+                            AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                            if (interceptAirGroup != null)
+                            {
+                                availableAirGroups.Remove(interceptAirGroup);
+                                interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                            }
                         }
                     }
                 }
@@ -1269,7 +1322,7 @@ namespace IL2DCE
                         int randomSubMissionTypeIndex = rand.Next(subMissionTypes.Count);
                         EMissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
 
-                        AirGroup interceptedAirGroup = getRandomInterceptedMission(airGroup, randomSubMissionType);
+                        AirGroup interceptedAirGroup = getRandomInterceptedAirGroup(airGroup, randomSubMissionType);
                         if (interceptedAirGroup != null)
                         {
                             availableAirGroups.Remove(interceptedAirGroup);
@@ -1284,7 +1337,7 @@ namespace IL2DCE
                             }
                             else if (randomSubMissionType == EMissionType.GROUND_ATTACK_AREA)
                             {
-                                AirGroup escortAirGroup = getRandomEscortMission(interceptedAirGroup);
+                                AirGroup escortAirGroup = getRandomEscortAirGroup(interceptedAirGroup);
                                 if (escortAirGroup != null)
                                 {
                                     availableAirGroups.Remove(escortAirGroup);
