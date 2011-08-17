@@ -678,7 +678,7 @@ namespace IL2DCE
             }
             else if (groundGroup.Type == EGroundGroupType.Ship)
             {
-                pathParams = Game.gpFindPath(start, 10.0, end, 20.0, PathType.WATER, groundGroup.Army);
+                pathParams = Game.gpFindPath(start, 10000.0, end, 10000.0, PathType.WATER, groundGroup.Army);
             }
 
             if (pathParams != null)
@@ -759,6 +759,8 @@ namespace IL2DCE
 
                 if (closestRoad != null)
                 {
+                    //findPath(groundGroup, start, new Point2d(closestRoad.Start.X, closestRoad.Start.Y));
+
                     groundGroup.Waypoints.AddRange(closestRoad.Waypoints);
 
                     List<Road> availableRoads = new List<Road>(roads);
@@ -812,30 +814,46 @@ namespace IL2DCE
                         }
                         else
                         {
-                            findRoad(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y), Waterways);
+                            Point2d start = new Point2d(closestMarker.Value.x, closestMarker.Value.y);
+                            Point2d end = new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y);
+                            findRoad(groundGroup, start, end, Waterways);
+
+                            if (groundGroup.Waypoints.Count > 0)
+                            {
+                                //findPath(groundGroup, new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count-1].Position.x,groundGroup.Waypoints[groundGroup.Waypoints.Count-1].Position.y), end);
+                            }
 
                             if (groundGroup.Waypoints.Count > 2)
                             {
                                 int startIndex = rand.Next(groundGroup.Waypoints.Count - 2); // do not start at the last waypoint
 
-                                //groundGroup.Waypoints.RemoveRange(0, startIndex);
+                                groundGroup.Waypoints.RemoveRange(0, startIndex);
 
                                 groundGroup.writeTo(missionFile);
 
-                                /*for (int i = 1; i < 3; i++)
+                                for (int i = 1; i < 3; i++)
                                 {
-                                    double xOffset = 0.0;
-                                    double yOffset = 0.0;
+                                    double xOffset = -1.0;
+                                    double yOffset = -1.0;
 
+                                    bool subWaypointUsed = false;
                                     Point2d p1 = new Point2d(groundGroup.Waypoints[0].X, groundGroup.Waypoints[0].Y);
-                                    //if (groundGroup.Waypoints[0].SubWaypoints.Count > 0 && groundGroup.Waypoints[0].SubWaypoints[0].P.HasValue)
-                                    //{
-                                    //    Point2d p2 = new Point2d(groundGroup.Waypoints[0].SubWaypoints[0].P.Value.x, groundGroup.Waypoints[0].SubWaypoints[0].P.Value.y);
-                                    //    double distance = p1.distance(ref p2);
-                                    //    xOffset = 500 * ((p2.x - p1.x) / distance);
-                                    //    yOffset = 500 * ((p2.y - p1.y) / distance);
-                                    //}
-                                    //else
+                                    if (groundGroup.Waypoints[0].SubWaypoints.Count > 0)
+                                    {
+                                        foreach (GroundGroupSubWaypoint subWaypoint in groundGroup.Waypoints[0].SubWaypoints)
+                                        {
+                                            if (subWaypoint.P.HasValue)
+                                            {
+                                                Point2d p2 = new Point2d(subWaypoint.P.Value.x, subWaypoint.P.Value.y);
+                                                double distance = p1.distance(ref p2);
+                                                xOffset = 500 * ((p2.x - p1.x) / distance);
+                                                yOffset = 500 * ((p2.y - p1.y) / distance);
+                                                subWaypointUsed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if(subWaypointUsed == false)
                                     {
                                         Point2d p2 = new Point2d(groundGroup.Waypoints[1].X, groundGroup.Waypoints[1].Y);
                                         double distance = p1.distance(ref p2);
@@ -846,15 +864,26 @@ namespace IL2DCE
                                     groundGroup.Waypoints[0].X += xOffset;
                                     groundGroup.Waypoints[0].Y += yOffset;
 
+                                    subWaypointUsed = false;
                                     p1 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Y);
-                                    //if (groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count > 0)
-                                    //{
-                                    //    Point2d p2 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints[groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count - 1].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints[groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count - 1].Y);
-                                    //    double distance = p1.distance(ref p2);
-                                    //    xOffset = 500 * ((p2.x - p1.x) / distance);
-                                    //    yOffset = 500 * ((p2.y - p1.y) / distance);
-                                    //}
-                                    //else
+                                    if (groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count > 0)
+                                    {
+                                        for (int j = groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints.Count-1; j >= 0; j--)
+                                        {
+                                            GroundGroupSubWaypoint subWaypoint = groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].SubWaypoints[j];
+                                            if (subWaypoint.P.HasValue)
+                                            {
+
+                                                Point2d p2 = new Point2d(subWaypoint.P.Value.x, subWaypoint.P.Value.y);
+                                                double distance = p1.distance(ref p2);
+                                                xOffset = 500 * ((p2.x - p1.x) / distance);
+                                                yOffset = 500 * ((p2.y - p1.y) / distance);
+                                                subWaypointUsed = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (subWaypointUsed == false)
                                     {
                                         Point2d p2 = new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].X, groundGroup.Waypoints[groundGroup.Waypoints.Count - 2].Y);
                                         double distance = p1.distance(ref p2);
@@ -868,7 +897,7 @@ namespace IL2DCE
                                     groundGroup._id = i.ToString() + "0" + groundGroup.Id;
 
                                     groundGroup.writeTo(missionFile);
-                                }*/
+                                }
                             }
                         }
                     }
