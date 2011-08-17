@@ -137,16 +137,7 @@ namespace IL2DCE
                     Game.Core.SpawnParked = false;
                 }
 
-                ISectionFile missionFile = Game.Core.ContinueCampaign();
-
-                string missionPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
-                if (!System.IO.Directory.Exists(missionPath))
-                {
-                    System.IO.Directory.CreateDirectory(missionPath);
-                }
-
-                string missionFileName = string.Format(string.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", DateTime.Now.ToString("yyyyMMddHHmmssffff")));
-                missionFile.save(missionFileName);
+                string missionFileName = Game.Core.ContinueCampaign();
 
                 if (Game is IGameSingle)
                 {

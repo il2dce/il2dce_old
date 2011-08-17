@@ -197,6 +197,12 @@ namespace IL2DCE
             set;
         }
 
+        public string Briefing
+        {
+            get;
+            set;
+        }
+
         public string Name
         {
             get
@@ -304,6 +310,12 @@ namespace IL2DCE
                     {
                         sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
                     }
+                }
+
+                if (Briefing != null)
+                {
+                    sectionFile.add(Name, "Briefing", Briefing);
+                    
                 }
             }
         }
