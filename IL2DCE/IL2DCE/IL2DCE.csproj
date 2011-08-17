@@ -42,9 +42,11 @@
     <Compile Include="AirGroup.cs" />
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
+    <Compile Include="BriefingFile.cs" />
     <Compile Include="Campaign.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="GroundGroupSubWaypoint.cs" />
+    <Compile Include="Interfaces\IBriefingFile.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />

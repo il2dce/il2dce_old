@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <addin>
-  <game server="true" name="IL2DCEGameServer">
+  <!-- disable IL2DCEGameServer it is working -->
+  <!-->game server="true" name="IL2DCEGameServer">
     <assembly type="IL2DCE.Game.GameServer" path="$home/parts/IL2DCE/IL2DCE.Game.dll"/>
     <title text="IL2DCE Server"/>
-  </game>
+  </game-->
 </addin>

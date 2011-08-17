@@ -33,9 +33,9 @@ namespace IL2DCE
             get;
         }
 
-        maddox.game.ISectionFile StartCampaign();
+        string StartCampaign();
 
-        maddox.game.ISectionFile ContinueCampaign();
+        string ContinueCampaign();
 
         bool SpawnParked
         {
