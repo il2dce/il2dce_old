@@ -590,6 +590,21 @@ namespace IL2DCE
                 missionFile.delete("Chiefs");
             }
 
+            for (int i = 0; i < missionFile.lines("MAIN"); i++)
+            {
+                string key;
+                string value;
+                missionFile.get("MAIN", i, out key, out value);
+                if (key == "player")
+                {
+                    missionFile.delete("MAIN", i);
+                    break;
+                }
+            }
+
+            // Preload mission file for path calculation.
+            Game.gameInterface.MissionLoad(missionFile);
+
             if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
             {
                 if (missionFile.exist("MAIN", "player"))
@@ -601,10 +616,6 @@ namespace IL2DCE
                     missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
                 }
             }
-
-            // Preload mission file for path calculation.
-            Game.gameInterface.MissionLoad(missionFile);
-            
 
             if (playerAirGroup != null)
             {
@@ -642,6 +653,9 @@ namespace IL2DCE
                     }
                 }
             }
+
+            // Stop the preloaded battle to prevent a postload.
+            Game.gameInterface.BattleStop();
 
             return missionFile;
         }
