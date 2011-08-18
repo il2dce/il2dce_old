@@ -26,8 +26,10 @@ namespace IL2DCE
 {
     public class Campaign : ICampaign
     {
-        public Campaign(string campaignFolderPath, ISectionFile campaignFile)
+        public Campaign(string id, string campaignFolderPath, ISectionFile campaignFile)
         {
+            _id = id;
+
             if (campaignFile.exist("Campaign", "name"))
             {
                 name = campaignFile.get("Campaign", "name");
@@ -38,9 +40,21 @@ namespace IL2DCE
                 templateFilePath = campaignFolderPath + campaignFile.get("Campaign", "templateFile");
             }
 
-            if (campaignFile.exist("Campaign", "briefingFile"))
+            if (campaignFile.exist("Campaign", "scriptFile"))
             {
-                briefingFilePath = campaignFolderPath + campaignFile.get("Campaign", "briefingFile");
+                _scriptFilePath = campaignFolderPath + campaignFile.get("Campaign", "scriptFile");
+            }
+
+            if (campaignFile.exist("Campaign", "startDate"))
+            {
+                string startDateString = campaignFile.get("Campaign", "startDate");
+                _startDate = DateTime.Parse(startDateString);
+            }
+
+            if (campaignFile.exist("Campaign", "endDate"))
+            {
+                string endDateString = campaignFile.get("Campaign", "endDate");
+                _endDate = DateTime.Parse(endDateString);
             }
         }
 
@@ -48,6 +62,15 @@ namespace IL2DCE
         {
             return Name;
         }
+
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
+        string _id;
 
         public string Name
         {
@@ -67,13 +90,49 @@ namespace IL2DCE
         }
         private string templateFilePath;
 
-        public string BriefingFilePath
+        public string ScriptFilePath
         {
             get
             {
-                return briefingFilePath;
+                return _scriptFilePath;
             }
         }
-        private string briefingFilePath;
+        private string _scriptFilePath;
+
+        public DateTime StartDate
+        {
+            get
+            {
+                return _startDate;
+            }
+        }
+        private DateTime _startDate;
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+        }
+        private DateTime _endDate;
+
+        public string CurrentMissionFileName
+        {
+            get
+            {
+                return _currentMissionFileName;
+            }
+            set
+            {
+                _currentMissionFileName = value;
+            }
+        }
+        private string _currentMissionFileName;
+
+        public void Save()
+        {
+
+        }
     }
 }

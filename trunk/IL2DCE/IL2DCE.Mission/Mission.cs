@@ -28,7 +28,28 @@ namespace IL2DCE
     {
         public class Mission : AMission
         {
-            
+            IGameSingle Game
+            {
+                get
+                {
+                    return GamePlay as IGameSingle;
+                }
+            }
+
+            public override void OnSingleBattleSuccess(bool success)
+            {
+                if (Game != null)
+                {
+                    if (success == true)
+                    {
+                        Game.BattleSuccess = EBattleResult.SUCCESS;
+                    }
+                    else
+                    {
+                        Game.BattleSuccess = EBattleResult.FAILURE;
+                    }
+                }                
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace IL2DCE
         public class SelectCampaignPage : PageDefImpl
         {
             public SelectCampaignPage()
-                : base("Select campaign", new SelectCampaign())
+                : base("Select Campaign", new SelectCampaign())
             {
                 FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
@@ -65,8 +65,6 @@ namespace IL2DCE
                 base._leave(play, arg);
 
                 _game = null;
-
-                //FrameworkElement.ListCampaign.ItemsSource = null;
             }
 
             private SelectCampaign FrameworkElement

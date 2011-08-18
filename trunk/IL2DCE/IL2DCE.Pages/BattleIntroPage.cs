@@ -26,20 +26,36 @@ namespace IL2DCE
 {
     namespace Pages
     {
-        public class ServerOptionsPage : PageDefImpl
+        public class BattleIntroPage : PageDefImpl
         {
-            public ServerOptionsPage()
-                : base("Server Options", new ServerOptions())
+            public BattleIntroPage()
+                : base("Battle Intro", new CampaignBattleIntro())
             {
-                FrameworkElement.Apply.Click += new System.Windows.RoutedEventHandler(Apply_Click);
+                FrameworkElement.Fly.Click += new System.Windows.RoutedEventHandler(Fly_Click);
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(Back_Click);
+            }
+
+            void Back_Click(object sender, System.Windows.RoutedEventArgs e)
+            {
+                Game.gameInterface.PagePop(null);
+            }
+
+            void Fly_Click(object sender, System.Windows.RoutedEventArgs e)
+            {
+                if (Game is IGameSingle)
+                {
+                    IGameSingle gameSingle = Game as IGameSingle;
+                    gameSingle.BattleSuccess = EBattleResult.NONE;
+                }
+
+                Game.gameInterface.PageChange(new BattlePage(), null);
             }
 
             public override void _enter(maddox.game.IGame play, object arg)
             {
                 base._enter(play, arg);
 
-                _game = play as IGameServer;
+                _game = play as IGame;
             }
 
             public override void _leave(maddox.game.IGame play, object arg)
@@ -49,34 +65,22 @@ namespace IL2DCE
                 _game = null;
             }
 
-            private ServerOptions FrameworkElement
+            private CampaignBattleIntro FrameworkElement
             {
                 get
                 {
-                    return FE as ServerOptions;
+                    return FE as CampaignBattleIntro;
                 }
             }
 
-            private IGameServer Game
+            private IGame Game
             {
                 get
                 {
                     return _game;
                 }
             }
-            private IGameServer _game;
-
-            private void Back_Click(object sender, System.Windows.RoutedEventArgs e)
-            {
-                Game.gameInterface.PagePop(null);
-            }
-
-            private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
-            {
-                Game.init("1234");
-
-                Game.gameInterface.PageChange(new SelectCampaignPage(), null);
-            }
+            private IGame _game;
         }
     }
 }

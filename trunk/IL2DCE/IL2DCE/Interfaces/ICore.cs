@@ -33,9 +33,9 @@ namespace IL2DCE
             get;
         }
 
-        string StartCampaign();
+        void ResetCampaign();
 
-        string ContinueCampaign();
+        void AdvanceCampaign();
 
         bool SpawnParked
         {

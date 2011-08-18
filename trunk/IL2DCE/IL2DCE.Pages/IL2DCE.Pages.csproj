@@ -41,6 +41,10 @@
     <Compile Include="..\IL2DCE\Properties\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BattleFailurePage.cs" />
+    <Compile Include="BattleIntroPage.cs" />
+    <Compile Include="BattlePage.cs" />
+    <Compile Include="BattleSuccessPage.cs" />
     <Compile Include="CampaignIntro.xaml.cs">
       <DependentUpon>CampaignIntro.xaml</DependentUpon>
     </Compile>
