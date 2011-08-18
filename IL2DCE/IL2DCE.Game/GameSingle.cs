@@ -31,7 +31,8 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                core = new Core(this);
+                _core = new Core(this);
+                _battleSuccess = EBattleResult.NONE;
             }
 
             public override maddox.game.play.PageInterface getStartPage()
@@ -43,10 +44,23 @@ namespace IL2DCE
             {
                 get
                 {
-                    return core;
+                    return _core;
                 }
             }
-            private ICore core;
+            private ICore _core;
+
+            public EBattleResult BattleSuccess
+            {
+                get
+                {
+                    return _battleSuccess;
+                }
+                set
+                {
+                    _battleSuccess = value;
+                }
+            }
+            EBattleResult _battleSuccess;
         }
     }
 }

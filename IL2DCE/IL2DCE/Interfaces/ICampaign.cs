@@ -26,5 +26,28 @@ namespace IL2DCE
         {
             get;
         }
+
+        string ScriptFilePath
+        {
+            get;
+        }
+
+        string Id
+        {
+            get;
+        }
+
+        string Name
+        {
+            get;
+        }
+
+        string CurrentMissionFileName
+        {
+            get;
+            set;
+        }
+
+        void Save();
     }
 }

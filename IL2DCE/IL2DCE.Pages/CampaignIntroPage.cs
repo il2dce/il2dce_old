@@ -29,10 +29,9 @@ namespace IL2DCE
         public class CampaignIntoPage : PageDefImpl
         {
             public CampaignIntoPage()
-                : base("Campaign into", new CampaignIntro())
+                : base("Campaign Into", new CampaignIntro())
             {
-                FrameworkElement.Continue.Click += new System.Windows.RoutedEventHandler(Continue_Click);
-                FrameworkElement.Next.Click += new System.Windows.RoutedEventHandler(Next_Click);
+                FrameworkElement.Start.Click += new System.Windows.RoutedEventHandler(Start_Click);
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(Back_Click);
                 FrameworkElement.comboBoxSelectArmy.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectArmy_SelectionChanged);
                 FrameworkElement.comboBoxSelectAirGroup.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(comboBoxSelectAirGroup_SelectionChanged);
@@ -104,30 +103,8 @@ namespace IL2DCE
                 Game.gameInterface.PagePop(null);
             }
 
-            private void Continue_Click(object sender, System.Windows.RoutedEventArgs e)
+            private void Start_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                if (Game.gameInterface.BattleIsRun())
-                {
-                    Game.gameInterface.UIMainHide();
-                }
-                else
-                {
-                    nextMission();
-                }
-            }
-
-            private void Next_Click(object sender, System.Windows.RoutedEventArgs e)
-            {
-                nextMission();
-            }
-
-            void nextMission()
-            {
-                if (Game.gameInterface.BattleIsRun())
-                {
-                    Game.gameInterface.BattleStop();
-                }
-
                 if (FrameworkElement.checkBoxSpawnParked.IsChecked == true)
                 {
                     Game.Core.SpawnParked = true;
@@ -137,16 +114,10 @@ namespace IL2DCE
                     Game.Core.SpawnParked = false;
                 }
 
-                string missionFileName = Game.Core.ContinueCampaign();
+                Game.Core.ResetCampaign();
+                Game.Core.AdvanceCampaign();
 
-                if (Game is IGameSingle)
-                {
-                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("SingleMissGame"), "mission " + missionFileName);
-                }
-                else if (Game is IGameServer)
-                {
-                    Game.gameInterface.PagePush(Game.gameInterface.PageGet("ServerGame"), "mission " + missionFileName);
-                }
+                Game.gameInterface.PageChange(new BattleIntroPage(), null);
             }
 
             private void comboBoxSelectArmy_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

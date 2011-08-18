@@ -6,15 +6,14 @@
              mc:Ignorable="d" xmlns:my="clr-namespace:maddox.game.page;assembly=gamePages" xmlns:my1="clr-namespace:maddox.game.play;assembly=gamePages" Height="914" Width="1672">
     <Grid Height="897" Width="1652" HorizontalAlignment="Left" VerticalAlignment="Top">
         <Label Content="Campaign Into" Height="138" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelCampaignInto" VerticalAlignment="Top" Width="640" FontSize="64" FontWeight="Bold" Foreground="#FF791313" />
-        <my1:ButtonAsMenuItem Content="Continue" Height="77" HorizontalAlignment="Left" Margin="68,218,0,0" Name="Continue" VerticalAlignment="Top" Width="206" />
-        <my1:ButtonAsMenuItem Content="Next" Height="77" HorizontalAlignment="Left" Margin="68,301,0,0" Name="Next" VerticalAlignment="Top" Width="206" />
-        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,384,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Start" Height="77" HorizontalAlignment="Left" Margin="68,218,0,0" Name="Start" VerticalAlignment="Top" Width="206" />
+        <my1:ButtonAsMenuItem Content="Back" Height="77" HorizontalAlignment="Left" Margin="68,301,0,0" Name="Back" VerticalAlignment="Top" Width="206" />
         <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,288,0,0" Name="comboBoxSelectArmy" VerticalAlignment="Top" Width="617" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />
             </ComboBox.Background>
         </ComboBox>
-        <Label Content="Select army:" Height="64" Margin="331,218,418,0" Name="labelSelectArmy" VerticalAlignment="Top" FontSize="28" Foreground="#FFA0854A" />
+        <Label Content="Select army:" Height="64" Margin="331,218,703,0" Name="labelSelectArmy" VerticalAlignment="Top" FontSize="28" Foreground="#FFA0854A" />
         <ComboBox Height="63" HorizontalAlignment="Left" Margin="331,427,0,0" Name="comboBoxSelectAirGroup" VerticalAlignment="Top" Width="618" FontSize="28" Foreground="#FFA0854A">
             <ComboBox.Background>
                 <SolidColorBrush />

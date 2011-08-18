@@ -20,8 +20,19 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
+    public enum EBattleResult
+    {
+        SUCCESS,
+        FAILURE,
+        NONE,
+    };
+
     public interface IGameSingle : maddox.game.IGameSingle, IGame
     {
-        
+        EBattleResult BattleSuccess
+        {
+            get;
+            set;
+        }
     }
 }

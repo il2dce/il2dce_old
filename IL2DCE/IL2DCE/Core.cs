@@ -93,7 +93,7 @@ namespace IL2DCE
                         {
                             ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/campaign.ini");
 
-                            Campaign campaign = new Campaign(campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignFile);
+                            Campaign campaign = new Campaign(campaignFolder.Name, campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignFile);
                             Campaigns.Add(campaign);
                         }
                     }
@@ -333,17 +333,19 @@ namespace IL2DCE
         public string playerAirGroupKey = null;
         public AirGroup playerAirGroup = null;
 
-        public string StartCampaign()
+        public void ResetCampaign()
         {
-            return ContinueCampaign();
+            // TODO: Reset campaign state
+
+            CurrentCampaign.Save();
         }
 
-        public string ContinueCampaign()
+        public void AdvanceCampaign()
         {
-            string missionPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
-            if (!System.IO.Directory.Exists(missionPath))
+            string missionFolderSystemPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE/" + CurrentCampaign.Id);
+            if (!System.IO.Directory.Exists(missionFolderSystemPath))
             {
-                System.IO.Directory.CreateDirectory(missionPath);
+                System.IO.Directory.CreateDirectory(missionFolderSystemPath);
             }
 
             string missionId = DateTime.Now.ToString("yyyyMMddHHmmssffff");
@@ -352,10 +354,17 @@ namespace IL2DCE
             
             generate(CurrentCampaign.TemplateFilePath, missionId, out missionFile, out briefingFile);
 
-            string missionFileName = string.Format("$user/mission/IL2DCE/IL2DCE_{0}.mis", missionId);
-            string briefingFileName = string.Format("$user/mission/IL2DCE/IL2DCE_{0}.briefing", missionId);
+            string missionFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.mis", missionId);
+            string briefingFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.briefing", missionId);
+            string scriptFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.cs", missionId);
+
+
+            string scriptSourceFileSystemPath = Game.gameInterface.ToFileSystemPath(CurrentCampaign.ScriptFilePath);
+            string scriptDestinationFileSystemPath = Game.gameInterface.ToFileSystemPath(scriptFileName);
+            System.IO.File.Copy(scriptSourceFileSystemPath, scriptDestinationFileSystemPath, true);
+
             missionFile.save(missionFileName);
-            briefingFile.save(briefingFileName);            
+            briefingFile.save(briefingFileName);
 
 #if DEBUG
             string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
@@ -379,9 +388,10 @@ namespace IL2DCE
             }
 #endif
 
-            return missionFileName;
+            CurrentCampaign.CurrentMissionFileName = missionFileName;
+            CurrentCampaign.Save();
         }
-
+        
         private void init(string templateFileName)
         {
             _roads.Clear();
@@ -823,7 +833,7 @@ namespace IL2DCE
                                 //findPath(groundGroup, new Point2d(groundGroup.Waypoints[groundGroup.Waypoints.Count-1].Position.x,groundGroup.Waypoints[groundGroup.Waypoints.Count-1].Position.y), end);
                             }
 
-                            if (groundGroup.Waypoints.Count > 2)
+                            if (groundGroup.Waypoints.Count >= 2)
                             {
                                 int startIndex = rand.Next(groundGroup.Waypoints.Count - 2); // do not start at the last waypoint
 
