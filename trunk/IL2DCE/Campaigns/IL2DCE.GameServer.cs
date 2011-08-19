@@ -30,14 +30,16 @@ public class Mission : AMission
         
         if (missionNumber == 0)
         {
-            maddox.game.GameDef game = GamePlay as maddox.game.GameDef;
-            IL2DCE.Core core = new IL2DCE.Core(game);
+            IL2DCE.Core core = new IL2DCE.Core(GamePlay, @"C:\Users\stefan.rothdach\Documents\1C SoftClub\il-2 sturmovik cliffs of dover\missions\IL2DCE\Campaigns");
 
-            core.CurrentCampaign = core.Campaigns[0];
+            core.CurrentCampaign = core.Campaigns[2];
 
             maddox.game.ISectionFile missionFile = core.StartCampaign();
+			
+			string missionFileName = "$user/mission/IL2DCE/Current.mis";
+			missionFile.save(missionFileName);
 
-            GamePlay.gpPostMissionLoad(missionFile);
+            GamePlay.gpPostMissionLoad(missionFileName);
         }
     }    
 }
