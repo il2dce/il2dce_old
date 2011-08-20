@@ -24,36 +24,36 @@ using maddox.game.page;
 
 namespace IL2DCE
 {
-    public class Campaign : ICampaign
+    public class CampaignInfo : ICampaignInfo
     {
-        public Campaign(string id, string campaignFolderPath, ISectionFile campaignFile)
+        public CampaignInfo(string id, string campaignFolderPath, ISectionFile campaignFile)
         {
             _id = id;
 
-            if (campaignFile.exist("Campaign", "name"))
+            if (campaignFile.exist("Main", "name"))
             {
-                name = campaignFile.get("Campaign", "name");
+                name = campaignFile.get("Main", "name");
             }
 
-            if (campaignFile.exist("Campaign", "templateFile"))
+            if (campaignFile.exist("Main", "templateFile"))
             {
-                templateFilePath = campaignFolderPath + campaignFile.get("Campaign", "templateFile");
+                templateFilePath = campaignFolderPath + campaignFile.get("Main", "templateFile");
             }
 
-            if (campaignFile.exist("Campaign", "scriptFile"))
+            if (campaignFile.exist("Main", "scriptFile"))
             {
-                _scriptFilePath = campaignFolderPath + campaignFile.get("Campaign", "scriptFile");
+                _scriptFilePath = campaignFolderPath + campaignFile.get("Main", "scriptFile");
             }
 
-            if (campaignFile.exist("Campaign", "startDate"))
+            if (campaignFile.exist("Main", "startDate"))
             {
-                string startDateString = campaignFile.get("Campaign", "startDate");
+                string startDateString = campaignFile.get("Main", "startDate");
                 _startDate = DateTime.Parse(startDateString);
             }
 
-            if (campaignFile.exist("Campaign", "endDate"))
+            if (campaignFile.exist("Main", "endDate"))
             {
-                string endDateString = campaignFile.get("Campaign", "endDate");
+                string endDateString = campaignFile.get("Main", "endDate");
                 _endDate = DateTime.Parse(endDateString);
             }
         }
@@ -116,23 +116,5 @@ namespace IL2DCE
             }
         }
         private DateTime _endDate;
-
-        public string CurrentMissionFileName
-        {
-            get
-            {
-                return _currentMissionFileName;
-            }
-            set
-            {
-                _currentMissionFileName = value;
-            }
-        }
-        private string _currentMissionFileName;
-
-        public void Save()
-        {
-
-        }
     }
 }

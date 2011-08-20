@@ -47,8 +47,8 @@ namespace IL2DCE
                     if (gameSingle.BattleSuccess == EBattleResult.NONE)
                     {
                         gameSingle.BattleSuccess = EBattleResult.FAILURE;
-                        
-                        string missionFileName = Game.Core.CurrentCampaign.CurrentMissionFileName;
+
+                        string missionFileName = Game.Core.Career.MissionFileName;
                         if (missionFileName != null)
                         {
                             Game.gameInterface.PagePush(Game.gameInterface.PageGet("SingleMissGame"), "mission " + missionFileName);

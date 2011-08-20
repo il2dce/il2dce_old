@@ -49,6 +49,14 @@
       <DependentUpon>CampaignIntro.xaml</DependentUpon>
     </Compile>
     <Compile Include="CampaignIntroPage.cs" />
+    <Compile Include="CareerIntro.xaml.cs">
+      <DependentUpon>CareerIntro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CareerIntroPage.cs" />
+    <Compile Include="SelectCareer.xaml.cs">
+      <DependentUpon>SelectCareer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectCareerPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectCampaignPage.cs" />
     <Compile Include="ServerOptionsPage.cs" />
@@ -80,6 +88,14 @@
     <Page Include="CampaignIntro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CareerIntro.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectCareer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
