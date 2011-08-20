@@ -20,34 +20,56 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface ICampaign
+    public interface ICareer
     {
-        string TemplateFilePath
-        {
-            get;
-        }
-
-        string ScriptFilePath
-        {
-            get;
-        }
-
-        string Id
-        {
-            get;
-        }
-
-        string Name
-        {
-            get;
-        }
-
-        string CurrentMissionFileName
+        string PilotName
         {
             get;
             set;
         }
 
-        void Save();
+        int ArmyIndex
+        {
+            get;
+            set;
+        }
+
+        int RankIndex
+        {
+            get;
+            set;
+        }
+
+        int Experience
+        {
+            get;
+            set;
+        }
+
+        ICampaignInfo CampaignInfo
+        {
+            get;
+            set;
+        }
+
+        string MissionFileName
+        {
+            get;
+            set;
+        }
+
+        DateTime? Date
+        {
+            get;
+            set;
+        }
+
+        string AirGroup
+        {
+            get;
+            set;
+        }
+
+        void writeTo(maddox.game.ISectionFile campaignFile);
     }
 }

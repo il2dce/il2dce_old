@@ -79,53 +79,77 @@ namespace IL2DCE
                 _debug = 0;
             }
 
-            if (confFile.exist("MAIN", "campaignsFolder"))
+            if (confFile.exist("Main", "campaignsFolder"))
             {
-                string campaignsFolderPath = confFile.get("MAIN", "campaignsFolder");
+                string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
                 string campaignsFolderSystemPath = game.gameInterface.ToFileSystemPath(campaignsFolderPath);
 
                 System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderSystemPath);
-                if (campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
+                if (campaignsFolder.Exists && campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
                 {
                     foreach (System.IO.DirectoryInfo campaignFolder in campaignsFolder.GetDirectories())
                     {
-                        if (campaignFolder.GetFiles("campaign.ini") != null && campaignFolder.GetFiles("campaign.ini").Length == 1)
+                        if (campaignFolder.GetFiles("CampaignInfo.ini") != null && campaignFolder.GetFiles("CampaignInfo.ini").Length == 1)
                         {
-                            ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/campaign.ini");
+                            ISectionFile campaignFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/CampaignInfo.ini");
 
-                            Campaign campaign = new Campaign(campaignFolder.Name, campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignFile);
-                            Campaigns.Add(campaign);
+                            CampaignInfo campaignInfo = new CampaignInfo(campaignFolder.Name, campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignFile);
+                            CampaignInfos.Add(campaignInfo);
                         }
+                    }
+                }
+            }
+
+            string careersFolderSystemPath = game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
+            System.IO.DirectoryInfo careersFolder = new System.IO.DirectoryInfo(careersFolderSystemPath);
+            if (careersFolder.Exists && careersFolder.GetDirectories() != null && careersFolder.GetDirectories().Length > 0)
+            {
+                foreach (System.IO.DirectoryInfo careerFolder in careersFolder.GetDirectories())
+                {
+                    if (careerFolder.GetFiles("Career.ini") != null && careerFolder.GetFiles("Career.ini").Length == 1)
+                    {
+                        ISectionFile careerFile = game.gameInterface.SectionFileLoad("$user/mission/IL2DCE" + "/" + careerFolder.Name + "/Career.ini");
+
+                        Career career = new Career(careerFolder.Name, CampaignInfos, careerFile);
+                        Careers.Add(career);
                     }
                 }
             }
         }
 
-        public ICampaign CurrentCampaign
+        public ICareer Career
         {
             get
             {
-                return _currentCampaign;
+                return _campaign;
             }
             set
             {
-                if (_currentCampaign != value)
+                if (_campaign != value)
                 {
-                    _currentCampaign = value;
-                    init(_currentCampaign.TemplateFilePath);
+                    _campaign = value;
                 }
             }
         }
-        private ICampaign _currentCampaign;
+        private ICareer _campaign;
 
-        public List<ICampaign> Campaigns
+        public List<ICareer> Careers
+        {
+            get
+            {
+                return _careers;
+            }
+        }
+        private List<ICareer> _careers = new List<ICareer>();
+
+        public List<ICampaignInfo> CampaignInfos
         {
             get
             {
                 return campaigns;
             }
         }
-        private List<ICampaign> campaigns = new List<ICampaign>();
+        private List<ICampaignInfo> campaigns = new List<ICampaignInfo>();
 
         private IGame Game
         {
@@ -267,99 +291,46 @@ namespace IL2DCE
         private List<GroundGroup> redGroundGroups = new List<GroundGroup>();
         private List<GroundGroup> blueGroundGroups = new List<GroundGroup>();
 
-        public int? PlayerSquadronIndex
-        {
-            get
-            {
-                return playerSquadronIndex;
-            }
-            set
-            {
-                playerSquadronIndex = value;
-            }
-        }
-
-        public int? PlayerFlightIndex
-        {
-            get
-            {
-                return playerFlightIndex;
-            }
-            set
-            {
-                playerFlightIndex = value;
-            }
-        }
-
-        public int? PlayerAircraftIndex
-        {
-            get
-            {
-                return playerAircraftIndex;
-            }
-            set
-            {
-                playerAircraftIndex = value;
-            }
-        }
-
-        public string PlayerAirGroupKey
-        {
-            get
-            {
-                return playerAirGroupKey;
-            }
-            set
-            {
-                playerAirGroupKey = value;
-            }
-        }
-
-        public IAirGroup PlayerAirGroup
-        {
-            get
-            {
-                return playerAirGroup;
-            }
-            set
-            {
-                playerAirGroup = value as AirGroup;
-            }
-        }
-
-        public int? playerSquadronIndex = null;
-        public int? playerFlightIndex = null;
-        public int? playerAircraftIndex = null;
-        public string playerAirGroupKey = null;
-        public AirGroup playerAirGroup = null;
-
         public void ResetCampaign()
         {
-            // TODO: Reset campaign state
+            // Reset campaign state
+            Career.Date = null;
 
-            CurrentCampaign.Save();
+            AdvanceCampaign();
         }
 
         public void AdvanceCampaign()
         {
-            string missionFolderSystemPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE/" + CurrentCampaign.Id);
+            if (!Career.Date.HasValue)
+            {
+                Career.Date = Career.CampaignInfo.StartDate;
+            }
+            else
+            {
+                Career.Date = Career.Date.Value.Add(new TimeSpan(1, 0, 0, 0));
+            }
+
+            string missionFolderSystemPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE/" + Career.PilotName);
             if (!System.IO.Directory.Exists(missionFolderSystemPath))
             {
                 System.IO.Directory.CreateDirectory(missionFolderSystemPath);
             }
 
-            string missionId = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            string missionId = Career.CampaignInfo.Id + "_" + Career.Date.Value.Date.Year.ToString() + "-" + Career.Date.Value.Date.Month.ToString() + "-" + Career.Date.Value.Date.Day.ToString();
             ISectionFile missionFile = null;
             IBriefingFile briefingFile = null;
             
-            generate(CurrentCampaign.TemplateFilePath, missionId, out missionFile, out briefingFile);
+            ISectionFile careerFile = Game.gameInterface.SectionFileCreate();
+            
+            generate(Career.CampaignInfo.TemplateFilePath, missionId, out missionFile, out briefingFile);
 
-            string missionFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.mis", missionId);
-            string briefingFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.briefing", missionId);
-            string scriptFileName = string.Format("$user/mission/IL2DCE/" + CurrentCampaign.Id + "/IL2DCE_{0}.cs", missionId);
+            string missionFileName = string.Format("$user/mission/IL2DCE/" + Career.PilotName + "/{0}.mis", missionId);
+            string briefingFileName = string.Format("$user/mission/IL2DCE/" + Career.PilotName + "/{0}.briefing", missionId);
+            string scriptFileName = string.Format("$user/mission/IL2DCE/" + Career.PilotName + "/{0}.cs", missionId);
+            string careerFileName = "$user/mission/IL2DCE/" + Career.PilotName + "/Career.ini";
 
 
-            string scriptSourceFileSystemPath = Game.gameInterface.ToFileSystemPath(CurrentCampaign.ScriptFilePath);
+            string scriptSourceFileSystemPath = Game.gameInterface.ToFileSystemPath(Career.CampaignInfo.ScriptFilePath);
             string scriptDestinationFileSystemPath = Game.gameInterface.ToFileSystemPath(scriptFileName);
             System.IO.File.Copy(scriptSourceFileSystemPath, scriptDestinationFileSystemPath, true);
 
@@ -374,6 +345,7 @@ namespace IL2DCE
             }
             missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
             briefingFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.briefing");
+            System.IO.File.Copy(scriptSourceFileSystemPath, debugPath + "\\IL2DCEDebug.cs", true);
 #else
             string debugPath = Game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
             if (Debug == 1)
@@ -388,11 +360,12 @@ namespace IL2DCE
             }
 #endif
 
-            CurrentCampaign.CurrentMissionFileName = missionFileName;
-            CurrentCampaign.Save();
+            Career.MissionFileName = missionFileName;
+            Career.writeTo(careerFile);
+            careerFile.save(careerFileName);
         }
         
-        private void init(string templateFileName)
+        public void InitCampaign()
         {
             _roads.Clear();
             _waterways.Clear();
@@ -404,13 +377,8 @@ namespace IL2DCE
             blueAirGroups.Clear();
             redGroundGroups.Clear();
             blueGroundGroups.Clear();
-            playerSquadronIndex = null;
-            playerFlightIndex = null;
-            playerAircraftIndex = null;
-            playerAirGroupKey = null;
-            playerAirGroup = null;
 
-            ISectionFile templateFile = Game.gpLoadSectionFile(templateFileName);
+            ISectionFile templateFile = Game.gpLoadSectionFile(Career.CampaignInfo.TemplateFilePath);
 
             for (int i = 0; i < templateFile.lines("Stationary"); i++)
             {
@@ -516,50 +484,6 @@ namespace IL2DCE
                     }
                 }
             }
-
-            if (templateFile.exist("MAIN", "player"))
-            {
-                string playerAircraftId = templateFile.get("MAIN", "player");
-
-                int result;
-                int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 1, 1), out result);
-                playerSquadronIndex = result;
-                int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 2, 1), out result);
-                playerFlightIndex = result;
-                int.TryParse(playerAircraftId.Substring(playerAircraftId.LastIndexOf(".") + 3, 1), out result);
-                playerAircraftIndex = result;
-
-                playerAirGroupKey = playerAircraftId.Substring(playerAircraftId.IndexOf(":") + 1, playerAircraftId.LastIndexOf(".") - playerAircraftId.IndexOf(":") - 1);
-
-                // Find the air group of the player.
-                if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
-                {
-                    foreach (AirGroup airGroup in getAirGroups(1))
-                    {
-                        if (airGroup.AirGroupKey == playerAirGroupKey &&
-                            airGroup.SquadronIndex == playerSquadronIndex &&
-                            airGroup.Flights.Count > playerFlightIndex &&
-                            airGroup.Flights.ContainsKey((int)playerFlightIndex) &&
-                            airGroup.Flights[(int)playerFlightIndex] != null &&
-                            airGroup.Flights[(int)playerFlightIndex].Count > playerAircraftIndex)
-                        {
-                            playerAirGroup = airGroup;
-                        }
-                    }
-                    foreach (AirGroup airGroup in getAirGroups(2))
-                    {
-                        if (airGroup.AirGroupKey == playerAirGroupKey &&
-                            airGroup.SquadronIndex == playerSquadronIndex &&
-                            airGroup.Flights.Count > playerFlightIndex &&
-                            airGroup.Flights.ContainsKey((int)playerFlightIndex) &&
-                            airGroup.Flights[(int)playerFlightIndex] != null &&
-                            airGroup.Flights[(int)playerFlightIndex].Count > playerAircraftIndex)
-                        {
-                            playerAirGroup = airGroup;
-                        }
-                    }
-                }
-            }
         }
 
 
@@ -626,23 +550,28 @@ namespace IL2DCE
             // Preload mission file for path calculation.
             Game.gameInterface.MissionLoad(missionFile);
 
-            if (playerAirGroupKey != null && playerSquadronIndex != null && playerFlightIndex != null && playerAircraftIndex != null)
+            foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
-                if (missionFile.exist("MAIN", "player"))
+                if(airGroup.Name == Career.AirGroup)
                 {
-                    missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
-                }
-                else
-                {
-                    missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
-                }
-            }
+                    string playerAirGroupKey = airGroup.AirGroupKey;
+                    int playerSquadronIndex = airGroup.SquadronIndex;
+                    int playerFlightIndex = airGroup.Flights.Count-1;
+                    int playerAircraftIndex = airGroup.Flights[playerFlightIndex].Count - 1;
 
-            if (playerAirGroup != null)
-            {
-                availableAirGroups.Remove(playerAirGroup);
+                    if (missionFile.exist("MAIN", "player"))
+                    {
+                        missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                    }
+                    else
+                    {
+                        missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                    }
 
-                createRandomAirOperation(missionFile, briefingFile, playerAirGroup);
+                    availableAirGroups.Remove(airGroup);
+                    createRandomAirOperation(missionFile, briefingFile, airGroup);
+                    break;
+                }
             }
 
             if (availableAirGroups != null && availableAirGroups.Count > 0)
@@ -1207,7 +1136,16 @@ namespace IL2DCE
                             briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
 
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                        }                        
+                        }
+                    }
+                    else
+                    {
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
+
+                        airGroup.CreateTransferFlight(sectionFile);
                     }
                 }
                 else if (randomMissionType == EMissionType.GROUND_ATTACK_AREA)
@@ -1251,43 +1189,64 @@ namespace IL2DCE
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
                         }
                     }
+                    else
+                    {
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
+
+                        airGroup.CreateTransferFlight(sectionFile);
+                    }
                 }
                 else if (randomMissionType == EMissionType.GROUND_ATTACK_TARGET)
                 {
                     GroundGroup groundGroup = getRandomGroundGroup(airGroup);
-                    availableGroundGroups.Remove(groundGroup);
-                    createRandomGroundOperation(sectionFile, groundGroup);
-
-                    double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
-
-                    AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
-                    if (escortAirGroup != null)
+                    if (groundGroup != null)
                     {
-                        availableAirGroups.Remove(escortAirGroup);
-                        Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), altitude);
-                        airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude, rendevouzPosition);
-                        escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
+                        availableGroundGroups.Remove(groundGroup);
+                        createRandomGroundOperation(sectionFile, groundGroup);
+
+                        double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
+
+                        AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
+                        if (escortAirGroup != null)
+                        {
+                            availableAirGroups.Remove(escortAirGroup);
+                            Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), altitude);
+                            airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude, rendevouzPosition);
+                            escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
+                        }
+                        else
+                        {
+                            airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude);
+                        }
+
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Attack " + groundGroup.Id + ".";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + groundGroup.Id + ")", null);
+
+                        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
+                        if (interceptAirGroup != null)
+                        {
+                            availableAirGroups.Remove(interceptAirGroup);
+                            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
+
+                            briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
+                            briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
+
+                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                        }
                     }
                     else
                     {
-                        airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude);
-                    }
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
 
-                    briefingFile.Name[airGroup.Name] = airGroup.Name;
-                    briefingFile.Description[airGroup.Name] = "Attack " + groundGroup.Id + ".";
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
 
-                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + groundGroup.Id + ")", null);
-
-                    AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                    if (interceptAirGroup != null)
-                    {
-                        availableAirGroups.Remove(interceptAirGroup);
-                        interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                        briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                        briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
+                        airGroup.CreateTransferFlight(sectionFile);
                     }
                 }
 
@@ -1331,6 +1290,15 @@ namespace IL2DCE
 
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
                         }
+                    }
+                    else
+                    {
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
+
+                        airGroup.CreateTransferFlight(sectionFile);
                     }
                 }
                 else if (randomMissionType == EMissionType.ESCORT)
@@ -1387,6 +1355,15 @@ namespace IL2DCE
                                 Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
                             }
                         }
+                    }
+                    else
+                    {
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
+
+                        airGroup.CreateTransferFlight(sectionFile);
                     }
                 }
                 else if (randomMissionType == EMissionType.INTERCEPT)
@@ -1449,6 +1426,15 @@ namespace IL2DCE
 
                             Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No intercept required. Instead defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
                         }
+                    }
+                    else
+                    {
+                        briefingFile.Name[airGroup.Name] = airGroup.Name;
+                        briefingFile.Description[airGroup.Name] = "Circuit.";
+
+                        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
+
+                        airGroup.CreateTransferFlight(sectionFile);
                     }
                 }
             }

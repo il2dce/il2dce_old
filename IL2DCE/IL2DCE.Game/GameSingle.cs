@@ -37,7 +37,7 @@ namespace IL2DCE
 
             public override maddox.game.play.PageInterface getStartPage()
             {
-                return new Pages.SelectCampaignPage();
+                return new Pages.SelectCareerPage();
             }
 
             public ICore Core

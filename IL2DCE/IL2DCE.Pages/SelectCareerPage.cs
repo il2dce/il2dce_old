@@ -26,20 +26,18 @@ namespace IL2DCE
 {
     namespace Pages
     {
-        public class SelectCampaignPage : PageDefImpl
+        public class SelectCareerPage : PageDefImpl
         {
-            public SelectCampaignPage()
-                : base("Select Campaign", new SelectCampaign())
+            public SelectCareerPage()
+                : base("Select Career", new SelectCareer())
             {
-                FrameworkElement.bBack.Click += new System.Windows.RoutedEventHandler(bBack_Click);
-                FrameworkElement.bNew.Click += new System.Windows.RoutedEventHandler(bNew_Click);
-                FrameworkElement.bContinue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
+                FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(bBack_Click);
+                FrameworkElement.New.Click += new System.Windows.RoutedEventHandler(bNew_Click);
+                FrameworkElement.Continue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
 
-                FrameworkElement.ListCampaign.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(listCampaign_SelectionChanged);
+                FrameworkElement.ListCareer.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(listCampaign_SelectionChanged);
 
-                // TODO: Make button visible when it is possible to continue a campaign.
-                FrameworkElement.bNew.IsEnabled = false;
-                FrameworkElement.bContinue.Visibility = System.Windows.Visibility.Hidden;                
+                FrameworkElement.Continue.IsEnabled = false;
             }
 
             public override void _enter(maddox.game.IGame play, object arg)
@@ -48,15 +46,15 @@ namespace IL2DCE
 
                 _game = play as IGame;
 
-                FrameworkElement.ListCampaign.ItemsSource = Game.Core.CampaignInfos;
+                FrameworkElement.ListCareer.ItemsSource = Game.Core.Careers;
 
-                if (FrameworkElement.ListCampaign.Items.Count > 0)
+                if (FrameworkElement.ListCareer.Items.Count > 0)
                 {
-                    FrameworkElement.ListCampaign.SelectedIndex = 0;
+                    FrameworkElement.ListCareer.SelectedIndex = 0;
                 }
                 else
                 {
-                    FrameworkElement.ListCampaign.SelectedIndex = -1;
+                    FrameworkElement.ListCareer.SelectedIndex = -1;
                 }
             }
 
@@ -67,11 +65,11 @@ namespace IL2DCE
                 _game = null;
             }
 
-            private SelectCampaign FrameworkElement
+            private SelectCareer FrameworkElement
             {
                 get
                 {
-                    return FE as SelectCampaign;
+                    return FE as SelectCareer;
                 }
             }
 
@@ -91,31 +89,37 @@ namespace IL2DCE
 
             private void bNew_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.Core.InitCampaign();
-
-                Game.gameInterface.PageChange(new CampaignIntoPage(), null);
+                Game.gameInterface.PageChange(new CareerIntroPage(), null);
             }
 
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.gameInterface.PagePop(null);
+                if (Game.Core.Career.CampaignInfo != null)
+                {
+                    Game.Core.InitCampaign();
+                    Game.gameInterface.PageChange(new BattleIntroPage(), null);
+                }
+                else
+                {
+                    Game.gameInterface.PageChange(new SelectCampaignPage(), null);
+                }
             }
 
             private void listCampaign_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
             {
                 if (e.AddedItems.Count > 0)
                 {
-                    ICampaignInfo campaignSelected = e.AddedItems[0] as ICampaignInfo;
-                    Game.Core.Career.CampaignInfo = campaignSelected;
+                    ICareer careerSelected = e.AddedItems[0] as ICareer;
+                    Game.Core.Career = careerSelected;
                 }
 
-                if (Game.Core.Career.CampaignInfo != null)
+                if (Game.Core.Career != null)
                 {
-                    FrameworkElement.bNew.IsEnabled = true;
+                    FrameworkElement.Continue.IsEnabled = true;
                 }
                 else
                 {
-                    FrameworkElement.bNew.IsEnabled = false;
+                    FrameworkElement.Continue.IsEnabled = false;
                 }
             }
         }

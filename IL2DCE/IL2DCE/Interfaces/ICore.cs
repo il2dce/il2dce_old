@@ -22,16 +22,23 @@ namespace IL2DCE
 {
     public interface ICore
     {
-        ICampaign CurrentCampaign
+        ICareer Career
         {
             get;
             set;
         }
 
-        List<ICampaign> Campaigns
+        List<ICareer> Careers
         {
             get;
         }
+
+        List<ICampaignInfo> CampaignInfos
+        {
+            get;
+        }
+
+        void InitCampaign();
 
         void ResetCampaign();
 
@@ -87,36 +94,6 @@ namespace IL2DCE
         System.Collections.Generic.IList<IGroundGroup> BlueGroundGroups
         {
             get;
-        }
-
-        int? PlayerSquadronIndex
-        {
-            get;
-            set;
-        }
-
-        int? PlayerFlightIndex
-        {
-            get;
-            set;
-        }
-
-        int? PlayerAircraftIndex
-        {
-            get;
-            set;
-        }
-
-        string PlayerAirGroupKey
-        {
-            get;
-            set;
-        }
-
-        IAirGroup PlayerAirGroup
-        {
-            get;
-            set;
         }
     }
 }

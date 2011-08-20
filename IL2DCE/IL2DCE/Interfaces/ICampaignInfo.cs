@@ -20,26 +20,19 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface IAirGroup
+    public interface ICampaignInfo
     {
-        string AirGroupKey
-        {
-            get;
-            set;
-        }
-
-        int SquadronIndex
-        {
-            get;
-            set;
-        }
-
-        System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
+        string TemplateFilePath
         {
             get;
         }
 
-        IAircraftInfo AircraftInfo
+        string ScriptFilePath
+        {
+            get;
+        }
+
+        string Id
         {
             get;
         }
@@ -48,5 +41,15 @@ namespace IL2DCE
         {
             get;
         }
+
+        DateTime StartDate
+        {
+            get;
+        }
+
+        DateTime EndDate
+        {
+            get;
+        }        
     }
 }
