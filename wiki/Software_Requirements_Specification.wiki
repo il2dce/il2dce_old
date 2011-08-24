@@ -13,10 +13,27 @@
 || Operation || The combination of a primary mission and optionally secondary missions and opposing missions of different units. ||
 || Battle || A closed set of one or more operations that take place at the same map. ||
 
+== Campaign scenarios ==
+
+This section contains a list of campaign scenarios.
+
+=== Phony War (Prelude) ===
+
+=== Dunkirk (Interlude) ===
+
+=== Kanalkampf (Phase 1) ===
+
+=== Adlertag (Phase 2) ===
+
+=== Battle of Britain (Phase 3) ===
+
+=== The Blitz (Phase 4) ===
+
+=== Leaning into France (Sequel) ===
+
 = Details =
 
 == Functional requirments ==
-
 
 === Air operations ===
 The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
