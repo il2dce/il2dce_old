@@ -3,19 +3,9 @@
 
 = Introduction =
 
-== Glossary ==
-
-|| *Term* || *Meaning* ||
-|| Mission || The task given to a elementary unit. ||
-|| Primary mission || The mission that is the main goal of the operation. ||
-|| Secondary mission || A mission that supports the main goal of the operation. ||
-|| Opposing mission || A mission that tries to prevent the achievment of the main goal of the operation. ||
-|| Operation || The combination of a primary mission and optionally secondary missions and opposing missions of different units. ||
-|| Battle || A closed set of one or more operations that take place at the same map. ||
+This sections contains a description of different campaign scenarios and use cases that should help to identify the requirments for IL2DCE.
 
 == Campaign scenarios ==
-
-This section contains a list of campaign scenarios.
 
 === Phony War (Prelude) ===
 
@@ -31,7 +21,21 @@ This section contains a list of campaign scenarios.
 
 === Leaning into France (Sequel) ===
 
+== Use cases ==
+
+
+
 = Details =
+
+== Glossary ==
+
+|| *Term* || *Meaning* ||
+|| Mission || The task given to a elementary unit. ||
+|| Primary mission || The mission that is the main goal of the operation. ||
+|| Secondary mission || A mission that supports the main goal of the operation. ||
+|| Opposing mission || A mission that tries to prevent the achievment of the main goal of the operation. ||
+|| Operation || The combination of a primary mission and optionally secondary missions and opposing missions of different units. ||
+|| Battle || A closed set of one or more operations that take place at the same map. ||
 
 == Functional requirments ==
 
@@ -67,7 +71,6 @@ The pilot can become the commanding officer of a squadron and can then influence
    * Select the pilots that take part in the mission
    * Modify waypoints to a certain degree
 
-
 === Game Modes ===
 
 ==== Single-player ====
@@ -87,7 +90,7 @@ The battle that is lasting over several operations.
 === Campaign Creation ===
 New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_. Configuration files can be provided optionally to overwrite the global configuration.
 
-=== Rapid release cycle ===
+=== Rapid release cycles ===
 New versions are released frequently.
 
 === Scalability ===
