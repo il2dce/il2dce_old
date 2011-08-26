@@ -43,7 +43,25 @@ This sections contains a description of different campaign scenarios and use cas
 The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
 
 ==== Mission types ====
+   * LIASON
 
+   * RECON
+   * MARITIME_RECON
+   * ARMED_RECON
+   * ARMED_MARITIME_RECON
+
+   * ATTACK_ARMOR
+   * ATTACK_VEHICLE
+   * ATTACK_ARTILLERY
+   * ATTACK_RADAR
+   * ATTACK_SHIP
+
+   * INTERCEPT
+   * NIGHT_INTERCEPT
+   * ESCORT
+
+   * INTRUDER
+   * NIGHT_INTRUDE
 
 ==== Special events ====
 
