@@ -598,7 +598,6 @@ namespace IL2DCE
                         missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
                     }
 
-                    availableAirGroups.Remove(airGroup);
                     createRandomAirOperation(missionFile, briefingFile, airGroup);
                     break;
                 }
@@ -612,8 +611,6 @@ namespace IL2DCE
                     {
                         int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
                         AirGroup randomAirGroup = availableAirGroups[randomAirGroupIndex];
-                        availableAirGroups.Remove(randomAirGroup);
-
                         createRandomAirOperation(missionFile, briefingFile, randomAirGroup);
                     }
                 }
@@ -1392,6 +1389,8 @@ namespace IL2DCE
         {
             if(isMissionTypeAvailable(airGroup, missionType))
             {
+                availableAirGroups.Remove(airGroup);
+
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
                 {
