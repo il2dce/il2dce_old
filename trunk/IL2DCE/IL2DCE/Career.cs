@@ -79,7 +79,6 @@ namespace IL2DCE
                 && careerFile.exist("Campaign", "id")
                 && careerFile.exist("Campaign", "airGroup")
                 && careerFile.exist("Campaign", "missionFile"))
-
             {
                 string id = careerFile.get("Campaign", "id");
                 foreach (ICampaignInfo campaignInfo in campaignInfos)

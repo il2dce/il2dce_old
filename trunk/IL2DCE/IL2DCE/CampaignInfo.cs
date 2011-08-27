@@ -26,9 +26,14 @@ namespace IL2DCE
 {
     public class CampaignInfo : ICampaignInfo
     {
-        public CampaignInfo(string id, string campaignFolderPath, ISectionFile campaignFile)
+        ISectionFile _globalAircraftInfoFile;
+        ISectionFile _localAircraftInfoFile;
+
+        public CampaignInfo(string id, string campaignFolderPath, ISectionFile campaignFile, ISectionFile glocalAircraftInfoFile, ISectionFile localAircraftInfoFile = null)
         {
             _id = id;
+            _globalAircraftInfoFile = glocalAircraftInfoFile;
+            _localAircraftInfoFile = localAircraftInfoFile;
 
             if (campaignFile.exist("Main", "name"))
             {
@@ -116,5 +121,21 @@ namespace IL2DCE
             }
         }
         private DateTime _endDate;
+
+        public IAircraftInfo GetAircraftInfo(string aircraft)
+        {
+            if(_localAircraftInfoFile.exist("Main", aircraft))
+            {
+                return new AircraftInfo(_localAircraftInfoFile, aircraft);
+            }
+            else if(_globalAircraftInfoFile.exist("Main", aircraft))
+            {
+                return new AircraftInfo(_globalAircraftInfoFile, aircraft);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
     }
 }

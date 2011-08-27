@@ -50,6 +50,8 @@ namespace IL2DCE
         DateTime EndDate
         {
             get;
-        }        
+        }
+
+        IAircraftInfo GetAircraftInfo(string aircraft);
     }
 }
