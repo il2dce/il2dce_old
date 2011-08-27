@@ -56,6 +56,16 @@ namespace IL2DCE
                 base._enter(play, arg);
 
                 _game = play as IGame;
+
+                // TODO:                
+                // Skip this page
+                if (Game is IGameSingle)
+                {
+                    IGameSingle gameSingle = Game as IGameSingle;
+                    gameSingle.BattleSuccess = EBattleResult.NONE;
+                }
+
+                Game.gameInterface.PageChange(new BattlePage(), null);
             }
 
             public override void _leave(maddox.game.IGame play, object arg)
