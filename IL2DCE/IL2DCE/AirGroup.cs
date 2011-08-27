@@ -26,10 +26,14 @@ namespace IL2DCE
 {
     public class AirGroup : IAirGroup
     {
+        ICore _core;
+
         #region Public constructors
 
-        public AirGroup(ISectionFile sectionFile, string airGroupId)
+        public AirGroup(ICore core, ISectionFile sectionFile, string airGroupId)
         {
+            _core = core;
+
             // airGroupId = <airGroupKey>.<squadronIndex><flightMask>
 
             // AirGroupKey
@@ -245,7 +249,7 @@ namespace IL2DCE
         {
             get
             {
-                return new AircraftInfo(Class);
+                return _core.Career.CampaignInfo.GetAircraftInfo(Class);
             }
         }
 
@@ -438,20 +442,20 @@ namespace IL2DCE
             writeTo(sectionFile);
         }
 
-        public void CreateReconFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
-        {
-            Waypoints.Clear();
+        //public void CreateReconFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
+        //{
+        //    Waypoints.Clear();
 
-            createStartWaypoints(sectionFile);
-            createStartInbetweenPoints(sectionFile, targetArea);
+        //    createStartWaypoints(sectionFile);
+        //    createStartInbetweenPoints(sectionFile, targetArea);
 
-            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.RECON, targetArea.x, targetArea.y, targetArea.z, 300.0));
+        //    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.RECON, targetArea.x, targetArea.y, targetArea.z, 300.0));
 
-            createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
-            createEndWaypoints(sectionFile, landingAirport);
+        //    createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
+        //    createEndWaypoints(sectionFile, landingAirport);
 
-            writeTo(sectionFile);
-        }
+        //    writeTo(sectionFile);
+        //}
 
         public void CreateCoverFlight(ISectionFile sectionFile, Point3d targetArea, AiAirport landingAirport = null)
         {
@@ -483,49 +487,95 @@ namespace IL2DCE
             writeTo(sectionFile);
         }
 
-        public void CreateGroundAttackFlight(ISectionFile sectionFile, Point3d targetArea, Point3d? rendevouzPosition = null, AiAirport landingAirport = null)
+        //public void CreateGroundAttackAreaMission(ISectionFile sectionFile, Point3d targetArea, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        //{
+        //    Point3d? rendevouzPosition = null;
+        //    if (escortAirGroup != null)
+        //    {
+        //        rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), targetArea.z);
+        //    }
+
+        //    Waypoints.Clear();
+
+        //    createStartWaypoints(sectionFile);
+
+        //    if (rendevouzPosition != null && rendevouzPosition.HasValue)
+        //    {
+        //        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
+        //        createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, targetArea);
+        //    }
+        //    else
+        //    {
+        //        createStartInbetweenPoints(sectionFile, targetArea);
+        //    }
+
+
+        //    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_POINT, targetArea.x, targetArea.y, targetArea.z, 300.0));
+
+        //    createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
+        //    createEndWaypoints(sectionFile, landingAirport);
+
+        //    writeTo(sectionFile);
+        //}
+
+        public void CreateGroundAttackRadarMission(ISectionFile sectionFile, Radar radar, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
+            Point3d? rendevouzPosition = null;
+            if (escortAirGroup != null)
+            {
+                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+            }
+
             Waypoints.Clear();
 
             createStartWaypoints(sectionFile);
 
-            if (rendevouzPosition == null)
+            if (rendevouzPosition != null && rendevouzPosition.HasValue)
             {
-                createStartInbetweenPoints(sectionFile, targetArea);
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
+                Point3d pStart = new Point3d(radar.X, radar.Y, altitude);
+                createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, pStart);
             }
             else
             {
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
-                createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, targetArea);
+                Point3d pStart = new Point3d(radar.X, radar.Y, altitude);
+                createStartInbetweenPoints(sectionFile, pStart);
             }
 
-
-            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_POINT, targetArea.x, targetArea.y, targetArea.z, 300.0));
-
-            createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
+            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, radar.X, radar.Y, altitude, 300.0, radar.Name));
+            
+            Point3d pEnd = new Point3d(radar.X, radar.Y, altitude);
+            createEndInbetweenPoints(sectionFile, pEnd, landingAirport);
+            
             createEndWaypoints(sectionFile, landingAirport);
 
             writeTo(sectionFile);
         }
 
-        public void CreateGroundAttackTargetMission(ISectionFile sectionFile, GroundGroup groundGroup, double altitude, Point3d? rendevouzPosition = null, AiAirport landingAirport = null)
+        public void CreateGroundAttackTargetMission(ISectionFile sectionFile, GroundGroup groundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
+            Point3d? rendevouzPosition = null;
+            if (escortAirGroup != null)
+            {
+                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+            }
+
             Waypoints.Clear();
 
             if (groundGroup.Waypoints.Count > 0)
             {
                 createStartWaypoints(sectionFile);
-            
-                if (rendevouzPosition == null)
-                {
-                    Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
-                    createStartInbetweenPoints(sectionFile, pStart);
-                }
-                else
+
+                if (rendevouzPosition != null && rendevouzPosition.HasValue)
                 {
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
                     Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
-                    createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, pStart);
+                    createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, pStart);                    
+                }
+                else
+                {
+                    Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
+                    createStartInbetweenPoints(sectionFile, pStart);
                 }
 
                 GroundGroupWaypoint lastGroundGroupWaypoint = null;
@@ -534,6 +584,63 @@ namespace IL2DCE
                 {
                     lastGroundGroupWaypoint = groundGroupWaypoint;
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, groundGroup.Id + " " + groundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
+                    if (start == null)
+                    {
+                        start = Waypoints[Waypoints.Count - 1];
+                    }
+                    else
+                    {
+                        if (distanceBetween(start, Waypoints[Waypoints.Count - 1]) > 20000.0)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (lastGroundGroupWaypoint != null)
+                {
+                    Point3d pEnd = new Point3d(lastGroundGroupWaypoint.Position.x, lastGroundGroupWaypoint.Position.y, altitude);
+                    createEndInbetweenPoints(sectionFile, pEnd, landingAirport);
+                }
+
+                createEndWaypoints(sectionFile, landingAirport);
+
+                writeTo(sectionFile);
+            }
+        }
+
+        public void CreateReconTargetMission(ISectionFile sectionFile, GroundGroup groundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        {
+            Point3d? rendevouzPosition = null;
+            if (escortAirGroup != null)
+            {
+                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+            }
+
+            Waypoints.Clear();
+
+            if (groundGroup.Waypoints.Count > 0)
+            {
+                createStartWaypoints(sectionFile);
+
+                if (rendevouzPosition != null && rendevouzPosition.HasValue)
+                {
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
+                    Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
+                    createInbetweenWaypoints(sectionFile, rendevouzPosition.Value, pStart);                    
+                }
+                else
+                {
+                    Point3d pStart = new Point3d(groundGroup.Waypoints[0].Position.x, groundGroup.Waypoints[0].Position.y, altitude);
+                    createStartInbetweenPoints(sectionFile, pStart);
+                }
+
+                GroundGroupWaypoint lastGroundGroupWaypoint = null;
+                AirGroupWaypoint start = null;
+                foreach (GroundGroupWaypoint groundGroupWaypoint in groundGroup.Waypoints)
+                {
+                    lastGroundGroupWaypoint = groundGroupWaypoint;
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.RECON, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, groundGroup.Id + " " + groundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
                     if (start == null)
                     {
                         start = Waypoints[Waypoints.Count - 1];

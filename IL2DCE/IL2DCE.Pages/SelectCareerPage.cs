@@ -33,11 +33,13 @@ namespace IL2DCE
             {
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(bBack_Click);
                 FrameworkElement.New.Click += new System.Windows.RoutedEventHandler(bNew_Click);
+                FrameworkElement.Delete.Click += new System.Windows.RoutedEventHandler(Delete_Click);
                 FrameworkElement.Continue.Click += new System.Windows.RoutedEventHandler(bContinue_Click);
 
                 FrameworkElement.ListCareer.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(listCampaign_SelectionChanged);
 
                 FrameworkElement.Continue.IsEnabled = false;
+                FrameworkElement.Delete.IsEnabled = false;
             }
 
             public override void _enter(maddox.game.IGame play, object arg)
@@ -56,6 +58,8 @@ namespace IL2DCE
                 {
                     FrameworkElement.ListCareer.SelectedIndex = -1;
                 }
+
+                FrameworkElement.ListCareer.Items.Refresh();
             }
 
             public override void _leave(maddox.game.IGame play, object arg)
@@ -105,6 +109,14 @@ namespace IL2DCE
                 }
             }
 
+            void Delete_Click(object sender, System.Windows.RoutedEventArgs e)
+            {
+                Game.Core.DeleteCareer(Game.Core.Career);
+                FrameworkElement.ListCareer.Items.RemoveAt(FrameworkElement.ListCareer.SelectedIndex);
+
+                FrameworkElement.ListCareer.Items.Refresh();
+            }
+
             private void listCampaign_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
             {
                 if (e.AddedItems.Count > 0)
@@ -116,10 +128,12 @@ namespace IL2DCE
                 if (Game.Core.Career != null)
                 {
                     FrameworkElement.Continue.IsEnabled = true;
+                    FrameworkElement.Delete.IsEnabled = true;
                 }
                 else
                 {
                     FrameworkElement.Continue.IsEnabled = false;
+                    FrameworkElement.Delete.IsEnabled = false;
                 }
             }
         }

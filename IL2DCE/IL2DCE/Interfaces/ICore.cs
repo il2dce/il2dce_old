@@ -38,6 +38,8 @@ namespace IL2DCE
             get;
         }
 
+        void DeleteCareer(ICareer career);
+
         void InitCampaign();
 
         void ResetCampaign();

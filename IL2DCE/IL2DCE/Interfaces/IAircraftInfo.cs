@@ -22,15 +22,25 @@ namespace IL2DCE
 {
     public enum EMissionType
     {
-        RECON_AREA,
-        GROUND_ATTACK_AREA,
-        OFFENSIVE_PATROL_AREA,
-        DEFENSIVE_PATROL_AREA,
-        GROUND_ATTACK_TARGET,
-        //OFFENSIVE_PATROL_TARGET,
-        //DEFENSIVE_PATROL_TARGET,
-        ESCORT,
+        LIASON,
+
+        RECON,
+        MARITIME_RECON,
+        ARMED_RECON,
+        ARMED_MARITIME_RECON,
+        
+        ATTACK_ARMOR,
+        ATTACK_VEHICLE,
+        //ATTACK_ARTILLERY,
+        ATTACK_RADAR,
+        ATTACK_SHIP,
+
         INTERCEPT,
+        //NIGHT_INTERCEPT,
+        ESCORT,
+
+        //INTRUDER,
+        //NIGHT_INTRUDER,
     };
 
     public interface IAircraftInfo

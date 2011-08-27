@@ -26,8 +26,11 @@ namespace IL2DCE
 {
     public class AircraftInfo : IAircraftInfo
     {
-        public AircraftInfo(string aircraft)
+        ISectionFile _aircraftInfoFile;
+
+        public AircraftInfo(ISectionFile aircraftInfoFile, string aircraft)
         {
+            _aircraftInfoFile = aircraftInfoFile;
             Aircraft = aircraft;
         }
 
@@ -35,13 +38,22 @@ namespace IL2DCE
         {
             get
             {
-                if (flyableAircrafts.Contains(Aircraft))
+                if (_aircraftInfoFile.exist(Aircraft, "Player"))
                 {
-                    return true;
+                    string value = _aircraftInfoFile.get(Aircraft, "Player");
+                    int player = int.Parse(value);
+                    if (player == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
-                    return false;
+                    throw new FormatException();
                 }
             }
         }
@@ -51,47 +63,18 @@ namespace IL2DCE
             get
             {
                 List<EMissionType> missionTypes = new List<EMissionType>();
-
-                if (reconAircrafts.Contains(Aircraft))
+                for (int i = 0; i < _aircraftInfoFile.lines(Aircraft); i++)
                 {
-                    if (!missionTypes.Contains(EMissionType.RECON_AREA))
+                    string key;
+                    string value;
+                    _aircraftInfoFile.get(Aircraft, i, out key, out value);
+
+                    EMissionType missionType;
+                    if(Enum.TryParse<EMissionType>(key, false, out missionType))
                     {
-                        missionTypes.Add(EMissionType.RECON_AREA);
+                        missionTypes.Add(missionType);
                     }
                 }
-
-                if (bomberAircrafts.Contains(Aircraft))
-                {
-                    //if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_AREA))
-                    //{
-                    //    missionTypes.Add(EMissionType.GROUND_ATTACK_AREA);
-                    //}
-                    if (!missionTypes.Contains(EMissionType.GROUND_ATTACK_TARGET))
-                    {
-                        missionTypes.Add(EMissionType.GROUND_ATTACK_TARGET);
-                    }
-                }
-
-                if (fighterAircrafts.Contains(Aircraft))
-                {
-                    if (!missionTypes.Contains(EMissionType.OFFENSIVE_PATROL_AREA))
-                    {
-                        missionTypes.Add(EMissionType.OFFENSIVE_PATROL_AREA);
-                    }
-                    //if (!missionTypes.Contains(MissionType.DEFENSIVE_PATROL_AREA))
-                    //{
-                    //    missionTypes.Add(MissionType.DEFENSIVE_PATROL_AREA);
-                    //}
-                    if (!missionTypes.Contains(EMissionType.ESCORT))
-                    {
-                        missionTypes.Add(EMissionType.ESCORT);
-                    }
-                    if (!missionTypes.Contains(EMissionType.INTERCEPT))
-                    {
-                        missionTypes.Add(EMissionType.INTERCEPT);
-                    }
-                }
-
                 return missionTypes;
             }
         }
@@ -101,94 +84,5 @@ namespace IL2DCE
             get;
             set;
         }
-
-        private List<string> flyableAircrafts = new List<string>
-        {
-            "Aircraft.HurricaneMkI_dH5-20",
-            "Aircraft.HurricaneMkI",
-            "Aircraft.SpitfireMkI",
-            "Aircraft.SpitfireMkI_Heartbreaker",
-            "Aircraft.SpitfireMkIa",
-            "Aircraft.SpitfireMkIIa", 
-            "Aircraft.Bf-109E-1",
-            "Aircraft.Bf-109E-3",
-            "Aircraft.Bf-109E-3B",
-            "Aircraft.Bf-110C-4",
-            "Aircraft.Bf-110C-7",
-            "Aircraft.CR42",
-            "Aircraft.G50",
-            "Aircraft.BlenheimMkIV",
-            "Aircraft.Ju-87B-2",
-            "Aircraft.He-111H-2",
-            "Aircraft.He-111P-2",
-            "Aircraft.Ju-88A-1",
-            "Aircraft.BR-20M", 
-        };
-
-        private List<string> liaisonAircrafts = new List<string>
-        {
-            "Aircraft.AnsonMkI",
-            "Aircraft.DH82A",
-            "Aircraft.Bf-108B-2",
-        };
-
-        private List<string> reconAircrafts = new List<string>
-        {
-            "Aircraft.BlenheimMkI",
-            "Aircraft.BlenheimMkIV",
-            //"Aircraft.SunderlandMkI",
-            //"Aircraft.WalrusMkI",
-            "Aircraft.WellingtonMkIc", 
-            //"Aircraft.Ju-87B-2", NO RECON
-            "Aircraft.Do-17Z-1",
-            "Aircraft.Do-17Z-2",
-            "Aircraft.Do-215B-1",
-            "Aircraft.FW-200C-1",
-            "Aircraft.He-111H-2",
-            "Aircraft.He-111P-2",
-            "Aircraft.Ju-88A-1",
-            //"Aircraft.He-115B-2"
-            "Aircraft.BR-20M", 
-        };
-
-        private List<string> fighterAircrafts = new List<string>
-        {
-            "Aircraft.BeaufighterMkIF",
-            "Aircraft.DefiantMkI",
-            "Aircraft.GladiatorMkII",
-            "Aircraft.HurricaneMkI_dH5-20",
-            "Aircraft.HurricaneMkI",
-            "Aircraft.SpitfireMkI",
-            "Aircraft.SpitfireMkI_Heartbreaker",
-            "Aircraft.SpitfireMkIa",
-            "Aircraft.SpitfireMkIIa", 
-            "Aircraft.Bf-109E-1",
-            "Aircraft.Bf-109E-3",
-            "Aircraft.Bf-110C-4",
-
-            "Aircraft.CR42",
-            "Aircraft.G50",  
-        };
-
-        private List<string> bomberAircrafts = new List<string>
-        {
-            "Aircraft.BlenheimMkI",
-            "Aircraft.BlenheimMkIV",
-            //"Aircraft.SunderlandMkI",
-            //"Aircraft.WalrusMkI",
-            "Aircraft.WellingtonMkIc", 
-            "Aircraft.Ju-87B-2",
-            "Aircraft.Do-17Z-1",
-            "Aircraft.Do-17Z-2",
-            //"Aircraft.Do-215B-1", NO BOMBER
-            "Aircraft.FW-200C-1",
-            "Aircraft.He-111H-2",
-            "Aircraft.He-111P-2",
-            "Aircraft.Ju-88A-1",
-            //"Aircraft.He-115B-2"
-            "Aircraft.BR-20M", 
-            "Aircraft.Bf-109E-3B",
-            "Aircraft.Bf-110C-7",
-        };
     }
 }
