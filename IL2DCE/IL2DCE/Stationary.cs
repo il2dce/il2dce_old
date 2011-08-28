@@ -24,16 +24,23 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    public class Radar
+    public class Stationary
     {
-        public Radar(string name, double x, double y)
+        public Stationary(string id, double x, double y)
         {
-            Name = name;
+            _id = id;
             X = x;
             Y = y;
         }
 
-        public string Name;
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
+        private string _id;
 
         public double X;
 

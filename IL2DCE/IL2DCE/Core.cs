@@ -35,8 +35,8 @@ namespace IL2DCE
         private int additionalAirOperations = 0;
         private int additionalGroundOperations = 0;
 
-        private List<Radar> redRadars = new List<Radar>();
-        private List<Radar> blueRadars = new List<Radar>();
+        private List<Stationary> redStationaries = new List<Stationary>();
+        private List<Stationary> blueStationaries = new List<Stationary>();
 
         public Core(IGame game)
         {
@@ -216,23 +216,23 @@ namespace IL2DCE
         }
         private int _debug = 0;
 
-        public System.Collections.Generic.IList<Road> Roads
+        public System.Collections.Generic.IList<Waterway> Roads
         {
             get
             {
                 return _roads;
             }
         }
-        System.Collections.Generic.List<Road> _roads = new System.Collections.Generic.List<Road>();
+        System.Collections.Generic.List<Waterway> _roads = new System.Collections.Generic.List<Waterway>();
 
-        public System.Collections.Generic.IList<Road> Waterways
+        public System.Collections.Generic.IList<Waterway> Waterways
         {
             get
             {
                 return _waterways;
             }
         }
-        System.Collections.Generic.List<Road> _waterways = new System.Collections.Generic.List<Road>();
+        System.Collections.Generic.List<Waterway> _waterways = new System.Collections.Generic.List<Waterway>();
 
         public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
@@ -399,8 +399,8 @@ namespace IL2DCE
         {
             _roads.Clear();
             _waterways.Clear();
-            redRadars.Clear();
-            blueRadars.Clear();
+            redStationaries.Clear();
+            blueStationaries.Clear();
             redFrontMarkers.Clear();
             blueFrontMarkers.Clear();
             redAirGroups.Clear();
@@ -426,8 +426,8 @@ namespace IL2DCE
                         double y;
                         double.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x);
                         double.TryParse(valueParts[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y);
-                        Radar radar = new Radar(key, x, y);
-                        redRadars.Add(radar);
+                        Stationary radar = new Stationary(key, x, y);
+                        redStationaries.Add(radar);
                     }
                 }
             }
@@ -503,7 +503,7 @@ namespace IL2DCE
                 }
                 else
                 {
-                    Road road = new Road(templateFile, key);
+                    Waterway road = new Waterway(templateFile, key);
                     if (value.StartsWith("Vehicle") || value.StartsWith("Armor"))
                     {
                         _roads.Add(road);
@@ -582,7 +582,7 @@ namespace IL2DCE
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
-                if(airGroup.Name == Career.AirGroup)
+                if(airGroup.Id == Career.AirGroup)
                 {
                     string playerAirGroupKey = airGroup.AirGroupKey;
                     int playerSquadronIndex = airGroup.SquadronIndex;
@@ -688,13 +688,13 @@ namespace IL2DCE
             }
         }
 
-        private void findRoad(GroundGroup groundGroup, Point2d start, Point2d end, IList<Road> roads)
+        private void findRoad(GroundGroup groundGroup, Point2d start, Point2d end, IList<Waterway> roads)
         {
             if (roads != null && roads.Count > 0)
             {
-                Road closestRoad = null;
+                Waterway closestRoad = null;
                 double closestRoadDistance = 0.0;
-                foreach (Road road in roads)
+                foreach (Waterway road in roads)
                 {
                     if (road.Start != null && road.End != null)
                     {
@@ -729,7 +729,7 @@ namespace IL2DCE
 
                     groundGroup.Waypoints.AddRange(closestRoad.Waypoints);
 
-                    List<Road> availableRoads = new List<Road>(roads);
+                    List<Waterway> availableRoads = new List<Waterway>(roads);
                     availableRoads.Remove(closestRoad);
 
                     findRoad(groundGroup, new Point2d(closestRoad.End.Position.x, closestRoad.End.Position.y), end, availableRoads);
@@ -905,35 +905,35 @@ namespace IL2DCE
             }
         }
 
-        public List<Radar> getFriendlyRadars(int armyIndex)
+        public List<Stationary> getFriendlyRadars(int armyIndex)
         {
             if (armyIndex == 1)
             {
-                return redRadars;
+                return redStationaries;
             }
             else if (armyIndex == 2)
             {
-                return blueRadars;
+                return blueStationaries;
             }
             else
             {
-                return new List<Radar>();
+                return new List<Stationary>();
             }
         }
 
-        public List<Radar> getEnemyRadars(int armyIndex)
+        public List<Stationary> getEnemyRadars(int armyIndex)
         {
             if (armyIndex == 1)
             {
-                return blueRadars;
+                return blueStationaries;
             }
             else if (armyIndex == 2)
             {
-                return redRadars;
+                return redStationaries;
             }
             else
             {
-                return new List<Radar>();
+                return new List<Stationary>();
             }
         }
 
@@ -1293,7 +1293,7 @@ namespace IL2DCE
             }
             else if(missionType == EMissionType.ATTACK_RADAR)
             {
-                List<Radar> radars = getEnemyRadars(airGroup.ArmyIndex);
+                List<Stationary> radars = getEnemyRadars(airGroup.ArmyIndex);
                 if(radars.Count > 0)
                 {
                     return true;
@@ -1398,7 +1398,7 @@ namespace IL2DCE
                     if (escortAirGroup != null)
                     {
                         availableAirGroups.Remove(escortAirGroup);
-                        escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
+                        escortAirGroup.EscortMission(sectionFile, airGroup);
                     }
                 }
 
@@ -1426,11 +1426,11 @@ namespace IL2DCE
                 }
                 else if (missionType == EMissionType.ATTACK_RADAR)
                 {
-                    List<Radar> radars = getEnemyRadars(airGroup.ArmyIndex);
+                    List<Stationary> radars = getEnemyRadars(airGroup.ArmyIndex);
                     if (radars.Count > 0)
                     {
                         int radarIndex = rand.Next(radars.Count);
-                        Radar radar = radars[radarIndex];
+                        Stationary radar = radars[radarIndex];
                         
                         airGroup.CreateGroundAttackRadarMission(sectionFile, radar, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                     }
@@ -1469,7 +1469,7 @@ namespace IL2DCE
                             EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
-                            airGroup.CreateEscortFlight(sectionFile, targetAirGroup);
+                            airGroup.EscortMission(sectionFile, targetAirGroup);
                         }
                     }
                 }
@@ -1493,7 +1493,7 @@ namespace IL2DCE
                             EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
-                            airGroup.CreateInterceptFlight(sectionFile, targetAirGroup);
+                            airGroup.InterceptMission(sectionFile, targetAirGroup);
                         }
                     }
                 }
@@ -1522,7 +1522,7 @@ namespace IL2DCE
                     if (interceptAirGroup != null)
                     {
                         availableAirGroups.Remove(interceptAirGroup);
-                        interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);                        
+                        interceptAirGroup.InterceptMission(sectionFile, airGroup);                        
                     }
                 }
             }
@@ -1548,7 +1548,7 @@ namespace IL2DCE
 
                 if (availableMissionTypes.Count > 0)
                 {
-                    airGroup.Briefing = airGroup.Name;
+                    airGroup.Briefing = airGroup.Id;
 
                     int randomMissionTypeIndex = rand.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];

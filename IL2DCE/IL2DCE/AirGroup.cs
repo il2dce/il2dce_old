@@ -30,24 +30,24 @@ namespace IL2DCE
 
         #region Public constructors
 
-        public AirGroup(ICore core, ISectionFile sectionFile, string airGroupId)
+        public AirGroup(ICore core, ISectionFile sectionFile, string id)
         {
             _core = core;
 
             // airGroupId = <airGroupKey>.<squadronIndex><flightMask>
 
             // AirGroupKey
-            AirGroupKey = airGroupId.Substring(0, airGroupId.IndexOf("."));
+            AirGroupKey = id.Substring(0, id.IndexOf("."));
 
             // SquadronIndex
-            int.TryParse(airGroupId.Substring(airGroupId.LastIndexOf(".") + 1, 1), out squadronIndex);
+            int.TryParse(id.Substring(id.LastIndexOf(".") + 1, 1), out squadronIndex);
 
             // Flight
             for (int i = 0; i < 4; i++)
             {
-                if (sectionFile.exist(airGroupId, "Flight" + i.ToString()))
+                if (sectionFile.exist(id, "Flight" + i.ToString()))
                 {
-                    string acNumberLine = sectionFile.get(airGroupId, "Flight" + i.ToString());
+                    string acNumberLine = sectionFile.get(id, "Flight" + i.ToString());
                     string[] acNumberList = acNumberLine.Split(new char[] { ' ' });
                     if (acNumberList != null && acNumberList.Length > 0)
                     {
@@ -62,19 +62,19 @@ namespace IL2DCE
             }
 
             // Class
-            Class = sectionFile.get(airGroupId, "Class");
+            Class = sectionFile.get(id, "Class");
 
             // Formation
-            Formation = sectionFile.get(airGroupId, "Formation");
+            Formation = sectionFile.get(id, "Formation");
 
             // CallSign
-            int.TryParse(sectionFile.get(airGroupId, "CallSign"), out CallSign);
+            int.TryParse(sectionFile.get(id, "CallSign"), out CallSign);
 
             // Fuel
-            int.TryParse(sectionFile.get(airGroupId, "Fuel"), out Fuel);
+            int.TryParse(sectionFile.get(id, "Fuel"), out Fuel);
 
             // Weapons
-            string weaponsLine = sectionFile.get(airGroupId, "Weapons");
+            string weaponsLine = sectionFile.get(id, "Weapons");
             string[] weaponsList = weaponsLine.Split(new char[] { ' ' });
             if (weaponsList != null && weaponsList.Length > 0)
             {
@@ -93,9 +93,9 @@ namespace IL2DCE
 
             // Waypoints
             Waypoints = new List<AirGroupWaypoint>();
-            for (int i = 0; i < sectionFile.lines(Name + "_Way"); i++)
+            for (int i = 0; i < sectionFile.lines(Id + "_Way"); i++)
             {
-                AirGroupWaypoint waypoint = new AirGroupWaypoint(sectionFile, Name, i);
+                AirGroupWaypoint waypoint = new AirGroupWaypoint(sectionFile, Id, i);
                 Waypoints.Add(waypoint);
             }
 
@@ -207,7 +207,7 @@ namespace IL2DCE
             set;
         }
 
-        public string Name
+        public string Id
         {
             get
             {
@@ -263,7 +263,7 @@ namespace IL2DCE
         {
             if (Waypoints.Count > 0)
             {
-                sectionFile.add("AirGroups", Name, "");
+                sectionFile.add("AirGroups", Id, "");
 
                 foreach (int flightIndex in Flights.Keys)
                 {
@@ -274,14 +274,14 @@ namespace IL2DCE
                         {
                             acNumberLine += acNumber + " ";
                         }
-                        sectionFile.add(Name, "Flight" + flightIndex, acNumberLine.TrimEnd());
+                        sectionFile.add(Id, "Flight" + flightIndex, acNumberLine.TrimEnd());
                     }
                 }
 
-                sectionFile.add(Name, "Class", Class);
-                sectionFile.add(Name, "Formation", Formation);
-                sectionFile.add(Name, "CallSign", CallSign.ToString());
-                sectionFile.add(Name, "Fuel", Fuel.ToString());
+                sectionFile.add(Id, "Class", Class);
+                sectionFile.add(Id, "Formation", Formation);
+                sectionFile.add(Id, "CallSign", CallSign.ToString());
+                sectionFile.add(Id, "Fuel", Fuel.ToString());
 
                 if (Weapons != null && Weapons.Length > 0)
                 {
@@ -290,35 +290,35 @@ namespace IL2DCE
                     {
                         weaponsLine += weapon.ToString() + " ";
                     }
-                    sectionFile.add(Name, "Weapons", weaponsLine.TrimEnd());
+                    sectionFile.add(Id, "Weapons", weaponsLine.TrimEnd());
                 }
 
                 if (Core._spawnParked == true)
                 {
-                    sectionFile.add(Name, "SetOnPark", "1");
+                    sectionFile.add(Id, "SetOnPark", "1");
                 }
                 else
                 {
-                    sectionFile.add(Name, "SetOnPark", "0");
+                    sectionFile.add(Id, "SetOnPark", "0");
                 }
 
-                sectionFile.add(Name, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
+                sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
 
                 foreach (AirGroupWaypoint waypoint in Waypoints)
                 {
                     if (waypoint.Target == null)
                     {
-                        sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     }
                     else
                     {
-                        sectionFile.add(Name + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
+                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
                     }
                 }
 
                 if (Briefing != null)
                 {
-                    sectionFile.add(Name, "Briefing", Briefing);
+                    sectionFile.add(Id, "Briefing", Briefing);
                 }
             }
         }
@@ -518,7 +518,7 @@ namespace IL2DCE
         //    writeTo(sectionFile);
         //}
 
-        public void CreateGroundAttackRadarMission(ISectionFile sectionFile, Radar radar, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void CreateGroundAttackRadarMission(ISectionFile sectionFile, Stationary radar, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             Point3d? rendevouzPosition = null;
             if (escortAirGroup != null)
@@ -542,7 +542,7 @@ namespace IL2DCE
                 createStartInbetweenPoints(sectionFile, pStart);
             }
 
-            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, radar.X, radar.Y, altitude, 300.0, radar.Name));
+            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, radar.X, radar.Y, altitude, 300.0, radar.Id));
             
             Point3d pEnd = new Point3d(radar.X, radar.Y, altitude);
             createEndInbetweenPoints(sectionFile, pEnd, landingAirport);
@@ -666,7 +666,7 @@ namespace IL2DCE
             }
         }
 
-        public void CreateEscortFlight(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
+        public void EscortMission(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
         {
             Waypoints.Clear();
 
@@ -676,7 +676,7 @@ namespace IL2DCE
             {
                 if (waypoint.Type != AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF && waypoint.Type != AirGroupWaypoint.AirGroupWaypointTypes.LANDING)
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.ESCORT, waypoint.X, waypoint.Y, waypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(waypoint)));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.ESCORT, waypoint.X, waypoint.Y, waypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(waypoint)));
                 }
             }
 
@@ -685,7 +685,7 @@ namespace IL2DCE
             writeTo(sectionFile);
         }
 
-        public void CreateInterceptFlight(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
+        public void InterceptMission(ISectionFile sectionFile, AirGroup targetAirUnit, AiAirport landingAirport = null)
         {
             Waypoints.Clear();
 
@@ -720,13 +720,13 @@ namespace IL2DCE
             if (interceptWaypoint != null)
             {
                 createStartInbetweenPoints(sectionFile, interceptWaypoint.Position);
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, interceptWaypoint.X, interceptWaypoint.Y, interceptWaypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(interceptWaypoint)));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, interceptWaypoint.X, interceptWaypoint.Y, interceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(interceptWaypoint)));
 
 
                 if (targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1 >= 0)
                 {
                     AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1];
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(sectionFile, nextInterceptWaypoint.Position, landingAirport);
                 }
@@ -738,13 +738,13 @@ namespace IL2DCE
             else if (closestInterceptWaypoint != null)
             {
                 createStartInbetweenPoints(sectionFile, closestInterceptWaypoint.Position);
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, closestInterceptWaypoint.X, closestInterceptWaypoint.Y, closestInterceptWaypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint)));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, closestInterceptWaypoint.X, closestInterceptWaypoint.Y, closestInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint)));
 
 
                 if (targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint) + 1 < targetAirUnit.Waypoints.Count)
                 {
                     AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) + 1];
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Name + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(sectionFile, nextInterceptWaypoint.Position, landingAirport);
                 }

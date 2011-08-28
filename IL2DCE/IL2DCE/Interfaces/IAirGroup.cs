@@ -44,7 +44,7 @@ namespace IL2DCE
             get;
         }
 
-        string Name
+        string Id
         {
             get;
         }

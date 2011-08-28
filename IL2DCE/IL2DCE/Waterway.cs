@@ -24,20 +24,20 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    public class Road
+    public class Waterway
     {
-        public Road(ISectionFile sectionFile, string groundGroupId)
+        public Waterway(ISectionFile sectionFile, string id)
         {
             // Waypoints
             GroundGroupWaypoint lastWaypoint = null;
-            for (int i = 0; i < sectionFile.lines(groundGroupId + "_Road"); i++)
+            for (int i = 0; i < sectionFile.lines(id + "_Road"); i++)
             {
                 string key;
                 string value;
-                sectionFile.get(groundGroupId + "_Road", i, out key, out value);
+                sectionFile.get(id + "_Road", i, out key, out value);
                 if (!key.Contains("S"))
                 {
-                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, groundGroupId, i);
+                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, id, i);
                     lastWaypoint = waypoint;
                     Waypoints.Add(waypoint);
                 }
@@ -45,7 +45,7 @@ namespace IL2DCE
                 {
                     if (lastWaypoint != null)
                     {
-                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, groundGroupId, i);
+                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, id, i);
                         lastWaypoint.SubWaypoints.Add(subWaypoint);
                     }
                 }

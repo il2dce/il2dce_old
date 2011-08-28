@@ -34,11 +34,11 @@ namespace IL2DCE
             _p = p;
         }
 
-        public GroundGroupSubWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
+        public GroundGroupSubWaypoint(ISectionFile sectionFile, string id, int line)
         {
             string key;
             string value;
-            sectionFile.get(groundGroupId + "_Road", line, out key, out value);
+            sectionFile.get(id + "_Road", line, out key, out value);
 
             System.Text.RegularExpressions.Regex subWaypointLong = new System.Text.RegularExpressions.Regex(@"^([0-9]+) ([0-9]+) ([0-9]+[.0-9]*) ([0-9]+[.0-9]*) P ([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");
             System.Text.RegularExpressions.Regex subWaypointShort = new System.Text.RegularExpressions.Regex(@"^([0-9]+) ([0-9]+) ([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");
