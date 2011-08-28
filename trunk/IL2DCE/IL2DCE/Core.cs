@@ -1408,21 +1408,21 @@ namespace IL2DCE
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ARMED_RECON)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor, EGroundGroupType.Vehicle});
                     createRandomGroundOperation(sectionFile, groundGroup);
                     
-                    airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_ARMOR)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_RADAR)
                 {
@@ -1440,14 +1440,14 @@ namespace IL2DCE
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_VEHICLE)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Vehicle});
                     createRandomGroundOperation(sectionFile, groundGroup);
                     
-                    airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ESCORT)
                 {
