@@ -38,6 +38,8 @@ namespace IL2DCE
         INTERCEPT,
         //NIGHT_INTERCEPT,
         ESCORT,
+        COVER,
+        MARITIME_COVER,
 
         //INTRUDER,
         //NIGHT_INTRUDER,
