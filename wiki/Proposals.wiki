@@ -12,10 +12,18 @@ IL2 DCE proposals
 
 - in-flight spawning for escorted/intercepted missions (place them on their calculated reach point in their flight-path at the moment player's escort airplanes are spawned)
 
+- dynamic mission objectives (take-off objectives which may be changed at some point(s) during the mission)
+
 - dynamic kill confirmation (with chances of success depending if above friendly territory, if in certain distance from friendly aircrafts, friendly ground, etc)
 
 - pilot aces
 
-- kill tracks and characteristics advancement for all pilots (RPG system)
+- kill tracks and characteristics advancement for all pilots (RPG system) plus rank promotions and rewards
+
+- limited airplanes supply system (continuous loses might not be replaced -> smaller aircraft numbers flights, older aircraft types reactivated)
+
+- new airplane types gradual infusion (new aircraft types entering service at certain dates might be in small number, replacing only part of a squadron's flights)
 
 - AI forcing (nearby bogey detection (based on pilots visual skill), dynamic attack waypoint addition (forcing AI to intercept, identify and attack bogey groups)
+
+- RRR system (repair/rearm/resupply) (if the player lands and taxies to certain locations/areas (close to a fuel cistern for example parked somewhere) on airfields, the script will move the player into a newly spawned aircraft and destroy the old landed one) - specially for online battles
