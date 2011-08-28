@@ -68,11 +68,11 @@ namespace IL2DCE
             Target = target;
         }
 
-        public AirGroupWaypoint(ISectionFile sectionFile, string airGroupName, int line)
+        public AirGroupWaypoint(ISectionFile sectionFile, string id, int line)
         {
             string key;
             string value;
-            sectionFile.get(airGroupName + "_Way", line, out key, out value);
+            sectionFile.get(id + "_Way", line, out key, out value);
 
             string[] valueList = value.Split(new char[] { ' ' });
             if (valueList != null && valueList.Length == 4)

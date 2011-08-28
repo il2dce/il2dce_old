@@ -44,11 +44,11 @@ namespace IL2DCE
             V = v;
         }
 
-        public GroundGroupWaypoint(ISectionFile sectionFile, string groundGroupId, int line)
+        public GroundGroupWaypoint(ISectionFile sectionFile, string id, int line)
         {
             string key;
             string value;
-            sectionFile.get(groundGroupId + "_Road", line, out key, out value);
+            sectionFile.get(id + "_Road", line, out key, out value);
 
             System.Text.RegularExpressions.Regex waypointLong = new System.Text.RegularExpressions.Regex(@"^([0-9]+[.0-9]*) ([0-9]+[.0-9]*)  ([0-9]+) ([0-9]+) ([0-9]+[.0-9]*)$");
             System.Text.RegularExpressions.Regex waypointShort = new System.Text.RegularExpressions.Regex(@"^([0-9]+[.0-9]*) ([0-9]+[.0-9]*)$");

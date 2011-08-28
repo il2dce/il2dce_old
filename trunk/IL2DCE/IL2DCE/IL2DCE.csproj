@@ -61,8 +61,8 @@
     <Compile Include="Interfaces\IGameSingle.cs" />
     <Compile Include="Interfaces\IGroundGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Radar.cs" />
-    <Compile Include="Road.cs" />
+    <Compile Include="Stationary.cs" />
+    <Compile Include="Waterway.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="core">

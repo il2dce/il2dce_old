@@ -26,11 +26,11 @@ namespace IL2DCE
 {
     public class GroundGroup : IGroundGroup
     {
-        public GroundGroup(ISectionFile sectionFile, string groundGroupId)
+        public GroundGroup(ISectionFile sectionFile, string id)
         {
-            _id = groundGroupId;
+            _id = id;
 
-            string value = sectionFile.get("Chiefs", groundGroupId);
+            string value = sectionFile.get("Chiefs", id);
 
             // Class
             Class = value.Substring(0, value.IndexOf(" "));
@@ -45,14 +45,14 @@ namespace IL2DCE
 
             // Waypoints
             GroundGroupWaypoint lastWaypoint = null;
-            for (int i = 0; i < sectionFile.lines(groundGroupId + "_Road"); i++)
+            for (int i = 0; i < sectionFile.lines(id + "_Road"); i++)
             {
                 string key;
-                sectionFile.get(groundGroupId + "_Road", i, out key, out value);
+                sectionFile.get(id + "_Road", i, out key, out value);
                                 
                 if (!key.Contains("S"))
                 {
-                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, groundGroupId, i);
+                    GroundGroupWaypoint waypoint = new GroundGroupWaypoint(sectionFile, id, i);
                     lastWaypoint = waypoint;
                     Waypoints.Add(waypoint);
                 }
@@ -60,7 +60,7 @@ namespace IL2DCE
                 {
                     if (lastWaypoint != null)
                     {
-                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, groundGroupId, i);
+                        GroundGroupSubWaypoint subWaypoint = new GroundGroupSubWaypoint(sectionFile, id, i);
                         lastWaypoint.SubWaypoints.Add(subWaypoint);
                     }
                 }
