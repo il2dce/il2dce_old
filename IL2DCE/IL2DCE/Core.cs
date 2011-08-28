@@ -1255,7 +1255,31 @@ namespace IL2DCE
 
         public bool isMissionTypeAvailable(AirGroup airGroup, EMissionType missionType)
         {
-            if(missionType == EMissionType.ARMED_MARITIME_RECON)
+            if (missionType == EMissionType.MARITIME_COVER)
+            {
+                List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Ship });
+                if (groundGroups.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (missionType == EMissionType.COVER)
+            {
+                List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
+                if (groundGroups.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if(missionType == EMissionType.ARMED_MARITIME_RECON)
             {
                 List<GroundGroup> groundGroups = getAvailableEnemyGroundGroups(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Ship });
                 if (groundGroups.Count > 0)
@@ -1402,8 +1426,21 @@ namespace IL2DCE
                     }
                 }
 
+                if (missionType == EMissionType.MARITIME_COVER)
+                {
+                    GroundGroup groundGroup = getAvailableRandomFriendlyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Ship });
+                    createRandomGroundOperation(sectionFile, groundGroup);
 
-                if (missionType == EMissionType.ARMED_MARITIME_RECON)
+                    airGroup.Cover(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo));
+                }
+                else if (missionType == EMissionType.COVER)
+                {
+                    GroundGroup groundGroup = getAvailableRandomFriendlyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
+                    createRandomGroundOperation(sectionFile, groundGroup);
+
+                    airGroup.Cover(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo));
+                }
+                else if (missionType == EMissionType.ARMED_MARITIME_RECON)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
