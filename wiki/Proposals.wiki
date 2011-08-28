@@ -37,3 +37,5 @@ IL2 DCE proposals
 - AI forcing (nearby bogey detection (based on pilots visual skill), dynamic attack waypoint addition (forcing AI to intercept, identify and attack bogey groups)
 
 - RRR system (repair/rearm/resupply) (if the player lands and taxies to certain locations/areas (close to a fuel cistern for example parked somewhere) on airfields, the script will move the player into a newly spawned aircraft and destroy the old landed one) - specially for online battles
+
+- customized radar/ground control (radars which are not 100% right (altitude, number of planes, directions, etc)
