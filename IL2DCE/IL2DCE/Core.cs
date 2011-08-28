@@ -1398,7 +1398,7 @@ namespace IL2DCE
                     if (escortAirGroup != null)
                     {
                         availableAirGroups.Remove(escortAirGroup);
-                        escortAirGroup.EscortMission(sectionFile, airGroup);
+                        escortAirGroup.Escort(sectionFile, airGroup);
                     }
                 }
 
@@ -1408,21 +1408,21 @@ namespace IL2DCE
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.GroundAttack(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ARMED_RECON)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor, EGroundGroupType.Vehicle});
                     createRandomGroundOperation(sectionFile, groundGroup);
                     
-                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.GroundAttack(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_ARMOR)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.GroundAttack(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_RADAR)
                 {
@@ -1432,7 +1432,7 @@ namespace IL2DCE
                         int radarIndex = rand.Next(radars.Count);
                         Stationary radar = radars[radarIndex];
                         
-                        airGroup.CreateGroundAttackRadarMission(sectionFile, radar, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                        airGroup.GroundAttack(sectionFile, radar, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                     }
                 }
                 else if (missionType == EMissionType.ATTACK_SHIP)
@@ -1440,14 +1440,14 @@ namespace IL2DCE
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.GroundAttack(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_VEHICLE)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Vehicle});
                     createRandomGroundOperation(sectionFile, groundGroup);
                     
-                    airGroup.AttackGroundGroup(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.GroundAttack(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.ESCORT)
                 {
@@ -1469,7 +1469,7 @@ namespace IL2DCE
                             EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
-                            airGroup.EscortMission(sectionFile, targetAirGroup);
+                            airGroup.Escort(sectionFile, targetAirGroup);
                         }
                     }
                 }
@@ -1493,7 +1493,7 @@ namespace IL2DCE
                             EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
-                            airGroup.InterceptMission(sectionFile, targetAirGroup);
+                            airGroup.Intercept(sectionFile, targetAirGroup);
                         }
                     }
                 }
@@ -1506,14 +1506,14 @@ namespace IL2DCE
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.CreateReconTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.Recon(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                 else if (missionType == EMissionType.RECON)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
                     createRandomGroundOperation(sectionFile, groundGroup);
 
-                    airGroup.CreateReconTargetMission(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
+                    airGroup.Recon(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                                 
                 if (isMissionTypeIntercepted(missionType))
@@ -1522,7 +1522,7 @@ namespace IL2DCE
                     if (interceptAirGroup != null)
                     {
                         availableAirGroups.Remove(interceptAirGroup);
-                        interceptAirGroup.InterceptMission(sectionFile, airGroup);                        
+                        interceptAirGroup.Intercept(sectionFile, airGroup);                        
                     }
                 }
             }
@@ -1554,335 +1554,6 @@ namespace IL2DCE
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
                     createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType);
-
-                    /*
-                    // Bomber mission types
-                    if (randomMissionType == EMissionType.RECON_AREA)
-                    {
-                        List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
-                        if (enemyMarkers.Count > 0)
-                        {
-                            int markerIndex = rand.Next(enemyMarkers.Count);
-                            Point3d marker = enemyMarkers[markerIndex];
-                            Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
-                            airGroup.CreateReconFlight(sectionFile, targetArea);
-
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Recon area " + targetArea.x + "," + targetArea.y + "," + targetArea.z + ".";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Recon flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-
-                            AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                            if (interceptAirGroup != null)
-                            {
-                                availableAirGroups.Remove(interceptAirGroup);
-                                interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                                briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                                briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                            }
-                        }
-                        else
-                        {
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                            airGroup.CreateTransferFlight(sectionFile);
-                        }
-                    }
-                    //else if (randomMissionType == EMissionType.GROUND_ATTACK_AREA)
-                    //{
-                    //    List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
-                    //    if (enemyMarkers.Count > 0)
-                    //    {
-                    //        int markerIndex = rand.Next(enemyMarkers.Count);
-                    //        Point3d marker = enemyMarkers[markerIndex];
-                    //        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
-
-                    //        AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
-                    //        if (escortAirGroup != null)
-                    //        {
-                    //            availableAirGroups.Remove(escortAirGroup);
-
-                    //            Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), targetArea.z);
-
-                    //            airGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
-                    //            escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
-                    //        }
-                    //        else
-                    //        {
-                    //            airGroup.CreateGroundAttackFlight(sectionFile, targetArea);
-                    //        }
-
-                    //        briefingFile.Name[airGroup.Name] = airGroup.Name;
-                    //        briefingFile.Description[airGroup.Name] = "Attack area " + targetArea.x + "," + targetArea.y + "," + targetArea.z + ".";
-
-                    //        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-
-                    //        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                    //        if (interceptAirGroup != null)
-                    //        {
-                    //            availableAirGroups.Remove(interceptAirGroup);
-                    //            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                    //            briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                    //            briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                    //            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        briefingFile.Name[airGroup.Name] = airGroup.Name;
-                    //        briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                    //        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                    //        airGroup.CreateTransferFlight(sectionFile);
-                    //    }
-                    //}
-                    else if (randomMissionType == EMissionType.GROUND_ATTACK_TARGET)
-                    {
-                        GroundGroup groundGroup = getRandomEnemyGroundGroup(airGroup.ArmyIndex);
-                        if (groundGroup != null)
-                        {
-                            availableGroundGroups.Remove(groundGroup);
-                            createRandomGroundOperation(sectionFile, groundGroup);
-
-                            double altitude = createRandomAltitude(randomMissionType, airGroup.AircraftInfo);
-
-                            AirGroup escortAirGroup = getRandomEscortAirGroup(airGroup);
-                            if (escortAirGroup != null)
-                            {
-                                availableAirGroups.Remove(escortAirGroup);
-                                Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortAirGroup.Position.y - airGroup.Position.y), altitude);
-                                airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude, rendevouzPosition);
-                                escortAirGroup.CreateEscortFlight(sectionFile, airGroup);
-                            }
-                            else
-                            {
-                                airGroup.CreateGroundAttackTargetMission(sectionFile, groundGroup, altitude);
-                            }
-
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Attack " + groundGroup.Id + ".";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Ground attack flight(" + groundGroup.Id + ")", null);
-
-                            AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                            if (interceptAirGroup != null)
-                            {
-                                availableAirGroups.Remove(interceptAirGroup);
-                                interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                                briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                                briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                            }
-                        }
-                        else
-                        {
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                            airGroup.CreateTransferFlight(sectionFile);
-                        }
-                    }
-
-                    // Fighter mission types
-                    //else if (randomMissionType == AircraftInfo.MissionType.DEFENSIVE_PATROL_AREA)
-                    //{
-                    //    List<Point3d> friendlyMarkers = getFriendlyMarkers(airGroup.ArmyIndex);
-                    //    if (friendlyMarkers.Count > 0)
-                    //    {
-                    //        int markerIndex = rand.Next(friendlyMarkers.Count);
-                    //        Point3d marker = friendlyMarkers[markerIndex];
-                    //        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType));
-                    //        airGroup.CreateCoverFlight(sectionFile, targetArea);
-
-                    //        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, airGroup.Name + ": Defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-                    //    }
-                    //}
-                    //else if (randomMissionType == EMissionType.OFFENSIVE_PATROL_AREA)
-                    //{
-                    //    List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
-                    //    if (enemyMarkers.Count > 0)
-                    //    {
-                    //        int markerIndex = rand.Next(enemyMarkers.Count);
-                    //        Point3d marker = enemyMarkers[markerIndex];
-                    //        Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
-                    //        airGroup.CreateHuntingFlight(sectionFile, targetArea);
-
-                    //        briefingFile.Name[airGroup.Name] = airGroup.Name;
-                    //        briefingFile.Description[airGroup.Name] = "Offensive patrol area " + targetArea.x + "," + targetArea.y + "," + targetArea.z + ".";
-
-                    //        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-
-                    //        AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                    //        if (interceptAirGroup != null)
-                    //        {
-                    //            availableAirGroups.Remove(interceptAirGroup);
-                    //            interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                    //            briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                    //            briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                    //            Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        briefingFile.Name[airGroup.Name] = airGroup.Name;
-                    //        briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                    //        Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                    //        airGroup.CreateTransferFlight(sectionFile);
-                    //    }
-                    //}
-                    else if (randomMissionType == EMissionType.ESCORT)
-                    {
-                        List<Point3d> enemyMarkers = getEnemyMarkers(airGroup.ArmyIndex);
-                        if (enemyMarkers.Count > 0)
-                        {
-                            int markerIndex = rand.Next(enemyMarkers.Count);
-                            Point3d marker = enemyMarkers[markerIndex];
-                            Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
-
-                            AirGroup escortedAirGroup = getRandomEscortedAirGroup(airGroup.ArmyIndex);
-                            if (escortedAirGroup != null)
-                            {
-                                availableAirGroups.Remove(escortedAirGroup);
-
-                                Point3d rendevouzPosition = new Point3d(airGroup.Position.x + 0.50 * (escortedAirGroup.Position.x - airGroup.Position.x), airGroup.Position.y + 0.50 * (escortedAirGroup.Position.y - airGroup.Position.y), targetArea.z);
-
-                                escortedAirGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
-                                airGroup.CreateEscortFlight(sectionFile, escortedAirGroup);
-
-                                briefingFile.Name[airGroup.Name] = airGroup.Name;
-                                briefingFile.Description[airGroup.Name] = "Escort " + escortedAirGroup.Name + ".";
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Escort flight(" + escortedAirGroup.Name + ")", null);
-
-                                AirGroup interceptAirGroup = getRandomInterceptAirGroup(escortedAirGroup);
-                                if (interceptAirGroup != null)
-                                {
-                                    availableAirGroups.Remove(interceptAirGroup);
-                                    interceptAirGroup.CreateInterceptFlight(sectionFile, escortedAirGroup);
-
-                                    briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                                    briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + escortedAirGroup.Name + ")", null);
-                                }
-                            }
-                            else
-                            {
-                                airGroup.CreateHuntingFlight(sectionFile, targetArea);
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No escort required. Instead offensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-
-                                AirGroup interceptAirGroup = getRandomInterceptAirGroup(airGroup);
-                                if (interceptAirGroup != null)
-                                {
-                                    availableAirGroups.Remove(interceptAirGroup);
-                                    interceptAirGroup.CreateInterceptFlight(sectionFile, airGroup);
-
-                                    briefingFile.Name[interceptAirGroup.Name] = interceptAirGroup.Name;
-                                    briefingFile.Description[interceptAirGroup.Name] = "Intercept " + airGroup.Name + ".";
-
-                                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, interceptAirGroup.Name + ": Intercept flight(" + airGroup.Name + ")", null);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                            airGroup.CreateTransferFlight(sectionFile);
-                        }
-                    }
-                    else if (randomMissionType == EMissionType.INTERCEPT)
-                    {
-                        List<Point3d> friendlyMarkers = getFriendlyMarkers(airGroup.ArmyIndex);
-                        if (friendlyMarkers.Count > 0)
-                        {
-                            int markerIndex = rand.Next(friendlyMarkers.Count);
-                            Point3d marker = friendlyMarkers[markerIndex];
-                            Point3d targetArea = new Point3d(marker.x, marker.y, createRandomAltitude(randomMissionType, airGroup.AircraftInfo));
-
-                            List<EMissionType> subMissionTypes = new List<EMissionType>() { EMissionType.RECON_AREA, EMissionType.GROUND_ATTACK_TARGET };
-                            int randomSubMissionTypeIndex = rand.Next(subMissionTypes.Count);
-                            EMissionType randomSubMissionType = subMissionTypes[randomSubMissionTypeIndex];
-
-                            AirGroup interceptedAirGroup = getRandomInterceptedAirGroup(airGroup.ArmyIndex);
-                            if (interceptedAirGroup != null)
-                            {
-                                availableAirGroups.Remove(interceptedAirGroup);
-
-                                if (randomSubMissionType == EMissionType.OFFENSIVE_PATROL_AREA)
-                                {
-                                    interceptedAirGroup.CreateHuntingFlight(sectionFile, targetArea);
-                                }
-                                else if (randomSubMissionType == EMissionType.RECON_AREA)
-                                {
-                                    interceptedAirGroup.CreateReconFlight(sectionFile, targetArea);
-                                }
-                                else if (randomSubMissionType == EMissionType.GROUND_ATTACK_AREA)
-                                {
-                                    AirGroup escortAirGroup = getRandomEscortAirGroup(interceptedAirGroup);
-                                    if (escortAirGroup != null)
-                                    {
-                                        availableAirGroups.Remove(escortAirGroup);
-
-                                        Point3d rendevouzPosition = new Point3d(interceptedAirGroup.Position.x + 0.50 * (escortAirGroup.Position.x - interceptedAirGroup.Position.x), interceptedAirGroup.Position.y + 0.50 * (escortAirGroup.Position.y - interceptedAirGroup.Position.y), targetArea.z);
-
-                                        interceptedAirGroup.CreateGroundAttackFlight(sectionFile, targetArea, rendevouzPosition);
-                                        escortAirGroup.CreateEscortFlight(sectionFile, interceptedAirGroup);
-                                    }
-                                    else
-                                    {
-                                        interceptedAirGroup.CreateGroundAttackFlight(sectionFile, targetArea);
-                                    }
-                                }
-
-                                airGroup.CreateInterceptFlight(sectionFile, interceptedAirGroup);
-
-                                briefingFile.Name[airGroup.Name] = airGroup.Name;
-                                briefingFile.Description[airGroup.Name] = "Intercept " + interceptedAirGroup.Name + ".";
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Intercept flight(" + interceptedAirGroup.Name + ")", null);
-                            }
-                            else
-                            {
-                                airGroup.CreateCoverFlight(sectionFile, targetArea);
-
-                                briefingFile.Name[airGroup.Name] = airGroup.Name;
-                                briefingFile.Description[airGroup.Name] = "Defensive patrol area " + targetArea.x + "," + targetArea.y + "," + targetArea.z + ".";
-
-                                Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": No intercept required. Instead defensive patrol flight(" + targetArea.x + "," + targetArea.y + "," + targetArea.z + ")", null);
-                            }
-                        }
-                        else
-                        {
-                            briefingFile.Name[airGroup.Name] = airGroup.Name;
-                            briefingFile.Description[airGroup.Name] = "Circuit.";
-
-                            Game.gpLogServer(new Player[] { Game.gpPlayer() }, airGroup.Name + ": Circuit", null);
-
-                            airGroup.CreateTransferFlight(sectionFile);
-                        }
-                    }*/
                 }
             }
         }
