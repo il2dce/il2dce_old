@@ -1,4 +1,5 @@
 #summary IL2 DCE proposals
+#labels Phase-Design
 
 = Introduction =
 
@@ -17,6 +18,11 @@ IL2 DCE proposals
 - dynamic kill confirmation (with chances of success depending if above friendly territory, if in certain distance from friendly aircrafts, friendly ground, etc)
 
 - pilot aces
+
+- a points system (based on player's deeds during the flight:
+     + number of killed/damaged enemy airplanes/groundunits/bombing objectives (radars, ships, ammo depots, etc)
+     + number of lost friendly escorted planes, protection/loss of own Rottenführer/Katschmarek (or other Schwarm partners if Schwarmführer)
+     + keeping a maximum distance from own Rottenführer when flying as Katschmarek (and being warned/penalized when exceeding it)
 
 - kill tracks and characteristics advancement for all pilots (RPG system) plus rank promotions and rewards
 
