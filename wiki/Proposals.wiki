@@ -17,3 +17,5 @@ IL2 DCE proposals
 - pilot aces
 
 - kill tracks and characteristics advancement for all pilots (RPG system)
+
+- AI forcing (nearby bogey detection (based on pilots visual skill), dynamic attack waypoint addition (forcing AI to intercept, identify and attack bogey groups)
