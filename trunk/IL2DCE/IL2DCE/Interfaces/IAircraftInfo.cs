@@ -22,7 +22,7 @@ namespace IL2DCE
 {
     public enum EMissionType
     {
-        LIASON,
+        //LIASON,
 
         RECON,
         MARITIME_RECON,
@@ -36,10 +36,11 @@ namespace IL2DCE
         ATTACK_SHIP,
 
         INTERCEPT,
+        //MARITIME_INTERCEPT,
         //NIGHT_INTERCEPT,
         ESCORT,
         COVER,
-        MARITIME_COVER,
+        //MARITIME_COVER,
 
         //INTRUDER,
         //NIGHT_INTRUDER,

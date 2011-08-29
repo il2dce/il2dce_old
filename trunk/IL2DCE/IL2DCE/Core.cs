@@ -27,7 +27,7 @@ namespace IL2DCE
 {
     public class Core : ICore
     {
-        public Random rand = new Random();
+        private Random rand = new Random();
 
         private List<AirGroup> availableAirGroups = new List<AirGroup>();
         private List<GroundGroup> availableGroundGroups = new List<GroundGroup>();
@@ -517,7 +517,7 @@ namespace IL2DCE
         }
 
 
-        public void generate(string templateFileName, string missionId, out ISectionFile missionFile, out IBriefingFile briefingFile)
+        private void generate(string templateFileName, string missionId, out ISectionFile missionFile, out IBriefingFile briefingFile)
         {
             availableAirGroups.Clear();
             availableGroundGroups.Clear();
@@ -737,7 +737,7 @@ namespace IL2DCE
             }
         }
 
-        public void createRandomGroundOperation(ISectionFile missionFile, GroundGroup groundGroup)
+        private void createRandomGroundOperation(ISectionFile missionFile, GroundGroup groundGroup)
         {
             availableGroundGroups.Remove(groundGroup);
 
@@ -872,8 +872,8 @@ namespace IL2DCE
                 }
             }
         }
-        
-        public List<GroundGroup> getGroundGroups(int armyIndex)
+
+        private List<GroundGroup> getGroundGroups(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -889,7 +889,7 @@ namespace IL2DCE
             }
         }
 
-        public List<AirGroup> getAirGroups(int armyIndex)
+        private List<AirGroup> getAirGroups(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -905,7 +905,7 @@ namespace IL2DCE
             }
         }
 
-        public List<Stationary> getFriendlyRadars(int armyIndex)
+        private List<Stationary> getFriendlyRadars(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -921,7 +921,7 @@ namespace IL2DCE
             }
         }
 
-        public List<Stationary> getEnemyRadars(int armyIndex)
+        private List<Stationary> getEnemyRadars(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -937,7 +937,7 @@ namespace IL2DCE
             }
         }
 
-        public List<Point3d> getFriendlyMarkers(int armyIndex)
+        private List<Point3d> getFriendlyMarkers(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -953,7 +953,7 @@ namespace IL2DCE
             }
         }
 
-        public List<Point3d> getEnemyMarkers(int armyIndex)
+        private List<Point3d> getEnemyMarkers(int armyIndex)
         {
             if (armyIndex == 1)
             {
@@ -969,7 +969,7 @@ namespace IL2DCE
             }
         }
 
-        public List<GroundGroup> getAvailableEnemyGroundGroups(int armyIndex)
+        private List<GroundGroup> getAvailableEnemyGroundGroups(int armyIndex)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
             foreach (GroundGroup groundGroup in availableGroundGroups)
@@ -982,7 +982,7 @@ namespace IL2DCE
             return groundGroups;
         }
         
-        public List<GroundGroup> getAvailableFriendlyGroundGroups(int armyIndex)
+        private List<GroundGroup> getAvailableFriendlyGroundGroups(int armyIndex)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
             foreach (GroundGroup groundGroup in availableGroundGroups)
@@ -995,7 +995,7 @@ namespace IL2DCE
             return groundGroups;
         }
 
-        public List<GroundGroup> getAvailableEnemyGroundGroups(int armyIndex, List<EGroundGroupType> groundGroupTypes)
+        private List<GroundGroup> getAvailableEnemyGroundGroups(int armyIndex, List<EGroundGroupType> groundGroupTypes)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
             foreach(GroundGroup groundGroup in getAvailableEnemyGroundGroups(armyIndex))
@@ -1008,7 +1008,7 @@ namespace IL2DCE
             return groundGroups;
         }
 
-        public List<GroundGroup> getAvailableFriendlyGroundGroups(int armyIndex, List<EGroundGroupType> groundGroupTypes)
+        private List<GroundGroup> getAvailableFriendlyGroundGroups(int armyIndex, List<EGroundGroupType> groundGroupTypes)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
             foreach (GroundGroup groundGroup in getAvailableFriendlyGroundGroups(armyIndex))
@@ -1021,13 +1021,13 @@ namespace IL2DCE
             return groundGroups;
         }
         
-        public double createRandomAltitude(EMissionType missionType, IAircraftInfo aircraftInfo)
+        private double createRandomAltitude(EMissionType missionType, IAircraftInfo aircraftInfo)
         {
             // TODO: Altitude range depends on mission type.
             return (double)rand.Next(500, 6000);
         }
 
-        public List<AirGroup> getAvailableInterceptedAirGroups(int armyIndex)
+        private List<AirGroup> getAvailableOffensiveAirGroups(int armyIndex)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1036,7 +1036,7 @@ namespace IL2DCE
                 {
                     foreach (EMissionType missionType in airGroup.AircraftInfo.MissionTypes)
                     {
-                        if (isMissionTypeIntercepted(missionType) && isMissionTypeAvailable(airGroup, missionType))
+                        if (isMissionTypeOffensive(missionType) && isMissionTypeAvailable(airGroup, missionType))
                         {
                             airGroups.Add(airGroup);
                             break;
@@ -1047,9 +1047,9 @@ namespace IL2DCE
             return airGroups;
         }
 
-        public AirGroup getAvailableRandomInterceptedAirGroup(int armyIndex)
+        private AirGroup getAvailableRandomOffensiveAirGroup(int armyIndex)
         {
-            List<AirGroup> airGroups = getAvailableInterceptedAirGroups(armyIndex);
+            List<AirGroup> airGroups = getAvailableOffensiveAirGroups(armyIndex);
             
             if (airGroups.Count > 0)
             {
@@ -1064,7 +1064,7 @@ namespace IL2DCE
             }
         }
 
-        public List<AirGroup> getAvailableEscortedAirGroups(int armyIndex)
+        private List<AirGroup> getAvailableEscortedAirGroups(int armyIndex)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1084,7 +1084,7 @@ namespace IL2DCE
             return airGroups;
         }
 
-        public AirGroup getAvailableRandomEscortedAirGroup(int armyIndex)
+        private AirGroup getAvailableRandomEscortedAirGroup(int armyIndex)
         {
             List<AirGroup> airGroups = getAvailableEscortedAirGroups(armyIndex);
             if (airGroups.Count > 0)
@@ -1100,7 +1100,7 @@ namespace IL2DCE
             }
         }
 
-        public AirGroup getAvailableRandomEscortAirGroup(AirGroup targetAirUnit)
+        private AirGroup getAvailableRandomEscortAirGroup(AirGroup targetAirUnit)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1127,7 +1127,7 @@ namespace IL2DCE
             }
         }
 
-        public GroundGroup getAvailableRandomEnemyGroundGroup(int armyIndex)
+        private GroundGroup getAvailableRandomEnemyGroundGroup(int armyIndex)
         {
             List<GroundGroup> groundGroups = getAvailableEnemyGroundGroups(armyIndex);
             if (groundGroups.Count > 0)
@@ -1143,7 +1143,7 @@ namespace IL2DCE
             }
         }
 
-        public GroundGroup getAvailableRandomEnemyGroundGroup(int armyIndex, List<EGroundGroupType> groundGroupTypes)
+        private GroundGroup getAvailableRandomEnemyGroundGroup(int armyIndex, List<EGroundGroupType> groundGroupTypes)
         {
             List<GroundGroup> groundGroups = getAvailableEnemyGroundGroups(armyIndex, groundGroupTypes);
             if (groundGroups.Count > 0)
@@ -1159,7 +1159,7 @@ namespace IL2DCE
             }
         }
 
-        public GroundGroup getAvailableRandomFriendlyGroundGroup(int armyIndex)
+        private GroundGroup getAvailableRandomFriendlyGroundGroup(int armyIndex)
         {
             List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(armyIndex);
             if (groundGroups.Count > 0)
@@ -1175,7 +1175,7 @@ namespace IL2DCE
             }
         }
 
-        public GroundGroup getAvailableRandomFriendlyGroundGroup(int armyIndex, List<EGroundGroupType> groundGroupTypes)
+        private GroundGroup getAvailableRandomFriendlyGroundGroup(int armyIndex, List<EGroundGroupType> groundGroupTypes)
         {
             List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(armyIndex, groundGroupTypes);
             if (groundGroups.Count > 0)
@@ -1191,7 +1191,7 @@ namespace IL2DCE
             }
         }
 
-        public AirGroup getAvailableRandomInterceptAirGroup(AirGroup targetAirUnit)
+        private AirGroup getAvailableRandomInterceptAirGroup(AirGroup targetAirUnit)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
             foreach (AirGroup airGroup in availableAirGroups)
@@ -1218,7 +1218,7 @@ namespace IL2DCE
             }
         }
 
-        public bool isMissionTypeEscorted(EMissionType missionType)
+        private bool isMissionTypeEscorted(EMissionType missionType)
         {
             if(missionType == EMissionType.ATTACK_ARMOR
                 || missionType == EMissionType.ATTACK_RADAR
@@ -1233,7 +1233,7 @@ namespace IL2DCE
             }            
         }
 
-        public bool isMissionTypeIntercepted(EMissionType missionType)
+        private bool isMissionTypeOffensive(EMissionType missionType)
         {
             if(missionType == EMissionType.ARMED_MARITIME_RECON
                 || missionType == EMissionType.ARMED_RECON
@@ -1241,7 +1241,6 @@ namespace IL2DCE
                 || missionType == EMissionType.ATTACK_RADAR
                 || missionType == EMissionType.ATTACK_SHIP
                 || missionType == EMissionType.ATTACK_VEHICLE
-                || missionType == EMissionType.LIASON
                 || missionType == EMissionType.MARITIME_RECON
                 || missionType == EMissionType.RECON)
             {
@@ -1253,24 +1252,12 @@ namespace IL2DCE
             }
         }
 
-        public bool isMissionTypeAvailable(AirGroup airGroup, EMissionType missionType)
+        private bool isMissionTypeAvailable(AirGroup airGroup, EMissionType missionType)
         {
-            if (missionType == EMissionType.MARITIME_COVER)
+            if (missionType == EMissionType.COVER)
             {
-                List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Ship });
-                if (groundGroups.Count > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (missionType == EMissionType.COVER)
-            {
-                List<GroundGroup> groundGroups = getAvailableFriendlyGroundGroups(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
-                if (groundGroups.Count > 0)
+                List<AirGroup> airGroups = getAvailableOffensiveAirGroups(airGroup.ArmyIndex);
+                if (airGroups.Count > 0)
                 {
                     return true;
                 }
@@ -1365,7 +1352,7 @@ namespace IL2DCE
             }
             else if(missionType == EMissionType.INTERCEPT)
             {
-                List<AirGroup> airGroups = getAvailableInterceptedAirGroups(airGroup.ArmyIndex);
+                List<AirGroup> airGroups = getAvailableOffensiveAirGroups(airGroup.ArmyIndex);
                 if (airGroups.Count > 0)
                 {
                     return true;
@@ -1374,10 +1361,6 @@ namespace IL2DCE
                 {
                     return false;
                 }
-            }
-            else if(missionType == EMissionType.LIASON)
-            {
-                return false;
             }
             else if(missionType == EMissionType.MARITIME_RECON)
             {
@@ -1409,7 +1392,7 @@ namespace IL2DCE
             }
         }
 
-        public void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType)
+        private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType)
         {
             if(isMissionTypeAvailable(airGroup, missionType))
             {
@@ -1426,19 +1409,31 @@ namespace IL2DCE
                     }
                 }
 
-                if (missionType == EMissionType.MARITIME_COVER)
+                if (missionType == EMissionType.COVER)
                 {
-                    GroundGroup groundGroup = getAvailableRandomFriendlyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Ship });
-                    createRandomGroundOperation(sectionFile, groundGroup);
+                    AirGroup targetAirGroup = getAvailableRandomOffensiveAirGroup(airGroup.ArmyIndex);
+                    if (targetAirGroup != null)
+                    {
+                        List<EMissionType> availableInterceptedMissionTypes = new List<EMissionType>();
+                        foreach (EMissionType targetMissionType in targetAirGroup.AircraftInfo.MissionTypes)
+                        {
+                            if (isMissionTypeAvailable(targetAirGroup, targetMissionType) && isMissionTypeOffensive(targetMissionType))
+                            {
+                                availableInterceptedMissionTypes.Add(targetMissionType);
+                            }
+                        }
 
-                    airGroup.Cover(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo));
-                }
-                else if (missionType == EMissionType.COVER)
-                {
-                    GroundGroup groundGroup = getAvailableRandomFriendlyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
-                    createRandomGroundOperation(sectionFile, groundGroup);
+                        if (availableInterceptedMissionTypes.Count > 0)
+                        {
+                            int targetMissionTypeIndex = rand.Next(availableInterceptedMissionTypes.Count);
+                            EMissionType randomTargetMissionType = availableInterceptedMissionTypes[targetMissionTypeIndex];
+                            createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
-                    airGroup.Cover(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo));
+                            //airGroup.Cover(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo));
+
+                            airGroup.Intercept(sectionFile, targetAirGroup);
+                        }
+                    }                    
                 }
                 else if (missionType == EMissionType.ARMED_MARITIME_RECON)
                 {
@@ -1491,19 +1486,19 @@ namespace IL2DCE
                     AirGroup targetAirGroup = getAvailableRandomEscortedAirGroup(airGroup.ArmyIndex);
                     if (targetAirGroup != null)
                     {
-                        List<EMissionType> availableTargetMissionTypes = new List<EMissionType>();
+                        List<EMissionType> availableEscortedMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in targetAirGroup.AircraftInfo.MissionTypes)
                         {
                             if (isMissionTypeAvailable(targetAirGroup, targetMissionType) && isMissionTypeEscorted(targetMissionType))
                             {
-                                availableTargetMissionTypes.Add(targetMissionType);
+                                availableEscortedMissionTypes.Add(targetMissionType);
                             }
                         }
 
-                        if (availableTargetMissionTypes.Count > 0)
+                        if (availableEscortedMissionTypes.Count > 0)
                         {
-                            int targetMissionTypeIndex = rand.Next(availableTargetMissionTypes.Count);
-                            EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
+                            int targetMissionTypeIndex = rand.Next(availableEscortedMissionTypes.Count);
+                            EMissionType randomTargetMissionType = availableEscortedMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
                             airGroup.Escort(sectionFile, targetAirGroup);
@@ -1512,13 +1507,13 @@ namespace IL2DCE
                 }
                 else if (missionType == EMissionType.INTERCEPT)
                 {
-                    AirGroup targetAirGroup = getAvailableRandomInterceptedAirGroup(airGroup.ArmyIndex);
+                    AirGroup targetAirGroup = getAvailableRandomOffensiveAirGroup(airGroup.ArmyIndex);
                     if (targetAirGroup != null)
                     {
                         List<EMissionType> availableInterceptedMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in targetAirGroup.AircraftInfo.MissionTypes)
                         {
-                            if (isMissionTypeAvailable(targetAirGroup, targetMissionType) && isMissionTypeIntercepted(targetMissionType))
+                            if (isMissionTypeAvailable(targetAirGroup, targetMissionType) && isMissionTypeOffensive(targetMissionType))
                             {
                                 availableInterceptedMissionTypes.Add(targetMissionType);
                             }
@@ -1533,10 +1528,6 @@ namespace IL2DCE
                             airGroup.Intercept(sectionFile, targetAirGroup);
                         }
                     }
-                }
-                else if (missionType == EMissionType.LIASON)
-                {
-
                 }
                 else if (missionType == EMissionType.MARITIME_RECON)
                 {
@@ -1553,7 +1544,7 @@ namespace IL2DCE
                     airGroup.Recon(sectionFile, groundGroup, createRandomAltitude(missionType, airGroup.AircraftInfo), escortAirGroup);
                 }
                                 
-                if (isMissionTypeIntercepted(missionType))
+                if (isMissionTypeOffensive(missionType))
                 {
                     AirGroup interceptAirGroup = getAvailableRandomInterceptAirGroup(airGroup);
                     if (interceptAirGroup != null)
@@ -1569,7 +1560,7 @@ namespace IL2DCE
             }
         }
 
-        public void createRandomAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup)
+        private void createRandomAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup)
         {
             List<EMissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
             if (missionTypes != null && missionTypes.Count > 0)
