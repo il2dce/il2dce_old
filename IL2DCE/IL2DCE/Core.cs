@@ -1515,19 +1515,19 @@ namespace IL2DCE
                     AirGroup targetAirGroup = getAvailableRandomInterceptedAirGroup(airGroup.ArmyIndex);
                     if (targetAirGroup != null)
                     {
-                        List<EMissionType> availableTargetMissionTypes = new List<EMissionType>();
+                        List<EMissionType> availableInterceptedMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in targetAirGroup.AircraftInfo.MissionTypes)
                         {
                             if (isMissionTypeAvailable(targetAirGroup, targetMissionType) && isMissionTypeIntercepted(targetMissionType))
                             {
-                                availableTargetMissionTypes.Add(targetMissionType);
+                                availableInterceptedMissionTypes.Add(targetMissionType);
                             }
                         }
 
-                        if (availableTargetMissionTypes.Count > 0)
+                        if (availableInterceptedMissionTypes.Count > 0)
                         {
-                            int targetMissionTypeIndex = rand.Next(availableTargetMissionTypes.Count);
-                            EMissionType randomTargetMissionType = availableTargetMissionTypes[targetMissionTypeIndex];
+                            int targetMissionTypeIndex = rand.Next(availableInterceptedMissionTypes.Count);
+                            EMissionType randomTargetMissionType = availableInterceptedMissionTypes[targetMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, targetAirGroup, randomTargetMissionType);
 
                             airGroup.Intercept(sectionFile, targetAirGroup);
