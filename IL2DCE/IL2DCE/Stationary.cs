@@ -45,5 +45,13 @@ namespace IL2DCE
         public double X;
 
         public double Y;
+
+        public Point2d Position
+        {
+            get
+            {
+                return new Point2d(this.X, this.Y);
+            }
+        }
     }
 }
