@@ -70,7 +70,7 @@ namespace IL2DCE
                     _aircraftInfoFile.get(Aircraft, i, out key, out value);
 
                     EMissionType missionType;
-                    if(Enum.TryParse<EMissionType>(key, false, out missionType))
+                    if (Enum.TryParse<EMissionType>(key, false, out missionType))
                     {
                         missionTypes.Add(missionType);
                     }
@@ -83,6 +83,28 @@ namespace IL2DCE
         {
             get;
             set;
+        }
+
+        public List<IAircraftParametersInfo> GetAircraftParametersInfo(EMissionType missionType)
+        {
+            List<IAircraftParametersInfo> missionParameters = new List<IAircraftParametersInfo>();
+            string value = _aircraftInfoFile.get(Aircraft, missionType.ToString());
+            string[] valueParts = value.Split('/');
+            if (valueParts != null && valueParts.Length > 0)
+            {
+                foreach (string valuePart in valueParts)
+                {
+                    AircraftParametersInfo missionParameter = new AircraftParametersInfo(valuePart);
+                    missionParameters.Add(missionParameter);
+                }
+            }
+
+            return missionParameters;
+        }
+
+        public IAircraftLoadoutInfo GetAircraftLoadoutInfo(string loadoutId)
+        {
+            return new AircraftLoadoutInfo(this._aircraftInfoFile, Aircraft, loadoutId);
         }
     }
 }

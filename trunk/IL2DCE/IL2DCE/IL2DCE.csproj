@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AircraftInfo.cs" />
+    <Compile Include="AircraftLoadoutInfo.cs" />
+    <Compile Include="AircraftParametersInfo.cs" />
     <Compile Include="AirGroup.cs" />
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
@@ -47,6 +49,8 @@
     <Compile Include="CampaignInfo.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="GroundGroupSubWaypoint.cs" />
+    <Compile Include="Interfaces\IAircraftLoadoutInfo.cs" />
+    <Compile Include="Interfaces\IAircraftParametersInfo.cs" />
     <Compile Include="Interfaces\IBriefingFile.cs" />
     <Compile Include="Interfaces\ICareer.cs" />
     <Compile Include="Interfaces\ICampaignInfo.cs" />
