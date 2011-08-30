@@ -1102,12 +1102,19 @@ namespace IL2DCE
             return groundGroups;
         }
         
-        private double createRandomAltitude(EMissionType missionType, IAircraftInfo aircraftInfo)
+        private double getRandomAltitude(IAircraftParametersInfo missionParameters)
         {
-            // TODO: Altitude range depends on mission type.
-            return (double)rand.Next(500, 6000);
+            if (missionParameters.MinAltitude != null && missionParameters.MinAltitude.HasValue && missionParameters.MaxAltitude != null && missionParameters.MaxAltitude.HasValue)
+            {
+                return (double)rand.Next((int)missionParameters.MinAltitude.Value, (int)missionParameters.MaxAltitude.Value);
+            }
+            else
+            {
+                // Use some default altitudes
+                return (double)rand.Next(300, 7000);
+            }
         }
-
+                
         private List<AirGroup> getAvailableOffensiveAirGroups(int armyIndex)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
@@ -1480,6 +1487,10 @@ namespace IL2DCE
             if(isMissionTypeAvailable(airGroup, missionType))
             {
                 airOperationTarget.MissionType = missionType;
+
+                List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
+                int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
+                IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
                 
                 briefingFile.Name[airGroup.Id] = airGroup.Id;
                 briefingFile.Description[airGroup.Id] = missionType.ToString();
@@ -1537,7 +1548,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.GroundAttack(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1547,8 +1558,8 @@ namespace IL2DCE
                 else if (missionType == EMissionType.ARMED_RECON)
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor, EGroundGroupType.Vehicle});
-                    createRandomGroundOperation(sectionFile, groundGroup);                    
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    createRandomGroundOperation(sectionFile, groundGroup);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.GroundAttack(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1559,7 +1570,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Armor});
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.GroundAttack(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1573,7 +1584,7 @@ namespace IL2DCE
                     {
                         int radarIndex = rand.Next(radars.Count);
                         Stationary radar = radars[radarIndex];
-                        double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                        double altitude = getRandomAltitude(randomAircraftParametersInfo);
                         
                         airGroup.GroundAttack(sectionFile, radar, altitude, escortAirGroup);
                         
@@ -1585,7 +1596,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.GroundAttack(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1596,7 +1607,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Vehicle});
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
                     
                     airGroup.GroundAttack(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1661,7 +1672,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> {EGroundGroupType.Ship});
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.Recon(sectionFile, groundGroup, altitude, escortAirGroup);
 
@@ -1672,7 +1683,7 @@ namespace IL2DCE
                 {
                     GroundGroup groundGroup = getAvailableRandomEnemyGroundGroup(airGroup.ArmyIndex, new List<EGroundGroupType> { EGroundGroupType.Armor, EGroundGroupType.Vehicle });
                     createRandomGroundOperation(sectionFile, groundGroup);
-                    double altitude = createRandomAltitude(missionType, airGroup.AircraftInfo);
+                    double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
                     airGroup.Recon(sectionFile, groundGroup, altitude, escortAirGroup);
 

@@ -20,51 +20,11 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public enum EMissionType
+    public interface IAircraftLoadoutInfo
     {
-        //LIASON,
-
-        RECON,
-        MARITIME_RECON,
-        ARMED_RECON,
-        ARMED_MARITIME_RECON,
-        
-        ATTACK_ARMOR,
-        ATTACK_VEHICLE,
-        //ATTACK_ARTILLERY,
-        ATTACK_RADAR,
-        ATTACK_SHIP,
-
-        INTERCEPT,
-        //MARITIME_INTERCEPT,
-        //NIGHT_INTERCEPT,
-        ESCORT,
-        COVER,
-        //MARITIME_COVER,
-
-        //INTRUDER,
-        //NIGHT_INTRUDER,
-    };
-
-    public interface IAircraftInfo
-    {
-        bool IsFlyable
+        string Weapons
         {
             get;
         }
-
-        List<EMissionType> MissionTypes
-        {
-            get;
-        }
-
-        string Aircraft
-        {
-            get;
-        }
-
-        List<IAircraftParametersInfo> GetAircraftParametersInfo(EMissionType missionType);
-
-        IAircraftLoadoutInfo GetAircraftLoadoutInfo(string loadoutId);
     }
 }
