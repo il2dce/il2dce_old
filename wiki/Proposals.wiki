@@ -9,6 +9,8 @@ IL2 DCE proposals
 = Details =
 *Dan Antonescu*
 
+- TERROR mission type (bombing cities/civil targets)
+
 - delayed take off/spawning for escort/intercept missions (only when the escorted airplanes reach a certain point - are in range/are detected and in range)
 
 - in-flight spawning for escorted/intercepted missions (place them on their calculated reach point in their flight-path at the moment player's escort airplanes are spawned)
