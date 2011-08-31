@@ -8,8 +8,10 @@ This sections contains a description of different campaign scenarios and use cas
 == Campaign scenarios ==
 
 === Phony War (Prelude) ===
+This campaign recreates the time between the outbreak of the war and before the Battle of France. During this time the Luftwaffe undertook reconnaissance and (armed) maritime reconnaissance missions.
 
 === Dunkirk (Interlude) ===
+
 
 === Kanalkampf (Phase 1) ===
 
