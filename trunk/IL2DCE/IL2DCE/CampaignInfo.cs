@@ -124,7 +124,7 @@ namespace IL2DCE
 
         public IAircraftInfo GetAircraftInfo(string aircraft)
         {
-            if(_localAircraftInfoFile.exist("Main", aircraft))
+            if(_localAircraftInfoFile != null && _localAircraftInfoFile.exist("Main", aircraft))
             {
                 return new AircraftInfo(_localAircraftInfoFile, aircraft);
             }

@@ -20,9 +20,9 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface IAircraftLoadoutInfo
+    public interface IAirGroupInfo
     {
-        int[] Weapons
+        int FlightSize
         {
             get;
         }

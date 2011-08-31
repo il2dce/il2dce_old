@@ -26,32 +26,42 @@ namespace IL2DCE
 {
     public class AircraftLoadoutInfo : IAircraftLoadoutInfo
     {
-        public AircraftLoadoutInfo(ISectionFile aircraftInfoFile, string aircraft, string loadout)
+        public AircraftLoadoutInfo(ISectionFile aircraftInfoFile, string aircraft, string loadoutId)
         {
-            if (aircraftInfoFile.exist(aircraft + "_" + loadout))
+            if (aircraftInfoFile.exist(aircraft + "_" + loadoutId))
             {
-                if (aircraftInfoFile.exist(aircraft + "_" + loadout, "Weapons"))
+                if (aircraftInfoFile.exist(aircraft + "_" + loadoutId, "Weapons"))
                 {
-                    this.weapons = aircraftInfoFile.get(aircraft + "_" + loadout, "Weapons");
+                    // Weapons
+                    string weaponsLine = aircraftInfoFile.get(aircraft + "_" + loadoutId, "Weapons");
+                    string[] weaponsList = weaponsLine.Split(new char[] { ' ' });
+                    if (weaponsList != null && weaponsList.Length > 0)
+                    {
+                        this.weapons = new int[weaponsList.Length];
+                        for (int i = 0; i < weaponsList.Length; i++)
+                        {
+                            this.weapons[i] = int.Parse(weaponsList[i]);
+                        }
+                    }
                 }
                 else
                 {
-                    throw new FormatException(aircraft + "_" + loadout + ".Weapons");
+                    throw new FormatException(aircraft + "_" + loadoutId + ".Weapons");
                 }
             }
             else
             {
-                throw new ArgumentException(aircraft + "_" + loadout);
+                throw new ArgumentException(aircraft + "_" + loadoutId);
             }
         }
 
-        public string Weapons
+        public int[] Weapons
         {
             get
             {
                 return this.weapons;
             }
         }
-        private string weapons = "";
+        private int[] weapons = null;
     }
 }

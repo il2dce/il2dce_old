@@ -24,7 +24,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    public abstract class AirGroupInfo
+    public abstract class AirGroupInfo : IAirGroupInfo
     {
         #region Public properties
 

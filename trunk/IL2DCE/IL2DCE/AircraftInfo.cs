@@ -89,7 +89,7 @@ namespace IL2DCE
         {
             List<IAircraftParametersInfo> missionParameters = new List<IAircraftParametersInfo>();
             string value = _aircraftInfoFile.get(Aircraft, missionType.ToString());
-            string[] valueParts = value.Split('/');
+            string[] valueParts = value.Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             if (valueParts != null && valueParts.Length > 0)
             {
                 foreach (string valuePart in valueParts)
@@ -97,6 +97,10 @@ namespace IL2DCE
                     AircraftParametersInfo missionParameter = new AircraftParametersInfo(valuePart);
                     missionParameters.Add(missionParameter);
                 }
+            }
+            else
+            {
+                throw new FormatException(Aircraft + "." + missionType.ToString() + " " + value);
             }
 
             return missionParameters;
