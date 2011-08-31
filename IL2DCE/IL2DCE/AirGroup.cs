@@ -230,11 +230,11 @@ namespace IL2DCE
         {
             get
             {
-                if (AirGroupInfo.GetAirGroupInfo(1, AirGroupKey) != null)
+                if (IL2DCE.AirGroupInfo.GetAirGroupInfo(1, AirGroupKey) != null)
                 {
                     return 1;
                 }
-                else if (AirGroupInfo.GetAirGroupInfo(2, AirGroupKey) != null)
+                else if (IL2DCE.AirGroupInfo.GetAirGroupInfo(2, AirGroupKey) != null)
                 {
                     return 2;
                 }
@@ -250,6 +250,14 @@ namespace IL2DCE
             get
             {
                 return _core.Career.CampaignInfo.GetAircraftInfo(Class);
+            }
+        }
+
+        public IAirGroupInfo AirGroupInfo
+        {
+            get
+            {
+                return IL2DCE.AirGroupInfo.GetAirGroupInfo(AirGroupKey);
             }
         }
 

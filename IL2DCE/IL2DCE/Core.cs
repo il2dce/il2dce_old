@@ -174,7 +174,13 @@ namespace IL2DCE
                         if (campaignFolder.GetFiles("CampaignInfo.ini") != null && campaignFolder.GetFiles("CampaignInfo.ini").Length == 1)
                         {
                             ISectionFile campaignInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/CampaignInfo.ini");
-                            ISectionFile localAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/AircraftInfo.ini");
+                            
+                            ISectionFile localAircraftInfoFile = null;
+                            System.IO.FileInfo localAircraftInfoFileInfo = new System.IO.FileInfo(game.gameInterface.ToFileSystemPath(campaignsFolderPath + "/" + campaignFolder.Name + "/AircraftInfo.ini"));
+                            if (localAircraftInfoFileInfo.Exists)
+                            {
+                                localAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/AircraftInfo.ini");
+                            }
 
                             CampaignInfo campaignInfo = new CampaignInfo(campaignFolder.Name, campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignInfoFile, globalAircraftInfoFile, localAircraftInfoFile);
                             CampaignInfos.Add(campaignInfo);
@@ -415,10 +421,17 @@ namespace IL2DCE
             if (!Career.Date.HasValue)
             {
                 Career.Date = Career.CampaignInfo.StartDate;
+                Career.Experience = Career.RankIndex * 1000;
             }
             else
             {
                 Career.Date = Career.Date.Value.Add(new TimeSpan(1, 0, 0, 0));
+                Career.Experience += 100;
+
+                if (Career.Experience >= (Career.RankIndex + 1) * 1000)
+                {
+                    Career.RankIndex += 1;
+                }
             }
 
             string missionFolderSystemPath = Game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE/" + Career.PilotName);
@@ -667,9 +680,9 @@ namespace IL2DCE
                 {
                     string playerAirGroupKey = airGroup.AirGroupKey;
                     int playerSquadronIndex = airGroup.SquadronIndex;
-                    int playerFlightIndex = airGroup.Flights.Count-1;
+                    int playerFlightIndex = airGroup.Flights.Count - 1;
                     int playerAircraftIndex = airGroup.Flights[playerFlightIndex].Count - 1;
-
+                    
                     if (missionFile.exist("MAIN", "player"))
                     {
                         missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
@@ -1486,17 +1499,19 @@ namespace IL2DCE
 
             if(isMissionTypeAvailable(airGroup, missionType))
             {
+                availableAirGroups.Remove(airGroup);
+                
                 airOperationTarget.MissionType = missionType;
 
                 List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
                 int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
                 IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
-                
+                IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
+                airGroup.Weapons = aircraftLoadoutInfo.Weapons;
+
                 briefingFile.Name[airGroup.Id] = airGroup.Id;
                 briefingFile.Description[airGroup.Id] = missionType.ToString();
                 airGroup.Briefing = airGroup.Id;
-
-                availableAirGroups.Remove(airGroup);
 
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
@@ -1505,6 +1520,13 @@ namespace IL2DCE
                     if (escortAirGroup != null)
                     {
                         availableAirGroups.Remove(escortAirGroup);
+
+                        List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
+                        int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
+                        IAircraftParametersInfo escortRandomAircraftParametersInfo = escortAircraftParametersInfos[escortAircraftParametersInfoIndex];
+                        IAircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
+                        escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
+
                         escortAirGroup.Escort(sectionFile, airGroup);
                     }
                 }
@@ -1697,6 +1719,13 @@ namespace IL2DCE
                     if (interceptAirGroup != null)
                     {
                         availableAirGroups.Remove(interceptAirGroup);
+
+                        List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
+                        int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
+                        IAircraftParametersInfo interceptRandomAircraftParametersInfo = interceptAircraftParametersInfos[interceptAircraftParametersInfoIndex];
+                        IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
+                        interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
+
                         interceptAirGroup.Intercept(sectionFile, airGroup);                        
                     }
                 }

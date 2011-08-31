@@ -149,7 +149,10 @@ namespace IL2DCE
             }
             set
             {
-                _rankIndex = value;
+                if (value < 6)
+                {
+                    _rankIndex = value;
+                }
             }
         }
         private int _rankIndex;
