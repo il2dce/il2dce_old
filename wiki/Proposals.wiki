@@ -17,7 +17,7 @@ IL2 DCE proposals
      + player is bomber: delayed spawn (and take-off) for the AI escort/intercept planes (spawn them only when the bombers are in range/detected)
 
 - *AI ground control* / central command / master mind which should do all needed actions in real time (while the mission is going on):
-     + generate recon/weather recon; CAPs; attacks + escorts; interceptions
+     + generate & insert new recon/weather recon; CAPs; attacks + escorts; interceptions flights/ground groups/sea groups
 
      + deal with newly appeared/reported situations
 
