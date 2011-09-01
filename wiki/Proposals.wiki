@@ -26,7 +26,7 @@ IL2 DCE proposals
 - *player commands*:
      + online wars commander(s) player(s) / high rank single player:  create ground/see/air groups and assign them missions (to intercept incoming flights, to attack certain targets, to patrol certain areas, to escort certain flights)
 
-     + report enemy sightings (for recon missions): quadrant, group type, size, composition, heading, altitude, speed
+     + report enemy sightings (for recon missions and not only): quadrant, group type, size, composition, heading, altitude, speed
 
      + report bogey sightings and eventually change flight's current waypoint to investigate the newly sighted bogeys (force AI)
 
