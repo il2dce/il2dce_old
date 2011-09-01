@@ -678,19 +678,86 @@ namespace IL2DCE
             {
                 if(airGroup.Id == Career.AirGroup)
                 {
+                    List<string> aircraftOrder = new List<string>();
+                    if (airGroup.AirGroupInfo.FlightSize % 3 == 0)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            foreach (int key in airGroup.Flights.Keys)
+                            {
+                                if (airGroup.Flights[key].Count > i)
+                                {
+                                    aircraftOrder.Add(key.ToString() + i.ToString());
+                                }
+                            }
+
+                            foreach (int key in airGroup.Flights.Keys)
+                            {
+                                if (airGroup.Flights[key].Count > i + 3)
+                                {
+                                    aircraftOrder.Add(key.ToString() + (i + 3).ToString());
+                                }
+                            }
+                        }
+                    }
+                    else if (airGroup.AirGroupInfo.FlightSize % 2 == 0)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            foreach (int key in airGroup.Flights.Keys)
+                            {
+                                if (airGroup.Flights[key].Count > i)
+                                {
+                                    aircraftOrder.Add(key.ToString() + i.ToString());
+                                }
+                            }
+
+                            foreach (int key in airGroup.Flights.Keys)
+                            {
+                                if (airGroup.Flights[key].Count > i + 2)
+                                {
+                                    aircraftOrder.Add(key.ToString() + (i + 2).ToString());
+                                }
+                            }
+                        }
+                    }
+                    else if (airGroup.AirGroupInfo.FlightSize % 1 == 0)
+                    {
+                        foreach (int key in airGroup.Flights.Keys)
+                        {
+                            if (airGroup.Flights[key].Count == 1)
+                            {
+                                aircraftOrder.Add(key.ToString() + "0");
+                            }
+                        }
+                    }
+                    
+                    
                     string playerAirGroupKey = airGroup.AirGroupKey;
                     int playerSquadronIndex = airGroup.SquadronIndex;
-                    int playerFlightIndex = airGroup.Flights.Count - 1;
-                    int playerAircraftIndex = airGroup.Flights[playerFlightIndex].Count - 1;
-                    
+                    string playerPosition = aircraftOrder[aircraftOrder.Count-1];
+
                     if (missionFile.exist("MAIN", "player"))
                     {
-                        missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                        missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
                     }
                     else
                     {
-                        missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
-                    }
+                        missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                    }                   
+                    
+                    
+                    //int playerFlightIndex = airGroup.Flights.Count - 1;
+                    //int playerAircraftIndex = airGroup.Flights[playerFlightIndex].Count - 1;
+                    
+                    //if (missionFile.exist("MAIN", "player"))
+                    //{
+                    //    missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                    //}
+                    //else
+                    //{
+                    //    missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
+                    //}
 
                     createRandomAirOperation(missionFile, briefingFile, airGroup);
                     break;
