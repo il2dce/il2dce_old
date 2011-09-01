@@ -16,15 +16,15 @@ IL2 DCE proposals
 
      + player is bomber: delayed spawn (and take-off) for the AI escort/intercept planes (spawn them only when the bombers are in range/detected)
 
-- *AI ground control* / central command / master mind which should do all needed actions
+- *AI ground control* / central command / master mind which should do all needed actions in real time (while the mission is going on):
      + generate recon/weather recon; CAPs; attacks + escorts; interceptions
 
-     + deal with new situations
+     + deal with newly appeared/reported situations
 
      + allow special players (admins/commanders) send commands to AI ground control)
 
-- *player commands*
-     + online warsallow admin(s)/commander(s) player(s)/high single player rank:  create ground/see/air groups and assign them missions (to intercept incoming flights, to attack certain targets, to patrol certain areas, to escort certain flights)
+- *player commands*:
+     + online wars commander(s) player(s) / high rank single player:  create ground/see/air groups and assign them missions (to intercept incoming flights, to attack certain targets, to patrol certain areas, to escort certain flights)
 
      + report enemy sightings (for recon missions): quadrant, group type, size, composition, heading, altitude, speed
 
@@ -59,4 +59,4 @@ IL2 DCE proposals
 
 - *RRR system* (repair/rearm/resupply) (if the player lands and taxies to certain locations/areas (close to a fuel cistern for example parked somewhere) on airfields, the script will move the player into a newly spawned aircraft and destroy the old landed one) - specially for online battles
 
-- dynamic weather generator (at this moment, it might be possible to change weather conditions IF the new weather conditions from a newly loaded missions during the current one are overwriting/replacing the initial missions's weather characteristics)
+- *dynamic weather generator* (at this moment, it might be possible to change weather conditions IF the new weather conditions from a newly loaded missions during the current one are overwriting/replacing the initial missions's weather characteristics)
