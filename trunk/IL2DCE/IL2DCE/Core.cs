@@ -737,6 +737,11 @@ namespace IL2DCE
                     int playerSquadronIndex = airGroup.SquadronIndex;
                     string playerPosition = aircraftOrder[aircraftOrder.Count-1];
 
+                    double factor = aircraftOrder.Count / 6;
+                    int playerPositionIndex = (int)(Math.Floor(Career.RankIndex * factor));
+                                        
+                    playerPosition = aircraftOrder[aircraftOrder.Count - 1 - playerPositionIndex];
+
                     if (missionFile.exist("MAIN", "player"))
                     {
                         missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
@@ -744,21 +749,8 @@ namespace IL2DCE
                     else
                     {
                         missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
-                    }                   
-                    
-                    
-                    //int playerFlightIndex = airGroup.Flights.Count - 1;
-                    //int playerAircraftIndex = airGroup.Flights[playerFlightIndex].Count - 1;
-                    
-                    //if (missionFile.exist("MAIN", "player"))
-                    //{
-                    //    missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
-                    //}
-                    //else
-                    //{
-                    //    missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerFlightIndex.ToString() + playerAircraftIndex.ToString());
-                    //}
-
+                    }
+                                        
                     createRandomAirOperation(missionFile, briefingFile, airGroup);
                     break;
                 }
