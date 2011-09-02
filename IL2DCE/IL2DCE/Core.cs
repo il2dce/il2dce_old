@@ -1552,6 +1552,16 @@ namespace IL2DCE
             }
         }
 
+        private void createBriefing(AirOperationTarget airOperationTarget, AirGroup airGroup, AirGroup escortAirGroup)
+        {
+            airGroup.Briefing = airOperationTarget.MissionType.ToString();
+
+            if (escortAirGroup != null)
+            {
+                escortAirGroup.Briefing = EMissionType.ESCORT.ToString();
+            }
+        }
+
         private AirOperationTarget createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType)
         {
             AirOperationTarget airOperationTarget = new AirOperationTarget();           
@@ -1567,11 +1577,7 @@ namespace IL2DCE
                 IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
                 IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
                 airGroup.Weapons = aircraftLoadoutInfo.Weapons;
-
-                briefingFile.Name[airGroup.Id] = airGroup.Id;
-                briefingFile.Description[airGroup.Id] = missionType.ToString();
-                airGroup.Briefing = airGroup.Id;
-
+                
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
                 {
@@ -1788,6 +1794,8 @@ namespace IL2DCE
                         interceptAirGroup.Intercept(sectionFile, airGroup);                        
                     }
                 }
+
+                createBriefing(airOperationTarget, airGroup, escortAirGroup);
             }
             else
             {
