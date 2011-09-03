@@ -488,6 +488,7 @@ namespace IL2DCE
                 {
                     lastGroundGroupWaypoint = groundGroupWaypoint;
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0));
+
                     if (start == null)
                     {
                         start = Waypoints[Waypoints.Count - 1];
@@ -679,11 +680,14 @@ namespace IL2DCE
                 }
 
                 GroundGroupWaypoint lastGroundGroupWaypoint = null;
-                AirGroupWaypoint start = null;
+                //AirGroupWaypoint start = null;
                 foreach (GroundGroupWaypoint groundGroupWaypoint in targetGroundGroup.Waypoints)
                 {
                     lastGroundGroupWaypoint = groundGroupWaypoint;
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, targetGroundGroup.Id + " " + targetGroundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
+
+                    break;
+                    /*
                     if (start == null)
                     {
                         start = Waypoints[Waypoints.Count - 1];
@@ -694,7 +698,7 @@ namespace IL2DCE
                         {
                             break;
                         }
-                    }
+                    }*/
                 }
 
                 if (lastGroundGroupWaypoint != null)
@@ -837,15 +841,14 @@ namespace IL2DCE
                 createStartInbetweenPoints(sectionFile, interceptWaypoint.Position);
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, interceptWaypoint.X, interceptWaypoint.Y, interceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(interceptWaypoint)));
 
-
-                if (targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1 >= 0)
+                /*if (targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1 >= 0)
                 {
                     AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1];
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(sectionFile, nextInterceptWaypoint.Position, landingAirport);
                 }
-                else
+                else*/
                 {
                     createEndInbetweenPoints(sectionFile, interceptWaypoint.Position, landingAirport);
                 }
@@ -856,14 +859,14 @@ namespace IL2DCE
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, closestInterceptWaypoint.X, closestInterceptWaypoint.Y, closestInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint)));
 
 
-                if (targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint) + 1 < targetAirUnit.Waypoints.Count)
+                /*if (targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint) + 1 < targetAirUnit.Waypoints.Count)
                 {
                     AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) + 1];
                     Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(sectionFile, nextInterceptWaypoint.Position, landingAirport);
                 }
-                else
+                else*/
                 {
                     createEndInbetweenPoints(sectionFile, closestInterceptWaypoint.Position, landingAirport);
                 }
