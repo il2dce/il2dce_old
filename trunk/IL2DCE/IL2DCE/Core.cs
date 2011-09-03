@@ -1800,7 +1800,7 @@ namespace IL2DCE
                         IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
                         interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
 
-                        interceptAirGroup.Intercept(sectionFile, airGroup);                        
+                        interceptAirGroup.Intercept(sectionFile, airGroup);
                     }
                 }
 
