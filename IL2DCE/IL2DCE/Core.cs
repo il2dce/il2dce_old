@@ -804,13 +804,13 @@ namespace IL2DCE
             {
                 while (pathParams.State == RecalcPathState.WAIT)
                 {
-                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait for path.", null);
+                    //Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Wait for path.", null);
                     System.Threading.Thread.Sleep(100);
                 }
 
                 if (pathParams.State == RecalcPathState.SUCCESS)
                 {
-                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path found (" + pathParams.Path.Length.ToString() + ").", null);
+                    //Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path found (" + pathParams.Path.Length.ToString() + ").", null);
 
                     GroundGroupWaypoint lastGroundGroupWaypoint = null;
                     foreach (maddox.game.world.AiWayPoint aiWayPoint in pathParams.Path)
@@ -836,7 +836,7 @@ namespace IL2DCE
                 }
                 else if (pathParams.State == RecalcPathState.FAILED)
                 {
-                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path not found.", null);
+                    //Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path not found.", null);
                 }
             }
         }
@@ -1619,14 +1619,23 @@ namespace IL2DCE
                             if (offensiveAirOperationTarget.TargetGroundGroup != null)
                             {
                                 airGroup.Cover(sectionFile, offensiveAirOperationTarget.TargetGroundGroup, offensiveAirOperationTarget.Altitude);
+
+                                airOperationTarget.TargetGroundGroup = offensiveAirOperationTarget.TargetGroundGroup;
+                                airOperationTarget.Altitude = offensiveAirOperationTarget.Altitude;
                             }
                             else if (offensiveAirOperationTarget.TargetStationary != null)
                             {
                                 airGroup.Cover(sectionFile, offensiveAirOperationTarget.TargetStationary, offensiveAirOperationTarget.Altitude);
+
+                                airOperationTarget.TargetStationary = offensiveAirOperationTarget.TargetStationary;
+                                airOperationTarget.Altitude = offensiveAirOperationTarget.Altitude;
                             }
                             else if (offensiveAirOperationTarget.TargetArea != null && offensiveAirOperationTarget.TargetArea.HasValue)
                             {
                                 airGroup.Cover(sectionFile, offensiveAirOperationTarget.TargetArea.Value, offensiveAirOperationTarget.Altitude);
+
+                                airOperationTarget.TargetArea = offensiveAirOperationTarget.TargetArea;
+                                airOperationTarget.Altitude = offensiveAirOperationTarget.Altitude;
                             }
                         }
                     }
@@ -1821,8 +1830,6 @@ namespace IL2DCE
 
                 if (availableMissionTypes.Count > 0)
                 {
-                    airGroup.Briefing = airGroup.Id;
-
                     int randomMissionTypeIndex = rand.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
