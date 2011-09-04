@@ -50,45 +50,6 @@ namespace IL2DCE
                     }
                 }                
             }
-
-            public override void OnTickGame()
-            {
-                base.OnTickGame();
-
-                if (Time.tickCounter() % 300 == 0)
-                {
-                    Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Update waypoint positions.", null);
-
-                    if (Game.gpArmies() != null && Game.gpArmies().Length > 0)
-                    {
-                        foreach (int armyIndex in Game.gpArmies())
-                        {
-                            if (Game.gpAirGroups(armyIndex) != null && Game.gpAirGroups(armyIndex).Length > 0)
-                            {
-                                foreach (AiAirGroup aiAirGroup in Game.gpAirGroups(armyIndex))
-                                {
-                                    foreach (AiWayPoint aiWayPoint in aiAirGroup.GetWay())
-                                    {
-                                        if (aiWayPoint is AiAirWayPoint)
-                                        {
-                                            AiAirWayPoint aiAirWayPoint = aiWayPoint as AiAirWayPoint;
-                                            if (aiAirWayPoint.Action == AiAirWayPointType.AATTACK_BOMBERS
-                                                || aiAirWayPoint.Action == AiAirWayPointType.AATTACK_BOMBERS
-                                                || aiAirWayPoint.Action == AiAirWayPointType.GATTACK_TARG)
-                                            {
-                                                if (aiAirWayPoint.Target != null && aiAirWayPoint.Target.IsValid() && aiAirWayPoint.Target.IsAlive())
-                                                {
-                                                    aiAirWayPoint.P = aiAirWayPoint.Target.Pos();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }                    
-                }
-            }
         }
     }
 }
