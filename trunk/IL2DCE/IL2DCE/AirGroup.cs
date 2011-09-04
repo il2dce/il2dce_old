@@ -267,12 +267,6 @@ namespace IL2DCE
 
         #region Private methods
 
-        private void writeTo(IBriefingFile briefingFile)
-        {
-            briefingFile.Name[this.Id] = this.Id;
-            briefingFile.Description[this.Id] = this.Briefing;
-        }
-
         private void writeTo(ISectionFile sectionFile)
         {
             if (Waypoints.Count > 0)
@@ -330,10 +324,7 @@ namespace IL2DCE
                     }
                 }
 
-                if (Briefing != null)
-                {
-                    sectionFile.add(Id, "Briefing", this.Id);
-                }
+                sectionFile.add(Id, "Briefing", this.Id);
             }
         }
 

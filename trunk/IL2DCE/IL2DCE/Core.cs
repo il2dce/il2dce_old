@@ -1552,12 +1552,14 @@ namespace IL2DCE
             }
         }
 
-        private void createBriefing(AirOperationTarget airOperationTarget, AirGroup airGroup, AirGroup escortAirGroup)
+        private void createBriefing(IBriefingFile briefingFile, AirOperationTarget airOperationTarget, AirGroup airGroup, AirGroup escortAirGroup)
         {
-            airGroup.Briefing = airOperationTarget.MissionType.ToString();
+            briefingFile.Name[airGroup.Id] = airGroup.Id;
+            briefingFile.Description[airGroup.Id] = airOperationTarget.MissionType.ToString();
 
             if (escortAirGroup != null)
             {
+                briefingFile.Name[escortAirGroup.Id] = escortAirGroup.Id;
                 escortAirGroup.Briefing = EMissionType.ESCORT.ToString();
             }
         }
@@ -1804,7 +1806,7 @@ namespace IL2DCE
                     }
                 }
 
-                createBriefing(airOperationTarget, airGroup, escortAirGroup);
+                createBriefing(briefingFile, airOperationTarget, airGroup, escortAirGroup);
             }
             else
             {
