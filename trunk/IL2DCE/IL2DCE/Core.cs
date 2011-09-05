@@ -1555,12 +1555,18 @@ namespace IL2DCE
         private void createBriefing(IBriefingFile briefingFile, AirOperationTarget airOperationTarget, AirGroup airGroup, AirGroup escortAirGroup)
         {
             briefingFile.Name[airGroup.Id] = airGroup.Id;
-            briefingFile.Description[airGroup.Id] = airOperationTarget.MissionType.ToString();
+
+            if (airOperationTarget.MissionType != null && airOperationTarget.MissionType.HasValue)
+            {
+                EMissionType missionType = airOperationTarget.MissionType.Value;
+
+                briefingFile.Description[airGroup.Id] = missionType.ToString();                
+            }
 
             if (escortAirGroup != null)
             {
                 briefingFile.Name[escortAirGroup.Id] = escortAirGroup.Id;
-                escortAirGroup.Briefing = EMissionType.ESCORT.ToString();
+                briefingFile.Description[escortAirGroup.Id] = EMissionType.ESCORT.ToString();
             }
         }
 
