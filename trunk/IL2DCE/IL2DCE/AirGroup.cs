@@ -455,6 +455,15 @@ namespace IL2DCE
             createStartInbetweenPoints(sectionFile, targetArea);
 
             Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetArea.x, targetArea.y, targetArea.z, 300.0));
+            AirGroupWaypoint start = Waypoints[Waypoints.Count - 1];
+
+            while (distanceBetween(start, Waypoints[Waypoints.Count - 1]) < 200000.0)
+            {
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetArea.x + 5000.0, targetArea.y + 5000.0, targetArea.z, 300.0));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetArea.x + 5000.0, targetArea.y - 5000.0, targetArea.z, 300.0));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetArea.x - 5000.0, targetArea.y - 5000.0, targetArea.z, 300.0));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetArea.x - 5000.0, targetArea.y + 5000.0, targetArea.z, 300.0));
+            }
 
             createEndInbetweenPoints(sectionFile, targetArea, landingAirport);
             createEndWaypoints(sectionFile, landingAirport);
@@ -466,43 +475,26 @@ namespace IL2DCE
         {
             Waypoints.Clear();
 
-            if (targetGroundGroup.Waypoints.Count > 1)
+            if (targetGroundGroup.Waypoints.Count > 0)
             {
                 createStartWaypoints(sectionFile);
 
-                Point3d pStart = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
-                createStartInbetweenPoints(sectionFile, pStart);
+                Point3d p = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
 
-                GroundGroupWaypoint lastGroundGroupWaypoint = null;
-                AirGroupWaypoint start = null;
-                foreach (GroundGroupWaypoint groundGroupWaypoint in targetGroundGroup.Waypoints)
+                createStartInbetweenPoints(sectionFile, p);
+
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, p.x, p.y, altitude, 300.0));
+                AirGroupWaypoint start = Waypoints[Waypoints.Count - 1];
+
+                while (distanceBetween(start, Waypoints[Waypoints.Count - 1]) < 200000.0)
                 {
-                    lastGroundGroupWaypoint = groundGroupWaypoint;
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0));
-                    if (start == null)
-                    {
-                        start = Waypoints[Waypoints.Count - 1];
-                    }
-                    else
-                    {
-                        if (distanceBetween(start, Waypoints[Waypoints.Count - 1]) > 20000.0)
-                        {
-                            break;
-                        }
-                    }
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, p.x + 5000.0, p.y + 5000.0, altitude, 300.0));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, p.x + 5000.0, p.y - 5000.0, altitude, 300.0));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, p.x - 5000.0, p.y - 5000.0, altitude, 300.0));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, p.x - 5000.0, p.y + 5000.0, altitude, 300.0));
                 }
 
-                if (lastGroundGroupWaypoint != null)
-                {
-                    while (distanceBetween(start, Waypoints[Waypoints.Count - 1]) < 200000.0)
-                    {
-                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude, 300.0));
-                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.COVER, lastGroundGroupWaypoint.Position.x, lastGroundGroupWaypoint.Position.y, altitude, 300.0));
-                    }
-
-                    Point3d pEnd = new Point3d(lastGroundGroupWaypoint.Position.x, lastGroundGroupWaypoint.Position.y, altitude);
-                    createEndInbetweenPoints(sectionFile, pEnd, landingAirport);
-                }
+                createEndInbetweenPoints(sectionFile, p, landingAirport);
 
                 createEndWaypoints(sectionFile, landingAirport);
 

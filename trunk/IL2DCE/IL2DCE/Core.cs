@@ -1584,18 +1584,6 @@ namespace IL2DCE
                 if (isMissionTypeEscorted(missionType))
                 {
                     escortAirGroup = getAvailableRandomEscortAirGroup(airGroup);
-                    if (escortAirGroup != null)
-                    {
-                        availableAirGroups.Remove(escortAirGroup);
-
-                        List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
-                        int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
-                        IAircraftParametersInfo escortRandomAircraftParametersInfo = escortAircraftParametersInfos[escortAircraftParametersInfoIndex];
-                        IAircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
-                        escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
-
-                        escortAirGroup.Escort(sectionFile, airGroup);
-                    }
                 }
 
                 if (missionType == EMissionType.COVER)
@@ -1787,6 +1775,19 @@ namespace IL2DCE
 
                     airOperationTarget.TargetGroundGroup = groundGroup;
                     airOperationTarget.Altitude = altitude;
+                }
+
+                if (escortAirGroup != null)
+                {
+                    availableAirGroups.Remove(escortAirGroup);
+
+                    List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
+                    int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
+                    IAircraftParametersInfo escortRandomAircraftParametersInfo = escortAircraftParametersInfos[escortAircraftParametersInfoIndex];
+                    IAircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
+                    escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
+
+                    escortAirGroup.Escort(sectionFile, airGroup);
                 }
                                 
                 if (isMissionTypeOffensive(missionType))
