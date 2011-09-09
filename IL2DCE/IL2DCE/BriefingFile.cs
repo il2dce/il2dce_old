@@ -18,16 +18,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using maddox.game;
+
 namespace IL2DCE
 {
     public class BriefingFile : IBriefingFile
     {
-        public BriefingFile(IGame game)
+        public BriefingFile(IGamePlay gamePlay)
         {
-            _game = game;
+            this.gamePlay = gamePlay;
         }
 
-        private IGame _game;
+        private IGamePlay gamePlay;
 
         public string MissionName
         {
@@ -75,7 +77,7 @@ namespace IL2DCE
 
         public void save(string fileName)
         {
-            string systemFileName = _game.gameInterface.ToFileSystemPath(fileName);
+            string systemFileName = gamePlay.gameInterface.ToFileSystemPath(fileName);
 
             System.IO.TextWriter briefingFileWriter = new System.IO.StreamWriter(systemFileName, false);
 

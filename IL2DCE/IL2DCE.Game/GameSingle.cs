@@ -31,7 +31,9 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                _core = new Core(this);
+                string userFileSystemPath = game.ToFileSystemPath("$
+
+                core = new Core(this);
                 _battleSuccess = EBattleResult.NONE;
             }
 
@@ -44,10 +46,10 @@ namespace IL2DCE
             {
                 get
                 {
-                    return _core;
+                    return core;
                 }
             }
-            private ICore _core;
+            private ICore core;
 
             public EBattleResult BattleSuccess
             {
