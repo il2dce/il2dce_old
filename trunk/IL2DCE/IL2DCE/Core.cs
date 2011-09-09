@@ -27,6 +27,9 @@ namespace IL2DCE
 {
     public class Core : ICore
     {
+        private string userSystemPath;
+        private string homeSystemPath;
+
         private ISectionFile confFile;
         private string careersFolderSystemPath;
         private string campaignsFolderSystemPath;
@@ -680,7 +683,7 @@ namespace IL2DCE
             }
 
             // Preload mission file for path calculation.
-            GamePlay.gameInterface.MissionLoad(missionFile);
+            GamePlay.gpPostMissionLoad(missionFile);
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
@@ -793,7 +796,7 @@ namespace IL2DCE
             }
 
             // Stop the preloaded battle to prevent a postload.
-            GamePlay.gameInterface.BattleStop();
+            GamePlay.gpBattleStop();
         }
 
         private void findPath(GroundGroup groundGroup, Point2d start, Point2d end)
