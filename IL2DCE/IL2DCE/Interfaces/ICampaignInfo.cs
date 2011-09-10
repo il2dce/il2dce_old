@@ -27,7 +27,7 @@ namespace IL2DCE
             get;
         }
 
-        string ScriptFilePath
+        string ScriptFileName
         {
             get;
         }

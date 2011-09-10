@@ -44,6 +44,8 @@ namespace IL2DCE
 
         void ResetCampaign();
 
+        void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
+
         void AdvanceCampaign();
 
         bool SpawnParked

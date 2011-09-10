@@ -22,12 +22,10 @@ namespace IL2DCE
 {
     public class BriefingFile : IBriefingFile
     {
-        public BriefingFile(IGame game)
+        public BriefingFile()
         {
-            _game = game;
-        }
 
-        private IGame _game;
+        }
 
         public string MissionName
         {
@@ -73,10 +71,8 @@ namespace IL2DCE
         }
         private Dictionary<string, string> _description = new Dictionary<string, string>();
 
-        public void save(string fileName)
+        public void save(string systemFileName)
         {
-            string systemFileName = _game.gameInterface.ToFileSystemPath(fileName);
-
             System.IO.TextWriter briefingFileWriter = new System.IO.StreamWriter(systemFileName, false);
 
             briefingFileWriter.WriteLine("[Info]");
