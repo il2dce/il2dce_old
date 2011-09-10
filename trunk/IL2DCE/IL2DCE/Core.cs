@@ -29,6 +29,7 @@ namespace IL2DCE
     {
         private string careersFolderSystemPath;
         private string campaignsFolderSystemPath;
+        private string debugFolderSystemPath;
 
         private Random rand = new Random();
 
@@ -207,12 +208,15 @@ namespace IL2DCE
                     }
                 }
             }
+
+            this.debugFolderSystemPath = game.gameInterface.ToFileSystemPath("$user/missions/IL2DCE/Debug");
         }
 
-        public Core(IGamePlay gamePlay, ISectionFile confFile, string campaignsFolderSystemPath, string careersFolderSystemPath)
+        public Core(IGamePlay gamePlay, ISectionFile confFile, string campaignsFolderSystemPath, string careersFolderSystemPath, string debugFolderSystemPath)
         {
             this.campaignsFolderSystemPath = campaignsFolderSystemPath;
-            this.careersFolderSystemPath = careersFolderSystemPath;            
+            this.careersFolderSystemPath = careersFolderSystemPath;
+            this.debugFolderSystemPath = debugFolderSystemPath;
 
             _gamePlay = gamePlay;
 
@@ -551,9 +555,29 @@ namespace IL2DCE
             System.IO.File.Copy(scriptSourceFileSystemPath, scriptDestinationFileSystemPath, true);
 
             missionFile.save(missionFileName);
-
-
             briefingFile.save(briefingFileSystemPath);
+
+
+#if DEBUG
+            if (!System.IO.Directory.Exists(this.debugFolderSystemPath))
+            {
+                System.IO.Directory.CreateDirectory(this.debugFolderSystemPath);
+            }
+            missionFile.save(  "$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+            briefingFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.briefing");
+            System.IO.File.Copy(scriptSourceFileSystemPath, this.debugFolderSystemPath + "\\IL2DCEDebug.cs", true);
+#else
+            if (Debug == 1)
+            {
+                if (!System.IO.Directory.Exists(this.debugFolderSystemPath))
+                {
+                    System.IO.Directory.CreateDirectory(this.debugFolderSystemPath);
+                }
+                missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+                briefingFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.briefing");
+                System.IO.File.Copy(scriptSourceFileSystemPath, this.debugFolderSystemPath + "\\IL2DCEDebug.cs", true);
+            }
+#endif
 
             Career.MissionFileName = missionFileName;
             Career.writeTo(careerFile);

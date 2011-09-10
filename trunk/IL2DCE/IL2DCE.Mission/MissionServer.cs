@@ -89,8 +89,9 @@ namespace IL2DCE
                 string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
                 string campaignsFolderSystemPath = @"C:\Users\stefan.rothdach\Documents\1C SoftClub\il-2 sturmovik cliffs of dover\missions\IL2DCE\Campaigns";
                 string careersFolderSystemPath = @"C:\Users\stefan.rothdach\Documents\1C SoftClub\il-2 sturmovik cliffs of dover\mission\IL2DCE";
+                string debugFolderSystemPath = @"C:\Users\stefan.rothdach\Documents\1C SoftClub\il-2 sturmovik cliffs of dover\missions\IL2DCE\Debug";
 
-                this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath);
+                this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
 
                 core.Career = core.Careers[0];
                 core.InitCampaign();
