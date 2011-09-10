@@ -1,4 +1,4 @@
-[PARTS]
+﻿[PARTS]
   core.100
   bob.100
 [MAIN]
@@ -16,8 +16,10 @@
   GustPower 5
   GustAngle 45
 [splines]
+[AirGroups]
 [CustomChiefs]
+[Chiefs]
 [Stationary]
 [Buildings]
 [BuildingsLinks]
-[FrontMarker]
+[Trigger]

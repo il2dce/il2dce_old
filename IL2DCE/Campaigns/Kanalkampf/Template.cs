@@ -17,7 +17,7 @@
 //$reference parts/IL2DCE/IL2DCE.Mission.dll
 //$debug
 
-public class Mission : IL2DCE.Mission.Mission
+public class Mission : IL2DCE.Mission.MissionSingle
 {
 
 }
