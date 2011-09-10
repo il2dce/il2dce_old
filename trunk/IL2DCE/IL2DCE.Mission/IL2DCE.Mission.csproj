@@ -43,6 +43,7 @@
     </Compile>
     <Compile Include="Mission.cs" />
     <Compile Include="MissionServer.cs" />
+    <Compile Include="MissionSingle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

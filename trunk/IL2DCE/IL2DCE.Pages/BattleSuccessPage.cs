@@ -48,7 +48,7 @@ namespace IL2DCE
 
             void Fly_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.Core.AdvanceCampaign();
+                Game.Core.AdvanceCampaign(Game);
 
                 Game.gameInterface.PageChange(new BattleIntroPage(), null);
             }

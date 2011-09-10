@@ -122,6 +122,93 @@ namespace IL2DCE
             private Point3d? targetArea = null;
         }
 
+        public Core(IGame game)
+        {
+            _gamePlay = game;
+
+            ISectionFile confFile = game.gameInterface.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+
+            if (confFile.exist("Core", "forceSetOnPark"))
+            {
+                string value = confFile.get("Core", "forceSetOnPark");
+                if (value == "1")
+                {
+                    SpawnParked = true;
+                }
+                else
+                {
+                    SpawnParked = false;
+                }
+            }
+
+            if (confFile.exist("Core", "additionalAirOperations"))
+            {
+                string value = confFile.get("Core", "additionalAirOperations");
+                int.TryParse(value, out additionalAirOperations);
+            }
+
+            if (confFile.exist("Core", "additionalGroundOperations"))
+            {
+                string value = confFile.get("Core", "additionalGroundOperations");
+                int.TryParse(value, out additionalGroundOperations);
+            }
+
+            if (confFile.exist("Core", "debug"))
+            {
+                string value = confFile.get("Core", "debug");
+                int.TryParse(value, out _debug);
+            }
+            else
+            {
+                _debug = 0;
+            }
+
+            if (confFile.exist("Main", "campaignsFolder"))
+            {
+                string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
+                this.campaignsFolderSystemPath = game.gameInterface.ToFileSystemPath(campaignsFolderPath);
+
+                System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderSystemPath);
+                if (campaignsFolder.Exists && campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
+                {
+                    ISectionFile globalAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + "AircraftInfo.ini");
+                    foreach (System.IO.DirectoryInfo campaignFolder in campaignsFolder.GetDirectories())
+                    {
+                        if (campaignFolder.GetFiles("CampaignInfo.ini") != null && campaignFolder.GetFiles("CampaignInfo.ini").Length == 1)
+                        {
+                            ISectionFile campaignInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/CampaignInfo.ini");
+
+                            ISectionFile localAircraftInfoFile = null;
+                            System.IO.FileInfo localAircraftInfoFileInfo = new System.IO.FileInfo(game.gameInterface.ToFileSystemPath(campaignsFolderPath + "/" + campaignFolder.Name + "/AircraftInfo.ini"));
+                            if (localAircraftInfoFileInfo.Exists)
+                            {
+                                localAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + campaignFolder.Name + "/AircraftInfo.ini");
+                            }
+
+                            CampaignInfo campaignInfo = new CampaignInfo(campaignFolder.Name, campaignsFolderPath + "/" + campaignFolder.Name + "/", campaignInfoFile, globalAircraftInfoFile, localAircraftInfoFile);
+                            CampaignInfos.Add(campaignInfo);
+                        }
+                    }
+                }
+            }
+
+            this.careersFolderSystemPath = game.gameInterface.ToFileSystemPath("$user/mission/IL2DCE");
+            System.IO.DirectoryInfo careersFolder = new System.IO.DirectoryInfo(careersFolderSystemPath);
+            if (careersFolder.Exists && careersFolder.GetDirectories() != null && careersFolder.GetDirectories().Length > 0)
+            {
+                foreach (System.IO.DirectoryInfo careerFolder in careersFolder.GetDirectories())
+                {
+                    if (careerFolder.GetFiles("Career.ini") != null && careerFolder.GetFiles("Career.ini").Length == 1)
+                    {
+                        ISectionFile careerFile = game.gameInterface.SectionFileLoad("$user/mission/IL2DCE" + "/" + careerFolder.Name + "/Career.ini");
+
+                        Career career = new Career(careerFolder.Name, CampaignInfos, careerFile);
+                        Careers.Add(career);
+                    }
+                }
+            }
+        }
+
         public Core(IGamePlay gamePlay, ISectionFile confFile, string campaignsFolderSystemPath, string careersFolderSystemPath)
         {
             this.campaignsFolderSystemPath = campaignsFolderSystemPath;
@@ -409,15 +496,15 @@ namespace IL2DCE
         private List<GroundGroup> redGroundGroups = new List<GroundGroup>();
         private List<GroundGroup> blueGroundGroups = new List<GroundGroup>();
 
-        public void ResetCampaign()
+        public void ResetCampaign(IGame game)
         {
             // Reset campaign state
             Career.Date = null;
 
-            AdvanceCampaign();
+            AdvanceCampaign(game);
         }
 
-        public void AdvanceCampaign()
+        public void AdvanceCampaign(IGame game)
         {
             if (!Career.Date.HasValue)
             {
@@ -446,15 +533,21 @@ namespace IL2DCE
             IBriefingFile briefingFile = null;
             
             ISectionFile careerFile = GamePlay.gpCreateSectionFile();
-            
+
+            // Preload mission file for path calculation.
+            game.gameInterface.MissionLoad(Career.CampaignInfo.TemplateFilePath);
+
             Generate(Career.CampaignInfo.TemplateFilePath, missionId, out missionFile, out briefingFile);
+
+            // Stop the preloaded battle to prevent a postload.
+            game.gameInterface.BattleStop();
 
             string missionFileName = string.Format("$user/mission/IL2DCE/" + Career.PilotName + "/{0}.mis", missionId);
             string careerFileName = "$user/mission/IL2DCE/" + Career.PilotName + "/Career.ini";
 
             string briefingFileSystemPath = string.Format(this.careersFolderSystemPath + "\\" + Career.PilotName + "\\{0}.briefing", missionId);
             string scriptSourceFileSystemPath = this.campaignsFolderSystemPath + "\\" + Career.CampaignInfo.Id + "\\" + Career.CampaignInfo.ScriptFileName;
-            string scriptDestinationFileSystemPath = this.careersFolderSystemPath + "\\" + Career.PilotName + "\\" + Career.CampaignInfo.ScriptFileName;
+            string scriptDestinationFileSystemPath = this.careersFolderSystemPath + "\\" + Career.PilotName + "\\" + missionId + ".cs";
             System.IO.File.Copy(scriptSourceFileSystemPath, scriptDestinationFileSystemPath, true);
 
             missionFile.save(missionFileName);
@@ -609,10 +702,11 @@ namespace IL2DCE
 
             briefingFile.MissionName = missionId;
             briefingFile.MissionDescription = "Mission generated by IL2DCE.";
-            
+
+            // Delete everything from the template file.
             if(missionFile.exist("AirGroups"))
             {
-                // Delete all air groups from the template file.
+                
                 for (int i = 0; i < missionFile.lines("AirGroups"); i++)
                 {
                     string key;
@@ -649,9 +743,10 @@ namespace IL2DCE
                 }
             }
 
-            // Preload mission file for path calculation.
-            //GamePlay.gameInterface.MissionLoad(missionFile);
-            //GamePlay.gpPostMissionLoad(missionFile);
+            // Add things to the template file.
+
+            int randomTime = rand.Next(5, 21);
+            missionFile.set("MAIN", "TIME", randomTime.ToString());
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
@@ -762,9 +857,6 @@ namespace IL2DCE
                     }
                 }
             }
-
-            // Stop the preloaded battle to prevent a postload.
-            //GamePlay.gpBattleStop();
         }
 
         private void findPath(GroundGroup groundGroup, Point2d start, Point2d end)
