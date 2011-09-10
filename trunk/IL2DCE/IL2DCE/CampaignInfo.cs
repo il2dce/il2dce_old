@@ -47,7 +47,7 @@ namespace IL2DCE
 
             if (campaignFile.exist("Main", "scriptFile"))
             {
-                _scriptFilePath = campaignFolderPath + campaignFile.get("Main", "scriptFile");
+                _scriptFileName = campaignFile.get("Main", "scriptFile");
             }
 
             if (campaignFile.exist("Main", "startDate"))
@@ -95,14 +95,14 @@ namespace IL2DCE
         }
         private string templateFilePath;
 
-        public string ScriptFilePath
+        public string ScriptFileName
         {
             get
             {
-                return _scriptFilePath;
+                return _scriptFileName;
             }
         }
-        private string _scriptFilePath;
+        private string _scriptFileName;
 
         public DateTime StartDate
         {

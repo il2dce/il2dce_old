@@ -33,7 +33,12 @@ namespace IL2DCE
             public GameServer(GameServerIterface game, bool dedicated)
                 : base(game, dedicated)
             {
-                _core = new Core(this);
+                ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+                string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
+                string campaignsFolderSystemPath = game.ToFileSystemPath(campaignsFolderPath);
+                string careersFolderSystemPath = game.ToFileSystemPath("$user/mission/IL2DCE");
+
+                _core = new Core(this, confFile, campaignsFolderSystemPath, careersFolderSystemPath);
             }
 
             public override maddox.game.play.PageInterface getStartPage()

@@ -31,7 +31,12 @@ namespace IL2DCE
             public GameSingle(GameSingleIterface game)
                 : base(game)
             {
-                _core = new Core(this);
+                ISectionFile confFile = game.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
+                string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
+                string campaignsFolderSystemPath = game.ToFileSystemPath(campaignsFolderPath);
+                string careersFolderSystemPath = game.ToFileSystemPath("$user/mission/IL2DCE");
+
+                _core = new Core(this, confFile, campaignsFolderSystemPath, careersFolderSystemPath);
                 _battleSuccess = EBattleResult.NONE;
             }
 
