@@ -130,7 +130,7 @@ namespace IL2DCE
 
             private void Start_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.Core.ResetCampaign();
+                Game.Core.ResetCampaign(Game);
 
                 Game.gameInterface.PageChange(new BattleIntroPage(), null);
             }            

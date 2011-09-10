@@ -26,11 +26,38 @@ namespace IL2DCE
 {
     namespace Mission
     {
-        abstract public class Mission : AMission
+        public class MissionSingle : Mission
         {
-            protected abstract ICore Core
+            protected override ICore Core
             {
-                get;
+                get
+                {
+                    return Game.Core;
+                }
+            }
+
+
+            IGameSingle Game
+            {
+                get
+                {
+                    return GamePlay as IGameSingle;
+                }
+            }
+
+            public override void OnSingleBattleSuccess(bool success)
+            {
+                if (Game != null)
+                {
+                    if (success == true)
+                    {
+                        Game.BattleSuccess = EBattleResult.ALIVE;
+                    }
+                    else
+                    {
+                        Game.BattleSuccess = EBattleResult.DEAD;
+                    }
+                }
             }
         }
     }

@@ -26,9 +26,18 @@ namespace IL2DCE
 {
     namespace Mission
     {
-        public class MissionServer : AMission
+        public class MissionServer : Mission
         {
             private ICore core;
+
+            protected override ICore Core
+            {
+                get
+                {
+                    return this.core;
+                }
+            }
+
 
             private void setMainMenu(Player player)
             {
