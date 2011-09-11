@@ -564,7 +564,7 @@ namespace IL2DCE
                 System.IO.Directory.CreateDirectory(this.debugFolderSystemPath);
             }
             missionFile.save(  "$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-            briefingFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.briefing");
+            briefingFile.save(this.debugFolderSystemPath + "\\IL2DCEDebug.briefing");
             System.IO.File.Copy(scriptSourceFileSystemPath, this.debugFolderSystemPath + "\\IL2DCEDebug.cs", true);
 #else
             if (Debug == 1)
@@ -573,8 +573,8 @@ namespace IL2DCE
                 {
                     System.IO.Directory.CreateDirectory(this.debugFolderSystemPath);
                 }
-                missionFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
-                briefingFile.save("$user/missions/IL2DCE/Debug/IL2DCEDebug.briefing");
+                missionFile.save(  "$user/missions/IL2DCE/Debug/IL2DCEDebug.mis");
+                briefingFile.save(this.debugFolderSystemPath + "\\IL2DCEDebug.briefing");
                 System.IO.File.Copy(scriptSourceFileSystemPath, this.debugFolderSystemPath + "\\IL2DCEDebug.cs", true);
             }
 #endif
@@ -771,6 +771,12 @@ namespace IL2DCE
 
             int randomTime = rand.Next(5, 21);
             missionFile.set("MAIN", "TIME", randomTime.ToString());
+
+            int randomWeatherIndex = rand.Next(0, 3);
+            missionFile.set("MAIN", "WeatherIndex", randomWeatherIndex.ToString());
+
+            int randomCloudsHeight = rand.Next(5, 15);
+            missionFile.set("MAIN", "CloudsHeight", (randomCloudsHeight * 100).ToString());
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
@@ -1281,6 +1287,34 @@ namespace IL2DCE
                 return (double)rand.Next(300, 7000);
             }
         }
+
+        private void getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
+        {
+            List<int> keys = new List<int>();
+            foreach (int key in airGroup.Flights.Keys)
+            {
+                keys.Add(key);
+            }
+
+            if (missionType == EMissionType.RECON || missionType == EMissionType.MARITIME_RECON)
+            {
+                while(airGroup.Flights[keys[0]].Count > 1)
+                {
+                    airGroup.Flights[keys[0]].RemoveAt(airGroup.Flights[keys[0]].Count - 1);
+                }
+                for (int i = 1; i < keys.Count; i++)
+                {
+                    airGroup.Flights.Remove(keys[i]);
+                }
+            }
+            else if (missionType == EMissionType.ARMED_RECON || missionType == EMissionType.ARMED_MARITIME_RECON)
+            {
+                for (int i = 1; i < keys.Count; i++)
+                {
+                    airGroup.Flights.Remove(keys[i]);
+                }
+            }
+        }
                 
         private List<AirGroup> getAvailableOffensiveAirGroups(int armyIndex)
         {
@@ -1680,7 +1714,9 @@ namespace IL2DCE
                 IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
                 IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
                 airGroup.Weapons = aircraftLoadoutInfo.Weapons;
-                
+
+                getRandomFlightSize(airGroup, missionType);
+
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
                 {
