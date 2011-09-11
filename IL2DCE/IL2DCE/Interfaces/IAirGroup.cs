@@ -48,5 +48,10 @@ namespace IL2DCE
         {
             get;
         }
+
+        IAirGroupInfo AirGroupInfo
+        {
+            get;
+        }
     }
 }
