@@ -1699,7 +1699,7 @@ namespace IL2DCE
             }
         }
 
-        private AirOperationTarget createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType)
+        private AirOperationTarget createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept)
         {
             AirOperationTarget airOperationTarget = new AirOperationTarget();           
 
@@ -1741,7 +1741,7 @@ namespace IL2DCE
                         {
                             int offensiveMissionTypeIndex = rand.Next(availableOffensiveMissionTypes.Count);
                             EMissionType randomOffensiveMissionType = availableOffensiveMissionTypes[offensiveMissionTypeIndex];
-                            AirOperationTarget offensiveAirOperationTarget = createAirOperation(sectionFile, briefingFile, offensiveAirGroup, randomOffensiveMissionType);
+                            AirOperationTarget offensiveAirOperationTarget = createAirOperation(sectionFile, briefingFile, offensiveAirGroup, randomOffensiveMissionType, false);
 
                             if (offensiveAirOperationTarget.TargetGroundGroup != null)
                             {
@@ -1855,7 +1855,7 @@ namespace IL2DCE
                         {
                             int escortedMissionTypeIndex = rand.Next(availableEscortedMissionTypes.Count);
                             EMissionType randomEscortedMissionType = availableEscortedMissionTypes[escortedMissionTypeIndex];
-                            AirOperationTarget targetAirOperation = createAirOperation(sectionFile, briefingFile, escortedAirGroup, randomEscortedMissionType);
+                            AirOperationTarget targetAirOperation = createAirOperation(sectionFile, briefingFile, escortedAirGroup, randomEscortedMissionType, true);
 
                             airGroup.Escort(sectionFile, escortedAirGroup);
 
@@ -1882,7 +1882,7 @@ namespace IL2DCE
                         {
                             int offensiveMissionTypeIndex = rand.Next(availableOffensiveMissionTypes.Count);
                             EMissionType randomOffensiveMissionType = availableOffensiveMissionTypes[offensiveMissionTypeIndex];
-                            AirOperationTarget offensiveAirOperationTarget = createAirOperation(sectionFile, briefingFile, interceptedAirGroup, randomOffensiveMissionType);
+                            AirOperationTarget offensiveAirOperationTarget = createAirOperation(sectionFile, briefingFile, interceptedAirGroup, randomOffensiveMissionType, false);
 
                             airGroup.Intercept(sectionFile, interceptedAirGroup);
                             
@@ -1929,18 +1929,21 @@ namespace IL2DCE
                                 
                 if (isMissionTypeOffensive(missionType))
                 {
-                    AirGroup interceptAirGroup = getAvailableRandomInterceptAirGroup(airGroup);
-                    if (interceptAirGroup != null)
+                    if (allowIntercept)
                     {
-                        availableAirGroups.Remove(interceptAirGroup);
+                        AirGroup interceptAirGroup = getAvailableRandomInterceptAirGroup(airGroup);
+                        if (interceptAirGroup != null)
+                        {
+                            availableAirGroups.Remove(interceptAirGroup);
 
-                        List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
-                        int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
-                        IAircraftParametersInfo interceptRandomAircraftParametersInfo = interceptAircraftParametersInfos[interceptAircraftParametersInfoIndex];
-                        IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
-                        interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
+                            List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
+                            int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
+                            IAircraftParametersInfo interceptRandomAircraftParametersInfo = interceptAircraftParametersInfos[interceptAircraftParametersInfoIndex];
+                            IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
+                            interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
 
-                        interceptAirGroup.Intercept(sectionFile, airGroup);                        
+                            interceptAirGroup.Intercept(sectionFile, airGroup);
+                        }
                     }
                 }
 
@@ -1973,7 +1976,7 @@ namespace IL2DCE
                     int randomMissionTypeIndex = rand.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
-                    createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType);
+                    createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType, true);
                 }
             }
         }
