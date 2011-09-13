@@ -34,6 +34,9 @@ namespace IL2DCE
                 FrameworkElement.Fly.Click += new System.Windows.RoutedEventHandler(Fly_Click);
                 FrameworkElement.ReFly.Click += new System.Windows.RoutedEventHandler(ReFly_Click);
                 FrameworkElement.Back.Click += new System.Windows.RoutedEventHandler(Back_Click);
+
+                FrameworkElement.Fly.IsEnabled = false;
+                FrameworkElement.Fly.Visibility = System.Windows.Visibility.Hidden;
             }
 
             void ReFly_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -58,6 +61,11 @@ namespace IL2DCE
                 base._enter(play, arg);
 
                 _game = play as IGame;
+
+                if (Game is IGameSingle)
+                {
+                    FrameworkElement.textBoxDescription.Text = (Game as IGameSingle).BattleSuccess.ToString();
+                }
             }
 
             public override void _leave(maddox.game.IGame play, object arg)
