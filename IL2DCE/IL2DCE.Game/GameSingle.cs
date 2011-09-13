@@ -32,7 +32,7 @@ namespace IL2DCE
                 : base(game)
             {
                 _core = new Core(this);
-                _battleSuccess = EBattleResult.NONE;
+                _battleSuccess = EBattleResult.DRAW;
             }
 
             public override maddox.game.play.PageInterface getStartPage()

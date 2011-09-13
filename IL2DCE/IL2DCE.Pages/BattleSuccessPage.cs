@@ -58,6 +58,33 @@ namespace IL2DCE
                 base._enter(play, arg);
 
                 _game = play as IGame;
+
+                if (Game is IGameSingle)
+                {
+                    FrameworkElement.textBoxDescription.Text = (Game as IGameSingle).BattleSuccess.ToString();
+                    FrameworkElement.textBoxDescription.Text += "\n";
+
+                    if ((Game as IGameSingle).BattleSuccess == EBattleResult.DRAW)
+                    {
+                        FrameworkElement.textBoxDescription.Text += "Exp: " + (Game.Core.Career.Experience + 100) + "/" + ((Game.Core.Career.RankIndex + 1) * 1000);
+                        FrameworkElement.textBoxDescription.Text += "\n";
+
+                        if (Game.Core.Career.Experience + 100 >= (Game.Core.Career.RankIndex + 1) * 1000)
+                        {
+                            FrameworkElement.textBoxDescription.Text += "Promition!";
+                        }
+                    }
+                    else
+                    {
+                        FrameworkElement.textBoxDescription.Text += "Exp: " + (Game.Core.Career.Experience + 200) + "/" + ((Game.Core.Career.RankIndex + 1) * 1000);
+                        FrameworkElement.textBoxDescription.Text += "\n";
+
+                        if (Game.Core.Career.Experience + 200 >= (Game.Core.Career.RankIndex + 1) * 1000)
+                        {
+                            FrameworkElement.textBoxDescription.Text += "Promition!";
+                        }
+                    }
+                }
             }
 
             public override void _leave(maddox.game.IGame play, object arg)

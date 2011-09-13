@@ -46,7 +46,7 @@ namespace IL2DCE
 
                     if (gameSingle.BattleSuccess == EBattleResult.NONE)
                     {
-                        gameSingle.BattleSuccess = EBattleResult.ALIVE;
+                        gameSingle.BattleSuccess = EBattleResult.DRAW;
 
                         string missionFileName = Game.Core.Career.MissionFileName;
                         if (missionFileName != null)
@@ -56,11 +56,15 @@ namespace IL2DCE
                     }
                     else
                     {
-                        if (gameSingle.BattleSuccess == EBattleResult.ALIVE)
+                        if (gameSingle.BattleSuccess == EBattleResult.SUCCESS)
                         {
                             Game.gameInterface.PageChange(new BattleSuccessPage(), null);
                         }
-                        else if (gameSingle.BattleSuccess == EBattleResult.DEAD)
+                        else if (gameSingle.BattleSuccess == EBattleResult.DRAW)
+                        {
+                            Game.gameInterface.PageChange(new BattleSuccessPage(), null);
+                        }
+                        else if (gameSingle.BattleSuccess == EBattleResult.FAIL)
                         {
                             Game.gameInterface.PageChange(new BattleFailurePage(), null);
                         }

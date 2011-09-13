@@ -518,7 +518,18 @@ namespace IL2DCE
             else
             {
                 Career.Date = Career.Date.Value.Add(new TimeSpan(1, 0, 0, 0));
-                Career.Experience += 100;
+
+                if (game is IGameSingle)
+                {
+                    if ((game as IGameSingle).BattleSuccess == EBattleResult.SUCCESS)
+                    {
+                        Career.Experience += 200;
+                    }
+                    else if ((game as IGameSingle).BattleSuccess == EBattleResult.DRAW)
+                    {
+                        Career.Experience += 100;
+                    }
+                }
 
                 if (Career.Experience >= (Career.RankIndex + 1) * 1000)
                 {

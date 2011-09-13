@@ -22,8 +22,9 @@ namespace IL2DCE
 {
     public enum EBattleResult
     {
-        ALIVE,
-        DEAD,
+        SUCCESS,
+        FAIL,
+        DRAW,
         NONE,
     };
 
