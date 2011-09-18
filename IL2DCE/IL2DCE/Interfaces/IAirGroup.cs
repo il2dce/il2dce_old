@@ -53,5 +53,40 @@ namespace IL2DCE
         {
             get;
         }
+        
+        EMissionType? MissionType
+        {
+            get;
+        }
+
+        double? Altitude
+        {
+            get;
+        }
+
+        IAirGroup EscortAirGroup
+        {
+            get;
+        }
+
+        Stationary TargetStationary
+        {
+            get;
+        }
+
+        GroundGroup TargetGroundGroup
+        {
+            get;
+        }
+
+        IAirGroup TargetAirGroup
+        {
+            get;
+        }
+
+        maddox.GP.Point2d? TargetArea
+        {
+            get;
+        }
     }
 }

@@ -22,6 +22,28 @@ namespace IL2DCE
 {
     public class BriefingFile : IBriefingFile
     {
+        public class Text : IText
+        {
+            public IDictionary<string, string> Sections
+            {
+                get
+                {
+                    return this.sections;
+                }
+            }
+            IDictionary<string, string> sections = new Dictionary<string, string>();
+
+            public override string ToString()
+            {
+                string result = "";
+                foreach (string key in Sections.Keys)
+                {
+                    result += Sections[key] + "\n\n";
+                }
+                return result;
+            }
+        }
+
         public BriefingFile()
         {
 
@@ -62,14 +84,14 @@ namespace IL2DCE
         }
         private Dictionary<string, string> _name = new Dictionary<string, string>();
 
-        public IDictionary<string, string> Description
+        public IDictionary<string, IText> Description
         {
             get
             {
                 return _description;
             }
         }
-        private Dictionary<string, string> _description = new Dictionary<string, string>();
+        private Dictionary<string, IText> _description = new Dictionary<string, IText>();
 
         public void save(string systemFileName)
         {

@@ -20,6 +20,14 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
+    public interface IText
+    {
+        IDictionary<string, string> Sections
+        {
+            get;
+        }        
+    }
+
     public interface IBriefingFile
     {
         string MissionName
@@ -39,7 +47,7 @@ namespace IL2DCE
             get;
         }
 
-        IDictionary<string, string> Description
+        IDictionary<string, IText> Description
         {
             get;
         }
