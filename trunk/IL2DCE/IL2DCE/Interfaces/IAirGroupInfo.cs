@@ -22,6 +22,11 @@ namespace IL2DCE
 {
     public interface IAirGroupInfo
     {
+        int FlightCount
+        {
+            get;
+        }
+
         int FlightSize
         {
             get;

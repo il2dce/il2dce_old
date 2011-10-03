@@ -267,67 +267,6 @@ namespace IL2DCE
 
         #region Private methods
 
-        private void writeTo(ISectionFile sectionFile)
-        {
-            if (Waypoints.Count > 0)
-            {
-                sectionFile.add("AirGroups", Id, "");
-
-                foreach (int flightIndex in Flights.Keys)
-                {
-                    if (Flights[flightIndex].Count > 0)
-                    {
-                        string acNumberLine = "";
-                        foreach (string acNumber in Flights[flightIndex])
-                        {
-                            acNumberLine += acNumber + " ";
-                        }
-                        sectionFile.add(Id, "Flight" + flightIndex, acNumberLine.TrimEnd());
-                    }
-                }
-
-                sectionFile.add(Id, "Class", Class);
-                sectionFile.add(Id, "Formation", Formation);
-                sectionFile.add(Id, "CallSign", CallSign.ToString());
-                sectionFile.add(Id, "Fuel", Fuel.ToString());
-
-                if (Weapons != null && Weapons.Length > 0)
-                {
-                    string weaponsLine = "";
-                    foreach (int weapon in Weapons)
-                    {
-                        weaponsLine += weapon.ToString() + " ";
-                    }
-                    sectionFile.add(Id, "Weapons", weaponsLine.TrimEnd());
-                }
-
-                if (Core._spawnParked == true)
-                {
-                    sectionFile.add(Id, "SetOnPark", "1");
-                }
-                else
-                {
-                    sectionFile.add(Id, "SetOnPark", "0");
-                }
-
-                sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
-
-                foreach (AirGroupWaypoint waypoint in Waypoints)
-                {
-                    if (waypoint.Target == null)
-                    {
-                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                    }
-                    else
-                    {
-                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
-                    }
-                }
-
-                sectionFile.add(Id, "Briefing", this.Id);
-            }
-        }
-
         private double distanceBetween(AirGroupWaypoint start, AirGroupWaypoint end)
         {
             double distanceStart = distanceTo(start);
@@ -442,12 +381,73 @@ namespace IL2DCE
 
         #region Public methods
 
+        public void writeTo(ISectionFile sectionFile)
+        {
+            if (Waypoints.Count > 0)
+            {
+                sectionFile.add("AirGroups", Id, "");
+
+                foreach (int flightIndex in Flights.Keys)
+                {
+                    if (Flights[flightIndex].Count > 0)
+                    {
+                        string acNumberLine = "";
+                        foreach (string acNumber in Flights[flightIndex])
+                        {
+                            acNumberLine += acNumber + " ";
+                        }
+                        sectionFile.add(Id, "Flight" + flightIndex, acNumberLine.TrimEnd());
+                    }
+                }
+
+                sectionFile.add(Id, "Class", Class);
+                sectionFile.add(Id, "Formation", Formation);
+                sectionFile.add(Id, "CallSign", CallSign.ToString());
+                sectionFile.add(Id, "Fuel", Fuel.ToString());
+
+                if (Weapons != null && Weapons.Length > 0)
+                {
+                    string weaponsLine = "";
+                    foreach (int weapon in Weapons)
+                    {
+                        weaponsLine += weapon.ToString() + " ";
+                    }
+                    sectionFile.add(Id, "Weapons", weaponsLine.TrimEnd());
+                }
+
+                if (Core._spawnParked == true)
+                {
+                    sectionFile.add(Id, "SetOnPark", "1");
+                }
+                else
+                {
+                    sectionFile.add(Id, "SetOnPark", "0");
+                }
+
+                sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
+
+                foreach (AirGroupWaypoint waypoint in Waypoints)
+                {
+                    if (waypoint.Target == null)
+                    {
+                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    }
+                    else
+                    {
+                        sectionFile.add(Id + "_Way", waypoint.Type.ToString(), waypoint.X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.V.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + waypoint.Target);
+                    }
+                }
+
+                sectionFile.add(Id, "Briefing", this.Id);
+            }
+        }
+
         public override string ToString()
         {
             return AirGroupKey + "." + SquadronIndex;
         }
 
-        public void Transfer(ISectionFile sectionFile, EMissionType missionType, double altitude, AiAirport landingAirport = null)
+        public void Transfer(EMissionType missionType, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -459,11 +459,9 @@ namespace IL2DCE
             createEndInbetweenPoints(target, landingAirport);
 
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void Cover(ISectionFile sectionFile, EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AiAirport landingAirport = null)
+        public void Cover(EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -492,12 +490,10 @@ namespace IL2DCE
                 createEndInbetweenPoints(p, landingAirport);
 
                 createEndWaypoints(landingAirport);
-
-                writeTo(sectionFile);
             }
         }
 
-        public void Cover(ISectionFile sectionFile, EMissionType missionType, Stationary targetStationary, double altitude, AiAirport landingAirport = null)
+        public void Cover(EMissionType missionType, Stationary targetStationary, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -523,11 +519,9 @@ namespace IL2DCE
             createEndInbetweenPoints(p, landingAirport);
 
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void Cover(ISectionFile sectionFile, EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
+        public void Cover(EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -553,11 +547,9 @@ namespace IL2DCE
             createEndInbetweenPoints(p, landingAirport);
 
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void Hunting(ISectionFile sectionFile, EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
+        public void Hunting(EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -573,11 +565,9 @@ namespace IL2DCE
 
             createEndInbetweenPoints(p, landingAirport);
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void GroundAttack(ISectionFile sectionFile, EMissionType missionType, Point2d targetArea, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void GroundAttack(EMissionType missionType, Point2d targetArea, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -611,11 +601,9 @@ namespace IL2DCE
 
             createEndInbetweenPoints(p, landingAirport);
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void GroundAttack(ISectionFile sectionFile, EMissionType missionType, Stationary targetStationary, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void GroundAttack(EMissionType missionType, Stationary targetStationary, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -649,11 +637,9 @@ namespace IL2DCE
             createEndInbetweenPoints(pEnd, landingAirport);
             
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void GroundAttack(ISectionFile sectionFile, EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void GroundAttack(EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -709,12 +695,10 @@ namespace IL2DCE
                 }
 
                 createEndWaypoints(landingAirport);
-
-                writeTo(sectionFile);
             }
         }
 
-        public void Recon(ISectionFile sectionFile, EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
+        public void Recon(EMissionType missionType, Point2d targetArea, double altitude, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -730,11 +714,9 @@ namespace IL2DCE
 
             createEndInbetweenPoints(p, landingAirport);
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void Recon(ISectionFile sectionFile, EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void Recon(EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -792,12 +774,10 @@ namespace IL2DCE
                 }
 
                 createEndWaypoints(landingAirport);
-
-                writeTo(sectionFile);
             }
         }
 
-        public void Escort(ISectionFile sectionFile, EMissionType missionType, AirGroup targetAirGroup, AiAirport landingAirport = null)
+        public void Escort(EMissionType missionType, AirGroup targetAirGroup, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -815,11 +795,9 @@ namespace IL2DCE
             }
 
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
 
-        public void Intercept(ISectionFile sectionFile, EMissionType missionType, AirGroup targetAirUnit, AiAirport landingAirport = null)
+        public void Intercept(EMissionType missionType, AirGroup targetAirUnit, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -892,8 +870,6 @@ namespace IL2DCE
             }
 
             createEndWaypoints(landingAirport);
-
-            writeTo(sectionFile);
         }
         
         #endregion        

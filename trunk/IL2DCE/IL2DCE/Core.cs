@@ -1229,28 +1229,46 @@ namespace IL2DCE
 
         private void getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
         {
-            List<int> keys = new List<int>();
-            foreach (int key in airGroup.Flights.Keys)
-            {
-                keys.Add(key);
-            }
+            airGroup.Flights.Clear();
+            int aircraftNumber = 1;
 
             if (missionType == EMissionType.RECON || missionType == EMissionType.MARITIME_RECON)
             {
-                while(airGroup.Flights[keys[0]].Count > 1)
+                for (int i = 0; i < 1; i++)
                 {
-                    airGroup.Flights[keys[0]].RemoveAt(airGroup.Flights[keys[0]].Count - 1);
-                }
-                for (int i = 1; i < keys.Count; i++)
-                {
-                    airGroup.Flights.Remove(keys[i]);
+                    List<string> aircraftNumbers = new List<string>();
+                    for (int j = 0; j < 1; j++)
+                    {
+                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumber++;
+                    }
+                    airGroup.Flights[i] = aircraftNumbers;
                 }
             }
             else if (missionType == EMissionType.ARMED_RECON || missionType == EMissionType.ARMED_MARITIME_RECON)
             {
-                for (int i = 1; i < keys.Count; i++)
+                for (int i = 0; i < 1; i++)
                 {
-                    airGroup.Flights.Remove(keys[i]);
+                    List<string> aircraftNumbers = new List<string>();
+                    for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                    {
+                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumber++;
+                    }
+                    airGroup.Flights[i] = aircraftNumbers;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < airGroup.AirGroupInfo.FlightCount; i++)
+                {
+                    List<string> aircraftNumbers = new List<string>();
+                    for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                    {
+                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumber++;
+                    }
+                    airGroup.Flights[i] = aircraftNumbers;
                 }
             }
         }
@@ -1650,11 +1668,11 @@ namespace IL2DCE
                 {
                     if (waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY)
                     {
-                        waypointSection += i + ". (" + waypoint.X + "|" + waypoint.Y + ")\n";
+                        waypointSection += i + ". " + GamePlay.gpSectorName(waypoint.X, waypoint.Y) + "\n";
                     }
                     else
                     {
-                        waypointSection += i + ". (" + waypoint.X + "|" + waypoint.Y + ") " + waypoint.Type.ToString() + "\n";
+                        waypointSection += i + ". " + GamePlay.gpSectorName(waypoint.X, waypoint.Y) + " " + waypoint.Type.ToString() + "\n";
                     }
                     i++;
                 }
@@ -1712,15 +1730,15 @@ namespace IL2DCE
 
                             if (offensiveAirGroup.Altitude != null && offensiveAirGroup.Altitude.HasValue && offensiveAirGroup.TargetGroundGroup != null)
                             {
-                                airGroup.Cover(sectionFile, missionType, offensiveAirGroup.TargetGroundGroup, offensiveAirGroup.Altitude.Value);                                
+                                airGroup.Cover(missionType, offensiveAirGroup.TargetGroundGroup, offensiveAirGroup.Altitude.Value);                                
                             }
                             else if (offensiveAirGroup.Altitude != null && offensiveAirGroup.Altitude.HasValue && offensiveAirGroup.TargetStationary != null)
                             {
-                                airGroup.Cover(sectionFile, missionType, offensiveAirGroup.TargetStationary, offensiveAirGroup.Altitude.Value);
+                                airGroup.Cover(missionType, offensiveAirGroup.TargetStationary, offensiveAirGroup.Altitude.Value);
                             }
                             else if (offensiveAirGroup.Altitude != null && offensiveAirGroup.Altitude.HasValue && offensiveAirGroup.TargetArea != null && offensiveAirGroup.TargetArea.HasValue)
                             {
-                                airGroup.Cover(sectionFile, missionType, offensiveAirGroup.TargetArea.Value, offensiveAirGroup.Altitude.Value);
+                                airGroup.Cover(missionType, offensiveAirGroup.TargetArea.Value, offensiveAirGroup.Altitude.Value);
                             }
                         }
                     }
@@ -1731,7 +1749,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.GroundAttack(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.GroundAttack(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ARMED_RECON)
                 {
@@ -1739,7 +1757,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.GroundAttack(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.GroundAttack(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_ARMOR)
                 {
@@ -1747,7 +1765,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.GroundAttack(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.GroundAttack(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_RADAR)
                 {
@@ -1758,7 +1776,7 @@ namespace IL2DCE
                         Stationary radar = radars[radarIndex];
                         double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                        airGroup.GroundAttack(sectionFile, missionType, radar, altitude, escortAirGroup);
+                        airGroup.GroundAttack(missionType, radar, altitude, escortAirGroup);
                     }
                 }
                 else if (missionType == EMissionType.ATTACK_SHIP)
@@ -1767,7 +1785,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.GroundAttack(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.GroundAttack(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_VEHICLE)
                 {
@@ -1775,7 +1793,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.GroundAttack(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.GroundAttack(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ESCORT)
                 {
@@ -1797,7 +1815,7 @@ namespace IL2DCE
                             EMissionType randomEscortedMissionType = availableEscortedMissionTypes[escortedMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, escortedAirGroup, randomEscortedMissionType, true);
 
-                            airGroup.Escort(sectionFile, missionType, escortedAirGroup);
+                            airGroup.Escort(missionType, escortedAirGroup);
                         }
                     }
                 }
@@ -1821,7 +1839,7 @@ namespace IL2DCE
                             EMissionType randomOffensiveMissionType = availableOffensiveMissionTypes[offensiveMissionTypeIndex];
                             createAirOperation(sectionFile, briefingFile, interceptedAirGroup, randomOffensiveMissionType, false);
 
-                            airGroup.Intercept(sectionFile, missionType, interceptedAirGroup);
+                            airGroup.Intercept(missionType, interceptedAirGroup);
                         }
                     }
                 }
@@ -1831,7 +1849,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.Recon(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.Recon(missionType, groundGroup, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.RECON)
                 {
@@ -1839,7 +1857,7 @@ namespace IL2DCE
                     createRandomGroundOperation(sectionFile, groundGroup);
                     double altitude = getRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.Recon(sectionFile, missionType, groundGroup, altitude, escortAirGroup);
+                    airGroup.Recon(missionType, groundGroup, altitude, escortAirGroup);
                 }
 
                 if (escortAirGroup != null)
@@ -1852,9 +1870,11 @@ namespace IL2DCE
                     IAircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
                     escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
 
-                    escortAirGroup.Escort(sectionFile, missionType, airGroup);
+                    escortAirGroup.Escort(missionType, airGroup);
+                    getRandomFlightSize(escortAirGroup, EMissionType.ESCORT);
 
                     createBriefing(briefingFile, escortAirGroup, null);
+                    escortAirGroup.writeTo(sectionFile);
                 }
                                 
                 if (isMissionTypeOffensive(missionType))
@@ -1872,14 +1892,17 @@ namespace IL2DCE
                             IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
                             interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
 
-                            interceptAirGroup.Intercept(sectionFile, missionType, airGroup);
+                            interceptAirGroup.Intercept(missionType, airGroup);
+                            getRandomFlightSize(interceptAirGroup, EMissionType.INTERCEPT);
 
                             createBriefing(briefingFile, interceptAirGroup, null);
+                            interceptAirGroup.writeTo(sectionFile);
                         }
                     }
                 }
 
                 createBriefing(briefingFile, airGroup, escortAirGroup);
+                airGroup.writeTo(sectionFile);
             }
             else
             {
