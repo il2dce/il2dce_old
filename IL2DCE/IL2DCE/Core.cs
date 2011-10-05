@@ -790,24 +790,24 @@ namespace IL2DCE
                     
                     string playerAirGroupKey = airGroup.AirGroupKey;
                     int playerSquadronIndex = airGroup.SquadronIndex;
-                    string playerPosition = aircraftOrder[0];
-                    
-                    //string playerPosition = aircraftOrder[aircraftOrder.Count-1];
+                    if (aircraftOrder.Count > 0)
+                    {
+                        string playerPosition = aircraftOrder[aircraftOrder.Count-1];
 
-                    //double factor = aircraftOrder.Count / 6;
-                    //int playerPositionIndex = (int)(Math.Floor(Career.RankIndex * factor));
+                        double factor = aircraftOrder.Count / 6;
+                        int playerPositionIndex = (int)(Math.Floor(Career.RankIndex * factor));
                                         
-                    //playerPosition = aircraftOrder[aircraftOrder.Count - 1 - playerPositionIndex];
-
-                    if (missionFile.exist("MAIN", "player"))
-                    {
-                        missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                        playerPosition = aircraftOrder[aircraftOrder.Count - 1 - playerPositionIndex];
+                        
+                        if (missionFile.exist("MAIN", "player"))
+                        {
+                            missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                        }
+                        else
+                        {
+                            missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                        }
                     }
-                    else
-                    {
-                        missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
-                    }
-
                     break;
                 }
             }
@@ -1265,7 +1265,13 @@ namespace IL2DCE
             {
                 if (airGroup.TargetAirGroup != null)
                 {
-                    for (int i = 0; i < airGroup.TargetAirGroup.Flights.Count; i++)
+                    int flightCount = airGroup.AirGroupInfo.FlightCount;
+                    if(airGroup.TargetAirGroup.Flights.Count < flightCount)
+                    {
+                        flightCount = airGroup.TargetAirGroup.Flights.Count;
+                    }
+
+                    for (int i = 0; i < flightCount; i++)
                     {
                         List<string> aircraftNumbers = new List<string>();
                         for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
@@ -1719,8 +1725,6 @@ namespace IL2DCE
                 IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
                 airGroup.Weapons = aircraftLoadoutInfo.Weapons;
 
-                getRandomFlightSize(airGroup, missionType);
-
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
                 {
@@ -1878,7 +1882,8 @@ namespace IL2DCE
 
                     airGroup.Recon(missionType, groundGroup, altitude, escortAirGroup);
                 }
-                
+
+                getRandomFlightSize(airGroup, missionType);
                 createBriefing(briefingFile, airGroup, escortAirGroup);
                 airGroup.writeTo(sectionFile);
                 
@@ -1892,9 +1897,9 @@ namespace IL2DCE
                     IAircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
                     escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
 
-                    escortAirGroup.Escort(missionType, airGroup);
-                    getRandomFlightSize(escortAirGroup, EMissionType.ESCORT);
+                    escortAirGroup.Escort(EMissionType.ESCORT, airGroup);
 
+                    getRandomFlightSize(escortAirGroup, EMissionType.ESCORT);
                     createBriefing(briefingFile, escortAirGroup, null);
                     escortAirGroup.writeTo(sectionFile);
                 }
@@ -1914,9 +1919,9 @@ namespace IL2DCE
                             IAircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
                             interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
 
-                            interceptAirGroup.Intercept(missionType, airGroup);
-                            getRandomFlightSize(interceptAirGroup, EMissionType.INTERCEPT);
+                            interceptAirGroup.Intercept(EMissionType.INTERCEPT, airGroup);
 
+                            getRandomFlightSize(interceptAirGroup, EMissionType.INTERCEPT);
                             createBriefing(briefingFile, interceptAirGroup, null);
                             interceptAirGroup.writeTo(sectionFile);
                         }

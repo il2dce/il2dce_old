@@ -781,7 +781,7 @@ namespace IL2DCE
         {
             this.reset();
             this.MissionType = missionType;
-            this.Altitude = altitude;
+            this.Altitude = targetAirGroup.Altitude;
             this.TargetAirGroup = targetAirGroup;
 
             createStartWaypoints();
@@ -801,7 +801,7 @@ namespace IL2DCE
         {
             this.reset();
             this.MissionType = missionType;
-            this.Altitude = altitude;
+            this.Altitude = targetAirGroup.Altitude;
             this.TargetAirGroup = targetAirGroup;
 
             createStartWaypoints();
