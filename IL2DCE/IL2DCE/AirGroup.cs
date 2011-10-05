@@ -797,7 +797,7 @@ namespace IL2DCE
             createEndWaypoints(landingAirport);
         }
 
-        public void Intercept(EMissionType missionType, AirGroup targetAirUnit, AiAirport landingAirport = null)
+        public void Intercept(EMissionType missionType, AirGroup targetAirGroup, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -808,10 +808,10 @@ namespace IL2DCE
 
             AirGroupWaypoint interceptWaypoint = null;
             AirGroupWaypoint closestInterceptWaypoint = null;
-            foreach (AirGroupWaypoint waypoint in targetAirUnit.Waypoints)
+            foreach (AirGroupWaypoint waypoint in targetAirGroup.Waypoints)
             {
                 Point3d p = Position;
-                if (targetAirUnit.distanceTo(waypoint) > waypoint.Position.distance(ref p))
+                if (targetAirGroup.distanceTo(waypoint) > waypoint.Position.distance(ref p))
                 {
                     interceptWaypoint = waypoint;
                     break;
@@ -824,7 +824,7 @@ namespace IL2DCE
                     }
                     else
                     {
-                        if (targetAirUnit.distanceTo(waypoint) < closestInterceptWaypoint.Position.distance(ref p))
+                        if (targetAirGroup.distanceTo(waypoint) < closestInterceptWaypoint.Position.distance(ref p))
                         {
                             closestInterceptWaypoint = waypoint;
                         }
@@ -835,13 +835,13 @@ namespace IL2DCE
             if (interceptWaypoint != null)
             {
                 createStartInbetweenPoints(interceptWaypoint.Position);
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, interceptWaypoint.X, interceptWaypoint.Y, interceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(interceptWaypoint)));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, interceptWaypoint.X, interceptWaypoint.Y, interceptWaypoint.Z, 300.0, targetAirGroup.Id + " " + targetAirGroup.Waypoints.IndexOf(interceptWaypoint)));
 
 
-                if (targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1 >= 0)
+                if (targetAirGroup.Waypoints.IndexOf(interceptWaypoint) - 1 >= 0)
                 {
-                    AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) - 1];
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
+                    AirGroupWaypoint nextInterceptWaypoint = targetAirGroup.Waypoints[targetAirGroup.Waypoints.IndexOf(interceptWaypoint) - 1];
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirGroup.Id + " " + targetAirGroup.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(nextInterceptWaypoint.Position, landingAirport);
                 }
@@ -853,13 +853,13 @@ namespace IL2DCE
             else if (closestInterceptWaypoint != null)
             {
                 createStartInbetweenPoints(closestInterceptWaypoint.Position);
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, closestInterceptWaypoint.X, closestInterceptWaypoint.Y, closestInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint)));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, closestInterceptWaypoint.X, closestInterceptWaypoint.Y, closestInterceptWaypoint.Z, 300.0, targetAirGroup.Id + " " + targetAirGroup.Waypoints.IndexOf(closestInterceptWaypoint)));
 
 
-                if (targetAirUnit.Waypoints.IndexOf(closestInterceptWaypoint) + 1 < targetAirUnit.Waypoints.Count)
+                if (targetAirGroup.Waypoints.IndexOf(closestInterceptWaypoint) + 1 < targetAirGroup.Waypoints.Count)
                 {
-                    AirGroupWaypoint nextInterceptWaypoint = targetAirUnit.Waypoints[targetAirUnit.Waypoints.IndexOf(interceptWaypoint) + 1];
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirUnit.Id + " " + targetAirUnit.Waypoints.IndexOf(nextInterceptWaypoint)));
+                    AirGroupWaypoint nextInterceptWaypoint = targetAirGroup.Waypoints[targetAirGroup.Waypoints.IndexOf(interceptWaypoint) + 1];
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.AATTACK_BOMBERS, nextInterceptWaypoint.X, nextInterceptWaypoint.Y, nextInterceptWaypoint.Z, 300.0, targetAirGroup.Id + " " + targetAirGroup.Waypoints.IndexOf(nextInterceptWaypoint)));
 
                     createEndInbetweenPoints(nextInterceptWaypoint.Position, landingAirport);
                 }

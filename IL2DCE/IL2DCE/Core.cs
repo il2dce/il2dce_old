@@ -729,8 +729,10 @@ namespace IL2DCE
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
-                if(airGroup.Id == Career.AirGroup)
+                if((airGroup.AirGroupKey + "." + airGroup.SquadronIndex.ToString()) == Career.AirGroup)
                 {
+                    createRandomAirOperation(missionFile, briefingFile, airGroup);
+
                     List<string> aircraftOrder = new List<string>();
                     if (airGroup.AirGroupInfo.FlightSize % 3 == 0)
                     {
@@ -788,12 +790,14 @@ namespace IL2DCE
                     
                     string playerAirGroupKey = airGroup.AirGroupKey;
                     int playerSquadronIndex = airGroup.SquadronIndex;
-                    string playerPosition = aircraftOrder[aircraftOrder.Count-1];
+                    string playerPosition = aircraftOrder[0];
+                    
+                    //string playerPosition = aircraftOrder[aircraftOrder.Count-1];
 
-                    double factor = aircraftOrder.Count / 6;
-                    int playerPositionIndex = (int)(Math.Floor(Career.RankIndex * factor));
+                    //double factor = aircraftOrder.Count / 6;
+                    //int playerPositionIndex = (int)(Math.Floor(Career.RankIndex * factor));
                                         
-                    playerPosition = aircraftOrder[aircraftOrder.Count - 1 - playerPositionIndex];
+                    //playerPosition = aircraftOrder[aircraftOrder.Count - 1 - playerPositionIndex];
 
                     if (missionFile.exist("MAIN", "player"))
                     {
@@ -803,8 +807,7 @@ namespace IL2DCE
                     {
                         missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
                     }
-                                        
-                    createRandomAirOperation(missionFile, briefingFile, airGroup);
+
                     break;
                 }
             }
@@ -1227,7 +1230,7 @@ namespace IL2DCE
             }
         }
 
-        private void getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
+        private void      getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
         {
             airGroup.Flights.Clear();
             int aircraftNumber = 1;
@@ -1256,6 +1259,22 @@ namespace IL2DCE
                         aircraftNumber++;
                     }
                     airGroup.Flights[i] = aircraftNumbers;
+                }
+            }
+            else if (missionType == EMissionType.ESCORT || missionType == EMissionType.INTERCEPT)
+            {
+                if (airGroup.TargetAirGroup != null)
+                {
+                    for (int i = 0; i < airGroup.TargetAirGroup.Flights.Count; i++)
+                    {
+                        List<string> aircraftNumbers = new List<string>();
+                        for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                        {
+                            aircraftNumbers.Add(aircraftNumber.ToString());
+                            aircraftNumber++;
+                        }
+                        airGroup.Flights[i] = aircraftNumbers;
+                    }
                 }
             }
             else
@@ -1859,7 +1878,10 @@ namespace IL2DCE
 
                     airGroup.Recon(missionType, groundGroup, altitude, escortAirGroup);
                 }
-
+                
+                createBriefing(briefingFile, airGroup, escortAirGroup);
+                airGroup.writeTo(sectionFile);
+                
                 if (escortAirGroup != null)
                 {
                     availableAirGroups.Remove(escortAirGroup);
@@ -1900,9 +1922,6 @@ namespace IL2DCE
                         }
                     }
                 }
-
-                createBriefing(briefingFile, airGroup, escortAirGroup);
-                airGroup.writeTo(sectionFile);
             }
             else
             {
