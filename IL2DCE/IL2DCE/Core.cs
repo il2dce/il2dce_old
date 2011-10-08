@@ -39,6 +39,9 @@ namespace IL2DCE
         private int additionalAirOperations = 0;
         private int additionalGroundOperations = 0;
 
+        private double flightSize;
+        private double flightCount;
+
         private List<Stationary> redStationaries = new List<Stationary>();
         private List<Stationary> blueStationaries = new List<Stationary>();
 
@@ -48,6 +51,7 @@ namespace IL2DCE
 
             ISectionFile confFile = game.gameInterface.SectionFileLoad("$home/parts/IL2DCE/conf.ini");
 
+            SpawnParked = false;
             if (confFile.exist("Core", "forceSetOnPark"))
             {
                 string value = confFile.get("Core", "forceSetOnPark");
@@ -61,28 +65,41 @@ namespace IL2DCE
                 }
             }
 
+            additionalAirOperations = 0;
             if (confFile.exist("Core", "additionalAirOperations"))
             {
                 string value = confFile.get("Core", "additionalAirOperations");
                 int.TryParse(value, out additionalAirOperations);
             }
 
+            additionalGroundOperations = 0;
             if (confFile.exist("Core", "additionalGroundOperations"))
             {
                 string value = confFile.get("Core", "additionalGroundOperations");
                 int.TryParse(value, out additionalGroundOperations);
             }
 
+            flightSize = 1.0;
+            if (confFile.exist("Core", "flightSize"))
+            {
+                string value = confFile.get("Core", "flightSize");
+                double.TryParse(value, out flightSize);
+            }
+
+            flightCount = 1.0;
+            if (confFile.exist("Core", "flightCount"))
+            {
+                string value = confFile.get("Core", "flightCount");
+                double.TryParse(value, out flightCount);
+            }
+
+            _debug = 0;
             if (confFile.exist("Core", "debug"))
             {
                 string value = confFile.get("Core", "debug");
                 int.TryParse(value, out _debug);
             }
-            else
-            {
-                _debug = 0;
-            }
-
+            
             if (confFile.exist("Main", "campaignsFolder"))
             {
                 string campaignsFolderPath = confFile.get("Main", "campaignsFolder");
@@ -1230,10 +1247,13 @@ namespace IL2DCE
             }
         }
 
-        private void      getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
+        private void getRandomFlightSize(IAirGroup airGroup, EMissionType missionType)
         {
             airGroup.Flights.Clear();
             int aircraftNumber = 1;
+
+            int flightCount = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightCount * this.flightCount);
+            int flightSize = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightSize * this.flightSize);            
 
             if (missionType == EMissionType.RECON || missionType == EMissionType.MARITIME_RECON)
             {
@@ -1253,7 +1273,7 @@ namespace IL2DCE
                 for (int i = 0; i < 1; i++)
                 {
                     List<string> aircraftNumbers = new List<string>();
-                    for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                    for (int j = 0; j < flightSize; j++)
                     {
                         aircraftNumbers.Add(aircraftNumber.ToString());
                         aircraftNumber++;
@@ -1265,8 +1285,7 @@ namespace IL2DCE
             {
                 if (airGroup.TargetAirGroup != null)
                 {
-                    int flightCount = airGroup.AirGroupInfo.FlightCount;
-                    if(airGroup.TargetAirGroup.Flights.Count < flightCount)
+                    if (airGroup.TargetAirGroup.Flights.Count < flightCount)
                     {
                         flightCount = airGroup.TargetAirGroup.Flights.Count;
                     }
@@ -1274,7 +1293,7 @@ namespace IL2DCE
                     for (int i = 0; i < flightCount; i++)
                     {
                         List<string> aircraftNumbers = new List<string>();
-                        for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                        for (int j = 0; j < flightSize; j++)
                         {
                             aircraftNumbers.Add(aircraftNumber.ToString());
                             aircraftNumber++;
@@ -1285,10 +1304,10 @@ namespace IL2DCE
             }
             else
             {
-                for (int i = 0; i < airGroup.AirGroupInfo.FlightCount; i++)
+                for (int i = 0; i < flightCount; i++)
                 {
                     List<string> aircraftNumbers = new List<string>();
-                    for (int j = 0; j < airGroup.AirGroupInfo.FlightSize; j++)
+                    for (int j = 0; j < flightSize; j++)
                     {
                         aircraftNumbers.Add(aircraftNumber.ToString());
                         aircraftNumber++;
