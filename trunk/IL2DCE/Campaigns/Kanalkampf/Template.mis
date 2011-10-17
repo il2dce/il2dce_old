@@ -3,7 +3,7 @@
   bob.100
 [MAIN]
   MAP Land$English_Channel_1940
-  BattleArea 136985 142814 217176 148999 10000
+  BattleArea 166130 195011 144493 98048 10000
   TIME 12
   WeatherIndex 0
   CloudsHeight 1000
@@ -24,6 +24,9 @@
   BoB_RAF_F_32Sqn_Early.01
   BoB_LW_KG51_III.37
   BoB_LW_JG51_II.31
+  BoB_LW_KG53_II.17
+  BoB_RAF_B_88Sqn.03
+  BoB_LW_JG2_I.07
 [BoB_LW_LG1_IV.37]
   Flight0  A B C
   Flight1  D E F
@@ -36,7 +39,7 @@
   SetOnPark 1
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
 [BoB_LW_LG1_IV.37_Way]
-  TAKEOFF 272395.11 200223.82 0 0
+  TAKEOFF 278866.09 207351.75 0 0
 [BoB_LW_KG2_II.33]
   Flight0  A B C
   Flight1  D E F
@@ -62,7 +65,7 @@
   TAKEOFF 281199.38 212866.62 0 0
 [BoB_RAF_F_41Sqn_Early.01]
   Flight0  1 2 3 4 5 6
-  Class Aircraft.SpitfireMkI
+  Class Aircraft.SpitfireMkIa
   Formation VIC3
   CallSign 27
   Fuel 100
@@ -73,7 +76,7 @@
   TAKEOFF 248048.43 259000.26 0 0
 [BoB_RAF_F_32Sqn_Early.01]
   Flight0  1 2 3 4 5 6
-  Class Aircraft.HurricaneMkI_dH5-20
+  Class Aircraft.HurricaneMkI
   Formation VIC3
   CallSign 31
   Fuel 100
@@ -105,88 +108,70 @@
   Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
 [BoB_LW_JG51_II.31_Way]
   TAKEOFF 276971.34 209427.57 0 0
+[BoB_LW_KG53_II.17]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.He-111H-2
+  Formation VIC3
+  CallSign 26
+  Fuel 100
+  Weapons 1 1 1 1 1 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_KG53_II.17_Way]
+  TAKEOFF 272496.24 200270.62 0 0
+[BoB_RAF_B_88Sqn.03]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.BlenheimMkIV
+  Formation LINEABREAST
+  CallSign 30
+  Fuel 100
+  Weapons 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_B_88Sqn.03_Way]
+  TAKEOFF 225120.93 228006.16 0 0
+[BoB_LW_JG2_I.07]
+  Flight0  1 2 3 4
+  Flight1  11 12 13 14
+  Flight2  21 22 23 24
+  Class Aircraft.Bf-109E-4
+  Formation FINGERFOUR
+  CallSign 20
+  Fuel 100
+  Weapons 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG2_I.07_Way]
+  TAKEOFF 284010.46 205122.95 0 0
 [CustomChiefs]
 [Chiefs]
-  0_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  1_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  2_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  3_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  4_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  5_Chief Ship.Tanker_Medium1 nn /sleep 0/skill 2/slowfire 1
-  6_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
-  7_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
-  8_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
-  9_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
-  10_Chief Vehicle.GB_Fuel_Column gb 
-  11_Chief Armor.Breen_Carrier_Mk_I gb /num_units 6
+  0_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  1_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  2_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  3_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  4_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
+  5_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
 [0_Chief_Road]
-  245791.33 226516.92 38.40  0 2 5.56
-  249638.92 230880.66 38.40
+  204996.14 203541.05 38.40  0 2 5.56
+  206147.45 203789.34 38.40
 [1_Chief_Road]
-  141266.33 182410.44 38.40  0 2 5.56
-  158068.36 182767.66 38.40  0 2 5.56
-  176194.59 181861.33 38.40  0 2 5.56
-  199926.50 188440.47 38.40  0 2 5.56
-  231298.20 203040.11 38.40  0 2 5.56
-  240843.13 217171.84 38.40  0 2 5.56
-  245640.69 224034.81 38.40
+  235543.20 216314.50 38.40  0 2 5.56
+  236675.25 217635.22 38.40
 [2_Chief_Road]
-  253415.36 232662.38 38.40  0 2 5.56
-  259898.17 241033.14 38.40  0 2 5.56
-  264162.75 261241.55 38.40  0 2 5.56
-  256439.38 270131.84 38.40  0 2 5.56
-  224384.58 272859.44 38.40  0 2 5.56
-  204106.72 273995.94 38.40  0 2 5.56
-  188253.81 273661.16 38.40  0 2 5.56
-  185066.03 273391.50 38.40  0 2 5.56
-  183630.41 270085.81 38.40  0 2 5.56
-  182648.17 269009.09 38.40  0 2 5.56
-  180570.31 268347.97 38.40  0 2 5.56
-  177642.39 268261.47 38.40
+  257429.53 235182.03 38.40  0 2 5.56
+  255825.80 233672.63 38.40
 [3_Chief_Road]
-  243663.13 223764.59 38.40  0 2 5.56
-  239282.52 217620.86 38.40  0 2 5.56
-  229487.53 204019.89 38.40  0 2 5.56
-  199658.38 190221.53 38.40  0 2 5.56
-  176203.52 183378.88 38.40  0 2 5.56
-  158681.58 184367.69 38.40  0 2 5.56
-  141474.70 184460.39 38.40
+  222815.42 268629.06 38.40  0 2 5.56
+  224641.44 268629.06 38.40
 [4_Chief_Road]
-  251738.77 230979.28 38.40  0 2 5.56
-  246672.11 225112.13 38.40
+  264962.09 210835.45 38.40  0 2 5.56
+  267822.41 212442.80 38.40
 [5_Chief_Road]
-  177674.80 268083.94 38.40  0 2 5.56
-  180529.63 268148.34 38.40  0 2 5.56
-  182836.38 268856.56 38.40  0 2 5.56
-  183892.64 270026.13 38.40  0 2 5.56
-  185147.19 272919.69 38.40  0 2 5.56
-  188319.98 273287.97 38.40  0 2 5.56
-  204090.70 273513.63 38.40  0 2 5.56
-  223930.44 272071.50 38.40  0 2 5.56
-  254940.31 269185.66 38.40  0 2 5.56
-  261572.41 261268.98 38.40  0 2 5.56
-  258019.42 241762.50 38.40  0 2 5.56
-  252789.97 234435.89 38.40
-[6_Chief_Road]
-  140369.16 197209.73 38.40  0 2 5.56
-  140840.61 196487.23 38.40
-[7_Chief_Road]
-  237557.28 229099.36 38.40  0 2 5.56
-  237960.59 228974.81 38.40
-[8_Chief_Road]
-  246249.95 234214.25 38.40  0 2 5.56
-  246669.69 233857.20 38.40
-[9_Chief_Road]
-  177725.41 268167.88 38.40  0 2 5.56
-  177956.41 268165.94 38.40
-[10_Chief_Road]
-  235665.88 231720.13 38.40  0 2 1.00
-  235697.31 231738.56 38.40
-[11_Chief_Road]
-  242859.64 235372.67 38.40  0 2 5.56
-  242898.05 235367.44 38.40
+  297523.91 225061.11 38.40  0 2 5.56
+  294732.28 224691.14 38.40
 [Stationary]
-  Static3 Stationary.Radar.EnglishRadar1 gb 178847.83 197272.98 100.00 
   Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
   Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
   Static5 Stationary.Radar.EnglishRadar1 gb 240479.50 249608.66 124.00 
@@ -195,7 +180,12 @@
 [Buildings]
 [BuildingsLinks]
 [FrontMarker]
-  FrontMarker0 242810.60 235309.57 1
-  FrontMarker1 235242.21 231499.84 1
-  FrontMarker2 146959.20 198741.08 1
-  FrontMarker3 177608.02 265598.23 1
+  FrontMarker0 246249.31 234205.68 1
+  FrontMarker1 237639.14 229168.58 1
+  FrontMarker2 177580.49 268505.19 1
+  FrontMarker3 192161.87 201595.90 1
+  FrontMarker4 229265.99 261395.10 1
+  FrontMarker5 189029.99 261455.02 1
+  FrontMarker6 265724.53 190303.22 2
+  FrontMarker7 283658.100 217310.47 2
+  FrontMarker8 307152.61 224075.37 2
