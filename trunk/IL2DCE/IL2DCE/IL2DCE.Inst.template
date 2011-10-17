@@ -38,21 +38,19 @@ sectionEnd
 
 section
 
-setOutPath "$INSTDIR\parts\IL2DCE\Campaigns\Prototype"
+setOutPath "$INSTDIR\parts\IL2DCE\Campaigns"
 
-file "parts\IL2DCE\Campaigns\Prototype\campaign.ini"
-file "parts\IL2DCE\Campaigns\Prototype\Template.cs"
-file "parts\IL2DCE\Campaigns\Prototype\Template.mis"
+file "parts\IL2DCE\Campaigns\AircraftInfo.ini"
 
 sectionEnd
 
 section
 
-setOutPath "$INSTDIR\parts\IL2DCE\Campaigns\Prototype2"
+setOutPath "$INSTDIR\parts\IL2DCE\Campaigns\Kanalkampf"
 
-file "parts\IL2DCE\Campaigns\Prototype2\campaign.ini"
-file "parts\IL2DCE\Campaigns\Prototype2\Template.cs"
-file "parts\IL2DCE\Campaigns\Prototype2\Template.mis"
+file "parts\IL2DCE\Campaigns\Kanalkampf\CampaignInfo.ini"
+file "parts\IL2DCE\Campaigns\Kanalkampf\Template.cs"
+file "parts\IL2DCE\Campaigns\Kanalkampf\Template.mis"
 
 sectionEnd
 
@@ -64,15 +62,12 @@ delete "$INSTDIR\uninst.exe"
 delete "$INSTDIR\..\..\AddIns\IL2DCE.GameServer.xml"
 delete "$INSTDIR\..\..\AddIns\IL2DCE.GameSingle.xml"
 
-delete "$INSTDIR\Campaigns\Prototype\campaign.ini"
-delete "$INSTDIR\Campaigns\Prototype\Template.cs"
-delete "$INSTDIR\Campaigns\Prototype\Template.mis"
-RMDir "$INSTDIR\Campaigns\Prototype"
+delete "$INSTDIR\Campaigns\Kanalkampf\CampaignInfo.ini"
+delete "$INSTDIR\Campaigns\Kanalkampf\Template.cs"
+delete "$INSTDIR\Campaigns\Kanalkampf\Template.mis"
+RMDir "$INSTDIR\Campaigns\Kanalkampf"
 
-delete "$INSTDIR\Campaigns\Prototype2\campaign.ini"
-delete "$INSTDIR\Campaigns\Prototype2\Template.cs"
-delete "$INSTDIR\Campaigns\Prototype2\Template.mis"
-RMDir "$INSTDIR\Campaigns\Prototype2"
+delete "$INSTDIR\Campaigns\AircraftInfo.ini"
 RMDir "$INSTDIR\Campaigns"
 
 delete "$INSTDIR\conf.ini"
