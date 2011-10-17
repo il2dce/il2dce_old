@@ -1732,7 +1732,7 @@ namespace IL2DCE
             }
         }
 
-        private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept)
+        private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, AirGroup forcedEscortAirGroup)
         {
             if(isMissionTypeAvailable(airGroup, missionType))
             {
@@ -1747,7 +1747,14 @@ namespace IL2DCE
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))
                 {
-                    escortAirGroup = getAvailableRandomEscortAirGroup(airGroup);
+                    if (forcedEscortAirGroup == null)
+                    {
+                        escortAirGroup = getAvailableRandomEscortAirGroup(airGroup);
+                    }
+                    else
+                    {
+                        escortAirGroup = forcedEscortAirGroup;
+                    }
                 }
 
                 if (missionType == EMissionType.COVER)
@@ -1768,7 +1775,7 @@ namespace IL2DCE
                         {
                             int offensiveMissionTypeIndex = rand.Next(availableOffensiveMissionTypes.Count);
                             EMissionType randomOffensiveMissionType = availableOffensiveMissionTypes[offensiveMissionTypeIndex];
-                            createAirOperation(sectionFile, briefingFile, offensiveAirGroup, randomOffensiveMissionType, false);
+                            createAirOperation(sectionFile, briefingFile, offensiveAirGroup, randomOffensiveMissionType, false, null);
 
                             if (offensiveAirGroup.Altitude != null && offensiveAirGroup.Altitude.HasValue && offensiveAirGroup.TargetGroundGroup != null)
                             {
@@ -1855,7 +1862,7 @@ namespace IL2DCE
                         {
                             int escortedMissionTypeIndex = rand.Next(availableEscortedMissionTypes.Count);
                             EMissionType randomEscortedMissionType = availableEscortedMissionTypes[escortedMissionTypeIndex];
-                            createAirOperation(sectionFile, briefingFile, escortedAirGroup, randomEscortedMissionType, true);
+                            createAirOperation(sectionFile, briefingFile, escortedAirGroup, randomEscortedMissionType, true, airGroup);
 
                             airGroup.Escort(missionType, escortedAirGroup);
                         }
@@ -1879,7 +1886,7 @@ namespace IL2DCE
                         {
                             int offensiveMissionTypeIndex = rand.Next(availableOffensiveMissionTypes.Count);
                             EMissionType randomOffensiveMissionType = availableOffensiveMissionTypes[offensiveMissionTypeIndex];
-                            createAirOperation(sectionFile, briefingFile, interceptedAirGroup, randomOffensiveMissionType, false);
+                            createAirOperation(sectionFile, briefingFile, interceptedAirGroup, randomOffensiveMissionType, false, null);
 
                             airGroup.Intercept(missionType, interceptedAirGroup);
                         }
@@ -1906,7 +1913,7 @@ namespace IL2DCE
                 createBriefing(briefingFile, airGroup, escortAirGroup);
                 airGroup.writeTo(sectionFile);
                 
-                if (escortAirGroup != null)
+                if (forcedEscortAirGroup == null && escortAirGroup != null)
                 {
                     availableAirGroups.Remove(escortAirGroup);
 
@@ -1972,7 +1979,7 @@ namespace IL2DCE
                     int randomMissionTypeIndex = rand.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
-                    createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType, true);
+                    createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType, true, null);
                 }
             }
         }
