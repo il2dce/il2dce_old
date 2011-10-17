@@ -28,7 +28,8 @@ Execute the uninstall process before you install another version of IL2DCE.
 
 == Uninstall IL2DCE ==
 
-  # Navigate to folder "$home\parts\IL2DCE" and execute the uninstaller (uninst.exe)
+  # Navigate to folder "$home\parts\IL2DCE" and execute the uninstaller (uninst.exe). 
+    Example: "C:\Program Files (x86)\Steam\steamapps\common\il-2 sturmovik cliffs of dover\parts\IL2DCE\uninst.exe"
   # Confirm the uninstall path.
   # Finish the uninstall process.
 
