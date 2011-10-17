@@ -1,5 +1,5 @@
 # Define the installer name
-outFile "IL2DCE-0.1.0.$WCREV$$WCMODS?M:$.exe"
+outFile "IL2DCE-0.2.0.$WCREV$$WCMODS?M:$.exe"
 
 # Set the default install directory
 installDir "$PROGRAMFILES\Steam\steamapps\common\il-2 sturmovik cliffs of dover"
