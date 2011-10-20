@@ -40,14 +40,14 @@ namespace IL2DCE
             AirGroupKey = id.Substring(0, id.IndexOf("."));
 
             // SquadronIndex
-            int.TryParse(id.Substring(id.LastIndexOf(".") + 1, 1), out squadronIndex);
+            int.TryParse(id.Substring(id.LastIndexOf(".") + 1, 1), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out squadronIndex);
 
             // Flight
             for (int i = 0; i < 4; i++)
             {
-                if (sectionFile.exist(id, "Flight" + i.ToString()))
+                if (sectionFile.exist(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat)))
                 {
-                    string acNumberLine = sectionFile.get(id, "Flight" + i.ToString());
+                    string acNumberLine = sectionFile.get(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                     string[] acNumberList = acNumberLine.Split(new char[] { ' ' });
                     if (acNumberList != null && acNumberList.Length > 0)
                     {
@@ -68,10 +68,10 @@ namespace IL2DCE
             Formation = sectionFile.get(id, "Formation");
 
             // CallSign
-            int.TryParse(sectionFile.get(id, "CallSign"), out CallSign);
+            int.TryParse(sectionFile.get(id, "CallSign"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out CallSign);
 
             // Fuel
-            int.TryParse(sectionFile.get(id, "Fuel"), out Fuel);
+            int.TryParse(sectionFile.get(id, "Fuel"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Fuel);
 
             // Weapons
             string weaponsLine = sectionFile.get(id, "Weapons");
@@ -81,7 +81,7 @@ namespace IL2DCE
                 Weapons = new int[weaponsList.Length];
                 for (int i = 0; i < weaponsList.Length; i++)
                 {
-                    int.TryParse(weaponsList[i], out Weapons[i]);
+                    int.TryParse(weaponsList[i], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Weapons[i]);
                 }
             }
 
@@ -222,7 +222,7 @@ namespace IL2DCE
                     }
                 }
 
-                return AirGroupKey + "." + SquadronIndex.ToString() + flightMask.ToString("X");
+                return AirGroupKey + "." + SquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + flightMask.ToString("X");
             }
         }
 
@@ -402,15 +402,15 @@ namespace IL2DCE
 
                 sectionFile.add(Id, "Class", Class);
                 sectionFile.add(Id, "Formation", Formation);
-                sectionFile.add(Id, "CallSign", CallSign.ToString());
-                sectionFile.add(Id, "Fuel", Fuel.ToString());
+                sectionFile.add(Id, "CallSign", CallSign.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                sectionFile.add(Id, "Fuel", Fuel.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
 
                 if (Weapons != null && Weapons.Length > 0)
                 {
                     string weaponsLine = "";
                     foreach (int weapon in Weapons)
                     {
-                        weaponsLine += weapon.ToString() + " ";
+                        weaponsLine += weapon.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " ";
                     }
                     sectionFile.add(Id, "Weapons", weaponsLine.TrimEnd());
                 }

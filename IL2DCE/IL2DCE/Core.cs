@@ -69,35 +69,35 @@ namespace IL2DCE
             if (confFile.exist("Core", "additionalAirOperations"))
             {
                 string value = confFile.get("Core", "additionalAirOperations");
-                int.TryParse(value, out additionalAirOperations);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalAirOperations);
             }
 
             additionalGroundOperations = 0;
             if (confFile.exist("Core", "additionalGroundOperations"))
             {
                 string value = confFile.get("Core", "additionalGroundOperations");
-                int.TryParse(value, out additionalGroundOperations);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalGroundOperations);
             }
 
             flightSize = 1.0;
             if (confFile.exist("Core", "flightSize"))
             {
                 string value = confFile.get("Core", "flightSize");
-                double.TryParse(value, out flightSize);
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out flightSize);
             }
 
             flightCount = 1.0;
             if (confFile.exist("Core", "flightCount"))
             {
                 string value = confFile.get("Core", "flightCount");
-                double.TryParse(value, out flightCount);
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out flightCount);
             }
 
             _debug = 0;
             if (confFile.exist("Core", "debug"))
             {
                 string value = confFile.get("Core", "debug");
-                int.TryParse(value, out _debug);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out _debug);
             }
             
             if (confFile.exist("Main", "campaignsFolder"))
@@ -172,19 +172,19 @@ namespace IL2DCE
             if (confFile.exist("Core", "additionalAirOperations"))
             {
                 string value = confFile.get("Core", "additionalAirOperations");
-                int.TryParse(value, out additionalAirOperations);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalAirOperations);
             }
 
             if (confFile.exist("Core", "additionalGroundOperations"))
             {
                 string value = confFile.get("Core", "additionalGroundOperations");
-                int.TryParse(value, out additionalGroundOperations);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalGroundOperations);
             }
 
             if (confFile.exist("Core", "debug"))
             {
                 string value = confFile.get("Core", "debug");
-                int.TryParse(value, out _debug);
+                int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out _debug);
             }
             else
             {
@@ -479,7 +479,7 @@ namespace IL2DCE
                 System.IO.Directory.CreateDirectory(missionFolderSystemPath);
             }
 
-            string missionId = Career.CampaignInfo.Id + "_" + Career.Date.Value.Date.Year.ToString() + "-" + Career.Date.Value.Date.Month.ToString() + "-" + Career.Date.Value.Date.Day.ToString();
+            string missionId = Career.CampaignInfo.Id + "_" + Career.Date.Value.Date.Year.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Career.Date.Value.Date.Month.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Career.Date.Value.Date.Day.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             ISectionFile missionFile = null;
             IBriefingFile briefingFile = null;
             
@@ -582,7 +582,7 @@ namespace IL2DCE
                     int army;
                     if (double.TryParse(valueParts[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x)
                         && double.TryParse(valueParts[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y)
-                        && int.TryParse(valueParts[2], out army))
+                        && int.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out army))
                     {
                         if (army == 0)
                         {
@@ -717,13 +717,13 @@ namespace IL2DCE
             // Add things to the template file.
 
             int randomTime = rand.Next(5, 21);
-            missionFile.set("MAIN", "TIME", randomTime.ToString());
+            missionFile.set("MAIN", "TIME", randomTime.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
 
             int randomWeatherIndex = rand.Next(0, 3);
-            missionFile.set("MAIN", "WeatherIndex", randomWeatherIndex.ToString());
+            missionFile.set("MAIN", "WeatherIndex", randomWeatherIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             
             int randomCloudsHeight = rand.Next(5, 15);
-            missionFile.set("MAIN", "CloudsHeight", (randomCloudsHeight * 100).ToString());
+            missionFile.set("MAIN", "CloudsHeight", (randomCloudsHeight * 100).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
 
             string weatherString = "";
             if(randomWeatherIndex == 0)
@@ -746,7 +746,7 @@ namespace IL2DCE
 
             foreach(AirGroup airGroup in getAirGroups(Career.ArmyIndex))
             {
-                if((airGroup.AirGroupKey + "." + airGroup.SquadronIndex.ToString()) == Career.AirGroup)
+                if ((airGroup.AirGroupKey + "." + airGroup.SquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat)) == Career.AirGroup)
                 {
                     createRandomAirOperation(missionFile, briefingFile, airGroup);
 
@@ -759,7 +759,7 @@ namespace IL2DCE
                             {
                                 if (airGroup.Flights[key].Count > i)
                                 {
-                                    aircraftOrder.Add(key.ToString() + i.ToString());
+                                    aircraftOrder.Add(key.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                                 }
                             }
 
@@ -767,7 +767,7 @@ namespace IL2DCE
                             {
                                 if (airGroup.Flights[key].Count > i + 3)
                                 {
-                                    aircraftOrder.Add(key.ToString() + (i + 3).ToString());
+                                    aircraftOrder.Add(key.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + (i + 3).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                                 }
                             }
                         }
@@ -780,7 +780,7 @@ namespace IL2DCE
                             {
                                 if (airGroup.Flights[key].Count > i)
                                 {
-                                    aircraftOrder.Add(key.ToString() + i.ToString());
+                                    aircraftOrder.Add(key.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                                 }
                             }
 
@@ -788,7 +788,7 @@ namespace IL2DCE
                             {
                                 if (airGroup.Flights[key].Count > i + 2)
                                 {
-                                    aircraftOrder.Add(key.ToString() + (i + 2).ToString());
+                                    aircraftOrder.Add(key.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + (i + 2).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                                 }
                             }
                         }
@@ -799,7 +799,7 @@ namespace IL2DCE
                         {
                             if (airGroup.Flights[key].Count == 1)
                             {
-                                aircraftOrder.Add(key.ToString() + "0");
+                                aircraftOrder.Add(key.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "0");
                             }
                         }
                     }
@@ -818,11 +818,11 @@ namespace IL2DCE
                         
                         if (missionFile.exist("MAIN", "player"))
                         {
-                            missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                            missionFile.set("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + playerPosition);
                         }
                         else
                         {
-                            missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString() + playerPosition);
+                            missionFile.add("MAIN", "player", playerAirGroupKey + "." + playerSquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + playerPosition);
                         }
                     }
                     break;
@@ -880,7 +880,7 @@ namespace IL2DCE
 
                 if (pathParams.State == RecalcPathState.SUCCESS)
                 {
-                    //Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path found (" + pathParams.Path.Length.ToString() + ").", null);
+                    //Game.gpLogServer(new Player[] { Game.gpPlayer() }, "Path found (" + pathParams.Path.Length.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + ").", null);
 
                     GroundGroupWaypoint lastGroundGroupWaypoint = null;
                     foreach (maddox.game.world.AiWayPoint aiWayPoint in pathParams.Path)
@@ -897,7 +897,7 @@ namespace IL2DCE
                             }
                             else if (lastGroundGroupWaypoint != null)
                             {
-                                string s = aiGroundWayPoint.P.x.ToString() + " " + aiGroundWayPoint.P.y.ToString() + " " + aiGroundWayPoint.P.z.ToString() + " " + aiGroundWayPoint.roadWidth.ToString();
+                                string s = aiGroundWayPoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.P.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.roadWidth.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                                 GroundGroupSubWaypoint groundGroupSubWaypoint = new GroundGroupSubWaypoint(s, null);
                                 lastGroundGroupWaypoint.SubWaypoints.Add(groundGroupSubWaypoint);
                             }
@@ -1076,7 +1076,7 @@ namespace IL2DCE
                                 groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].X -= xOffset;
                                 groundGroup.Waypoints[groundGroup.Waypoints.Count - 1].Y -= yOffset;
 
-                                groundGroup._id = groundGroupId + "." + i.ToString();
+                                groundGroup._id = groundGroupId + "." + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 
                                 groundGroup.writeTo(missionFile);
                             }
@@ -1262,7 +1262,7 @@ namespace IL2DCE
                     List<string> aircraftNumbers = new List<string>();
                     for (int j = 0; j < 1; j++)
                     {
-                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumbers.Add(aircraftNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                         aircraftNumber++;
                     }
                     airGroup.Flights[i] = aircraftNumbers;
@@ -1275,7 +1275,7 @@ namespace IL2DCE
                     List<string> aircraftNumbers = new List<string>();
                     for (int j = 0; j < flightSize; j++)
                     {
-                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumbers.Add(aircraftNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                         aircraftNumber++;
                     }
                     airGroup.Flights[i] = aircraftNumbers;
@@ -1295,7 +1295,7 @@ namespace IL2DCE
                         List<string> aircraftNumbers = new List<string>();
                         for (int j = 0; j < flightSize; j++)
                         {
-                            aircraftNumbers.Add(aircraftNumber.ToString());
+                            aircraftNumbers.Add(aircraftNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                             aircraftNumber++;
                         }
                         airGroup.Flights[i] = aircraftNumbers;
@@ -1309,7 +1309,7 @@ namespace IL2DCE
                     List<string> aircraftNumbers = new List<string>();
                     for (int j = 0; j < flightSize; j++)
                     {
-                        aircraftNumbers.Add(aircraftNumber.ToString());
+                        aircraftNumbers.Add(aircraftNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
                         aircraftNumber++;
                     }
                     airGroup.Flights[i] = aircraftNumbers;

@@ -224,11 +224,11 @@ namespace IL2DCE
 
         public void writeTo(ISectionFile careerFile)
         {
-            careerFile.add("Main", "armyIndex", ArmyIndex.ToString());
-            careerFile.add("Main", "rankIndex", RankIndex.ToString());
-            careerFile.add("Main", "experience", Experience.ToString());
+            careerFile.add("Main", "armyIndex", ArmyIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            careerFile.add("Main", "rankIndex", RankIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            careerFile.add("Main", "experience", Experience.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
 
-            careerFile.add("Campaign", "date", Date.Value.Year.ToString() + "-" + Date.Value.Month + "-" + Date.Value.Day.ToString());
+            careerFile.add("Campaign", "date", Date.Value.Year.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Date.Value.Month.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Date.Value.Day.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             careerFile.add("Campaign", "airGroup", AirGroup);
             careerFile.add("Campaign", "missionFile", MissionFileName);
             careerFile.add("Campaign", "id", CampaignInfo.Id);
