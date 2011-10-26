@@ -1,0 +1,34 @@
+﻿[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  BattleArea 0 0 40960 32768 10000
+  TIME 12
+  WeatherIndex 0
+  CloudsHeight 1000
+  BreezeActivity 10
+  ThermalActivity 10
+[GlobalWind_0]
+  Power 3.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 5
+  GustAngle 45
+[splines]
+[CustomChiefs]
+[Stationary]
+  Static4 Stationary.Radar.EnglishRadar1 gb 70506.68 171685.75 93.00 
+  Static3 Stationary.Radar.EnglishRadar1 gb 178847.83 197272.98 100.00 
+  Static8 Stationary.Radar.EnglishRadar2 gb 118310.60 199359.30 -45.00 
+  Static7 Stationary.Radar.EnglishRadar2 gb 118348.40 199322.13 -45.00 
+  Static10 Stationary.Radar.EnglishRadar2 gb 118378.41 199355.13 -45.00 
+  Static6 Stationary.Radar.EnglishRadar1 gb 118589.34 199340.84 -90.00 
+  Static9 Stationary.Radar.EnglishRadar2 gb 118345.22 199390.86 -45.00 
+  Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
+  Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
+  Static5 Stationary.Radar.EnglishRadar1 gb 240479.50 249608.66 124.00 
+  Static1 Stationary.Radar.EnglishRadar1 gb 217627.77 251506.53 71.00 
+  Static11 Stationary.Radar.EnglishRadar1 gb 203391.09 287593.25 125.00 
+[Buildings]
+[BuildingsLinks]
