@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IL2DCE.Mission", "IL2DCE.Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IL2DCE.Pages", "IL2DCE.Pages\IL2DCE.Pages.csproj", "{ECBA2DA0-44D1-4449-9240-E57F07460A14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IL2DCE.Single", "IL2DCE.Single\IL2DCE.Single.csproj", "{A533DFA7-DDD9-4C5A-8BAB-39EBB0281B1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IL2DCE.Server", "IL2DCE.Server\IL2DCE.Server.csproj", "{D152AD60-ADBC-4961-B4AB-0FDB0CBF8D10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -31,6 +35,14 @@ Global
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Debug|x86.Build.0 = Debug|x86
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Release|x86.ActiveCfg = Release|x86
 		{ECBA2DA0-44D1-4449-9240-E57F07460A14}.Release|x86.Build.0 = Release|x86
+		{A533DFA7-DDD9-4C5A-8BAB-39EBB0281B1B}.Debug|x86.ActiveCfg = Debug|x86
+		{A533DFA7-DDD9-4C5A-8BAB-39EBB0281B1B}.Debug|x86.Build.0 = Debug|x86
+		{A533DFA7-DDD9-4C5A-8BAB-39EBB0281B1B}.Release|x86.ActiveCfg = Release|x86
+		{A533DFA7-DDD9-4C5A-8BAB-39EBB0281B1B}.Release|x86.Build.0 = Release|x86
+		{D152AD60-ADBC-4961-B4AB-0FDB0CBF8D10}.Debug|x86.ActiveCfg = Debug|x86
+		{D152AD60-ADBC-4961-B4AB-0FDB0CBF8D10}.Debug|x86.Build.0 = Debug|x86
+		{D152AD60-ADBC-4961-B4AB-0FDB0CBF8D10}.Release|x86.ActiveCfg = Release|x86
+		{D152AD60-ADBC-4961-B4AB-0FDB0CBF8D10}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
