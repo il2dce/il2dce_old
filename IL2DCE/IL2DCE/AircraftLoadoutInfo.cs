@@ -48,6 +48,17 @@ namespace IL2DCE
                 {
                     throw new FormatException(aircraft + "_" + loadoutId + ".Weapons");
                 }
+
+                for (int i = 0; i < aircraftInfoFile.lines(aircraft + "_" + loadoutId); i++)
+                {
+                    string key;
+                    string value;
+                    aircraftInfoFile.get(aircraft + "_" + loadoutId, i, out key, out value);
+                    if (key == "Detonator")
+                    {
+                        this.detonator.Add(value);
+                    }
+                }
             }
             else
             {
@@ -63,5 +74,14 @@ namespace IL2DCE
             }
         }
         private int[] weapons = null;
+
+        public List<string> Detonator
+        {
+            get
+            {
+                return this.detonator;
+            }
+        }
+        private List<string> detonator = new List<string>();
     }
 }

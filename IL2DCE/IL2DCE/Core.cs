@@ -1743,6 +1743,7 @@ namespace IL2DCE
                 IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
                 IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
                 airGroup.Weapons = aircraftLoadoutInfo.Weapons;
+                airGroup.Detonator = aircraftLoadoutInfo.Detonator;
 
                 AirGroup escortAirGroup = null;
                 if (isMissionTypeEscorted(missionType))

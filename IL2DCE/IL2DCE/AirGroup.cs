@@ -85,6 +85,17 @@ namespace IL2DCE
                 }
             }
 
+            for (int i = 0; i < sectionFile.lines(id); i++)
+            {
+                string key;
+                string value;
+                sectionFile.get(id, i, out key, out value);
+                if (key == "Detonator")
+                {
+                    this.detonator.Add(value);
+                }
+            }
+
             // Belt
             // TODO: Parse belt
 
@@ -166,6 +177,19 @@ namespace IL2DCE
             get;
             set;
         }
+
+        public List<string> Detonator
+        {
+            get
+            {
+                return this.detonator;
+            }
+            set
+            {
+                this.detonator = value;
+            }
+        }
+        private List<string> detonator = new List<string>();
 
         public Point3d Position
         {
@@ -413,6 +437,14 @@ namespace IL2DCE
                         weaponsLine += weapon.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " ";
                     }
                     sectionFile.add(Id, "Weapons", weaponsLine.TrimEnd());
+                }
+
+                if (Detonator != null && Detonator.Count > 0)
+                {
+                    foreach (string detonator in Detonator)
+                    {
+                        sectionFile.add(Id, "Detonator", detonator);
+                    }
                 }
 
                 if (Core._spawnParked == true)
