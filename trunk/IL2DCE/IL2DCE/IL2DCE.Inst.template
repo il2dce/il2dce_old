@@ -12,6 +12,9 @@ UninstPage instfiles
 
 LicenseData "parts\IL2DCE\COPYING.txt"
 
+# Execute uninstall
+Exec $INSTDIR\uninst.exe
+
 section
 
 setOutPath "$INSTDIR\AddIns"
