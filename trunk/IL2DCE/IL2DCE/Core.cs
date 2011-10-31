@@ -291,10 +291,10 @@ namespace IL2DCE
         {
             get
             {
-                return campaigns;
+                return campaignInfos;
             }
         }
-        private List<ICampaignInfo> campaigns = new List<ICampaignInfo>();
+        private List<ICampaignInfo> campaignInfos = new List<ICampaignInfo>();
 
         private IGamePlay GamePlay
         {
