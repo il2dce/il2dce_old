@@ -99,5 +99,7 @@ namespace IL2DCE
         {
             get;
         }
+
+        double GetRandomAltitude(IAircraftParametersInfo missionParameters);
     }
 }
