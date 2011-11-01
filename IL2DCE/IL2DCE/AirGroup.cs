@@ -273,7 +273,7 @@ namespace IL2DCE
         {
             get
             {
-                return _core.Career.CampaignInfo.GetAircraftInfo(Class);
+                return _core.CurrentCareer.CampaignInfo.GetAircraftInfo(Class);
             }
         }
 

@@ -20,74 +20,52 @@ using System.Collections.Generic;
 
 namespace IL2DCE
 {
-    public interface ICore
+    public interface IGenerator
     {
-        maddox.game.IGamePlay GamePlay
-        {
-            get;
-        }
-
-        ICareer CurrentCareer
-        {
-            get;
-            set;
-        }
-
-        List<ICareer> Careers
-        {
-            get;
-        }
-
-        List<ICampaignInfo> CampaignInfos
-        {
-            get;
-        }
-
-        IGenerator Generator
-        {
-            get;
-        }
-
-        void DeleteCareer(ICareer career);
-
         void InitCampaign();
-
-        void ResetCampaign(IGame game);
 
         void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
 
-        void AdvanceCampaign(IGame game);
-
-        bool SpawnParked
-        {
-            get;
-            set;
-        }
-
-        int Debug
-        {
-            get;
-            set;
-        }
-
-        double FlightSize
+        System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
             get;
         }
 
-        double FlightCount
+        System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
         {
             get;
         }
 
-        int AdditionalAirOperations
+        System.Collections.Generic.IList<IAirGroup> AirGroups
         {
             get;
         }
 
-        int AdditionalGroundOperations
+        System.Collections.Generic.IList<IAirGroup> RedAirGroups
         {
             get;
         }
+
+        System.Collections.Generic.IList<IAirGroup> BlueAirGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> GroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> RedGroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> BlueGroundGroups
+        {
+            get;
+        }
+
+        double GetRandomAltitude(IAircraftParametersInfo missionParameters);
     }
 }

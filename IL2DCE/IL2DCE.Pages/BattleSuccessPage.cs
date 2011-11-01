@@ -66,20 +66,20 @@ namespace IL2DCE
 
                     if ((Game as IGameSingle).BattleSuccess == EBattleResult.DRAW)
                     {
-                        FrameworkElement.textBoxDescription.Text += "Exp: " + Game.Core.Career.Experience + " + 100/" + ((Game.Core.Career.RankIndex + 1) * 1000);
+                        FrameworkElement.textBoxDescription.Text += "Exp: " + Game.Core.CurrentCareer.Experience + " + 100/" + ((Game.Core.CurrentCareer.RankIndex + 1) * 1000);
                         FrameworkElement.textBoxDescription.Text += "\n";
 
-                        if (Game.Core.Career.Experience + 100 >= (Game.Core.Career.RankIndex + 1) * 1000)
+                        if (Game.Core.CurrentCareer.Experience + 100 >= (Game.Core.CurrentCareer.RankIndex + 1) * 1000)
                         {
                             FrameworkElement.textBoxDescription.Text += "Promition!";
                         }
                     }
                     else
                     {
-                        FrameworkElement.textBoxDescription.Text += "Exp: " + Game.Core.Career.Experience + " + 200/" + ((Game.Core.Career.RankIndex + 1) * 1000);
+                        FrameworkElement.textBoxDescription.Text += "Exp: " + Game.Core.CurrentCareer.Experience + " + 200/" + ((Game.Core.CurrentCareer.RankIndex + 1) * 1000);
                         FrameworkElement.textBoxDescription.Text += "\n";
 
-                        if (Game.Core.Career.Experience + 200 >= (Game.Core.Career.RankIndex + 1) * 1000)
+                        if (Game.Core.CurrentCareer.Experience + 200 >= (Game.Core.CurrentCareer.RankIndex + 1) * 1000)
                         {
                             FrameworkElement.textBoxDescription.Text += "Promition!";
                         }
