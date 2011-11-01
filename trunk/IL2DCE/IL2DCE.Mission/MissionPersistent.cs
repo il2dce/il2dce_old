@@ -183,7 +183,8 @@ namespace IL2DCE
             private System.Collections.Generic.List<FrontMarker> frontMarkers = new System.Collections.Generic.List<FrontMarker>();
             private ISectionFile triggerFile;
 
-            private Queue<AirGroup> availableAirGroups = new Queue<AirGroup>();
+            private List<AirGroup> idleAirGroups = new List<AirGroup>();
+            private List<AirGroup> pendingAirGroups = new List<AirGroup>();
 
             public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
             {
@@ -256,7 +257,7 @@ namespace IL2DCE
                     templateFile.get("AirGroups", i, out key, out value);
 
                     IL2DCE.AirGroup airGroup = new IL2DCE.AirGroup(this.Core, templateFile, key);
-                    availableAirGroups.Enqueue(airGroup);                    
+                    idleAirGroups.Add(airGroup);
                 }
             }
 
@@ -541,6 +542,18 @@ namespace IL2DCE
                 }
             }
 
+            void checkPendingAirGroups()
+            {
+                for (int i = pendingAirGroups.Count - 1; i >= 0; i--)
+                {
+                    if (isAvailable(pendingAirGroups[i]))
+                    {
+                        idleAirGroups.Add(pendingAirGroups[i]);
+                        pendingAirGroups.RemoveAt(i);
+                    }
+                }
+            }
+
             bool isAvailable(AirGroup airGroup)
             {
                 List<string> aiAirGroupNames = new List<string>();
@@ -570,12 +583,11 @@ namespace IL2DCE
 
                 if (Time.tickCounter() % 300 == 0)
                 {
-                    if (availableAirGroups.Count > 0)
-                    {
-                        AirGroup airGroup = availableAirGroups.Dequeue();
-                        availableAirGroups.Enqueue(airGroup);
+                    checkPendingAirGroups();
 
-                        if (isAvailable(airGroup))
+                    if (idleAirGroups.Count > 0)
+                    {
+                        foreach(AirGroup airGroup in idleAirGroups)
                         {
                             if (airGroup.AircraftInfo.MissionTypes.Contains(EMissionType.ATTACK_ARMOR))
                             {
@@ -616,6 +628,9 @@ namespace IL2DCE
 
                                     if (closestAiGroundGroup != null)
                                     {
+                                        idleAirGroups.Remove(airGroup);
+                                        pendingAirGroups.Add(airGroup);
+
                                         ISectionFile airMission = GamePlay.gpCreateSectionFile();
 
                                         Random rand = new Random();
@@ -636,6 +651,8 @@ namespace IL2DCE
                                         airGroup.writeTo(airMission);
 
                                         GamePlay.gpPostMissionLoad(airMission);
+
+                                        break;
                                     }
                                 }
                             }
