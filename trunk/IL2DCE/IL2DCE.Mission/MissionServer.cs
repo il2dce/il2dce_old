@@ -93,12 +93,12 @@ namespace IL2DCE
 
                 this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
 
-                core.Career = core.Careers[0];
+                core.CurrentCareer = core.Careers[0];
                 core.InitCampaign();
                 
                 ISectionFile missionFile = null;
                 IBriefingFile briefingFile = null;
-                core.Generate(core.Career.CampaignInfo.TemplateFilePath, "test", out missionFile, out briefingFile);
+                core.Generate(core.CurrentCareer.CampaignInfo.TemplateFilePath, "test", out missionFile, out briefingFile);
 
                 GamePlay.gpBattleStop();
 

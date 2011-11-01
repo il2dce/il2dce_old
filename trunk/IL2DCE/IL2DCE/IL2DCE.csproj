@@ -56,6 +56,7 @@
     <Compile Include="Interfaces\IBriefingFile.cs" />
     <Compile Include="Interfaces\ICareer.cs" />
     <Compile Include="Interfaces\ICampaignInfo.cs" />
+    <Compile Include="Interfaces\IGenerator.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />

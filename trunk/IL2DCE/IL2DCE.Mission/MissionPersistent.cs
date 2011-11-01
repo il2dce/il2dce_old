@@ -218,7 +218,7 @@ namespace IL2DCE
 
                 this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
 
-                core.Career = core.Careers[0];
+                core.CurrentCareer = core.Careers[0];
                 core.InitCampaign();
 
 
@@ -643,7 +643,7 @@ namespace IL2DCE
                                         airGroup.Detonator = aircraftLoadoutInfo.Detonator;
 
                                         Point2d pos = new Point2d(closestAiGroundGroup.Pos().x, closestAiGroundGroup.Pos().y);
-                                        double alt = this.Core.GetRandomAltitude(randomAircraftParametersInfo);
+                                        double alt = this.Core.Generator.GetRandomAltitude(randomAircraftParametersInfo);
                                         airGroup.GroundAttack(EMissionType.ATTACK_ARMOR, closestAiGroundGroup, alt);
 
                                         airGroup.SetOnParked = true;
