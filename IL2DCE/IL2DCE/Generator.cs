@@ -29,7 +29,11 @@ namespace IL2DCE
     {
         private Random rand = new Random();
         private List<AirGroup> availableAirGroups = new List<AirGroup>();
+        private List<AirGroup> operatingAirGroups = new List<AirGroup>();
+
+
         private List<GroundGroup> availableGroundGroups = new List<GroundGroup>();
+        
         private List<Stationary> redStationaries = new List<Stationary>();
         private List<Stationary> blueStationaries = new List<Stationary>();
 
@@ -1009,6 +1013,41 @@ namespace IL2DCE
             }
         }
 
+        void checkPendingAirGroups()
+        {
+            for (int i = operatingAirGroups.Count - 1; i >= 0; i--)
+            {
+                if (isAvailable(operatingAirGroups[i]))
+                {
+                    availableAirGroups.Add(operatingAirGroups[i]);
+                    operatingAirGroups.RemoveAt(i);
+                }
+            }
+        }
+
+        bool isAvailable(AirGroup airGroup)
+        {
+            List<string> aiAirGroupNames = new List<string>();
+            if (this.Core.GamePlay.gpAirGroups(airGroup.ArmyIndex) != null && this.Core.GamePlay.gpAirGroups(airGroup.ArmyIndex).Length > 0)
+            {
+                foreach (maddox.game.world.AiAirGroup aiAirGroup in this.Core.GamePlay.gpAirGroups(airGroup.ArmyIndex))
+                {
+                    string aiAirGroupName = aiAirGroup.Name();
+                    aiAirGroupName = aiAirGroupName.Remove(0, aiAirGroupName.IndexOf(":") + 1);
+                    aiAirGroupNames.Add(aiAirGroupName);
+                }
+            }
+
+            if (aiAirGroupNames.Contains(airGroup.Id))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, AirGroup forcedEscortAirGroup)
         {
             if (isMissionTypeAvailable(airGroup, missionType))
@@ -1365,6 +1404,23 @@ namespace IL2DCE
                     blueGroundGroups.Add(groundGroup);
                 }
             }
+        }
+
+        public ISectionFile GenerateRandomAirOperation()
+        {
+            checkPendingAirGroups();
+
+            ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
+            IBriefingFile briefingFile = new BriefingFile();
+
+            if (availableAirGroups != null && availableAirGroups.Count > 0
+                && operatingAirGroups != null && operatingAirGroups.Count < this.Core.AdditionalAirOperations)
+            {
+                AirGroup airGroup = availableAirGroups[availableAirGroups.Count-1];
+                createRandomAirOperation(missionFile, briefingFile, airGroup);
+            }
+
+            return missionFile;
         }
 
         public void Generate(string templateFileName, string missionId, out ISectionFile missionFile, out IBriefingFile briefingFile)

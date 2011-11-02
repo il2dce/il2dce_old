@@ -183,9 +183,6 @@ namespace IL2DCE
             private System.Collections.Generic.List<FrontMarker> frontMarkers = new System.Collections.Generic.List<FrontMarker>();
             private ISectionFile triggerFile;
 
-            private List<AirGroup> idleAirGroups = new List<AirGroup>();
-            private List<AirGroup> pendingAirGroups = new List<AirGroup>();
-
             public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
             {
                 base.OnActorCreated(missionNumber, shortName, actor);
@@ -221,7 +218,7 @@ namespace IL2DCE
                 
                 ISectionFile missionFile = GamePlay.gpLoadSectionFile("$user/missions/IL2DCE/Campaigns/IL2DCE.Persistent.mis");
                 
-                core.Generator.Init(missionFile);                
+                core.Generator.Init(missionFile);
 
                 this.triggerFile = GamePlay.gpCreateSectionFile();
 
@@ -247,16 +244,6 @@ namespace IL2DCE
                             triggerFile.add("Trigger", "changeArmy" + i.ToString() + "_2", " TPassThrough 3 2 " + x + " " + y + " 500");
                         }
                     }
-                }
-
-                for (int i = 0; i < missionFile.lines("AirGroups"); i++)
-                {
-                    string key;
-                    string value;
-                    missionFile.get("AirGroups", i, out key, out value);
-
-                    IL2DCE.AirGroup airGroup = new IL2DCE.AirGroup(this.Core, missionFile, key);
-                    idleAirGroups.Add(airGroup);
                 }
             }
 
@@ -540,123 +527,14 @@ namespace IL2DCE
                     }
                 }
             }
-
-            void checkPendingAirGroups()
-            {
-                for (int i = pendingAirGroups.Count - 1; i >= 0; i--)
-                {
-                    if (isAvailable(pendingAirGroups[i]))
-                    {
-                        idleAirGroups.Add(pendingAirGroups[i]);
-                        pendingAirGroups.RemoveAt(i);
-                    }
-                }
-            }
-
-            bool isAvailable(AirGroup airGroup)
-            {
-                List<string> aiAirGroupNames = new List<string>();
-                if (GamePlay.gpAirGroups(airGroup.ArmyIndex) != null && GamePlay.gpAirGroups(airGroup.ArmyIndex).Length > 0)
-                {
-                    foreach (AiAirGroup aiAirGroup in GamePlay.gpAirGroups(airGroup.ArmyIndex))
-                    {
-                        string aiAirGroupName = aiAirGroup.Name();
-                        aiAirGroupName = aiAirGroupName.Remove(0, aiAirGroupName.IndexOf(":") + 1);
-                        aiAirGroupNames.Add(aiAirGroupName);
-                    }
-                }
-
-                if (aiAirGroupNames.Contains(airGroup.Id))
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-
+            
             public override void OnTickGame()
             {
                 base.OnTickGame();
 
                 if (Time.tickCounter() % 300 == 0)
                 {
-                    checkPendingAirGroups();
-
-                    if (idleAirGroups.Count > 0)
-                    {
-                        foreach(AirGroup airGroup in idleAirGroups)
-                        {
-                            if (airGroup.AircraftInfo.MissionTypes.Contains(EMissionType.ATTACK_ARMOR))
-                            {
-                                if (GamePlay.gpGroundGroups(airGroup.ArmyIndex) != null && GamePlay.gpGroundGroups(airGroup.ArmyIndex).Length > 0)
-                                {
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, "Hello", null);
-
-                                    AiGroundGroup closestAiGroundGroup = null;
-
-                                    int armyIndex = 0;
-                                    if (airGroup.ArmyIndex == 1)
-                                    {
-                                        armyIndex = 2;
-                                    }
-                                    else
-                                    {
-                                        armyIndex = 1;
-                                    }
-
-                                    foreach (AiGroundGroup aiGroundGroup in GamePlay.gpGroundGroups(armyIndex))
-                                    {
-                                        if (aiGroundGroup.IsAlive())
-                                        {
-                                            if (closestAiGroundGroup == null)
-                                            {
-                                                closestAiGroundGroup = aiGroundGroup;
-                                            }
-                                            else
-                                            {
-                                                Point3d p = new Point3d(airGroup.Position.x, airGroup.Position.y, airGroup.Position.z);
-                                                if (aiGroundGroup.Pos().distance(ref p) < closestAiGroundGroup.Pos().distance(ref p))
-                                                {
-                                                    closestAiGroundGroup = aiGroundGroup;
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    if (closestAiGroundGroup != null)
-                                    {
-                                        idleAirGroups.Remove(airGroup);
-                                        pendingAirGroups.Add(airGroup);
-
-                                        ISectionFile airMission = GamePlay.gpCreateSectionFile();
-
-                                        Random rand = new Random();
-
-                                        List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ATTACK_ARMOR);
-                                        int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
-                                        IAircraftParametersInfo randomAircraftParametersInfo = aircraftParametersInfos[aircraftParametersInfoIndex];
-                                        IAircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
-                                        airGroup.Weapons = aircraftLoadoutInfo.Weapons;
-                                        airGroup.Detonator = aircraftLoadoutInfo.Detonator;
-
-                                        Point2d pos = new Point2d(closestAiGroundGroup.Pos().x, closestAiGroundGroup.Pos().y);
-                                        double alt = this.Core.Generator.GetRandomAltitude(randomAircraftParametersInfo);
-                                        airGroup.GroundAttack(EMissionType.ATTACK_ARMOR, closestAiGroundGroup, alt);
-
-                                        airGroup.SetOnParked = true;
-
-                                        airGroup.writeTo(airMission);
-
-                                        GamePlay.gpPostMissionLoad(airMission);
-
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Core.Generator.GenerateRandomAirOperation();
                 }
 
                 if (Time.tickCounter() % 300 == 0)
