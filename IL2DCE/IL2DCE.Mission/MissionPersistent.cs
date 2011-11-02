@@ -217,20 +217,19 @@ namespace IL2DCE
                 string debugFolderSystemPath = @"C:\Users\stefan.rothdach\Documents\1C SoftClub\il-2 sturmovik cliffs of dover\missions\IL2DCE\Debug";
 
                 this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
-
                 core.CurrentCareer = core.Careers[0];
-                core.InitCampaign();
-
-
-                ISectionFile templateFile = GamePlay.gpLoadSectionFile("$user/missions/IL2DCE/Campaigns/IL2DCE.Persistent.mis");
+                
+                ISectionFile missionFile = GamePlay.gpLoadSectionFile("$user/missions/IL2DCE/Campaigns/IL2DCE.Persistent.mis");
+                
+                core.Generator.Init(missionFile);                
 
                 this.triggerFile = GamePlay.gpCreateSectionFile();
 
-                for (int i = 0; i < templateFile.lines("FrontMarker"); i++)
+                for (int i = 0; i < missionFile.lines("FrontMarker"); i++)
                 {
                     string key;
                     string value;
-                    templateFile.get("FrontMarker", i, out key, out value);
+                    missionFile.get("FrontMarker", i, out key, out value);
 
                     string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (valueParts.Length == 3)
@@ -250,13 +249,13 @@ namespace IL2DCE
                     }
                 }
 
-                for (int i = 0; i < templateFile.lines("AirGroups"); i++)
+                for (int i = 0; i < missionFile.lines("AirGroups"); i++)
                 {
                     string key;
                     string value;
-                    templateFile.get("AirGroups", i, out key, out value);
+                    missionFile.get("AirGroups", i, out key, out value);
 
-                    IL2DCE.AirGroup airGroup = new IL2DCE.AirGroup(this.Core, templateFile, key);
+                    IL2DCE.AirGroup airGroup = new IL2DCE.AirGroup(this.Core, missionFile, key);
                     idleAirGroups.Add(airGroup);
                 }
             }
