@@ -29,10 +29,10 @@ namespace IL2DCE
         ISectionFile _globalAircraftInfoFile;
         ISectionFile _localAircraftInfoFile;
 
-        public CampaignInfo(string id, string campaignFolderPath, ISectionFile campaignFile, ISectionFile glocalAircraftInfoFile, ISectionFile localAircraftInfoFile = null)
+        public CampaignInfo(string id, string campaignFolderPath, ISectionFile campaignFile, ISectionFile globalAircraftInfoFile, ISectionFile localAircraftInfoFile = null)
         {
             _id = id;
-            _globalAircraftInfoFile = glocalAircraftInfoFile;
+            _globalAircraftInfoFile = globalAircraftInfoFile;
             _localAircraftInfoFile = localAircraftInfoFile;
 
             if (campaignFile.exist("Main", "name"))

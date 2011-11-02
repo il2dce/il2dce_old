@@ -48,24 +48,6 @@ namespace IL2DCE
             this.core = core;
         }
 
-        public System.Collections.Generic.IList<Waterway> Roads
-        {
-            get
-            {
-                return _roads;
-            }
-        }
-        System.Collections.Generic.List<Waterway> _roads = new System.Collections.Generic.List<Waterway>();
-
-        public System.Collections.Generic.IList<Waterway> Waterways
-        {
-            get
-            {
-                return _waterways;
-            }
-        }
-        System.Collections.Generic.List<Waterway> _waterways = new System.Collections.Generic.List<Waterway>();
-
         public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
             get
@@ -1280,10 +1262,8 @@ namespace IL2DCE
             }
         }
 
-        public void InitCampaign()
+        public void Init(ISectionFile missionFile)
         {
-            _roads.Clear();
-            _waterways.Clear();
             redStationaries.Clear();
             blueStationaries.Clear();
             redFrontMarkers.Clear();
@@ -1293,13 +1273,11 @@ namespace IL2DCE
             redGroundGroups.Clear();
             blueGroundGroups.Clear();
 
-            ISectionFile templateFile = this.Core.GamePlay.gpLoadSectionFile(Core.CurrentCareer.CampaignInfo.TemplateFilePath);
-
-            for (int i = 0; i < templateFile.lines("Stationary"); i++)
+            for (int i = 0; i < missionFile.lines("Stationary"); i++)
             {
                 string key;
                 string value;
-                templateFile.get("Stationary", i, out key, out value);
+                missionFile.get("Stationary", i, out key, out value);
 
                 // Radar
                 string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -1317,11 +1295,11 @@ namespace IL2DCE
                 }
             }
 
-            for (int i = 0; i < templateFile.lines("FrontMarker"); i++)
+            for (int i = 0; i < missionFile.lines("FrontMarker"); i++)
             {
                 string key;
                 string value;
-                templateFile.get("FrontMarker", i, out key, out value);
+                missionFile.get("FrontMarker", i, out key, out value);
 
                 string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (valueParts.Length == 3)
@@ -1350,13 +1328,13 @@ namespace IL2DCE
             }
 
             availableAirGroups.Clear();
-            for (int i = 0; i < templateFile.lines("AirGroups"); i++)
+            for (int i = 0; i < missionFile.lines("AirGroups"); i++)
             {
                 string key;
                 string value;
-                templateFile.get("AirGroups", i, out key, out value);
+                missionFile.get("AirGroups", i, out key, out value);
 
-                AirGroup airGroup = new AirGroup(this.Core, templateFile, key);
+                AirGroup airGroup = new AirGroup(this.Core, missionFile, key);
                 availableAirGroups.Add(airGroup);
 
                 if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
@@ -1370,13 +1348,13 @@ namespace IL2DCE
             }
 
 
-            for (int i = 0; i < templateFile.lines("Chiefs"); i++)
+            for (int i = 0; i < missionFile.lines("Chiefs"); i++)
             {
                 string key;
                 string value;
-                templateFile.get("Chiefs", i, out key, out value);
+                missionFile.get("Chiefs", i, out key, out value);
 
-                GroundGroup groundGroup = new GroundGroup(templateFile, key);
+                GroundGroup groundGroup = new GroundGroup(missionFile, key);
 
                 if (groundGroup.Army == 1)
                 {
@@ -1385,18 +1363,6 @@ namespace IL2DCE
                 else if (groundGroup.Army == 2)
                 {
                     blueGroundGroups.Add(groundGroup);
-                }
-                else
-                {
-                    Waterway road = new Waterway(templateFile, key);
-                    if (value.StartsWith("Vehicle") || value.StartsWith("Armor"))
-                    {
-                        _roads.Add(road);
-                    }
-                    else if (value.StartsWith("Ship"))
-                    {
-                        _waterways.Add(road);
-                    }
                 }
             }
         }

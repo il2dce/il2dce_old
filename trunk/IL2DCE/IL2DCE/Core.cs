@@ -464,7 +464,8 @@ namespace IL2DCE
         
         public void InitCampaign()
         {
-            Generator.InitCampaign();
+            ISectionFile templateFile = this.GamePlay.gpLoadSectionFile(CurrentCareer.CampaignInfo.TemplateFilePath);
+            Generator.Init(templateFile);
         }
 
         public void Generate(string templateFileName, string missionId, out ISectionFile missionFile, out IBriefingFile briefingFile)

@@ -22,7 +22,7 @@ namespace IL2DCE
 {
     public interface IGenerator
     {
-        void InitCampaign();
+        void Init(maddox.game.ISectionFile missionFile);
 
         void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
 
