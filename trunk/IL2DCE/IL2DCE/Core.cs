@@ -101,18 +101,18 @@ namespace IL2DCE
                 int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalGroundOperations);
             }
 
-            flightSize = 1.0;
+            this.flightSize = 1.0;
             if (confFile.exist("Core", "flightSize"))
             {
                 string value = confFile.get("Core", "flightSize");
-                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out flightSize);
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out this.flightSize);
             }
 
-            flightCount = 1.0;
+            this.flightCount = 1.0;
             if (confFile.exist("Core", "flightCount"))
             {
                 string value = confFile.get("Core", "flightCount");
-                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out flightCount);
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out this.flightCount);
             }
 
             _debug = 0;
@@ -178,6 +178,7 @@ namespace IL2DCE
 
             _gamePlay = gamePlay;
 
+            SpawnParked = false;
             if (confFile.exist("Core", "forceSetOnPark"))
             {
                 string value = confFile.get("Core", "forceSetOnPark");
@@ -191,26 +192,39 @@ namespace IL2DCE
                 }
             }
 
+            additionalAirOperations = 0;
             if (confFile.exist("Core", "additionalAirOperations"))
             {
                 string value = confFile.get("Core", "additionalAirOperations");
                 int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalAirOperations);
             }
 
+            additionalGroundOperations = 0;
             if (confFile.exist("Core", "additionalGroundOperations"))
             {
                 string value = confFile.get("Core", "additionalGroundOperations");
                 int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out additionalGroundOperations);
             }
 
+            this.flightSize = 1.0;
+            if (confFile.exist("Core", "flightSize"))
+            {
+                string value = confFile.get("Core", "flightSize");
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out this.flightSize);
+            }
+
+            this.flightCount = 1.0;
+            if (confFile.exist("Core", "flightCount"))
+            {
+                string value = confFile.get("Core", "flightCount");
+                double.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out this.flightCount);
+            }
+
+            _debug = 0;
             if (confFile.exist("Core", "debug"))
             {
                 string value = confFile.get("Core", "debug");
                 int.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out _debug);
-            }
-            else
-            {
-                _debug = 0;
             }
 
             if (confFile.exist("Main", "campaignsFolder"))
