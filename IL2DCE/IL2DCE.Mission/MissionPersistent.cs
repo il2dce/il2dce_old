@@ -534,7 +534,8 @@ namespace IL2DCE
 
                 if (Time.tickCounter() % 300 == 0)
                 {
-                    Core.Generator.GenerateRandomAirOperation();
+                    ISectionFile missionFile = Core.Generator.GenerateRandomAirOperation();
+                    GamePlay.gpPostMissionLoad(missionFile);
                 }
 
                 if (Time.tickCounter() % 300 == 0)

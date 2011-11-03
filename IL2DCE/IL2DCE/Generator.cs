@@ -1015,13 +1015,20 @@ namespace IL2DCE
 
         void checkPendingAirGroups()
         {
-            for (int i = operatingAirGroups.Count - 1; i >= 0; i--)
+            List<AirGroup> airGroupsToRemove = new List<AirGroup>();
+            foreach (AirGroup airGroup in operatingAirGroups)
             {
-                if (isAvailable(operatingAirGroups[i]))
+                if (isAvailable(airGroup))
                 {
-                    availableAirGroups.Add(operatingAirGroups[i]);
-                    operatingAirGroups.RemoveAt(i);
+                    airGroupsToRemove.Add(airGroup);
                 }
+            }
+
+            foreach (AirGroup airGroup in airGroupsToRemove)
+            {
+                availableAirGroups.Add(airGroup);
+                operatingAirGroups.Remove(airGroup);
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available.", null);
             }
         }
 
@@ -1053,6 +1060,9 @@ namespace IL2DCE
             if (isMissionTypeAvailable(airGroup, missionType))
             {
                 availableAirGroups.Remove(airGroup);
+                operatingAirGroups.Add(airGroup);
+
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating.", null);
 
                 List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
                 int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
@@ -1233,6 +1243,8 @@ namespace IL2DCE
                 if (forcedEscortAirGroup == null && escortAirGroup != null)
                 {
                     availableAirGroups.Remove(escortAirGroup);
+                    operatingAirGroups.Add(escortAirGroup);
+                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, escortAirGroup.Id + " is operating.", null);
 
                     List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
                     int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
@@ -1255,6 +1267,8 @@ namespace IL2DCE
                         if (interceptAirGroup != null)
                         {
                             availableAirGroups.Remove(interceptAirGroup);
+                            operatingAirGroups.Add(interceptAirGroup);
+                            this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, interceptAirGroup.Id + " is operating.", null);
 
                             List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
                             int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
@@ -1288,6 +1302,12 @@ namespace IL2DCE
                     if (isMissionTypeAvailable(airGroup, missionType))
                     {
                         availableMissionTypes.Add(missionType);
+
+                        this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available for " + missionType, null);
+                    }
+                    else
+                    {
+                        this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is unavailable for " + missionType, null);
                     }
                 }
 
@@ -1297,6 +1317,10 @@ namespace IL2DCE
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
                     createAirOperation(sectionFile, briefingFile, airGroup, randomMissionType, true, null);
+                }
+                else
+                {
+                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No mission type available.", null);
                 }
             }
         }
@@ -1311,6 +1335,9 @@ namespace IL2DCE
             blueAirGroups.Clear();
             redGroundGroups.Clear();
             blueGroundGroups.Clear();
+
+            operatingAirGroups.Clear();
+            availableAirGroups.Clear();
 
             for (int i = 0; i < missionFile.lines("Stationary"); i++)
             {
@@ -1366,7 +1393,6 @@ namespace IL2DCE
                 }
             }
 
-            availableAirGroups.Clear();
             for (int i = 0; i < missionFile.lines("AirGroups"); i++)
             {
                 string key;
@@ -1394,6 +1420,7 @@ namespace IL2DCE
                 missionFile.get("Chiefs", i, out key, out value);
 
                 GroundGroup groundGroup = new GroundGroup(missionFile, key);
+                availableGroundGroups.Add(groundGroup);
 
                 if (groundGroup.Army == 1)
                 {
@@ -1413,11 +1440,15 @@ namespace IL2DCE
             ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
             IBriefingFile briefingFile = new BriefingFile();
 
-            if (availableAirGroups != null && availableAirGroups.Count > 0
-                && operatingAirGroups != null && operatingAirGroups.Count < this.Core.AdditionalAirOperations)
+            if (availableAirGroups != null && availableAirGroups.Count > 0)
             {
-                AirGroup airGroup = availableAirGroups[availableAirGroups.Count-1];
+                int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
+                AirGroup airGroup = availableAirGroups[randomAirGroupIndex];
                 createRandomAirOperation(missionFile, briefingFile, airGroup);
+            }
+            else
+            {
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No air group available.", null);
             }
 
             return missionFile;
@@ -1426,6 +1457,7 @@ namespace IL2DCE
         public void Generate(string templateFileName, string missionId, out ISectionFile missionFile, out IBriefingFile briefingFile)
         {
             availableAirGroups.Clear();
+            operatingAirGroups.Clear();
             availableGroundGroups.Clear();
 
             foreach (AirGroup airGroup in AirGroups)

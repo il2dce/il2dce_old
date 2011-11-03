@@ -446,8 +446,8 @@ namespace IL2DCE
                         sectionFile.add(Id, "Detonator", detonator);
                     }
                 }
-
-                if (this.SetOnParked == true)
+                
+                if (_core.SpawnParked == true)
                 {
                     sectionFile.add(Id, "SetOnPark", "1");
                 }
