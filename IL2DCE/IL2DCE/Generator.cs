@@ -52,24 +52,46 @@ namespace IL2DCE
             this.core = core;
         }
 
-        public System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
+        public System.Collections.Generic.List<FrontMarker> RedFrontMarkers
         {
             get
             {
+                List<FrontMarker> redFrontMarkers = new List<FrontMarker>();
+                foreach (FrontMarker frontMarker in FrontMarkers)
+                {
+                    if (frontMarker.Army == 1)
+                    {
+                        redFrontMarkers.Add(frontMarker);
+                    }
+                }
                 return redFrontMarkers;
             }
         }
 
-        public System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
+        public System.Collections.Generic.List<FrontMarker> BlueFrontMarkers
         {
             get
             {
+                List<FrontMarker> blueFrontMarkers = new List<FrontMarker>();
+                foreach (FrontMarker frontMarker in FrontMarkers)
+                {
+                    if (frontMarker.Army == 2)
+                    {
+                        blueFrontMarkers.Add(frontMarker);
+                    }
+                }
                 return blueFrontMarkers;
             }
         }
-        private List<Point3d> redFrontMarkers = new List<Point3d>();
-        private List<Point3d> blueFrontMarkers = new List<Point3d>();
-        private List<Point3d> neutralFrontMarkers = new List<Point3d>();
+
+        public System.Collections.Generic.List<FrontMarker> FrontMarkers
+        {
+            get
+            {
+                return this.frontMarkers;
+            }
+        }
+        private List<FrontMarker> frontMarkers = new List<FrontMarker>();
 
         public System.Collections.Generic.IList<IAirGroup> AirGroups
         {
@@ -243,25 +265,27 @@ namespace IL2DCE
 
         private void createRandomGroundOperation(ISectionFile missionFile, GroundGroup groundGroup)
         {
+            return;
+
             availableGroundGroups.Remove(groundGroup);
 
-            List<Point3d> friendlyMarkers = getFriendlyMarkers(groundGroup.Army);
+            List<FrontMarker> friendlyMarkers = getFriendlyMarkers(groundGroup.Army);
             if (friendlyMarkers.Count > 0)
             {
-                List<Point3d> availableFriendlyMarkers = new List<Point3d>(friendlyMarkers);
+                List<FrontMarker> availableFriendlyMarkers = new List<FrontMarker>(friendlyMarkers);
 
                 // Find closest friendly marker
-                Point3d? closestMarker = null;
-                foreach (Point3d marker in availableFriendlyMarkers)
+                FrontMarker closestMarker = null;
+                foreach (FrontMarker marker in availableFriendlyMarkers)
                 {
                     if (closestMarker == null)
                     {
                         closestMarker = marker;
                     }
-                    else if (closestMarker.HasValue)
+                    else if (closestMarker != null)
                     {
-                        Point3d p1 = new Point3d(marker.x, marker.y, marker.z);
-                        Point3d p2 = new Point3d(closestMarker.Value.x, closestMarker.Value.y, closestMarker.Value.z);
+                        Point3d p1 = new Point3d(marker.Position.x, marker.Position.y, 0.0);
+                        Point3d p2 = new Point3d(closestMarker.Position.x, closestMarker.Position.y, 0.0);
                         if (groundGroup.Position.distance(ref p1) < groundGroup.Position.distance(ref p2))
                         {
                             closestMarker = marker;
@@ -269,9 +293,9 @@ namespace IL2DCE
                     }
                 }
 
-                if (closestMarker != null && closestMarker.HasValue)
+                if (closestMarker != null)
                 {
-                    availableFriendlyMarkers.Remove(closestMarker.Value);
+                    availableFriendlyMarkers.Remove(closestMarker);
 
                     if (availableFriendlyMarkers.Count > 0)
                     {
@@ -280,11 +304,11 @@ namespace IL2DCE
                         groundGroup.Waypoints.Clear();
 
                         Point2d start = new Point2d(groundGroup.Position.x, groundGroup.Position.y);
-                        Point2d end = new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y);
+                        Point2d end = new Point2d(availableFriendlyMarkers[markerIndex].Position.x, availableFriendlyMarkers[markerIndex].Position.y);
 
                         if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
                         {
-                            findPath(groundGroup, new Point2d(closestMarker.Value.x, closestMarker.Value.y), new Point2d(availableFriendlyMarkers[markerIndex].x, availableFriendlyMarkers[markerIndex].y));
+                            findPath(groundGroup, new Point2d(closestMarker.Position.x, closestMarker.Position.y), new Point2d(availableFriendlyMarkers[markerIndex].Position.x, availableFriendlyMarkers[markerIndex].Position.y));
                             groundGroup.writeTo(missionFile);
                         }
                         else
@@ -431,35 +455,35 @@ namespace IL2DCE
             }
         }
 
-        private List<Point3d> getFriendlyMarkers(int armyIndex)
+        private List<FrontMarker> getFriendlyMarkers(int armyIndex)
         {
             if (armyIndex == 1)
             {
-                return redFrontMarkers;
+                return RedFrontMarkers;
             }
             else if (armyIndex == 2)
             {
-                return blueFrontMarkers;
+                return BlueFrontMarkers;
             }
             else
             {
-                return new List<Point3d>();
+                return new List<FrontMarker>();
             }
         }
 
-        private List<Point3d> getEnemyMarkers(int armyIndex)
+        private List<FrontMarker> getEnemyMarkers(int armyIndex)
         {
             if (armyIndex == 1)
             {
-                return blueFrontMarkers;
+                return BlueFrontMarkers;
             }
             else if (armyIndex == 2)
             {
-                return redFrontMarkers;
+                return RedFrontMarkers;
             }
             else
             {
-                return new List<Point3d>();
+                return new List<FrontMarker>();
             }
         }
 
@@ -1327,10 +1351,9 @@ namespace IL2DCE
 
         public void Init(ISectionFile missionFile)
         {
+            frontMarkers.Clear();
             redStationaries.Clear();
             blueStationaries.Clear();
-            redFrontMarkers.Clear();
-            blueFrontMarkers.Clear();
             redAirGroups.Clear();
             blueAirGroups.Clear();
             redGroundGroups.Clear();
@@ -1377,18 +1400,7 @@ namespace IL2DCE
                         && double.TryParse(valueParts[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y)
                         && int.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out army))
                     {
-                        if (army == 0)
-                        {
-                            neutralFrontMarkers.Add(new Point3d(x, y, 0.0));
-                        }
-                        else if (army == 1)
-                        {
-                            redFrontMarkers.Add(new Point3d(x, y, 0.0));
-                        }
-                        else if (army == 2)
-                        {
-                            blueFrontMarkers.Add(new Point3d(x, y, 0.0));
-                        }
+                        frontMarkers.Add(new FrontMarker(new Point2d(x, y), army));
                     }
                 }
             }

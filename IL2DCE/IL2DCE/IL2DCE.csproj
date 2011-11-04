@@ -48,6 +48,7 @@
     <Compile Include="Career.cs" />
     <Compile Include="CampaignInfo.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="FrontMarker.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="GroundGroupSubWaypoint.cs" />
     <Compile Include="Interfaces\IAircraftLoadoutInfo.cs" />

@@ -28,12 +28,17 @@ namespace IL2DCE
 
         void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
 
-        System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
+        System.Collections.Generic.List<FrontMarker> FrontMarkers
         {
             get;
         }
 
-        System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
+        System.Collections.Generic.List<FrontMarker> BlueFrontMarkers
+        {
+            get;
+        }
+
+        System.Collections.Generic.List<FrontMarker> RedFrontMarkers
         {
             get;
         }
