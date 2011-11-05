@@ -28,6 +28,8 @@ namespace IL2DCE
     {
         public class MissionPersistent : AMission
         {
+            public string missionFileName = null;
+
             protected ICore Core
             {
                 get
@@ -150,7 +152,7 @@ namespace IL2DCE
                 this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
                 core.CurrentCareer = core.Careers[0];
                 
-                ISectionFile missionFile = GamePlay.gpLoadSectionFile("$user/missions/IL2DCE/Campaigns/IL2DCE.Persistent.mis");
+                ISectionFile missionFile = GamePlay.gpLoadSectionFile(missionFileName);
                 
                 core.Generator.Init(missionFile);
 
