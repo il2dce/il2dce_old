@@ -36,6 +36,10 @@ namespace IL2DCE
 
     public interface IGroundGroup
     {
-        
+        maddox.game.IRecalcPathParams PathParams
+        {
+            get;
+            set;
+        }
     }
 }

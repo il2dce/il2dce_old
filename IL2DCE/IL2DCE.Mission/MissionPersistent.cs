@@ -37,27 +37,6 @@ namespace IL2DCE
             }
             private ICore core;
 
-            internal class GroundGroupProxy
-            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-                public GroundGroupProxy(AiGroundGroup aiGroundGroup, IGamePlay gamePlay)
-                {
-                    Detected = false;
-                    PathParams = null;
-                }
-
-                public bool Detected
-                {
-                    get;
-                    set;
-                }
-
-                public IRecalcPathParams PathParams
-                {
-                    get;
-                    set;
-                }
-            }
-
             internal class AirGroupProxy
             {
                 public enum ETask
@@ -123,26 +102,38 @@ namespace IL2DCE
             }
 
             private System.Collections.Generic.Dictionary<AiAirGroup, AirGroupProxy> airGroupProxies = new System.Collections.Generic.Dictionary<AiAirGroup, AirGroupProxy>();
-            private System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroupProxy> groundGroupProxies = new System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroupProxy>();
+
+            private System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroup> groundGroupProxies = new System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroup>();
             private ISectionFile triggerFile;
 
             public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
             {
                 base.OnActorCreated(missionNumber, shortName, actor);
 
-                if (actor is AiAirGroup)
+                if (actor is AiGroundGroup)
                 {
-                    AirGroupProxy airGroup = new AirGroupProxy(actor as AiAirGroup, this.GamePlay);
-                    airGroupProxies.Add(actor as AiAirGroup, airGroup);
+                    foreach (GroundGroup groundGroup in this.core.Generator.GroundGroups)
+                    {
+                        string aiGroundGroupName = actor.Name();
+                        aiGroundGroupName = aiGroundGroupName.Remove(0, aiGroundGroupName.IndexOf(":") + 1);
 
-                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, actor.Name() + "now under control of Wizard.", null);
+                        if (groundGroup.Id == aiGroundGroupName)
+                        {
+                            groundGroupProxies.Add((actor as AiGroundGroup), groundGroup);
+                            this.Core.Generator.Created(groundGroup);
+                        }
+                    }
                 }
-                else if (actor is AiGroundGroup)
-                {
-                    GroundGroupProxy groundGroup = new GroundGroupProxy(actor as AiGroundGroup, this.GamePlay);
-                    groundGroupProxies.Add(actor as AiGroundGroup, groundGroup);
+            }
 
-                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, actor.Name() + "now under control of Wizard.", null);
+            public override void OnActorDestroyed(int missionNumber, string shortName, AiActor actor)
+            {
+                base.OnActorDestroyed(missionNumber, shortName, actor);
+
+                if (actor is AiGroundGroup && groundGroupProxies.ContainsKey(actor as AiGroundGroup))
+                {
+                    this.Core.Generator.Destroyed(groundGroupProxies[(actor as AiGroundGroup)]);
+                    groundGroupProxies.Remove(actor as AiGroundGroup);
                 }
             }
 
@@ -254,6 +245,9 @@ namespace IL2DCE
                 {
                     ISectionFile missionFile = Core.Generator.GenerateRandomAirOperation();
                     GamePlay.gpPostMissionLoad(missionFile);
+
+                    ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
+                    GamePlay.gpPostMissionLoad(groundMissionFile);
                 }
 
                 if (Time.tickCounter() % 300 == 0)
@@ -262,7 +256,7 @@ namespace IL2DCE
                     {
                         foreach (AiGroundGroup aiGroundGroup in groundGroupProxies.Keys)
                         {
-                            GroundGroupProxy groundGroup = groundGroupProxies[aiGroundGroup];
+                            GroundGroup groundGroup = groundGroupProxies[aiGroundGroup];
                             if (groundGroup.PathParams != null)
                             {
                                 if (groundGroup.PathParams.State == RecalcPathState.SUCCESS)

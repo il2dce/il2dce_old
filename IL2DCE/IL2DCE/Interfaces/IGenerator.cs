@@ -26,7 +26,15 @@ namespace IL2DCE
 
         maddox.game.ISectionFile GenerateRandomAirOperation();
 
+        maddox.game.ISectionFile GenerateRandomGroundOperation();
+        
+        void Created(GroundGroup groundGroup);
+
+        void Destroyed(GroundGroup groundGroup);
+        
         void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
+
+        
 
         System.Collections.Generic.List<FrontMarker> FrontMarkers
         {
