@@ -208,5 +208,11 @@ namespace IL2DCE
                 sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             }
         }
+        
+        public IRecalcPathParams PathParams
+        {
+            get;
+            set;
+        }
     }
 }

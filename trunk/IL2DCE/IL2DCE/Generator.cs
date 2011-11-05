@@ -28,14 +28,17 @@ namespace IL2DCE
     public class Generator : IGenerator
     {
         private Random rand = new Random();
+
         private List<AirGroup> availableAirGroups = new List<AirGroup>();
         private List<AirGroup> operatingAirGroups = new List<AirGroup>();
 
-
         private List<GroundGroup> availableGroundGroups = new List<GroundGroup>();
+        private List<GroundGroup> operatingGroundGroups = new List<GroundGroup>();
         
         private List<Stationary> redStationaries = new List<Stationary>();
         private List<Stationary> blueStationaries = new List<Stationary>();
+
+        private List<Point2d> factories = new List<Point2d>();
 
         private ICore Core
         {
@@ -1078,7 +1081,7 @@ namespace IL2DCE
                 return true;
             }
         }
-
+        
         private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, AirGroup forcedEscortAirGroup)
         {
             if (isMissionTypeAvailable(airGroup, missionType))
@@ -1362,6 +1365,28 @@ namespace IL2DCE
             operatingAirGroups.Clear();
             availableAirGroups.Clear();
 
+            for (int i = 0; i < missionFile.lines("Buildings"); i++)
+            {
+                string key;
+                string value;
+                missionFile.get("Buildings", i, out key, out value);
+
+                string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (valueParts.Length > 4)
+                {
+                    if (valueParts[0] == "buildings.House$GermanyMotorPool01")
+                    {
+                        double x;
+                        double y;
+                        double.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x);
+                        double.TryParse(valueParts[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y);
+                        Point2d position = new Point2d(x, y);
+                        factories.Add(position);
+                    }
+                }
+            }
+
             for (int i = 0; i < missionFile.lines("Stationary"); i++)
             {
                 string key;
@@ -1376,10 +1401,19 @@ namespace IL2DCE
                     {
                         double x;
                         double y;
+                        string army = valueParts[1];
                         double.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x);
                         double.TryParse(valueParts[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y);
                         Stationary radar = new Stationary(key, x, y);
-                        redStationaries.Add(radar);
+
+                        if (army == "gb")
+                        {
+                            redStationaries.Add(radar);
+                        }
+                        else if (army == "de")
+                        {
+                            blueStationaries.Add(radar);
+                        }
                     }
                 }
             }
@@ -1452,7 +1486,8 @@ namespace IL2DCE
             ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
             IBriefingFile briefingFile = new BriefingFile();
 
-            if (availableAirGroups != null && availableAirGroups.Count > 0)
+            if (availableAirGroups != null && availableAirGroups.Count > 0
+                && operatingAirGroups.Count < this.Core.AdditionalAirOperations)
             {
                 int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
                 AirGroup airGroup = availableAirGroups[randomAirGroupIndex];
@@ -1461,6 +1496,44 @@ namespace IL2DCE
             else
             {
                 this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No air group available.", null);
+            }
+
+            return missionFile;
+        }
+
+        public ISectionFile GenerateRandomGroundOperation()
+        {
+            ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
+
+            if (availableGroundGroups != null && availableGroundGroups.Count > 0)
+            {
+                int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
+                GroundGroup groundGroup = availableGroundGroups[randomGroundGroupIndex];
+
+                List<Point2d> friendlyFactories = new List<Point2d>();
+                foreach (Point2d factory in factories)
+                {
+                    if (this.Core.GamePlay.gpFrontArmy(factory.x, factory.y) == groundGroup.Army)
+                    {
+                        friendlyFactories.Add(factory);
+                    }
+                }
+
+                if (friendlyFactories.Count > 0)
+                {
+                    int randomFactoryIndex = rand.Next(friendlyFactories.Count);
+                    Point2d factory = friendlyFactories[randomFactoryIndex];
+
+                    groundGroup.Waypoints.Clear();
+                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 50, factory.y + 50, 0.0, 0.0));
+                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 55, factory.y + 55, 0.0, 0.0));
+
+                    groundGroup.writeTo(missionFile);
+                }
+            }
+            else
+            {
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No ground group available.", null);
             }
 
             return missionFile;
@@ -1670,6 +1743,18 @@ namespace IL2DCE
                     }
                 }
             }
+        }
+
+        public void Created(GroundGroup groundGroup)
+        {
+            availableGroundGroups.Remove(groundGroup);
+            operatingGroundGroups.Add(groundGroup);
+        }
+
+        public void Destroyed(GroundGroup groundGroup)
+        {
+            operatingGroundGroups.Remove(groundGroup);
+            availableGroundGroups.Add(groundGroup);
         }
     }
 }
