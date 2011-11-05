@@ -241,13 +241,19 @@ namespace IL2DCE
             {
                 base.OnTickGame();
 
-                if (Time.tickCounter() % 300 == 0)
+                if (Time.tickCounter() % 3000 == 0)
                 {
-                    ISectionFile missionFile = Core.Generator.GenerateRandomAirOperation();
-                    GamePlay.gpPostMissionLoad(missionFile);
+                    ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
+                    if (airMissionFile != null)
+                    {
+                        GamePlay.gpPostMissionLoad(airMissionFile);
+                    }
 
                     ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
-                    GamePlay.gpPostMissionLoad(groundMissionFile);
+                    if (groundMissionFile != null)
+                    {
+                        GamePlay.gpPostMissionLoad(groundMissionFile);
+                    }
                 }
 
                 if (Time.tickCounter() % 300 == 0)

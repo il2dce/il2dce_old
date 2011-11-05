@@ -1483,19 +1483,17 @@ namespace IL2DCE
         {
             checkPendingAirGroups();
 
-            ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
-            IBriefingFile briefingFile = new BriefingFile();
+            ISectionFile missionFile = null;
 
             if (availableAirGroups != null && availableAirGroups.Count > 0
                 && operatingAirGroups.Count < this.Core.AdditionalAirOperations)
             {
+                missionFile = this.Core.GamePlay.gpCreateSectionFile();
+                IBriefingFile briefingFile = new BriefingFile();
+
                 int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
                 AirGroup airGroup = availableAirGroups[randomAirGroupIndex];
                 createRandomAirOperation(missionFile, briefingFile, airGroup);
-            }
-            else
-            {
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No air group available.", null);
             }
 
             return missionFile;
@@ -1503,10 +1501,12 @@ namespace IL2DCE
 
         public ISectionFile GenerateRandomGroundOperation()
         {
-            ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
+            ISectionFile missionFile = null;
 
             if (availableGroundGroups != null && availableGroundGroups.Count > 0)
             {
+                missionFile = this.Core.GamePlay.gpCreateSectionFile();
+
                 int randomGroundGroupIndex = rand.Next(availableGroundGroups.Count);
                 GroundGroup groundGroup = availableGroundGroups[randomGroundGroupIndex];
 
@@ -1525,15 +1525,11 @@ namespace IL2DCE
                     Point2d factory = friendlyFactories[randomFactoryIndex];
 
                     groundGroup.Waypoints.Clear();
-                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 50, factory.y + 50, 0.0, 0.0));
-                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 55, factory.y + 55, 0.0, 0.0));
+                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 50, factory.y + 50, 38.40, 10.0));
+                    groundGroup.Waypoints.Add(new GroundGroupWaypoint(factory.x + 55, factory.y + 55, 38.40, 10.0));
 
                     groundGroup.writeTo(missionFile);
                 }
-            }
-            else
-            {
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No ground group available.", null);
             }
 
             return missionFile;
