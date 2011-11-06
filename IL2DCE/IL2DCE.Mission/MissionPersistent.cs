@@ -122,6 +122,7 @@ namespace IL2DCE
                         if (groundGroup.Id == aiGroundGroupName)
                         {
                             groundGroupProxies.Add((actor as AiGroundGroup), groundGroup);
+                            groundGroup.AiGroundGroup = (actor as AiGroundGroup);
                             this.Core.Generator.Created(groundGroup);
                         }
                     }
@@ -135,6 +136,7 @@ namespace IL2DCE
                 if (actor is AiGroundGroup && groundGroupProxies.ContainsKey(actor as AiGroundGroup))
                 {
                     this.Core.Generator.Destroyed(groundGroupProxies[(actor as AiGroundGroup)]);
+                    groundGroupProxies[(actor as AiGroundGroup)].AiGroundGroup = null;
                     groundGroupProxies.Remove(actor as AiGroundGroup);
                 }
             }
@@ -223,39 +225,47 @@ namespace IL2DCE
                                 }
                             }
 
-                            if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
-                                || closestTarget != null && closestFrontMarker == null)
+                            if (groundGroupProxies[aiGroundGroup].Type == EGroundGroupType.Armor)
                             {
-                                Point2d end = new Point2d(closestTarget.Pos().x, closestTarget.Pos().y);
-                                groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
-                            }
-                            else if (closestFrontMarker != null)
-                            {
-                                Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
-                                groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
-                            }
+                                if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
+                                    || closestTarget != null && closestFrontMarker == null)
+                                {
+                                    Point2d end = new Point2d(closestTarget.Pos().x, closestTarget.Pos().y);
+                                    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
+                                }
+                                else if (closestFrontMarker != null)
+                                {
+                                    Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
+                                    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
+                                }
+                            }                            
                         }
                     }
                 }                
             }
-            
+
             public override void OnTickGame()
             {
                 base.OnTickGame();
 
-                if (Time.tickCounter() % 3000 == 0)
+                if (Time.tickCounter() > 10000)
                 {
-                    ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
-                    if (airMissionFile != null)
+                    if (Time.tickCounter() % 3000 == 0)
                     {
-                        GamePlay.gpPostMissionLoad(airMissionFile);
+                        ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
+                        if (airMissionFile != null)
+                        {
+                            GamePlay.gpPostMissionLoad(airMissionFile);
+                        }
+
+                        ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
+                        if (groundMissionFile != null)
+                        {
+                            GamePlay.gpPostMissionLoad(groundMissionFile);
+                        }
                     }
 
-                    ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
-                    if (groundMissionFile != null)
-                    {
-                        GamePlay.gpPostMissionLoad(groundMissionFile);
-                    }
+                    this.Core.Generator.UpdateWaypoints();
                 }
 
                 if (Time.tickCounter() % 300 == 0)
