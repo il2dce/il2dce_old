@@ -493,7 +493,7 @@ namespace IL2DCE
         private List<GroundGroup> getAvailableEnemyGroundGroups(int armyIndex)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
-            foreach (GroundGroup groundGroup in availableGroundGroups)
+            foreach (GroundGroup groundGroup in operatingGroundGroups)
             {
                 if (groundGroup.Army != armyIndex)
                 {
@@ -506,7 +506,7 @@ namespace IL2DCE
         private List<GroundGroup> getAvailableFriendlyGroundGroups(int armyIndex)
         {
             List<GroundGroup> groundGroups = new List<GroundGroup>();
-            foreach (GroundGroup groundGroup in availableGroundGroups)
+            foreach (GroundGroup groundGroup in operatingGroundGroups)
             {
                 if (groundGroup.Army == armyIndex)
                 {
@@ -1365,6 +1365,9 @@ namespace IL2DCE
             operatingAirGroups.Clear();
             availableAirGroups.Clear();
 
+            availableGroundGroups.Clear();
+            operatingGroundGroups.Clear();
+
             for (int i = 0; i < missionFile.lines("Buildings"); i++)
             {
                 string key;
@@ -1540,6 +1543,7 @@ namespace IL2DCE
             availableAirGroups.Clear();
             operatingAirGroups.Clear();
             availableGroundGroups.Clear();
+            operatingAirGroups.Clear();
 
             foreach (AirGroup airGroup in AirGroups)
             {
@@ -1751,6 +1755,11 @@ namespace IL2DCE
         {
             operatingGroundGroups.Remove(groundGroup);
             availableGroundGroups.Add(groundGroup);
+        }
+
+        public void UpdateWaypoints()
+        {
+            // TODO:
         }
     }
 }

@@ -31,11 +31,11 @@ namespace IL2DCE
         void Created(GroundGroup groundGroup);
 
         void Destroyed(GroundGroup groundGroup);
-        
+
+        void UpdateWaypoints();
+
         void Generate(string templateFileName, string missionId, out maddox.game.ISectionFile missionFile, out IBriefingFile briefingFile);
-
         
-
         System.Collections.Generic.List<FrontMarker> FrontMarkers
         {
             get;
