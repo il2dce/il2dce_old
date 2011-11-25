@@ -225,7 +225,7 @@ namespace IL2DCE
                                 }
                             }
 
-                            if (groundGroupProxies[aiGroundGroup].Type == EGroundGroupType.Armor)
+                            //if (groundGroupProxies[aiGroundGroup].Type == EGroundGroupType.Armor)
                             {
                                 if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
                                     || closestTarget != null && closestFrontMarker == null)

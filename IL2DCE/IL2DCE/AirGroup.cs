@@ -628,6 +628,12 @@ namespace IL2DCE
 
             Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude, 300.0));
 
+            AiWayPoint[] aiWaypoints = aiGroundGroup.GetWay();
+            if (aiWaypoints != null && aiWaypoints.Length > 0)
+            {
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, aiWaypoints[aiWaypoints.Length - 1].P.x, aiWaypoints[aiWaypoints.Length - 1].P.y, altitude, 300.0));
+            }
+
             Point3d pEnd = new Point3d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude);
             createEndInbetweenPoints(pEnd, landingAirport);
 
@@ -708,60 +714,67 @@ namespace IL2DCE
 
         public void GroundAttack(EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
-            this.reset();
-            this.MissionType = missionType;
-            this.Altitude = altitude;
-            this.TargetGroundGroup= targetGroundGroup;
-            this.escortAirGroup = escortAirGroup;
-
-            Point3d? rendevouzPosition = null;
-            if (escortAirGroup != null)
+            if (targetGroundGroup.AiGroundGroup != null)
             {
-                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                GroundAttack(missionType, targetGroundGroup.AiGroundGroup, altitude, escortAirGroup, landingAirport);
             }
-
-            if (targetGroundGroup.Waypoints.Count > 0)
+            else
             {
-                createStartWaypoints();
+                this.reset();
+                this.MissionType = missionType;
+                this.Altitude = altitude;
+                this.TargetGroundGroup = targetGroundGroup;
+                this.escortAirGroup = escortAirGroup;
 
-                if (rendevouzPosition != null && rendevouzPosition.HasValue)
+                Point3d? rendevouzPosition = null;
+                if (escortAirGroup != null)
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
-                    Point3d pStart = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
-                    createInbetweenWaypoints(rendevouzPosition.Value, pStart);
-                }
-                else
-                {
-                    Point3d pStart = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
-                    createStartInbetweenPoints(pStart);
+                    rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
                 }
 
-                GroundGroupWaypoint lastGroundGroupWaypoint = null;
-                AirGroupWaypoint start = null;
-                foreach (GroundGroupWaypoint groundGroupWaypoint in targetGroundGroup.Waypoints)
+                if (targetGroundGroup.Waypoints.Count > 0)
                 {
-                    lastGroundGroupWaypoint = groundGroupWaypoint;
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, targetGroundGroup.Id + " " + targetGroundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
-                    if (start == null)
+                    createStartWaypoints();
+
+                    if (rendevouzPosition != null && rendevouzPosition.HasValue)
                     {
-                        start = Waypoints[Waypoints.Count - 1];
+                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
+                        Point3d pStart = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
+                        createInbetweenWaypoints(rendevouzPosition.Value, pStart);
                     }
                     else
                     {
-                        if (distanceBetween(start, Waypoints[Waypoints.Count - 1]) > 20000.0)
+                        Point3d pStart = new Point3d(targetGroundGroup.Waypoints[0].Position.x, targetGroundGroup.Waypoints[0].Position.y, altitude);
+                        createStartInbetweenPoints(pStart);
+                    }
+
+                    GroundGroupWaypoint lastGroundGroupWaypoint = null;
+                    AirGroupWaypoint start = null;
+                    foreach (GroundGroupWaypoint groundGroupWaypoint in targetGroundGroup.Waypoints)
+                    {
+                        lastGroundGroupWaypoint = groundGroupWaypoint;
+                        Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, groundGroupWaypoint.Position.x, groundGroupWaypoint.Position.y, altitude, 300.0, targetGroundGroup.Id + " " + targetGroundGroup.Waypoints.IndexOf(groundGroupWaypoint)));
+                        if (start == null)
                         {
-                            break;
+                            start = Waypoints[Waypoints.Count - 1];
+                        }
+                        else
+                        {
+                            if (distanceBetween(start, Waypoints[Waypoints.Count - 1]) > 20000.0)
+                            {
+                                break;
+                            }
                         }
                     }
-                }
 
-                if (lastGroundGroupWaypoint != null)
-                {
-                    Point3d pEnd = new Point3d(lastGroundGroupWaypoint.Position.x, lastGroundGroupWaypoint.Position.y, altitude);
-                    createEndInbetweenPoints(pEnd, landingAirport);
-                }
+                    if (lastGroundGroupWaypoint != null)
+                    {
+                        Point3d pEnd = new Point3d(lastGroundGroupWaypoint.Position.x, lastGroundGroupWaypoint.Position.y, altitude);
+                        createEndInbetweenPoints(pEnd, landingAirport);
+                    }
 
-                createEndWaypoints(landingAirport);
+                    createEndWaypoints(landingAirport);
+                }
             }
         }
 

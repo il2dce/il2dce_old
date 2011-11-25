@@ -1058,7 +1058,7 @@ namespace IL2DCE
                 this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available.", null);
             }
         }
-
+                
         bool isAvailable(AirGroup airGroup)
         {
             List<string> aiAirGroupNames = new List<string>();
