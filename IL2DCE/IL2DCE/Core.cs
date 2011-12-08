@@ -31,6 +31,15 @@ namespace IL2DCE
         private string campaignsFolderSystemPath;
         private string debugFolderSystemPath;
 
+        public ISectionFile GlobalAircraftInfoFile
+        {
+            get
+            {
+                return this.globalAircraftInfoFile;
+            }
+        }
+        private ISectionFile globalAircraftInfoFile;
+
         public int AdditionalAirOperations
         {
             get
@@ -130,7 +139,7 @@ namespace IL2DCE
                 System.IO.DirectoryInfo campaignsFolder = new System.IO.DirectoryInfo(campaignsFolderSystemPath);
                 if (campaignsFolder.Exists && campaignsFolder.GetDirectories() != null && campaignsFolder.GetDirectories().Length > 0)
                 {
-                    ISectionFile globalAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + "AircraftInfo.ini");
+                    this.globalAircraftInfoFile = game.gameInterface.SectionFileLoad(campaignsFolderPath + "/" + "AircraftInfo.ini");
                     foreach (System.IO.DirectoryInfo campaignFolder in campaignsFolder.GetDirectories())
                     {
                         if (campaignFolder.GetFiles("CampaignInfo.ini") != null && campaignFolder.GetFiles("CampaignInfo.ini").Length == 1)

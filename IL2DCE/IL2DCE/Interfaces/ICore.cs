@@ -48,6 +48,11 @@ namespace IL2DCE
             get;
         }
 
+        maddox.game.ISectionFile GlobalAircraftInfoFile
+        {
+            get;
+        }
+
         void DeleteCareer(ICareer career);
 
         void InitCampaign();
