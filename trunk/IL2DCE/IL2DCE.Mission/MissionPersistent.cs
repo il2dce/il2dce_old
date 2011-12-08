@@ -224,6 +224,25 @@ namespace IL2DCE
                                     }
                                 }
                             }
+                            
+                            //foreach (x in frontmarkers)
+                            //{
+                            //    bool firstline = true;
+                            //    foreach (y in frontmarkers)
+                            //    {
+                            //        if(x != y)
+                            //        {
+                            //            if(x.distanceToFront() > x.distanceTo(y))
+                            //            {
+                            //                if(y.distanceToFront() < x.distanceTo(y))
+                            //                {			
+                            //                    firstline = false;
+                            //                    break;
+                            //                }
+                            //            }
+                            //        }
+                            //    }
+                            //}
 
                             //if (groundGroupProxies[aiGroundGroup].Type == EGroundGroupType.Armor)
                             {
@@ -242,6 +261,13 @@ namespace IL2DCE
                         }
                     }
                 }                
+            }
+
+            public override void OnAiAirNewEnemy(AiAirEnemyElement element, int army)
+            {
+                base.OnAiAirNewEnemy(element, army);
+
+                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, "ELement: " + element.agID + " " + element.state, null);
             }
 
             public override void OnTickGame()

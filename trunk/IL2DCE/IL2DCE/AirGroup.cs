@@ -273,7 +273,14 @@ namespace IL2DCE
         {
             get
             {
-                return _core.CurrentCareer.CampaignInfo.GetAircraftInfo(Class);
+                if (_core.CurrentCareer == null || _core.CurrentCareer.CampaignInfo == null)
+                {
+                    return new AircraftInfo(_core.GlobalAircraftInfoFile, Class);
+                }
+                else
+                {
+                    return _core.CurrentCareer.CampaignInfo.GetAircraftInfo(Class);
+                }
             }
         }
 
