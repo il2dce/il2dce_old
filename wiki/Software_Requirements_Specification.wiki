@@ -75,11 +75,14 @@ The ground operations are simulated at the operational level of war. The element
 === Squadron managment ===
 
 ==== Medals and decoration ===
+Medals and decorations are commissioned for certain achievments.
 
 ==== Rank ====
+The rank reflects the experience of the pilot.
 
 ==== Pilot experience ====
 The experience of a pilot is reflected by his position within the squadron. 
+   * Wingman
    * Section Leader
    * Flight Leader
    * Commanding Officer
