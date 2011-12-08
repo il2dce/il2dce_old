@@ -108,7 +108,7 @@ The battle that is lasting over several operations.
 == Non-functional Requirments ==
 
 === Campaign Creation ===
-New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_. Configuration files can be provided optionally to overwrite the global configuration.
+New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_ that defines the initial situation of he campaign. Configuration files can be provided optionally to overwrite the global configuration.
 
 === Rapid release cycles ===
 New versions are released frequently.
@@ -118,5 +118,5 @@ New versions are released frequently.
 ==== Performance ====
 Only the units that are involved in an operation are visible in the 3D engine. The amount of operations in each battle can be scaled to the available hardware.
 
-==== Aircraft, vehicles, statics, maps ====
-New Aircraft, vehicles, statics, maps can be added with little effort.
+==== Content ====
+New game content (Aircraft, vehicles, statics, and maps) can be added with little effort.
