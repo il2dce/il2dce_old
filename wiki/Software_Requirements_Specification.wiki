@@ -24,7 +24,7 @@ This campaign recreates the time between the outbreak of the war and before the 
 === Leaning into France (Sequel) ===
 
 == Use cases ==
-
+TODO
 
 
 = Details =
@@ -66,10 +66,17 @@ The air operations are simulated at the tactical level of war. The elementary un
    * NIGHT_INTRUDE
 
 ==== Special events ====
-
+TODO
 
 === Ground operations ===
-The ground operations are simulated at the operational level of war. The elementary unit is the battalion. 
+
+==== Offensive operations (Armor) ====
+
+==== Defensive operations (Artillery) ====
+
+==== Support operations (Vehicle) ====
+
+==== Ship operations (Ship) ====
 
 
 === Squadron managment ===
