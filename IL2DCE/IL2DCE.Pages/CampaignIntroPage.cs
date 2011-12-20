@@ -44,7 +44,7 @@ namespace IL2DCE
                     System.Windows.Controls.ComboBoxItem itemAirGroup = e.AddedItems[0] as System.Windows.Controls.ComboBoxItem;
                     AirGroup airGroup = (AirGroup)itemAirGroup.Tag;
 
-                    Game.Core.CurrentCareer.AirGroup = airGroup.AirGroupKey + "." + airGroup.SquadronIndex;
+                    Game.Core.Career.AirGroup = airGroup.AirGroupKey + "." + airGroup.SquadronIndex;
                 }
             }
 
@@ -56,9 +56,9 @@ namespace IL2DCE
 
                 _game = play as IGame;
 
-                if (Game.Core.CurrentCareer.ArmyIndex == 1)
+                if (Game.Core.Career.ArmyIndex == 1)
                 {
-                    foreach (IAirGroup airGroup in Game.Core.Generator.RedAirGroups)
+                    foreach (IAirGroup airGroup in Game.Core.RedAirGroups)
                     {
                         if (airGroup.AircraftInfo.IsFlyable)
                         {
@@ -69,9 +69,9 @@ namespace IL2DCE
                         }
                     }
                 }
-                else if (Game.Core.CurrentCareer.ArmyIndex == 2)
+                else if (Game.Core.Career.ArmyIndex == 2)
                 {
-                    foreach (IAirGroup airGroup in Game.Core.Generator.BlueAirGroups)
+                    foreach (IAirGroup airGroup in Game.Core.BlueAirGroups)
                     {
                         if (airGroup.AircraftInfo.IsFlyable)
                         {

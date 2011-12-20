@@ -106,10 +106,10 @@ namespace IL2DCE
                 if (e.AddedItems.Count > 0)
                 {
                     ICampaignInfo campaignSelected = e.AddedItems[0] as ICampaignInfo;
-                    Game.Core.CurrentCareer.CampaignInfo = campaignSelected;
+                    Game.Core.Career.CampaignInfo = campaignSelected;
                 }
 
-                if (Game.Core.CurrentCareer.CampaignInfo != null)
+                if (Game.Core.Career.CampaignInfo != null)
                 {
                     FrameworkElement.bNew.IsEnabled = true;
                 }

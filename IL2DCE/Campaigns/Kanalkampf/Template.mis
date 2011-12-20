@@ -124,7 +124,7 @@
   Flight0  1 2 3 4
   Flight1  11 12 13 14
   Flight2  21 22 23 24
-  Class Aircraft.Bf-109E-4B
+  Class Aircraft.Bf-109E-4
   Formation FINGERFOUR
   CallSign 20
   Fuel 100

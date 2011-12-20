@@ -26,10 +26,5 @@ namespace IL2DCE
         {
             get;
         }
-        
-        List<string> Detonator
-        {
-            get;
-        }
     }
 }
