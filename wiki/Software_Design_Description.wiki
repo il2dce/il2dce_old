@@ -1,0 +1,12 @@
+#summary Software Design Description of IL2DCE.
+#labels Phase-Design,Draft
+
+= Introduction =
+
+= System Architectural Design =
+
+= Detail Description of Components =
+
+= User Interface Design =
+
+= Additional Material =
