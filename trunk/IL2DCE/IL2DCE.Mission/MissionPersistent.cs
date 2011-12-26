@@ -184,91 +184,17 @@ namespace IL2DCE
                     AiGroundGroup aiGroundGroup = actor as AiGroundGroup;
                     if (groundGroupProxies.ContainsKey(aiGroundGroup))
                     {
-                        Point2d start = new Point2d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y);
-
-                        if (aiGroundGroup.GroupType() == AiGroundGroupType.Vehicle)
-                        {
-                            AiGroundGroup closestTarget = null;
-                            foreach (AiGroundGroup target in groundGroupProxies.Keys)
-                            {
-                                if (target.IsAlive() && target.IsValid() && target.Army() != aiGroundGroup.Army())
-                                {
-                                    if (closestTarget == null)
-                                    {
-                                        closestTarget = target;
-                                    }
-                                    else
-                                    {
-                                        if (new Point2d(target.Pos().x, target.Pos().y).distance(ref start) < new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start))
-                                        {
-                                            closestTarget = target;
-                                        }
-                                    }
-                                }
-                            }
-                            FrontMarker closestFrontMarker = null;
-                            foreach (FrontMarker frontMarker in this.Core.Generator.FrontMarkers)
-                            {
-                                if (frontMarker.Army != aiGroundGroup.Army())
-                                {
-                                    if (closestFrontMarker == null)
-                                    {
-                                        closestFrontMarker = frontMarker;
-                                    }
-                                    else
-                                    {
-                                        if (frontMarker.Position.distance(ref start) < closestFrontMarker.Position.distance(ref start))
-                                        {
-                                            closestFrontMarker = frontMarker;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            //foreach (x in frontmarkers)
-                            //{
-                            //    bool firstline = true;
-                            //    foreach (y in frontmarkers)
-                            //    {
-                            //        if(x != y)
-                            //        {
-                            //            if(x.distanceToFront() > x.distanceTo(y))
-                            //            {
-                            //                if(y.distanceToFront() < x.distanceTo(y))
-                            //                {			
-                            //                    firstline = false;
-                            //                    break;
-                            //                }
-                            //            }
-                            //        }
-                            //    }
-                            //}
-
-                            //if (groundGroupProxies[aiGroundGroup].Type == EGroundGroupType.Armor)
-                            {
-                                if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
-                                    || closestTarget != null && closestFrontMarker == null)
-                                {
-                                    Point2d end = new Point2d(closestTarget.Pos().x, closestTarget.Pos().y);
-                                    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
-                                }
-                                else if (closestFrontMarker != null)
-                                {
-                                    Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
-                                    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
-                                }
-                            }                            
-                        }
+                        this.Core.Generator.GenerateGroundOperation(groundGroupProxies[aiGroundGroup]);
                     }
                 }                
             }
 
-            public override void OnAiAirNewEnemy(AiAirEnemyElement element, int army)
-            {
-                base.OnAiAirNewEnemy(element, army);
+            //public override void OnAiAirNewEnemy(AiAirEnemyElement element, int army)
+            //{
+            //    base.OnAiAirNewEnemy(element, army);
 
-                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, "ELement: " + element.agID + " " + element.state, null);
-            }
+            //    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, "ELement: " + element.agID + " " + element.state, null);
+            //}
 
             public override void OnTickGame()
             {
@@ -300,6 +226,7 @@ namespace IL2DCE
                     {
                         foreach (AiGroundGroup aiGroundGroup in groundGroupProxies.Keys)
                         {
+                            Point2d currentPosition = new Point2d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y);
                             GroundGroup groundGroup = groundGroupProxies[aiGroundGroup];
                             if (groundGroup.PathParams != null)
                             {
@@ -313,8 +240,18 @@ namespace IL2DCE
                                 else if (groundGroup.PathParams.State == RecalcPathState.FAILED)
                                 {
                                     groundGroup.PathParams = null;
+
+                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroundGroup.Name() + " path failed.", null);
                                 }
                             }
+                            //else
+                            //{
+                            //    // check for stuck ground group
+                            //    if (groundGroup.LastPosition.distance(ref currentPosition) < 5)
+                            //    {
+                                    
+                            //    }
+                            //}
                         }
                     }
                 }

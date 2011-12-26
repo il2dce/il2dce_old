@@ -96,6 +96,27 @@ namespace IL2DCE
             }
         }
 
+        public EGroundGroupSubType SubType
+        {
+            get
+            {
+                string subType = Class.Remove(0, Type.ToString().Length + 1);
+                // Type
+                if (subType.StartsWith("Artillery$"))
+                {
+                    return EGroundGroupSubType.Artillery;
+                }
+                else if (Class.StartsWith("Supply$"))
+                {
+                    return EGroundGroupSubType.Supply;
+                }
+                else
+                {
+                    return EGroundGroupSubType.None;
+                }                
+            }
+        }
+
         public Point3d Position
         {
             get
@@ -208,7 +229,19 @@ namespace IL2DCE
                 sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             }
         }
-        
+
+        public Point2d Target
+        {
+            get;
+            set;
+        }
+
+        public Point2d LastPosition
+        {
+            get;
+            set;
+        }
+
         public IRecalcPathParams PathParams
         {
             get

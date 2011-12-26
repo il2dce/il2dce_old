@@ -1502,6 +1502,126 @@ namespace IL2DCE
             return missionFile;
         }
 
+        public void GenerateGroundOperation(GroundGroup groundGroup)
+        {
+            Point2d start = new Point2d(groundGroup.AiGroundGroup.Pos().x, groundGroup.AiGroundGroup.Pos().y);
+                        
+            if (groundGroup.Type == EGroundGroupType.Armor)
+            {
+                // Offensive operation.
+                //AiGroundGroup closestTarget = null;
+                //foreach (AiGroundGroup target in groundGroupProxies.Keys)
+                //{
+                //    if (target.IsAlive() && target.IsValid() && target.Army() != aiGroundGroup.Army())
+                //    {
+                //        if (closestTarget == null)
+                //        {
+                //            closestTarget = target;
+                //        }
+                //        else
+                //        {
+                //            if (new Point2d(target.Pos().x, target.Pos().y).distance(ref start) < new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start))
+                //            {
+                //                closestTarget = target;
+                //            }
+                //        }
+                //    }
+                //}
+                FrontMarker closestFrontMarker = null;
+                foreach (FrontMarker frontMarker in this.Core.Generator.FrontMarkers)
+                {
+                    if (frontMarker.Army != groundGroup.Army)
+                    {
+                        if (closestFrontMarker == null)
+                        {
+                            closestFrontMarker = frontMarker;
+                        }
+                        else
+                        {
+                            if (frontMarker.Position.distance(ref start) < closestFrontMarker.Position.distance(ref start))
+                            {
+                                closestFrontMarker = frontMarker;
+                            }
+                        }
+                    }
+                }
+                //if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
+                //    || closestTarget != null && closestFrontMarker == null)
+                //{
+                //    Point2d end = new Point2d(closestTarget.Pos().x, closestTarget.Pos().y);
+                //    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
+                //}
+                /*else*/ if (closestFrontMarker != null)
+                {
+                    Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
+                    groundGroup.Target = end;
+                    groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100, end, 100, PathType.GROUND, groundGroup.Army);
+                }
+            }
+            else if (groundGroup.Type == EGroundGroupType.Ship)
+            {
+                FrontMarker randomFrontMarker = null;
+                if (getFriendlyMarkers(groundGroup.Army).Count > 0)
+                {
+                    int randomMarkerIndex = rand.Next(getFriendlyMarkers(groundGroup.Army).Count);
+                    randomFrontMarker = getFriendlyMarkers(groundGroup.Army)[randomMarkerIndex];
+
+                    Point2d end = new Point2d(randomFrontMarker.Position.x, randomFrontMarker.Position.y);
+                    groundGroup.Target = end;
+                    groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10, end, 20, PathType.WATER, groundGroup.Army);
+                }
+            }
+            else if (groundGroup.Type == EGroundGroupType.Vehicle)
+            {
+                //if (groundGroup.SubType == EGroundGroupSubType.Supply)
+                {
+                    // Supply operation.
+                    FrontMarker randomFrontMarker = null;
+                    if (getFriendlyMarkers(groundGroup.Army).Count > 0)
+                    {
+                        int randomMarkerIndex = rand.Next(getFriendlyMarkers(groundGroup.Army).Count);
+                        randomFrontMarker = getFriendlyMarkers(groundGroup.Army)[randomMarkerIndex];
+
+                        Point2d end = new Point2d(randomFrontMarker.Position.x, randomFrontMarker.Position.y);
+                        groundGroup.Target = end;
+                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, groundGroup.Army);
+                    }
+                }
+                //else if (groundGroup.SubType == EGroundGroupSubType.Artillery)
+                //{
+                //    // Defensive operation.
+                //    FrontMarker firstLineFrontMarker = null;
+                //    if (getFriendlyMarkers(groundGroup.Army).Count > 0)
+                //    {
+                //        List<FrontMarker> firstLineFrontMarkers = new List<FrontMarker>();
+                //        foreach (FrontMarker x in getFriendlyMarkers(groundGroup.Army))
+                //        {
+                //            bool firstline = true;
+                //            foreach (FrontMarker y in getFriendlyMarkers(groundGroup.Army))
+                //            {
+                //                if (x != y)
+                //                {
+                //                    if (x.distanceToFront() > x.distanceTo(y))
+                //                    {
+                //                        if (y.distanceToFront() < x.distanceTo(y))
+                //                        {
+                //                            firstline = false;
+                //                            break;
+                //                        }
+                //                    }
+                //                }
+                //            }
+
+                //            if (firstline)
+                //            {
+                //                firstLineFrontMarkers.Add(x);
+                //            }
+                //        }
+                //    }
+                //}
+            }
+        }
+
         public ISectionFile GenerateRandomGroundOperation()
         {
             ISectionFile missionFile = null;
