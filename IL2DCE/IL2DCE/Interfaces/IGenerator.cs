@@ -27,6 +27,8 @@ namespace IL2DCE
         maddox.game.ISectionFile GenerateRandomAirOperation();
 
         maddox.game.ISectionFile GenerateRandomGroundOperation();
+
+        void GenerateGroundOperation(GroundGroup groundGroup);
         
         void Created(GroundGroup groundGroup);
 

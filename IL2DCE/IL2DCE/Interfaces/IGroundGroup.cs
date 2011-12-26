@@ -34,6 +34,13 @@ namespace IL2DCE
         Ship,
     }
 
+    public enum EGroundGroupSubType
+    {
+        Artillery,
+        Supply,
+        None,
+    }
+
     public interface IGroundGroup
     {
         maddox.game.IRecalcPathParams PathParams
