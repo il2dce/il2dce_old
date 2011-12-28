@@ -1627,21 +1627,21 @@ namespace IL2DCE
                 
                 if (groundGroup.Stuck == true)
                 {
-                    Point2d p = new Point2d(start.x + 0.1 * (end.x - start.x), start.y + 0.1 * (end.y - start.y));
+                    Point2d p = new Point2d(start.x + 0.01 * (end.x - start.x), start.y + 0.01 * (end.y - start.y));
                     start = p;
                     groundGroup.Stuck = false;
                 }
 
-                if (groundGroup.Fails < 10)
+                //if (groundGroup.Fails < 10)
                 {
                     // Failes 1 to 9 times. Move end closer to the start.
-                    if (groundGroup.Fails > 0)
-                    {
-                        {
-                            Point2d p = new Point2d(start.x + (1 - (groundGroup.Fails / 10)) * (end.x - start.x), start.y + (1 - (groundGroup.Fails / 10)) * (end.y - start.y));
-                            end = p;
-                        }
-                    }
+                    //if (groundGroup.Fails > 0)
+                    //{
+                    //    {
+                    //        Point2d p = new Point2d(start.x + (1 - (groundGroup.Fails / 10)) * (end.x - start.x), start.y + (1 - (groundGroup.Fails / 10)) * (end.y - start.y));
+                    //        end = p;
+                    //    }
+                    //}
 
                     if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
                     {
@@ -1652,20 +1652,20 @@ namespace IL2DCE
                         groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100, end, 100, PathType.WATER, groundGroup.Army);
                     }
                 }
-                else
-                {
-                    // Failed 10 times. Increase radius of gpFindPath.
-                    if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
-                    {
-                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10 * (groundGroup.Fails - 9), end, 10 * (groundGroup.Fails - 9), PathType.GROUND, groundGroup.Army);
-                    }
-                    else if (groundGroup.Type == EGroundGroupType.Ship)
-                    {
-                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100 * (groundGroup.Fails - 9), end, 100 * (groundGroup.Fails - 9), PathType.WATER, groundGroup.Army);
-                    }
+                //else
+                //{
+                //    // Failed 10 times. Increase radius of gpFindPath.
+                //    if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
+                //    {
+                //        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10 * (groundGroup.Fails - 9), end, 10 * (groundGroup.Fails - 9), PathType.GROUND, groundGroup.Army);
+                //    }
+                //    else if (groundGroup.Type == EGroundGroupType.Ship)
+                //    {
+                //        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100 * (groundGroup.Fails - 9), end, 100 * (groundGroup.Fails - 9), PathType.WATER, groundGroup.Army);
+                //    }
 
-                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "Radius: " + (groundGroup.Fails - 9).ToString(), null);
-                }
+                //    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "Radius: " + (groundGroup.Fails - 9).ToString(), null);
+                //}
             }
         }
 
