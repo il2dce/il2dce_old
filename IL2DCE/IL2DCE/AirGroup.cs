@@ -606,7 +606,7 @@ namespace IL2DCE
             createEndWaypoints(landingAirport);
         }
         
-        public void GroundAttack(EMissionType missionType, AiGroundGroup aiGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
+        public void GroundAttack(EMissionType missionType, AiGroup aiGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
             this.reset();
             this.MissionType = missionType;
@@ -624,24 +624,24 @@ namespace IL2DCE
             if (rendevouzPosition != null && rendevouzPosition.HasValue)
             {
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, rendevouzPosition.Value, 300.0));
-                Point3d pStart = new Point3d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude);
+                Point3d pStart = new Point3d(aiGroup.Pos().x, aiGroup.Pos().y, altitude);
                 createInbetweenWaypoints(rendevouzPosition.Value, pStart);
             }
             else
             {
-                Point3d pStart = new Point3d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude);
+                Point3d pStart = new Point3d(aiGroup.Pos().x, aiGroup.Pos().y, altitude);
                 createStartInbetweenPoints(pStart);
             }
 
-            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude, 300.0));
+            Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, aiGroup.Pos().x, aiGroup.Pos().y, altitude, 300.0));
 
-            AiWayPoint[] aiWaypoints = aiGroundGroup.GetWay();
+            AiWayPoint[] aiWaypoints = aiGroup.GetWay();
             if (aiWaypoints != null && aiWaypoints.Length > 0)
             {
                 Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.GATTACK_TARG, aiWaypoints[aiWaypoints.Length - 1].P.x, aiWaypoints[aiWaypoints.Length - 1].P.y, altitude, 300.0));
             }
 
-            Point3d pEnd = new Point3d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y, altitude);
+            Point3d pEnd = new Point3d(aiGroup.Pos().x, aiGroup.Pos().y, altitude);
             createEndInbetweenPoints(pEnd, landingAirport);
 
             createEndWaypoints(landingAirport);
@@ -721,9 +721,9 @@ namespace IL2DCE
 
         public void GroundAttack(EMissionType missionType, GroundGroup targetGroundGroup, double altitude, AirGroup escortAirGroup = null, AiAirport landingAirport = null)
         {
-            if (targetGroundGroup.AiGroundGroup != null)
+            if (targetGroundGroup.AiGroup != null)
             {
-                GroundAttack(missionType, targetGroundGroup.AiGroundGroup, altitude, escortAirGroup, landingAirport);
+                GroundAttack(missionType, targetGroundGroup.AiGroup, altitude, escortAirGroup, landingAirport);
             }
             else
             {
