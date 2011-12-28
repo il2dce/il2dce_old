@@ -1504,121 +1504,168 @@ namespace IL2DCE
 
         public void GenerateGroundOperation(GroundGroup groundGroup)
         {
-            Point2d start = new Point2d(groundGroup.AiGroundGroup.Pos().x, groundGroup.AiGroundGroup.Pos().y);
-                        
-            if (groundGroup.Type == EGroundGroupType.Armor)
+            Point2d start = new Point2d(groundGroup.AiGroup.Pos().x, groundGroup.AiGroup.Pos().y);;
+            
+            if(groundGroup.Target == null)
             {
-                // Offensive operation.
-                //AiGroundGroup closestTarget = null;
-                //foreach (AiGroundGroup target in groundGroupProxies.Keys)
-                //{
-                //    if (target.IsAlive() && target.IsValid() && target.Army() != aiGroundGroup.Army())
-                //    {
-                //        if (closestTarget == null)
-                //        {
-                //            closestTarget = target;
-                //        }
-                //        else
-                //        {
-                //            if (new Point2d(target.Pos().x, target.Pos().y).distance(ref start) < new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start))
-                //            {
-                //                closestTarget = target;
-                //            }
-                //        }
-                //    }
-                //}
-                FrontMarker closestFrontMarker = null;
-                foreach (FrontMarker frontMarker in this.Core.Generator.FrontMarkers)
+                if (groundGroup.Type == EGroundGroupType.Armor)
                 {
-                    if (frontMarker.Army != groundGroup.Army)
+                    // Offensive operation.
+                    FrontMarker closestFrontMarker = null;
+                    foreach (FrontMarker frontMarker in this.Core.Generator.FrontMarkers)
                     {
-                        if (closestFrontMarker == null)
+                        if (frontMarker.Army != groundGroup.Army)
                         {
-                            closestFrontMarker = frontMarker;
-                        }
-                        else
-                        {
-                            if (frontMarker.Position.distance(ref start) < closestFrontMarker.Position.distance(ref start))
+                            if (closestFrontMarker == null)
                             {
                                 closestFrontMarker = frontMarker;
                             }
+                            else
+                            {
+                                if (frontMarker.Position.distance(ref start) < closestFrontMarker.Position.distance(ref start))
+                                {
+                                    closestFrontMarker = frontMarker;
+                                }
+                            }
                         }
                     }
-                }
-                //if (((closestTarget != null && closestFrontMarker != null) && (new Point2d(closestTarget.Pos().x, closestTarget.Pos().y).distance(ref start) < closestFrontMarker.Position.distance(ref start)))
-                //    || closestTarget != null && closestFrontMarker == null)
-                //{
-                //    Point2d end = new Point2d(closestTarget.Pos().x, closestTarget.Pos().y);
-                //    groundGroupProxies[aiGroundGroup].PathParams = GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, aiGroundGroup.Army());
-                //}
-                /*else*/ if (closestFrontMarker != null)
-                {
-                    Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
-                    groundGroup.Target = end;
-                    groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100, end, 100, PathType.GROUND, groundGroup.Army);
-                }
-            }
-            else if (groundGroup.Type == EGroundGroupType.Ship)
-            {
-                FrontMarker randomFrontMarker = null;
-                if (getFriendlyMarkers(groundGroup.Army).Count > 0)
-                {
-                    int randomMarkerIndex = rand.Next(getFriendlyMarkers(groundGroup.Army).Count);
-                    randomFrontMarker = getFriendlyMarkers(groundGroup.Army)[randomMarkerIndex];
 
-                    Point2d end = new Point2d(randomFrontMarker.Position.x, randomFrontMarker.Position.y);
-                    groundGroup.Target = end;
-                    groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10, end, 20, PathType.WATER, groundGroup.Army);
-                }
-            }
-            else if (groundGroup.Type == EGroundGroupType.Vehicle)
-            {
-                //if (groundGroup.SubType == EGroundGroupSubType.Supply)
-                {
-                    // Supply operation.
-                    FrontMarker randomFrontMarker = null;
-                    if (getFriendlyMarkers(groundGroup.Army).Count > 0)
+                    if (closestFrontMarker != null)
                     {
-                        int randomMarkerIndex = rand.Next(getFriendlyMarkers(groundGroup.Army).Count);
-                        randomFrontMarker = getFriendlyMarkers(groundGroup.Army)[randomMarkerIndex];
+                        Point2d end = new Point2d(closestFrontMarker.Position.x, closestFrontMarker.Position.y);
+                        groundGroup.Target = end;
+                    }               
+                }
+                else if (groundGroup.Type == EGroundGroupType.Ship)
+                {
+                    FrontMarker randomFrontMarker = null;
+                    
+                    // Do not use closest front marker.
+                    List<FrontMarker> frontMarkers = new List<FrontMarker>();
+                    foreach (FrontMarker frontMarker in getFriendlyMarkers(groundGroup.Army))
+                    {
+                        if (frontMarker.Position.distance(ref start) > 10)
+                        {
+                            frontMarkers.Add(frontMarker);
+                        }
+                    }
+
+                    if (frontMarkers.Count > 0)
+                    {
+                        int randomMarkerIndex = rand.Next(frontMarkers.Count);
+                        randomFrontMarker = frontMarkers[randomMarkerIndex];
 
                         Point2d end = new Point2d(randomFrontMarker.Position.x, randomFrontMarker.Position.y);
                         groundGroup.Target = end;
-                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10, end, 20, PathType.GROUND, groundGroup.Army);
                     }
                 }
-                //else if (groundGroup.SubType == EGroundGroupSubType.Artillery)
-                //{
-                //    // Defensive operation.
-                //    FrontMarker firstLineFrontMarker = null;
-                //    if (getFriendlyMarkers(groundGroup.Army).Count > 0)
-                //    {
-                //        List<FrontMarker> firstLineFrontMarkers = new List<FrontMarker>();
-                //        foreach (FrontMarker x in getFriendlyMarkers(groundGroup.Army))
-                //        {
-                //            bool firstline = true;
-                //            foreach (FrontMarker y in getFriendlyMarkers(groundGroup.Army))
-                //            {
-                //                if (x != y)
-                //                {
-                //                    if (x.distanceToFront() > x.distanceTo(y))
-                //                    {
-                //                        if (y.distanceToFront() < x.distanceTo(y))
-                //                        {
-                //                            firstline = false;
-                //                            break;
-                //                        }
-                //                    }
-                //                }
-                //            }
+                else if (groundGroup.Type == EGroundGroupType.Vehicle)
+                {
+                    //if (groundGroup.SubType == EGroundGroupSubType.Supply)
+                    {
+                        // Supply operation.
+                        FrontMarker randomFrontMarker = null;
 
-                //            if (firstline)
-                //            {
-                //                firstLineFrontMarkers.Add(x);
-                //            }
-                //        }
-                //    }
-                //}
+                        // Do not use closest front marker.
+                        List<FrontMarker> frontMarkers = new List<FrontMarker>();
+                        foreach (FrontMarker frontMarker in getFriendlyMarkers(groundGroup.Army))
+                        {
+                            if (frontMarker.Position.distance(ref start) > 10)
+                            {
+                                frontMarkers.Add(frontMarker);
+                            }
+                        }
+
+                        if (frontMarkers.Count > 0)
+                        {
+                            int randomMarkerIndex = rand.Next(frontMarkers.Count);
+                            randomFrontMarker = frontMarkers[randomMarkerIndex];
+
+                            Point2d end = new Point2d(randomFrontMarker.Position.x, randomFrontMarker.Position.y);
+                            groundGroup.Target = end;
+                            groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10 * (groundGroup.Fails + 1), end, 10 * (groundGroup.Fails + 1), PathType.GROUND, groundGroup.Army);
+                        }
+                    }
+                    //else if (groundGroup.SubType == EGroundGroupSubType.Artillery)
+                    //{
+                    //    // Defensive operation.
+                    //    FrontMarker firstLineFrontMarker = null;
+                    //    if (getFriendlyMarkers(groundGroup.Army).Count > 0)
+                    //    {
+                    //        List<FrontMarker> firstLineFrontMarkers = new List<FrontMarker>();
+                    //        foreach (FrontMarker x in getFriendlyMarkers(groundGroup.Army))
+                    //        {
+                    //            bool firstline = true;
+                    //            foreach (FrontMarker y in getFriendlyMarkers(groundGroup.Army))
+                    //            {
+                    //                if (x != y)
+                    //                {
+                    //                    if (x.distanceToFront() > x.distanceTo(y))
+                    //                    {
+                    //                        if (y.distanceToFront() < x.distanceTo(y))
+                    //                        {
+                    //                            firstline = false;
+                    //                            break;
+                    //                        }
+                    //                    }
+                    //                }
+                    //            }
+
+                    //            if (firstline)
+                    //            {
+                    //                firstLineFrontMarkers.Add(x);
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+            }
+    
+            if (groundGroup.Target != null && groundGroup.Target.HasValue)
+            {
+                Point2d end = groundGroup.Target.Value;
+                
+                if (groundGroup.Stuck == true)
+                {
+                    Point2d p = new Point2d(start.x + 0.1 * (end.x - start.x), start.y + 0.1 * (end.y - start.y));
+                    start = p;
+                    groundGroup.Stuck = false;
+                }
+
+                if (groundGroup.Fails < 10)
+                {
+                    // Failes 1 to 9 times. Move end closer to the start.
+                    if (groundGroup.Fails > 0)
+                    {
+                        {
+                            Point2d p = new Point2d(start.x + (1 - (groundGroup.Fails / 10)) * (end.x - start.x), start.y + (1 - (groundGroup.Fails / 10)) * (end.y - start.y));
+                            end = p;
+                        }
+                    }
+
+                    if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
+                    {
+                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10, end, 10, PathType.GROUND, groundGroup.Army);
+                    }
+                    else if (groundGroup.Type == EGroundGroupType.Ship)
+                    {
+                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100, end, 100, PathType.WATER, groundGroup.Army);
+                    }
+                }
+                else
+                {
+                    // Failed 10 times. Increase radius of gpFindPath.
+                    if (groundGroup.Type == EGroundGroupType.Armor || groundGroup.Type == EGroundGroupType.Vehicle)
+                    {
+                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 10 * (groundGroup.Fails - 9), end, 10 * (groundGroup.Fails - 9), PathType.GROUND, groundGroup.Army);
+                    }
+                    else if (groundGroup.Type == EGroundGroupType.Ship)
+                    {
+                        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100 * (groundGroup.Fails - 9), end, 100 * (groundGroup.Fails - 9), PathType.WATER, groundGroup.Army);
+                    }
+
+                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "Radius: " + (groundGroup.Fails - 9).ToString(), null);
+                }
             }
         }
 

@@ -39,107 +39,8 @@ namespace IL2DCE
             }
             private ICore core;
 
-            internal class AirGroupProxy
-            {
-                public enum ETask
-                {
-                    READY,
-                    PENDING_INTERCEPT,
-                    INTERCEPT,
-                    PENDING_ATTACK,
-                    ATTACK,
-                    RTB,
-                }
-
-                public AirGroupProxy(AiAirGroup aiAirGroup, IGamePlay gamePlay)
-                {
-                    AiAirport closestAiAirport = null;
-                    if (gamePlay.gpAirports() != null && gamePlay.gpAirports().Length > 0)
-                    {
-                        foreach (AiAirport aiAirport in gamePlay.gpAirports())
-                        {
-                            Point3d p = new Point3d(aiAirGroup.Pos().x, aiAirGroup.Pos().y, aiAirGroup.Pos().z);
-                            if (closestAiAirport == null)
-                            {
-                                closestAiAirport = aiAirport;
-                            }
-                            else
-                            {
-                                if (aiAirport.Pos().distance(ref p) < closestAiAirport.Pos().distance(ref p))
-                                {
-                                    closestAiAirport = aiAirport;
-                                }
-                            }
-                            Airport = closestAiAirport;
-                        }
-                    }
-
-                    Task = ETask.READY;
-                    Detected = false;
-                }
-
-                public ETask Task
-                {
-                    get;
-                    set;
-                }
-
-                public bool Detected
-                {
-                    get;
-                    set;
-                }
-
-                public AiActor Target
-                {
-                    get;
-                    set;
-                }
-
-                public AiAirport Airport
-                {
-                    get;
-                    set;
-                }
-            }
-
-            private System.Collections.Generic.Dictionary<AiAirGroup, AirGroupProxy> airGroupProxies = new System.Collections.Generic.Dictionary<AiAirGroup, AirGroupProxy>();
-
-            private System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroup> groundGroupProxies = new System.Collections.Generic.Dictionary<AiGroundGroup, GroundGroup>();
+            private System.Collections.Generic.Dictionary<AiGroup, GroundGroup> groundGroupProxies = new System.Collections.Generic.Dictionary<AiGroup, GroundGroup>();
             private ISectionFile triggerFile;
-
-            public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
-            {
-                base.OnActorCreated(missionNumber, shortName, actor);
-
-                if (actor is AiGroundGroup)
-                {
-                    foreach (GroundGroup groundGroup in this.core.Generator.GroundGroups)
-                    {
-                        string aiGroundGroupName = actor.Name();
-                        aiGroundGroupName = aiGroundGroupName.Remove(0, aiGroundGroupName.IndexOf(":") + 1);
-
-                        if (groundGroup.Id == aiGroundGroupName)
-                        {
-                            groundGroupProxies.Add((actor as AiGroundGroup), groundGroup);
-                            groundGroup.AiGroundGroup = (actor as AiGroundGroup);
-                            this.Core.Generator.Created(groundGroup);
-                        }
-                    }
-                }
-            }
-
-            public override void OnActorDestroyed(int missionNumber, string shortName, AiActor actor)
-            {
-                base.OnActorDestroyed(missionNumber, shortName, actor);
-
-                if (actor is AiGroundGroup && groundGroupProxies.ContainsKey(actor as AiGroundGroup))
-                {
-                    this.Core.Generator.Destroyed(groundGroupProxies[(actor as AiGroundGroup)]);
-                    groundGroupProxies[(actor as AiGroundGroup)].AiGroundGroup = null;
-                    groundGroupProxies.Remove(actor as AiGroundGroup);
-                }
-            }
 
             public override void OnBattleInit()
             {
@@ -174,27 +75,57 @@ namespace IL2DCE
                 MissionNumberListener = -1;
                 GamePlay.gpPostMissionLoad(triggerFile);
             }
+            
+            public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
+            {
+                base.OnActorCreated(missionNumber, shortName, actor);
+                
+                if (actor is AiGroup)
+                {
+                    foreach (GroundGroup groundGroup in this.core.Generator.GroundGroups)
+                    {
+                        string actorName = actor.Name();
+                        actorName = actorName.Remove(0, actorName.IndexOf(":") + 1);
+
+                        if (groundGroup.Id == actorName)
+                        {
+                            groundGroupProxies.Add(actor as AiGroup, groundGroup);
+                            groundGroup.AiGroup = actor as AiGroup;
+                            this.Core.Generator.Created(groundGroup);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            public override void OnActorDestroyed(int missionNumber, string shortName, AiActor actor)
+            {
+                base.OnActorDestroyed(missionNumber, shortName, actor);
+
+                if (actor is AiGroup)
+                {
+                    this.Core.Generator.Destroyed(groundGroupProxies[actor as AiGroup]);
+                    groundGroupProxies[actor as AiGroup].AiGroup = null;
+                    groundGroupProxies[actor as AiGroup].Fails = 0;
+                    groundGroupProxies[actor as AiGroup].Stuck = false;
+                    groundGroupProxies[actor as AiGroup].Target = null;
+
+                    groundGroupProxies.Remove(actor as AiGroup);
+                }
+            }
 
             public override void OnActorTaskCompleted(int missionNumber, string shortName, AiActor actor)
             {
                 base.OnActorTaskCompleted(missionNumber, shortName, actor);
 
-                if (actor is AiGroundGroup)
+                if (actor is AiGroup)
                 {
-                    AiGroundGroup aiGroundGroup = actor as AiGroundGroup;
-                    if (groundGroupProxies.ContainsKey(aiGroundGroup))
+                    if (groundGroupProxies.ContainsKey(actor as AiGroup))
                     {
-                        this.Core.Generator.GenerateGroundOperation(groundGroupProxies[aiGroundGroup]);
+                        this.Core.Generator.GenerateGroundOperation(groundGroupProxies[actor as AiGroup]);
                     }
                 }                
             }
-
-            //public override void OnAiAirNewEnemy(AiAirEnemyElement element, int army)
-            //{
-            //    base.OnAiAirNewEnemy(element, army);
-
-            //    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, "ELement: " + element.agID + " " + element.state, null);
-            //}
 
             public override void OnTickGame()
             {
@@ -224,34 +155,53 @@ namespace IL2DCE
                 {
                     if (groundGroupProxies.Count > 0)
                     {
-                        foreach (AiGroundGroup aiGroundGroup in groundGroupProxies.Keys)
+                        foreach (AiGroup aiGroup in groundGroupProxies.Keys)
                         {
-                            Point2d currentPosition = new Point2d(aiGroundGroup.Pos().x, aiGroundGroup.Pos().y);
-                            GroundGroup groundGroup = groundGroupProxies[aiGroundGroup];
+                            Point2d currentPosition = new Point2d(aiGroup.Pos().x, aiGroup.Pos().y);
+                            GroundGroup groundGroup = groundGroupProxies[aiGroup];
                             if (groundGroup.PathParams != null)
                             {
                                 if (groundGroup.PathParams.State == RecalcPathState.SUCCESS)
                                 {
-                                    aiGroundGroup.SetWay(groundGroup.PathParams.Path);
+                                    aiGroup.SetWay(groundGroup.PathParams.Path);
                                     groundGroup.PathParams = null;
+                                    groundGroup.Fails = 0;
+                                    groundGroup.Target = null;
 
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroundGroup.Name() + " new path.", null);
+                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " new path.", null);
                                 }
                                 else if (groundGroup.PathParams.State == RecalcPathState.FAILED)
                                 {
                                     groundGroup.PathParams = null;
+                                    groundGroup.Fails++;
+                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " path failed (" + groundGroup.Fails.ToString() + ").", null);
 
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroundGroup.Name() + " path failed.", null);
+                                    this.Core.Generator.GenerateGroundOperation(groundGroup);
                                 }
                             }
-                            //else
-                            //{
-                            //    // check for stuck ground group
-                            //    if (groundGroup.LastPosition.distance(ref currentPosition) < 5)
-                            //    {
-                                    
-                            //    }
-                            //}
+                            else
+                            {
+                                if (groundGroup.LastPosition.distance(ref currentPosition) < 1)
+                                {
+                                    // Check for stuck ground groups.
+                                    if (groundGroup.Type != EGroundGroupType.Ship)
+                                    {
+                                        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " is stuck.", null);
+                                        groundGroup.Stuck = true;
+                                        this.Core.Generator.GenerateGroundOperation(groundGroup);
+                                    }
+                                    // This is also used for ships as they don't seem to fire the OnActorTaskComplete event.
+                                    else if(groundGroup.Type == EGroundGroupType.Ship)
+                                    {
+                                        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " task complete (Ship).", null);
+                                        this.Core.Generator.GenerateGroundOperation(groundGroup);
+                                    }
+                                }
+
+                                // TODO: Check for disconnected trailers.
+                            }
+
+                            groundGroup.LastPosition = currentPosition;
                         }
                     }
                 }

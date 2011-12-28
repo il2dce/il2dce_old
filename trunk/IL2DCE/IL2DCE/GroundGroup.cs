@@ -230,17 +230,50 @@ namespace IL2DCE
             }
         }
 
-        public Point2d Target
+        public Point2d? Target
         {
-            get;
-            set;
+            get
+            {
+                return this.target;
+            }
+            set
+            {
+                this.target = value;
+            }
         }
+        private Point2d? target = null;
 
         public Point2d LastPosition
         {
             get;
             set;
         }
+
+        public int Fails
+        {
+            get
+            {
+                return this.fails;
+            }
+            set
+            {
+                this.fails = value;
+            }
+        }
+        private int fails = 0;
+
+        public bool Stuck
+        {
+            get
+            {
+                return this.stuck;
+            }
+            set
+            {
+                this.stuck= value;
+            }
+        }
+        private bool stuck = false;
 
         public IRecalcPathParams PathParams
         {
@@ -280,26 +313,18 @@ namespace IL2DCE
         }
         private IRecalcPathParams pathParams = null;
 
-        public AiGroundGroup AiGroundGroup
+        public AiGroup AiGroup
         {
             get
             {
-                return this.aiGroundGroup;
+                return this.aiGroup;
             }
             set
             {
-                this.aiGroundGroup = value;
+                this.aiGroup = value;
+                LastPosition = new Point2d(aiGroup.Pos().x, aiGroup.Pos().y);
             }
         }
-        private AiGroundGroup aiGroundGroup = null;
-
-        public List<AiGroundActor> AiGroundActors
-        {
-            get
-            {
-                return this.aiGroundActors;
-            }
-        }
-        private List<AiGroundActor> aiGroundActors = new List<AiGroundActor>();
+        private AiGroup aiGroup = null;
     }
 }
