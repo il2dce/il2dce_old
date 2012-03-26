@@ -34,6 +34,7 @@ namespace IL2DCE
         //ATTACK_ARTILLERY,
         ATTACK_RADAR,
         ATTACK_SHIP,
+        ATTACK_AIRFIELD,
 
         INTERCEPT,
         //MARITIME_INTERCEPT,

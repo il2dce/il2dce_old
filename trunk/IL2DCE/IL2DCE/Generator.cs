@@ -625,6 +625,66 @@ namespace IL2DCE
             }
         }
 
+        private List<AirGroup> getAvailableEnemyAirGroups(int armyIndex)
+        {
+            List<AirGroup> airGroups = new List<AirGroup>();
+            foreach (AirGroup airGroup in availableAirGroups)
+            {
+                if (airGroup.ArmyIndex != armyIndex)
+                {
+                    airGroups.Add(airGroup);
+                }
+            }
+            return airGroups;
+        }
+
+        private AirGroup getAvailableRandomEnemyAirGroup(int armyIndex)
+        {
+            List<AirGroup> airGroups = getAvailableEnemyAirGroups(armyIndex);
+
+            if (airGroups.Count > 0)
+            {
+                int airGroupIndex = rand.Next(airGroups.Count);
+                AirGroup airGroup = airGroups[airGroupIndex];
+
+                return airGroup;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private List<AirGroup> getAvailableFriendlyAirGroups(int armyIndex)
+        {
+            List<AirGroup> airGroups = new List<AirGroup>();
+            foreach (AirGroup airGroup in availableAirGroups)
+            {
+                if (airGroup.ArmyIndex == armyIndex)
+                {
+                    airGroups.Add(airGroup);
+                }
+            }
+            return airGroups;
+        }
+
+        private AirGroup getAvailableRandomFriendlyAirGroup(int armyIndex)
+        {
+            List<AirGroup> airGroups = getAvailableFriendlyAirGroups(armyIndex);
+
+            if (airGroups.Count > 0)
+            {
+                int airGroupIndex = rand.Next(airGroups.Count);
+                AirGroup airGroup = airGroups[airGroupIndex];
+
+                return airGroup;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private List<AirGroup> getAvailableOffensiveAirGroups(int armyIndex)
         {
             List<AirGroup> airGroups = new List<AirGroup>();
@@ -644,7 +704,7 @@ namespace IL2DCE
             }
             return airGroups;
         }
-
+        
         private AirGroup getAvailableRandomOffensiveAirGroup(int armyIndex)
         {
             List<AirGroup> airGroups = getAvailableOffensiveAirGroups(armyIndex);
@@ -837,6 +897,7 @@ namespace IL2DCE
                 || missionType == EMissionType.ARMED_RECON
                 || missionType == EMissionType.ATTACK_ARMOR
                 || missionType == EMissionType.ATTACK_RADAR
+                || missionType == EMissionType.ATTACK_AIRFIELD
                 || missionType == EMissionType.ATTACK_SHIP
                 || missionType == EMissionType.ATTACK_VEHICLE
                 || missionType == EMissionType.MARITIME_RECON
@@ -904,6 +965,18 @@ namespace IL2DCE
             {
                 List<Stationary> radars = getEnemyRadars(airGroup.ArmyIndex);
                 if (radars.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (missionType == EMissionType.ATTACK_AIRFIELD)
+            {
+                List<AirGroup> enemyAirGroups = getAvailableEnemyAirGroups(airGroup.ArmyIndex);
+                if (enemyAirGroups.Count > 0)
                 {
                     return true;
                 }
@@ -1181,6 +1254,17 @@ namespace IL2DCE
 
                         airGroup.GroundAttack(missionType, radar, altitude, escortAirGroup);
                     }
+                }
+                else if (missionType == EMissionType.ATTACK_AIRFIELD)
+                {
+                    AirGroup enemyAirGroup = getAvailableRandomEnemyAirGroup(airGroup.ArmyIndex);
+                    createRandomAirOperation(sectionFile, briefingFile, enemyAirGroup);
+
+                    sectionFile.set(enemyAirGroup.Id, "Idle", true);
+
+                    double altitude = GetRandomAltitude(randomAircraftParametersInfo);
+                    Point2d p = new Point2d(enemyAirGroup.Position.x, enemyAirGroup.Position.y);
+                    airGroup.GroundAttack(missionType, p, altitude, escortAirGroup);
                 }
                 else if (missionType == EMissionType.ATTACK_SHIP)
                 {
