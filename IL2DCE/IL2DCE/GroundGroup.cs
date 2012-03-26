@@ -38,10 +38,10 @@ namespace IL2DCE
 
             // Army
             Country = (EGroundGroupCountry)Enum.Parse(typeof(EGroundGroupCountry), value.Substring(0, 2));
-            value = value.Remove(0, 2);
+            value = value.Remove(0, 3);
 
             // Options
-            Options = value.Trim();
+            Options = value;
 
             // Waypoints
             GroundGroupWaypoint lastWaypoint = null;
