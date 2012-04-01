@@ -35,8 +35,11 @@ namespace IL2DCE
         private List<GroundGroup> availableGroundGroups = new List<GroundGroup>();
         private List<GroundGroup> operatingGroundGroups = new List<GroundGroup>();
         
-        private List<Stationary> redStationaries = new List<Stationary>();
-        private List<Stationary> blueStationaries = new List<Stationary>();
+        private List<Stationary> redRadars = new List<Stationary>();
+        private List<Stationary> blueRadars = new List<Stationary>();
+
+        private List<Stationary> redAircrafts = new List<Stationary>();
+        private List<Stationary> blueAircrafts = new List<Stationary>();
 
         private List<Point2d> factories = new List<Point2d>();
 
@@ -430,11 +433,11 @@ namespace IL2DCE
         {
             if (armyIndex == 1)
             {
-                return redStationaries;
+                return redRadars;
             }
             else if (armyIndex == 2)
             {
-                return blueStationaries;
+                return blueRadars;
             }
             else
             {
@@ -446,11 +449,44 @@ namespace IL2DCE
         {
             if (armyIndex == 1)
             {
-                return blueStationaries;
+                return blueRadars;
             }
             else if (armyIndex == 2)
             {
-                return redStationaries;
+                return redRadars;
+            }
+            else
+            {
+                return new List<Stationary>();
+            }
+        }
+
+
+        private List<Stationary> getFriendlyAircrafts(int armyIndex)
+        {
+            if (armyIndex == 1)
+            {
+                return redAircrafts;
+            }
+            else if (armyIndex == 2)
+            {
+                return blueAircrafts;
+            }
+            else
+            {
+                return new List<Stationary>();
+            }
+        }
+
+        private List<Stationary> getEnemyAircrafts(int armyIndex)
+        {
+            if (armyIndex == 1)
+            {
+                return blueAircrafts;
+            }
+            else if (armyIndex == 2)
+            {
+                return redAircrafts;
             }
             else
             {
@@ -880,6 +916,7 @@ namespace IL2DCE
         {
             if (missionType == EMissionType.ATTACK_ARMOR
                 || missionType == EMissionType.ATTACK_RADAR
+                || missionType == EMissionType.ATTACK_AIRCRAFT
                 || missionType == EMissionType.ATTACK_SHIP
                 || missionType == EMissionType.ATTACK_VEHICLE)
             {
@@ -893,15 +930,15 @@ namespace IL2DCE
 
         private bool isMissionTypeOffensive(EMissionType missionType)
         {
-            if (missionType == EMissionType.ARMED_MARITIME_RECON
+            if (missionType == EMissionType.ARMED_MARITIME_RECON                
+                || missionType == EMissionType.MARITIME_RECON
                 || missionType == EMissionType.ARMED_RECON
+                || missionType == EMissionType.RECON
                 || missionType == EMissionType.ATTACK_ARMOR
                 || missionType == EMissionType.ATTACK_RADAR
-                || missionType == EMissionType.ATTACK_AIRFIELD
+                || missionType == EMissionType.ATTACK_AIRCRAFT
                 || missionType == EMissionType.ATTACK_SHIP
-                || missionType == EMissionType.ATTACK_VEHICLE
-                || missionType == EMissionType.MARITIME_RECON
-                || missionType == EMissionType.RECON)
+                || missionType == EMissionType.ATTACK_VEHICLE)
             {
                 return true;
             }
@@ -973,10 +1010,10 @@ namespace IL2DCE
                     return false;
                 }
             }
-            else if (missionType == EMissionType.ATTACK_AIRFIELD)
+            else if (missionType == EMissionType.ATTACK_AIRCRAFT)
             {
-                List<AirGroup> enemyAirGroups = getAvailableEnemyAirGroups(airGroup.ArmyIndex);
-                if (enemyAirGroups.Count > 0)
+                List<Stationary> enemyAircrafts = getEnemyAircrafts(airGroup.ArmyIndex);
+                if (enemyAircrafts.Count > 0)
                 {
                     return true;
                 }
@@ -1128,7 +1165,17 @@ namespace IL2DCE
             {
                 availableAirGroups.Add(airGroup);
                 operatingAirGroups.Remove(airGroup);
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is now available.", null);
+            }
+
+            foreach (AirGroup airGroup in availableAirGroups)
+            {
                 this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available.", null);
+            }
+
+            foreach (AirGroup airGroup in operatingAirGroups)
+            {
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating.", null);
             }
         }
                 
@@ -1162,7 +1209,7 @@ namespace IL2DCE
                 availableAirGroups.Remove(airGroup);
                 operatingAirGroups.Add(airGroup);
 
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating.", null);
+                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating. (" + missionType + ")", null);
 
                 List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
                 int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
@@ -1255,16 +1302,17 @@ namespace IL2DCE
                         airGroup.GroundAttack(missionType, radar, altitude, escortAirGroup);
                     }
                 }
-                else if (missionType == EMissionType.ATTACK_AIRFIELD)
+                else if (missionType == EMissionType.ATTACK_AIRCRAFT)
                 {
-                    AirGroup enemyAirGroup = getAvailableRandomEnemyAirGroup(airGroup.ArmyIndex);
-                    createRandomAirOperation(sectionFile, briefingFile, enemyAirGroup);
+                    List<Stationary> aircrafts = getEnemyAircrafts(airGroup.ArmyIndex);
+                    if (aircrafts.Count > 0)
+                    {
+                        int aircraftIndex = rand.Next(aircrafts.Count);
+                        Stationary aircraft = aircrafts[aircraftIndex];
+                        double altitude = GetRandomAltitude(randomAircraftParametersInfo);
 
-                    sectionFile.set(enemyAirGroup.Id, "Idle", true);
-
-                    double altitude = GetRandomAltitude(randomAircraftParametersInfo);
-                    Point2d p = new Point2d(enemyAirGroup.Position.x, enemyAirGroup.Position.y);
-                    airGroup.GroundAttack(missionType, p, altitude, escortAirGroup);
+                        airGroup.GroundAttack(missionType, aircraft, altitude, escortAirGroup);
+                    }
                 }
                 else if (missionType == EMissionType.ATTACK_SHIP)
                 {
@@ -1355,7 +1403,7 @@ namespace IL2DCE
                 {
                     availableAirGroups.Remove(escortAirGroup);
                     operatingAirGroups.Add(escortAirGroup);
-                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, escortAirGroup.Id + " is operating.", null);
+                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")", null);
 
                     List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
                     int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
@@ -1379,7 +1427,7 @@ namespace IL2DCE
                         {
                             availableAirGroups.Remove(interceptAirGroup);
                             operatingAirGroups.Add(interceptAirGroup);
-                            this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, interceptAirGroup.Id + " is operating.", null);
+                            this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, interceptAirGroup.Id + " is operating. (" + EMissionType.INTERCEPT + ")", null);
 
                             List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
                             int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
@@ -1439,8 +1487,10 @@ namespace IL2DCE
         public void Init(ISectionFile missionFile)
         {
             frontMarkers.Clear();
-            redStationaries.Clear();
-            blueStationaries.Clear();
+            redRadars.Clear();
+            blueRadars.Clear();
+            redAircrafts.Clear();
+            blueAircrafts.Clear();
             redAirGroups.Clear();
             blueAirGroups.Clear();
             redGroundGroups.Clear();
@@ -1479,7 +1529,7 @@ namespace IL2DCE
                 string key;
                 string value;
                 missionFile.get("Stationary", i, out key, out value);
-
+                
                 // Radar
                 string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (valueParts.Length > 4)
@@ -1495,11 +1545,29 @@ namespace IL2DCE
 
                         if (army == "gb")
                         {
-                            redStationaries.Add(radar);
+                            redRadars.Add(radar);
                         }
                         else if (army == "de")
                         {
-                            blueStationaries.Add(radar);
+                            blueRadars.Add(radar);
+                        }
+                    }
+                    else if (valueParts[0].StartsWith("Stationary"))
+                    {
+                        double x;
+                        double y;
+                        string army = valueParts[1];
+                        double.TryParse(valueParts[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out x);
+                        double.TryParse(valueParts[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out y);
+                        Stationary aircraft = new Stationary(key, x, y);
+
+                        if (army == "gb")
+                        {
+                            redAircrafts.Add(aircraft);
+                        }
+                        else if (army == "de")
+                        {
+                            blueAircrafts.Add(aircraft);
                         }
                     }
                 }
