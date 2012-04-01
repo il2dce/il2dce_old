@@ -74,6 +74,21 @@ namespace IL2DCE
 
                 MissionNumberListener = -1;
                 GamePlay.gpPostMissionLoad(triggerFile);
+
+                Timeout((1 * 60), () =>
+                {
+                    UpdateWaypoints();
+                });
+
+                Timeout((2 * 60), () =>
+                {
+                    SpawnGroundGroups();
+                });
+
+                Timeout((3 * 60), () =>
+                {
+                    SpawnAirGroups();
+                });
             }
             
             public override void OnActorCreated(int missionNumber, string shortName, AiActor actor)
@@ -127,84 +142,97 @@ namespace IL2DCE
                 }                
             }
 
-            public override void OnTickGame()
+            public void UpdateWaypoints()
             {
-                base.OnTickGame();
-
-                if (Time.tickCounter() > 10000)
+                // Ground
+                if (groundGroupProxies.Count > 0)
                 {
-                    if (Time.tickCounter() % 3000 == 0)
+                    foreach (AiGroup aiGroup in groundGroupProxies.Keys)
                     {
-                        ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
-                        if (airMissionFile != null)
+                        Point2d currentPosition = new Point2d(aiGroup.Pos().x, aiGroup.Pos().y);
+                        GroundGroup groundGroup = groundGroupProxies[aiGroup];
+                        if (groundGroup.PathParams != null)
                         {
-                            GamePlay.gpPostMissionLoad(airMissionFile);
-                        }
-
-                        ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
-                        if (groundMissionFile != null)
-                        {
-                            GamePlay.gpPostMissionLoad(groundMissionFile);
-                        }
-                    }
-
-                    this.Core.Generator.UpdateWaypoints();
-                }
-
-                if (Time.tickCounter() % 300 == 0)
-                {
-                    if (groundGroupProxies.Count > 0)
-                    {
-                        foreach (AiGroup aiGroup in groundGroupProxies.Keys)
-                        {
-                            Point2d currentPosition = new Point2d(aiGroup.Pos().x, aiGroup.Pos().y);
-                            GroundGroup groundGroup = groundGroupProxies[aiGroup];
-                            if (groundGroup.PathParams != null)
+                            if (groundGroup.PathParams.State == RecalcPathState.SUCCESS)
                             {
-                                if (groundGroup.PathParams.State == RecalcPathState.SUCCESS)
-                                {
-                                    aiGroup.SetWay(groundGroup.PathParams.Path);
-                                    groundGroup.PathParams = null;
-                                    groundGroup.Fails = 0;
-                                    groundGroup.Target = null;
+                                aiGroup.SetWay(groundGroup.PathParams.Path);
+                                groundGroup.PathParams = null;
+                                groundGroup.Fails = 0;
+                                groundGroup.Target = null;
 
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " new path.", null);
+                                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " new path.", null);
+                            }
+                            else if (groundGroup.PathParams.State == RecalcPathState.FAILED)
+                            {
+                                groundGroup.PathParams = null;
+                                groundGroup.Fails++;
+                                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " path failed (" + groundGroup.Fails.ToString() + ").", null);
+
+                                this.Core.Generator.GenerateGroundOperation(groundGroup);
+                            }
+                        }
+                        else
+                        {
+                            if (groundGroup.LastPosition.distance(ref currentPosition) < 1)
+                            {
+                                // Check for stuck ground groups.
+                                if (groundGroup.Type != EGroundGroupType.Ship)
+                                {
+                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " is stuck.", null);
+                                    groundGroup.Stuck = true;
+                                    this.Core.Generator.GenerateGroundOperation(groundGroup);
                                 }
-                                else if (groundGroup.PathParams.State == RecalcPathState.FAILED)
+                                // This is also used for ships as they don't seem to fire the OnActorTaskComplete event.
+                                else if (groundGroup.Type == EGroundGroupType.Ship)
                                 {
-                                    groundGroup.PathParams = null;
-                                    groundGroup.Fails++;
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " path failed (" + groundGroup.Fails.ToString() + ").", null);
-
+                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " task complete (Ship).", null);
                                     this.Core.Generator.GenerateGroundOperation(groundGroup);
                                 }
                             }
-                            else
-                            {
-                                if (groundGroup.LastPosition.distance(ref currentPosition) < 1)
-                                {
-                                    // Check for stuck ground groups.
-                                    if (groundGroup.Type != EGroundGroupType.Ship)
-                                    {
-                                        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " is stuck.", null);
-                                        groundGroup.Stuck = true;
-                                        this.Core.Generator.GenerateGroundOperation(groundGroup);
-                                    }
-                                    // This is also used for ships as they don't seem to fire the OnActorTaskComplete event.
-                                    else if(groundGroup.Type == EGroundGroupType.Ship)
-                                    {
-                                        GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " task complete (Ship).", null);
-                                        this.Core.Generator.GenerateGroundOperation(groundGroup);
-                                    }
-                                }
 
-                                // TODO: Check for disconnected trailers.
-                            }
-
-                            groundGroup.LastPosition = currentPosition;
+                            // TODO: Check for disconnected trailers.
                         }
+
+                        groundGroup.LastPosition = currentPosition;
                     }
                 }
+
+                // Air
+                this.Core.Generator.UpdateWaypoints();
+
+                // Delay
+                Timeout((1 * 60), () =>
+                {
+                    UpdateWaypoints();
+                });
+            }
+
+            public void SpawnAirGroups()
+            {                
+                ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
+                if (airMissionFile != null)
+                {
+                    GamePlay.gpPostMissionLoad(airMissionFile);
+                }
+                
+                Timeout((15 * 60), () =>
+                {
+                    SpawnAirGroups();
+                });
+            }
+
+            public void SpawnGroundGroups()
+            {
+                ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
+                if (groundMissionFile != null)
+                {
+                    GamePlay.gpPostMissionLoad(groundMissionFile);
+                }
+
+                Timeout((5 * 60), () =>
+                {
+                    SpawnGroundGroups();
+                });
             }
 
             internal ISectionFile CreateNewFrontLineMission(int markerNum, int newArmy)
