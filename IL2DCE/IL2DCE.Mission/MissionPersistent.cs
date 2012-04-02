@@ -29,6 +29,7 @@ namespace IL2DCE
         public class MissionPersistent : AMission
         {
             public string missionFileName = null;
+            public string missionFolderName = null;
 
             protected ICore Core
             {
@@ -208,12 +209,18 @@ namespace IL2DCE
             }
 
             public void SpawnAirGroups()
-            {                
-                ISectionFile airMissionFile = Core.Generator.GenerateRandomAirOperation();
-                if (airMissionFile != null)
-                {
-                    GamePlay.gpPostMissionLoad(airMissionFile);
-                }
+            {
+                ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
+                IBriefingFile briefingFile = new BriefingFile();
+                Core.Generator.GenerateRandomAirOperation(missionFile, briefingFile);
+
+                Guid guid = new Guid();
+                String missionId = guid.ToString();
+
+                string briefingFileSystemPath = missionFolderName + "mission.briefing";
+                missionFile.save(missionFolderName + "mission.mis");
+                briefingFile.save(briefingFileSystemPath);
+                GamePlay.gpPostMissionLoad(missionFolderName + "mission.mis");
                 
                 Timeout((15 * 60), () =>
                 {

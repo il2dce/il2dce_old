@@ -24,7 +24,7 @@ namespace IL2DCE
     {
         void Init(maddox.game.ISectionFile missionFile);
 
-        maddox.game.ISectionFile GenerateRandomAirOperation();
+        void GenerateRandomAirOperation(maddox.game.ISectionFile missionFile, IBriefingFile briefingFile);
 
         maddox.game.ISectionFile GenerateRandomGroundOperation();
 

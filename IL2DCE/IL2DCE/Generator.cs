@@ -1634,24 +1634,16 @@ namespace IL2DCE
             }
         }
 
-        public ISectionFile GenerateRandomAirOperation()
+        public void GenerateRandomAirOperation(ISectionFile missionFile, IBriefingFile briefingFile)
         {
             checkPendingAirGroups();
-
-            ISectionFile missionFile = null;
-
             if (availableAirGroups != null && availableAirGroups.Count > 0
                 && operatingAirGroups.Count < this.Core.AdditionalAirOperations)
             {
-                missionFile = this.Core.GamePlay.gpCreateSectionFile();
-                IBriefingFile briefingFile = new BriefingFile();
-
                 int randomAirGroupIndex = rand.Next(availableAirGroups.Count);
                 AirGroup airGroup = availableAirGroups[randomAirGroupIndex];
                 createRandomAirOperation(missionFile, briefingFile, airGroup);
             }
-
-            return missionFile;
         }
 
         public void GenerateGroundOperation(GroundGroup groundGroup)
