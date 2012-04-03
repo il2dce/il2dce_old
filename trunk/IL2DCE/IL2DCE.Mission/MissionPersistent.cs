@@ -161,13 +161,13 @@ namespace IL2DCE
                                 groundGroup.Fails = 0;
                                 groundGroup.Target = null;
 
-                                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " new path.", null);
+                                this.Core.Debug(aiGroup.Name() + " new path.");
                             }
                             else if (groundGroup.PathParams.State == RecalcPathState.FAILED)
                             {
                                 groundGroup.PathParams = null;
                                 groundGroup.Fails++;
-                                GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " path failed (" + groundGroup.Fails.ToString() + ").", null);
+                                this.Core.Debug(aiGroup.Name() + " path failed (" + groundGroup.Fails.ToString() + ").");
 
                                 this.Core.Generator.GenerateGroundOperation(groundGroup);
                             }
@@ -179,14 +179,14 @@ namespace IL2DCE
                                 // Check for stuck ground groups.
                                 if (groundGroup.Type != EGroundGroupType.Ship)
                                 {
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " is stuck.", null);
+                                    this.Core.Debug(aiGroup.Name() + " is stuck.");
                                     groundGroup.Stuck = true;
                                     this.Core.Generator.GenerateGroundOperation(groundGroup);
                                 }
                                 // This is also used for ships as they don't seem to fire the OnActorTaskComplete event.
                                 else if (groundGroup.Type == EGroundGroupType.Ship)
                                 {
-                                    GamePlay.gpLogServer(new Player[] { GamePlay.gpPlayer() }, aiGroup.Name() + " task complete (Ship).", null);
+                                    this.Core.Debug(aiGroup.Name() + " task complete (Ship).");
                                     this.Core.Generator.GenerateGroundOperation(groundGroup);
                                 }
                             }

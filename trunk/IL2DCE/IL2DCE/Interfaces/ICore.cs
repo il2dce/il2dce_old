@@ -63,13 +63,15 @@ namespace IL2DCE
 
         void AdvanceCampaign(IGame game);
 
+        void Debug(string text);
+
         bool SpawnParked
         {
             get;
             set;
         }
 
-        int Debug
+        int IsDebug
         {
             get;
             set;
