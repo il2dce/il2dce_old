@@ -1165,17 +1165,17 @@ namespace IL2DCE
             {
                 availableAirGroups.Add(airGroup);
                 operatingAirGroups.Remove(airGroup);
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is now available.", null);
+                this.Core.Debug(airGroup.Id + " is now available.");
             }
 
             foreach (AirGroup airGroup in availableAirGroups)
             {
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available.", null);
+                this.Core.Debug(airGroup.Id + " is available.");
             }
 
             foreach (AirGroup airGroup in operatingAirGroups)
             {
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating.", null);
+                this.Core.Debug(airGroup.Id + " is operating.");
             }
         }
                 
@@ -1209,7 +1209,7 @@ namespace IL2DCE
                 availableAirGroups.Remove(airGroup);
                 operatingAirGroups.Add(airGroup);
 
-                this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is operating. (" + missionType + ")", null);
+                this.Core.Debug(airGroup.Id + " is operating. (" + missionType + ")");
 
                 List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
                 int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
@@ -1403,7 +1403,7 @@ namespace IL2DCE
                 {
                     availableAirGroups.Remove(escortAirGroup);
                     operatingAirGroups.Add(escortAirGroup);
-                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")", null);
+                    this.Core.Debug(escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")");
 
                     List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
                     int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
@@ -1427,7 +1427,7 @@ namespace IL2DCE
                         {
                             availableAirGroups.Remove(interceptAirGroup);
                             operatingAirGroups.Add(interceptAirGroup);
-                            this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, interceptAirGroup.Id + " is operating. (" + EMissionType.INTERCEPT + ")", null);
+                            this.Core.Debug(interceptAirGroup.Id + " is operating. (" + EMissionType.INTERCEPT + ")");
 
                             List<IAircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
                             int interceptAircraftParametersInfoIndex = rand.Next(interceptAircraftParametersInfos.Count);
@@ -1462,11 +1462,11 @@ namespace IL2DCE
                     {
                         availableMissionTypes.Add(missionType);
 
-                        this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is available for " + missionType, null);
+                        this.Core.Debug(airGroup.Id + " is available for " + missionType);
                     }
                     else
                     {
-                        this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, airGroup.Id + " is unavailable for " + missionType, null);
+                        this.Core.Debug(airGroup.Id + " is unavailable for " + missionType);
                     }
                 }
 
@@ -1479,7 +1479,7 @@ namespace IL2DCE
                 }
                 else
                 {
-                    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "No mission type available.", null);
+                    this.Core.Debug("No mission type available.");
                 }
             }
         }
@@ -1808,7 +1808,7 @@ namespace IL2DCE
                 //        groundGroup.PathParams = this.Core.GamePlay.gpFindPath(start, 100 * (groundGroup.Fails - 9), end, 100 * (groundGroup.Fails - 9), PathType.WATER, groundGroup.Army);
                 //    }
 
-                //    this.Core.GamePlay.gpLogServer(new Player[] { this.Core.GamePlay.gpPlayer() }, "Radius: " + (groundGroup.Fails - 9).ToString(), null);
+                //    this.Core.Debug("Radius: " + (groundGroup.Fails - 9).ToString());
                 //}
             }
         }

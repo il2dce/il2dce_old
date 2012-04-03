@@ -31,6 +31,17 @@ namespace IL2DCE
         private string campaignsFolderSystemPath;
         private string debugFolderSystemPath;
 
+        public void Debug(string text)
+        {
+            List<Player> players = new List<Player>();
+            players.AddRange(GamePlay.gpRemotePlayers());
+            if (GamePlay.gpPlayer() != null && !players.Contains(GamePlay.gpPlayer()))
+            {
+                players.Add(GamePlay.gpPlayer());
+            }
+            GamePlay.gpLogServer(players.ToArray(), text, null);
+        }
+
         public ISectionFile GlobalAircraftInfoFile
         {
             get
@@ -376,7 +387,7 @@ namespace IL2DCE
         }
         public static bool _spawnParked = false;
 
-        public int Debug
+        public int IsDebug
         {
             get
             {
