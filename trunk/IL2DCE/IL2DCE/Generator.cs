@@ -1600,16 +1600,19 @@ namespace IL2DCE
                 string value;
                 missionFile.get("AirGroups", i, out key, out value);
 
-                AirGroup airGroup = new AirGroup(this.Core, missionFile, key);
-                availableAirGroups.Add(airGroup);
+                if (missionFile.get(key, "SpawnFromScript") == "1")
+                {
+                    AirGroup airGroup = new AirGroup(this.Core, missionFile, key);
+                    availableAirGroups.Add(airGroup);
 
-                if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
-                {
-                    getAirGroups(1).Add(airGroup);
-                }
-                else if (AirGroupInfo.GetAirGroupInfo(2, airGroup.AirGroupKey) != null)
-                {
-                    getAirGroups(2).Add(airGroup);
+                    if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
+                    {
+                        getAirGroups(1).Add(airGroup);
+                    }
+                    else if (AirGroupInfo.GetAirGroupInfo(2, airGroup.AirGroupKey) != null)
+                    {
+                        getAirGroups(2).Add(airGroup);
+                    }
                 }
             }
 

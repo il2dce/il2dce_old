@@ -460,7 +460,7 @@ namespace IL2DCE
                 }
                 else
                 {
-                    sectionFile.add(Id, "SetOnPark", "0");
+                    sectionFile.add(Id, "Scramble", "1");
                 }
                 
                 sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
