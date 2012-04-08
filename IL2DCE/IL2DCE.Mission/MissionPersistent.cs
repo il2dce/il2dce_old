@@ -76,17 +76,17 @@ namespace IL2DCE
                 MissionNumberListener = -1;
                 GamePlay.gpPostMissionLoad(triggerFile);
 
-                Timeout((1 * 60), () =>
+                Timeout((10), () =>
                 {
                     UpdateWaypoints();
                 });
 
-                Timeout((2 * 60), () =>
+                Timeout((20), () =>
                 {
                     SpawnGroundGroups();
                 });
 
-                Timeout((3 * 60), () =>
+                Timeout((30), () =>
                 {
                     SpawnAirGroups();
                 });
@@ -233,12 +233,7 @@ namespace IL2DCE
                 int missionNumber = GamePlay.gpNextMissionNumber();
                 GamePlay.gpPostMissionLoad(missionFolderName + "mission.mis");
 
-                //Timeout((5), () =>
-                //{
-                //    SetIdle(missionNumber);
-                //});
-
-                Timeout((1 * 60), () =>
+                Timeout((5 * 60), () =>
                 {
                     RemoveIdle(missionNumber);
                 });
@@ -247,26 +242,6 @@ namespace IL2DCE
                 {
                     SpawnAirGroups();
                 });
-            }
-
-            public void SetIdle(int missionNumber)
-            {
-                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                {
-                    foreach (int army in GamePlay.gpArmies())
-                    {
-                        if (GamePlay.gpAirGroups(army) != null && GamePlay.gpAirGroups(army).Length > 0)
-                        {
-                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(army))
-                            {
-                                if (airGroup.Name().StartsWith(missionNumber + ":"))
-                                {
-                                    airGroup.Idle = true;
-                                }
-                            }
-                        }
-                    }
-                }
             }
 
             public void RemoveIdle(int missionNumber)
@@ -603,6 +578,16 @@ namespace IL2DCE
                             player.PlaceEnter(aircraft, placeIndex);
                         }
                     }
+                }
+            }
+            
+            public override void OnAircraftTookOff(int missionNumber, string shortName, AiAircraft aircraft)
+            {
+                base.OnAircraftTookOff(missionNumber, shortName, aircraft);
+
+                if (aircraft.Player(0) != null)
+                {
+                    GamePlay.gpHUDLogCenter(new Player[] { aircraft.Player(0) }, "Please enable autopilot for a few seconds to activate the AI aircraft of your squadron.");
                 }
             }
         }
