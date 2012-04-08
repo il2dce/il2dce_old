@@ -1150,81 +1150,6 @@ namespace IL2DCE
             }
         }
 
-
-        //private void createBriefing(IBriefingFile briefingFile, AirGroup airGroup, AirGroup escortAirGroup)
-        //{
-        //    string armyString = "";
-        //    if (airGroup.ArmyIndex == 1)
-        //    {
-        //        armyString = "Army Red";
-        //    }
-        //    else if (airGroup.ArmyIndex == 2)
-        //    {
-        //        armyString = "Army Blue";
-        //    }
-
-        //    briefingFile.Name[airGroup.Id] = airGroup.Id;
-        //    briefingFile.Name[armyString] = armyString;
-
-        //    if (briefingFile.Description[airGroup.Id] == null)
-        //    {
-        //        briefingFile.Description[airGroup.Id] = new BriefingFile.Text();
-        //    }
-        //    if (briefingFile.Description[armyString] == null)
-        //    {
-        //        briefingFile.Description[armyString] = new BriefingFile.Text();
-        //    }
-
-        //    briefingFile.Description[airGroup.Id].Sections.Add("descriptionSection", briefingFile.MissionDescription);
-        //    briefingFile.Description[armyString].Sections.Add("descriptionSection", briefingFile.MissionDescription);
-
-        //    if (airGroup.MissionType != null && airGroup.MissionType.HasValue)
-        //    {
-        //        EMissionType missionType = airGroup.MissionType.Value;
-        //        string mainSection = missionType.ToString();
-        //        briefingFile.Description[airGroup.Id].Sections.Add("mainSection", mainSection);
-        //        briefingFile.Description[armyString].Sections.Add("mainSection", mainSection);
-        //    }
-
-        //    if (airGroup.Altitude != null && airGroup.Altitude.HasValue)
-        //    {
-        //        string altitudeSection = "Altitude: " + airGroup.Altitude + "m";
-
-        //        briefingFile.Description[airGroup.Id].Sections.Add("altitudeSection", altitudeSection);
-        //        briefingFile.Description[armyString].Sections.Add("altitudeSection", altitudeSection);
-        //    }
-
-        //    if (airGroup.Waypoints.Count > 0)
-        //    {
-        //        string waypointSection = "Waypoints:\n";
-
-        //        int i = 1;
-        //        foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
-        //        {
-        //            if (waypoint.Type == AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY)
-        //            {
-        //                waypointSection += i + ". " + this.Core.GamePlay.gpSectorName(waypoint.X, waypoint.Y) + "\n";
-        //            }
-        //            else
-        //            {
-        //                waypointSection += i + ". " + this.Core.GamePlay.gpSectorName(waypoint.X, waypoint.Y) + " " + waypoint.Type.ToString() + "\n";
-        //            }
-        //            i++;
-        //        }
-
-        //        briefingFile.Description[airGroup.Id].Sections.Add("waypointSection", waypointSection);
-        //        briefingFile.Description[armyString].Sections.Add("waypointSection", waypointSection);
-        //    }
-
-        //    if (airGroup.EscortAirGroup != null)
-        //    {
-        //        string escortSection = "Escorted by: " + escortAirGroup.Id;
-
-        //        briefingFile.Description[airGroup.Id].Sections.Add("escortSection", escortSection);
-        //        briefingFile.Description[armyString].Sections.Add("escortSection", escortSection);
-        //    }            
-        //}
-
         void checkPendingAirGroups()
         {
             List<AirGroup> airGroupsToRemove = new List<AirGroup>();
@@ -1675,16 +1600,19 @@ namespace IL2DCE
                 string value;
                 missionFile.get("AirGroups", i, out key, out value);
 
-                AirGroup airGroup = new AirGroup(this.Core, missionFile, key);
-                availableAirGroups.Add(airGroup);
+                if (missionFile.get(key, "SpawnFromScript") == "1")
+                {
+                    AirGroup airGroup = new AirGroup(this.Core, missionFile, key);
+                    availableAirGroups.Add(airGroup);
 
-                if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
-                {
-                    getAirGroups(1).Add(airGroup);
-                }
-                else if (AirGroupInfo.GetAirGroupInfo(2, airGroup.AirGroupKey) != null)
-                {
-                    getAirGroups(2).Add(airGroup);
+                    if (AirGroupInfo.GetAirGroupInfo(1, airGroup.AirGroupKey) != null)
+                    {
+                        getAirGroups(1).Add(airGroup);
+                    }
+                    else if (AirGroupInfo.GetAirGroupInfo(2, airGroup.AirGroupKey) != null)
+                    {
+                        getAirGroups(2).Add(airGroup);
+                    }
                 }
             }
 
