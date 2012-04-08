@@ -478,6 +478,38 @@ namespace IL2DCE
                 }
 
                 sectionFile.add(Id, "Briefing", this.Id);
+
+                if (AircraftInfo.IsFlyable)
+                {
+                    string birthPlaceKey = "BirthPlace" + sectionFile.lines("BirthPlace").ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                    string birthPlaceValue = ArmyIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].X).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Y).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Z).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " ";
+                    birthPlaceValue += "12 1 1 ";
+                    if (ArmyIndex == 1 && AirGroupKey.StartsWith("BoB_RAF_"))
+                    {
+                        birthPlaceValue += "gb ";
+                        if (AirGroupKey.StartsWith("BoB_RAF_F_") && AirGroupKey.EndsWith("_Early"))
+                        {
+                            birthPlaceValue += "RAF_Fighter_1939 ";
+                        }
+                        else if (AirGroupKey.StartsWith("BoB_RAF_F_") && AirGroupKey.EndsWith("_Late"))
+                        {
+                            birthPlaceValue += "RAF_Fighter_1940 ";
+                        }
+                        else if (AirGroupKey.StartsWith("BoB_RAF_B_"))
+                        {
+                            birthPlaceValue += "RAF_Bomber_1940 ";
+                        }
+                        birthPlaceValue += AirGroupKey;
+                    }
+                    else if (ArmyIndex == 2 && AirGroupKey.StartsWith("BoB_LW_"))
+                    {
+                        birthPlaceValue += "de . .";
+                    }
+
+                    sectionFile.add("BirthPlace", Id, birthPlaceValue);
+
+                    sectionFile.add(birthPlaceKey, Class, "");
+                }
             }
         }
 

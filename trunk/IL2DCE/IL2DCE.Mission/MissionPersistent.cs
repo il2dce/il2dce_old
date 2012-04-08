@@ -76,17 +76,17 @@ namespace IL2DCE
                 MissionNumberListener = -1;
                 GamePlay.gpPostMissionLoad(triggerFile);
 
-                Timeout((1 * 60), () =>
+                Timeout((5), () =>
                 {
                     UpdateWaypoints();
                 });
 
-                Timeout((2 * 60), () =>
+                Timeout((10), () =>
                 {
                     SpawnGroundGroups();
                 });
 
-                Timeout((3 * 60), () =>
+                Timeout((15), () =>
                 {
                     SpawnAirGroups();
                 });
@@ -213,7 +213,7 @@ namespace IL2DCE
                 ISectionFile missionFile = this.Core.GamePlay.gpCreateSectionFile();
                 IBriefingFile briefingFile = new BriefingFile();
                 Core.Generator.GenerateRandomAirOperation(missionFile, briefingFile);
-
+                
                 for (int airGroupIndex = 0; airGroupIndex < missionFile.lines("AirGroups"); airGroupIndex++)
                 {
                     string airGroupKey;
@@ -230,15 +230,19 @@ namespace IL2DCE
                 missionFile.save(missionFolderName + "mission.mis");
                 briefingFile.save(briefingFileSystemPath);
 
+                // Destroy old birth places.
+                if (GamePlay.gpBirthPlaces() != null && GamePlay.gpBirthPlaces().Length > 0)
+                {
+                    foreach (AiBirthPlace birthPlace in GamePlay.gpBirthPlaces())
+                    {
+                        birthPlace.destroy();                        
+                    }
+                }
+
                 int missionNumber = GamePlay.gpNextMissionNumber();
                 GamePlay.gpPostMissionLoad(missionFolderName + "mission.mis");
 
-                //Timeout((5), () =>
-                //{
-                //    SetIdle(missionNumber);
-                //});
-
-                Timeout((1 * 60), () =>
+                Timeout((15 * 60), () =>
                 {
                     RemoveIdle(missionNumber);
                 });
@@ -247,26 +251,6 @@ namespace IL2DCE
                 {
                     SpawnAirGroups();
                 });
-            }
-
-            public void SetIdle(int missionNumber)
-            {
-                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                {
-                    foreach (int army in GamePlay.gpArmies())
-                    {
-                        if (GamePlay.gpAirGroups(army) != null && GamePlay.gpAirGroups(army).Length > 0)
-                        {
-                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(army))
-                            {
-                                if (airGroup.Name().StartsWith(missionNumber + ":"))
-                                {
-                                    airGroup.Idle = true;
-                                }
-                            }
-                        }
-                    }
-                }
             }
 
             public void RemoveIdle(int missionNumber)
@@ -288,7 +272,7 @@ namespace IL2DCE
                     }
                 }
             }
-
+                        
             public void SpawnGroundGroups()
             {
                 ISectionFile groundMissionFile = Core.Generator.GenerateRandomGroundOperation();
@@ -341,270 +325,7 @@ namespace IL2DCE
                         }
                     }
                 }
-            }
-            
-            public override void OnPlayerArmy(Player player, int army)
-            {
-                base.OnPlayerArmy(player, army);
-
-                assignToLobbyAircraft(player);
-            }
-
-            private void assignToLobbyAircraft(Player player)
-            {
-                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                {
-                    foreach (int army in GamePlay.gpArmies())
-                    {
-                        if (GamePlay.gpAirGroups(army) != null && GamePlay.gpAirGroups(army).Length > 0)
-                        {
-                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(army))
-                            {
-                                // Lobby aircrafts always have the mission index 0.
-                                if (airGroup.Name().StartsWith("0:"))
-                                {
-                                    if (airGroup.GetItems() != null && airGroup.GetItems().Length > 0)
-                                    {
-                                        foreach (AiActor actor in airGroup.GetItems())
-                                        {
-                                            if (actor is AiAircraft)
-                                            {
-                                                AiAircraft aircraft = actor as AiAircraft;
-                                                for (int placeIndex = 0; placeIndex < aircraft.Places(); placeIndex++)
-                                                {
-                                                    if (aircraft.Player(placeIndex) == null)
-                                                    {
-                                                        player.PlaceEnter(aircraft, placeIndex);
-                                                        // Place found.
-                                                        return;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }                        
-                    }
-                }
-                
-                GamePlay.gpLogServer(new Player[] { player }, "No unoccupied place available in the lobby aircrafts.", null);
-            }
-
-            public override void OnPlaceEnter(Player player, AiActor actor, int placeIndex)
-            {
-                base.OnPlaceEnter(player, actor, placeIndex);
-
-                if (actor.Name().StartsWith("0:"))
-                {
-                    menuOffsets[player] = 0;
-                    SetMenu(player);
-                    GamePlay.gpHUDLogCenter(new Player[] { player }, "Use 'Mission Menu' (TAB + 4) to select aircraft.");
-                }
-                else
-                {
-                    menuOffsets[player] = 0;
-                    SetEmptyMenu(player);
-                    GamePlay.gpHUDLogCenter(new Player[] { player }, "Select army to return to aircraft selection.");
-                }
-            }
-
-            private Dictionary<Player, int> menuOffsets = new Dictionary<Player, int>();
-
-            public void SetEmptyMenu(Player player)
-            {
-                GamePlay.gpSetOrderMissionMenu(player, false, 1, new string[] { }, new bool[] { });
-            }
-
-            public void SetMenu(Player player)
-            {
-                int entryCount = 9;
-                string[] entry = new string[entryCount];
-                bool[] hasSubEntry = new bool[entryCount];
-                                
-                List<string> aircraftPlaceDisplayNames = getAircraftPlaceDisplayNames(player);
-                List<string> aircraftPlaces = getAircraftPlaces(player);
-
-                if (menuOffsets[player] < 0)
-                {
-                    menuOffsets[player] = (int)aircraftPlaceDisplayNames.Count / 7;
-                }
-                else if ((menuOffsets[player] * 7) > aircraftPlaceDisplayNames.Count)
-                {
-                    menuOffsets[player] = 0;
-                }
-
-                for (int entryIndex = 0; entryIndex < entryCount; entryIndex++)
-                {
-                    if (entryIndex == entryCount - 2)
-                    {
-                        entry[entryIndex] = "Page up";
-                        hasSubEntry[entryIndex] = true;
-                    }
-                    else if (entryIndex == entryCount - 1)
-                    {
-                        entry[entryIndex] = "Page down";
-                        hasSubEntry[entryIndex] = true;
-                    }
-                    else
-                    {
-                        if (entryIndex + (menuOffsets[player] * 7) < aircraftPlaceDisplayNames.Count)
-                        {
-                            entry[entryIndex] = aircraftPlaceDisplayNames[entryIndex + (menuOffsets[player] * 7)];
-                            hasSubEntry[entryIndex] = false;
-                        }
-                    }
-                }
-                
-                GamePlay.gpSetOrderMissionMenu(player, false, 0, entry, hasSubEntry);
-            }
-       
-            public List<string> getAircraftPlaceDisplayNames(Player player)
-            {
-                List<string> aircraftPlaceDisplayNames = new List<string>();
-                
-                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                {
-                    foreach (int armyIndex in GamePlay.gpArmies())
-                    {
-                        if (GamePlay.gpAirGroups(armyIndex) != null && GamePlay.gpAirGroups(armyIndex).Length > 0)
-                        {
-                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(armyIndex))
-                            {
-                                if (airGroup.GetItems() != null && airGroup.GetItems().Length > 0)
-                                {
-                                    foreach (AiActor actor in airGroup.GetItems())
-                                    {
-                                        if (actor is AiAircraft)
-                                        {
-                                            AiAircraft aircraft = actor as AiAircraft;
-                                            if (!aircraft.Name().StartsWith("0:"))
-                                            {
-                                                if (aircraft.Places() > 0)
-                                                {
-                                                    for (int placeIndex = 0; placeIndex < aircraft.Places(); placeIndex++)
-                                                    {
-                                                        if (aircraft.ExistCabin(placeIndex))
-                                                        {
-                                                            string aircraftPlaceDisplayName = aircraft.Name() + " " + aircraft.TypedName() + " " + aircraft.CrewFunctionPlace(placeIndex).ToString();
-                                                            aircraftPlaceDisplayNames.Add(aircraftPlaceDisplayName);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }                            
-                            }
-                        }
-                    }
-                }
-
-                return aircraftPlaceDisplayNames;
-            }
-
-            private List<string> getAircraftPlaces(Player player)
-            {
-                List<string> aircraftPlaces = new List<string>();
-
-                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
-                {
-                    foreach (int armyIndex in GamePlay.gpArmies())
-                    {
-                        if (GamePlay.gpAirGroups(armyIndex) != null && GamePlay.gpAirGroups(armyIndex).Length > 0)
-                        {
-                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(armyIndex))
-                            {
-                                if (airGroup.GetItems() != null && airGroup.GetItems().Length > 0)
-                                {
-                                    foreach (AiActor actor in airGroup.GetItems())
-                                    {
-                                        if (actor is AiAircraft)
-                                        {
-                                            AiAircraft aircraft = actor as AiAircraft;
-                                            if(!aircraft.Name().StartsWith("0:"))
-                                            {
-                                                if (aircraft.Places() > 0)
-                                                {
-                                                    for (int placeIndex = 0; placeIndex < aircraft.Places(); placeIndex++)
-                                                    {
-                                                        if (aircraft.ExistCabin(placeIndex))
-                                                        {
-                                                            string aircraftPlace = aircraft.Name() + "@" + placeIndex;
-                                                            aircraftPlaces.Add(aircraftPlace);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return aircraftPlaces;
-            }
-
-            public override void OnOrderMissionMenuSelected(Player player, int ID, int menuItemIndex)
-            {
-                if (ID == 0)
-                {
-                    if (menuItemIndex == 0)
-                    {
-                        menuOffsets[player] = 0;
-                        SetMenu(player);
-                    }
-                    else
-                    {
-                        if (menuItemIndex == 8)
-                        {
-                            menuOffsets[player] = menuOffsets[player] - 1;
-                            SetMenu(player);
-                        }
-                        else if (menuItemIndex == 9)
-                        {
-                            menuOffsets[player] = menuOffsets[player] + 1;
-                            SetMenu(player);
-                        }
-                        else
-                        {
-                            if (menuItemIndex - 1 + (menuOffsets[player] * 7) < getAircraftPlaces(player).Count)
-                            {                                
-                                List<string> aircraftPlaces = getAircraftPlaces(player);
-                                List<string> aircraftPlaceDisplayNames = getAircraftPlaceDisplayNames(player);
-                                                                    
-                                string aircraftPlace = aircraftPlaces[menuItemIndex - 1 + (menuOffsets[player] * 7)];
-                                placePlayer(player, aircraftPlace);
-                            }
-                            else
-                            {
-                                // No handling needed as menu item is not displayed.
-                            }
-                        }
-                    }
-                }                
-            }
-
-            private void placePlayer(Player player, string aircraftPlace)
-            {
-                string aircraftName = aircraftPlace.Remove(aircraftPlace.IndexOf("@"), aircraftPlace.Length - aircraftPlace.IndexOf("@"));
-                string place = aircraftPlace.Replace(aircraftName + "@", "");
-                int placeIndex;
-                if (int.TryParse(place, out placeIndex))
-                {
-                    AiActor actor = GamePlay.gpActorByName(aircraftName);
-                    if (actor != null && actor is AiAircraft)
-                    {
-                        AiAircraft aircraft = actor as AiAircraft;
-                        if (aircraft.ExistCabin(placeIndex))
-                        {
-                            player.PlaceEnter(aircraft, placeIndex);
-                        }
-                    }
-                }
-            }
+            }            
         }
     }
 }
