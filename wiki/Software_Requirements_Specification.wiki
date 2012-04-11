@@ -88,42 +88,6 @@ The air operations are simulated at the tactical level of war. The elementary un
 
 ==== Ship operations (Ship) ====
 
-=== Squadron managment ===
-
-==== Medals and decoration ===
-Medals and decorations are commissioned for certain achievments.
-
-==== Rank ====
-The rank reflects the experience of the pilot.
-
-==== Pilot experience ====
-The experience of a pilot is reflected by his position within the squadron. 
-   * Wingman
-   * Section Leader
-   * Flight Leader
-   * Commanding Officer
-
-==== Commanding Officer ====
-The pilot can become the commanding officer of a squadron and can then influence the mission parameters. 
-   * Select aircraft that take part in the mission
-   * Select the loadout for the mission
-   * Select the pilots that take part in the mission
-   * Modify waypoints to a certain degree
-
-=== Game Modes ===
-
-==== Single-player ====
-A single-player mode is provided where the player selects his unit at the beginning of the campaign. Every battle of the campaign contains at least a operation with a primary mission for the player's unit and optionally additional operations depending on the configuration. The battle ends when the primary mission of the player's unit is completed.
-
-==== Multiplayer ====
-A multiplayer mode is provided where remote players connect to the server that is running IL2DCE.
-
-===== Cooperative =====
-Same as single-player mode but allows remote players to select the army, the air group and the aircraft.
-
-===== Dogfight =====
-The battle that is lasting over several operations.
-
 == Non-functional Requirments ==
 
 === Campaign Creation ===
