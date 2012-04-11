@@ -44,10 +44,6 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 
 The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
 
-= Details =
-
-== Functional requirments ==
-
 === Campaign types ===
 
 ==== Dynamic campaign ====
@@ -63,6 +59,11 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 This campaign type is recommended for historical campaigns.
 
 === Persistent world ===
+
+
+= Details =
+
+== Functional requirments ==
 
 === Air operations ===
 The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
