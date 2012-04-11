@@ -13,7 +13,6 @@ The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coas
 
 === Dunkirk ===
 
-
 === Kanalkampf ===
 
 === Adlerangriff ===
@@ -23,6 +22,12 @@ The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coas
 === The Blitz ===
 
 === Leaning into France ===
+
+== Campaign types ==
+
+=== Dynamic campaign ===
+
+=== Semi-dynamic campaign ===
 
 == Use cases ==
 
