@@ -39,7 +39,7 @@ This campaign type is recommended for historical campaigns.
 
 == Use cases ==
 
-|| *Use case* || ||
+|| *Title* || ||
 || *Description* || ||
 
 = Details =
