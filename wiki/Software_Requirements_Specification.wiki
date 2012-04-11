@@ -46,6 +46,8 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 
 This campaign type is recommended for historical campaigns.
 
+=== Persistent world ===
+
 === Air operations ===
 The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
 
