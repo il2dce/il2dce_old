@@ -3,12 +3,12 @@
 
 = Introduction =
 
-This document contains instructions on how to build IL2DCE from source. Users should follow the [Install_Instructions Install Instructions].
+This document contains instructions on how to build IL2DCE from source. This is useful for developers and very ambitious users that want to work with the source code or use unreleased versions. Regular users should use a binary release and follow the [Install_Instructions Install Instructions].
 
 
 = Details =
 
-The source of the current development path is available within the trunk. The sources for releases are available within as tags. Parallel development paths are available as branches.
+The source of the current development path is available within the trunk. The sources for releases are available as tags. Parallel development paths are available as branches.
 
 
 == Software requirements ==
@@ -28,7 +28,7 @@ See [#Checkout Checkout] for more details.
 
 === SubWCRev.exe ===
 
-IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the "SubWCRev.exe" is used. This Windows console application is part of a _TortoiseSVN_ installation. IL2DCE projects call "SubWCRev.exe" without a specified path. This is possible because _TortoiseSVN_ adds its binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") to the environment variable "path". 
+IL2DCE uses the highest SVN revision number as part of the assembly version number. To retrieve it from the SVN repository and make it available as a variable the tool "SubWCRev.exe" is used. This Windows console application is part of a _TortoiseSVN_ installation. IL2DCE projects call "SubWCRev.exe" without a specified path. This is possible because _TortoiseSVN_ adds its binary folder (e.g. "C:\Program Files\TortoiseSVN\bin") to the environment variable "path". 
 
 See the [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-subwcrev.html TortoiseSVN Documentation] for more details.
 
