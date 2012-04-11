@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This sections contains a description of different campaign scenarios and use cases that should help to identify the requirements for IL2DCE.
+This sections contains a description of different campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
 
 == Campaign scenarios ==
 
@@ -23,10 +23,13 @@ The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coas
 
 === Leaning into France ===
 
-== Use cases ==
+== User stories ==
 
-|| *Title* || ||
-|| *Description* || ||
+=== Client login ===
+The player starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplayer_ and then _Client_ in the menu, browses the server list and then connects to the server running IL2DCE. Once the mission has loaded he selects an army. He is informed over the current state and task of each active air group. He can then select one of the aircraft in the aircraft list.
+
+=== Server start ===
+The host starts the dedicated server of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game point of a existing campaign. The campaign progress continues as soon as the battle is started.
 
 = Details =
 
@@ -74,7 +77,8 @@ The air operations are simulated at the tactical level of war. The elementary un
    * NIGHT_INTRUDE
 
 ==== Special events ====
-TODO
+
+_TODO_
 
 === Ground operations ===
 
@@ -85,7 +89,6 @@ TODO
 ==== Support operations (Vehicle) ====
 
 ==== Ship operations (Ship) ====
-
 
 === Squadron managment ===
 
