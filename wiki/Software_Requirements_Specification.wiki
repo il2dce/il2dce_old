@@ -78,16 +78,6 @@ The air operations are simulated at the tactical level of war. The elementary un
 
 ==== Bomber: Radar attack mission ====
 
-=== Ground operations ===
-
-==== Offensive operations (Armor) ====
-
-==== Defensive operations (Artillery) ====
-
-==== Support operations (Vehicle) ====
-
-==== Ship operations (Ship) ====
-
 == Non-functional Requirments ==
 
 === Campaign Creation ===
