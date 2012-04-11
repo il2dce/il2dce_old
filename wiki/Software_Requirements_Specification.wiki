@@ -27,7 +27,15 @@ The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coas
 
 === Dynamic campaign ===
 
+For a dynamic campaign only the initial strategic and tactical situation is defined for ground units, air units, supplies and reinforcements. The progress and outcome of the campaign is not defined and evolves completely dynamic depending on the past events.
+
+This campaign type is recommended for fictional and semi-historical campaigns.
+
 === Semi-dynamic campaign ===
+
+For a semi-dynamic campaign the strategic and tactical situation for ground units, air units, supplies and reinforcements is defined for various stages of the campaign. The interval between these stages may vary. Between two defined stages the progress of the campaign evolves dynamic. At the end of one stage the definitions of the following stage are applied, however certain information are propagated forward, like strength, supplies and experience of the units. To reduce the inflicted conflicts between the dynamic progress and the defined situation of the following stage the intervals between two stages should be small.
+
+This campaign type is recommended for historical campaigns.
 
 == Use cases ==
 
