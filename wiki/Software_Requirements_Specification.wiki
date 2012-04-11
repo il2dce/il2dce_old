@@ -8,6 +8,7 @@ This sections contains a description of different campaign scenarios and user st
 == Campaign scenarios ==
 
 === Phony War ===
+
 This campaign recreates the time between the outbreak of the war and before the Battle of France. During this time the Luftwaffe undertook reconnaissance and (armed) maritime reconnaissance missions.
 The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coastal Command undertook reconnaissance and (armed) maritime reconnaissance.
 
@@ -25,11 +26,23 @@ The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coas
 
 == User stories ==
 
-=== Client login ===
+=== General ===
+
+==== Client login ====
+
 The player starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplayer_ and then _Client_ in the menu, browses the server list and then connects to the server running IL2DCE. Once the mission has loaded he selects an army. He is informed over the current state and task of each active air group. He can then select one of the aircraft in the aircraft list.
 
-=== Server start ===
-The host starts the dedicated server of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game point of a existing campaign. The campaign progress continues as soon as the battle is started.
+==== Client logout ====
+
+The player disconnects from the server running IL2DCE. His aircraft continues the mission under AI control.
+
+==== Server start ====
+
+The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game of an existing campaign. The campaign progress continues as soon as the battle is started.
+
+==== Server end ====
+
+The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
 
 = Details =
 
