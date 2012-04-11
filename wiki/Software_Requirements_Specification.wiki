@@ -3,27 +3,29 @@
 
 = Introduction =
 
-This sections contains a description of different campaign scenarios and use cases that should help to identify the requirments for IL2DCE.
+This sections contains a description of different campaign scenarios and use cases that should help to identify the requirements for IL2DCE.
 
 == Campaign scenarios ==
 
-=== Phony War (Prelude) ===
+=== Phony War ===
 This campaign recreates the time between the outbreak of the war and before the Battle of France. During this time the Luftwaffe undertook reconnaissance and (armed) maritime reconnaissance missions.
+The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coastal Command undertook reconnaissance and (armed) maritime reconnaissance.
 
-=== Dunkirk (Interlude) ===
+=== Dunkirk ===
 
 
-=== Kanalkampf (Phase 1) ===
+=== Kanalkampf ===
 
-=== Adlertag (Phase 2) ===
+=== Adlerangriff ===
 
-=== Battle of Britain (Phase 3) ===
+=== Battle of Britain ===
 
-=== The Blitz (Phase 4) ===
+=== The Blitz ===
 
-=== Leaning into France (Sequel) ===
+=== Leaning into France ===
 
 == Use cases ==
+
 TODO
 
 
@@ -55,6 +57,7 @@ The air operations are simulated at the tactical level of war. The elementary un
    * ATTACK_ARMOR
    * ATTACK_VEHICLE
    * ATTACK_ARTILLERY
+   * ATTACK_AIRFIELD
    * ATTACK_RADAR
    * ATTACK_SHIP
 
