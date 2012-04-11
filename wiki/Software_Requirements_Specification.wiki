@@ -121,7 +121,7 @@ The battle that is lasting over several operations.
 == Non-functional Requirments ==
 
 === Campaign Creation ===
-New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_ that defines the initial situation of he campaign. Configuration files can be provided optionally to overwrite the global configuration.
+New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_ that defines the initial situation of the campaign. Configuration files can be provided optionally to overwrite the global configuration.
 
 === Rapid release cycles ===
 New versions are released frequently.
