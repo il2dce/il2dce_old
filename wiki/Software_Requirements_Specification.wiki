@@ -67,31 +67,15 @@ This campaign type is recommended for historical campaigns.
 === Air operations ===
 The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
 
-==== Mission types ====
-   * LIASON
+==== Fighter: Intercept mission ====
 
-   * RECON
-   * MARITIME_RECON
-   * ARMED_RECON
-   * ARMED_MARITIME_RECON
+==== Fighter: Patrol mission ====
 
-   * ATTACK_ARMOR
-   * ATTACK_VEHICLE
-   * ATTACK_ARTILLERY
-   * ATTACK_AIRFIELD
-   * ATTACK_RADAR
-   * ATTACK_SHIP
+==== Fighter: Escort mission ====
 
-   * INTERCEPT
-   * NIGHT_INTERCEPT
-   * ESCORT
+==== Bomber: Airfield attack mission ====
 
-   * INTRUDER
-   * NIGHT_INTRUDE
-
-==== Special events ====
-
-_TODO_
+==== Bomber: Radar attack mission ====
 
 === Ground operations ===
 
