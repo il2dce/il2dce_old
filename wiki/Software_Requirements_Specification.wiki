@@ -102,4 +102,4 @@ New versions are released frequently.
 Only the units that are involved in an operation are visible in the 3D engine. The amount of operations in each battle can be scaled to the available hardware.
 
 ==== Content ====
-New game content (Aircraft, vehicles, statics, and maps) can be added with little effort.
+New game content (Aircraft, vehicles, statics, and maps) can be added without changes in the source code.
