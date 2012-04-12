@@ -5,6 +5,8 @@
 
 This sections contains a description of different campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
 
+= Details =
+
 == Campaign scenarios ==
 
 === Phony War ===
@@ -59,24 +61,6 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 This campaign type is recommended for historical campaigns.
 
 === Persistent world ===
-
-
-= Details =
-
-== Functional requirments ==
-
-=== Air operations ===
-The air operations are simulated at the tactical level of war. The elementary unit is the squadron. A squadron is given a mission.
-
-==== Fighter: Intercept mission ====
-
-==== Fighter: Patrol mission ====
-
-==== Fighter: Escort mission ====
-
-==== Bomber: Airfield attack mission ====
-
-==== Bomber: Radar attack mission ====
 
 == Non-functional Requirments ==
 
