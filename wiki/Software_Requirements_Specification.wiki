@@ -50,7 +50,7 @@ The host stops the battle and closes the dedicated server application. The curre
 
 ==== Intercept ====
 
-==== Defensive Patrol ====
+==== Defensive patrol ====
 
 === Persistent world ===
 
@@ -76,7 +76,7 @@ See [http://code.google.com/p/il2dce/issues/list Issues].
 
 == Non-functional Requirments ==
 
-=== Campaign Creation ===
+=== Campaign creation ===
 
 New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_ that defines the initial situation of the campaign. Configuration files can be provided optionally to overwrite the global configuration.
 
