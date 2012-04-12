@@ -2073,7 +2073,48 @@ namespace IL2DCE
 
         public void UpdateWaypoints()
         {
-            // TODO:
+            //foreach (AirGroup airGroup in operatingAirGroups)
+            //{
+            //    if (airGroup.MissionType.HasValue && airGroup.MissionType != null)
+            //    {
+            //        if (airGroup.MissionType.Value == EMissionType.INTERCEPT && airGroup.TargetAirGroup != null)
+            //        {
+            //            if (this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex) != null && this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex).Length > 0)
+            //            {
+            //                Core.Debug("UpdateWaypoints.");
+                            
+            //                foreach (maddox.game.world.AiAirGroup aiAirGroup in this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex))
+            //                {
+            //                    string aiAirGroupName = aiAirGroup.Name();
+            //                    aiAirGroupName = aiAirGroupName.Remove(0, aiAirGroupName.IndexOf(":") + 1);
+            //                    if (aiAirGroupName == airGroup.TargetAirGroup.Id)
+            //                    {
+            //                        Core.Debug(aiAirGroup.Pos().x + " " + aiAirGroup.Pos().y + " " + aiAirGroup.Pos().z);
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else if (airGroup.MissionType.Value == EMissionType.COVER && airGroup.TargetAirGroup != null)
+            //        {
+            //            if (this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex) != null && this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex).Length > 0)
+            //            {
+            //                Core.Debug("UpdateWaypoints.");
+                            
+            //                foreach (maddox.game.world.AiAirGroup aiAirGroup in this.Core.GamePlay.gpAirGroups(airGroup.TargetAirGroup.ArmyIndex))
+            //                {
+            //                    string aiAirGroupName = aiAirGroup.Name();
+            //                    aiAirGroupName = aiAirGroupName.Remove(0, aiAirGroupName.IndexOf(":") + 1);
+            //                    if (aiAirGroupName == airGroup.TargetAirGroup.Id)
+            //                    {
+            //                        Core.Debug(aiAirGroup.Pos().x + " " + aiAirGroup.Pos().y + " " + aiAirGroup.Pos().z);
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }

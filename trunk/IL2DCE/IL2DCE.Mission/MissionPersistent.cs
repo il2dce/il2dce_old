@@ -140,7 +140,7 @@ namespace IL2DCE
                     {
                         this.Core.Generator.GenerateGroundOperation(groundGroupProxies[actor as AiGroup]);
                     }
-                }                
+                }
             }
 
             public void UpdateWaypoints()
