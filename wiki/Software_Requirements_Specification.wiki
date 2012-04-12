@@ -57,7 +57,11 @@ An air group on a escort mission meets with the escorted air group at a rendezvo
 
 ==== Intercept mission ====
 
+An air group on an intercept mission attacks an incoming opposing air group. The air group tries to meet the opposing air group as early as possible. After the meetup the air group returns to the landing airfield.
+
 ==== Defensive patrol mission ====
+
+An air group on a defensive patrol protects an area or route over own territory against incoming opposing air groups. After a specific time it returns to the landing airfield.
 
 === Persistent world ===
 
