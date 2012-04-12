@@ -3,28 +3,21 @@
 
 = Introduction =
 
-This sections contains a description of different campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
+This document contains the vision, examples for different campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
 
 = Details =
 
-== Campaign scenarios ==
+== Vision ==
 
-=== Phony War ===
+The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE simulates a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign.
 
-This campaign recreates the time between the outbreak of the war and before the Battle of France. During this time the Luftwaffe undertook reconnaissance and (armed) maritime reconnaissance missions.
-The Fighter Command undertook patrol, convoy patrol missions and Bomber and Coastal Command undertook reconnaissance and (armed) maritime reconnaissance.
+== Examples for campaign scenarios ==
 
-=== Dunkirk ===
+=== Adlerangriff (13th August - 6th September 1940) ===
 
-=== Kanalkampf ===
+The bombers of the Luftwaffe attack airfields and radar stations, fighters provide escort.
 
-=== Adlerangriff ===
-
-=== Battle of Britain ===
-
-=== The Blitz ===
-
-=== Leaning into France ===
+Fighter Command undertakes intercept and patrol operations.
 
 == User stories ==
 
