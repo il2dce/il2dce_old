@@ -33,7 +33,6 @@ The player starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplay
 
 The player disconnects from the server running IL2DCE. If the mission is not finished his aircraft will continue under AI control.
 
-
 ==== Server start ====
 
 The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game to continue an existing campaign. The campaign progress continues as soon as the battle is started.
@@ -42,19 +41,25 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 
 The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
 
-=== Air operations ===
+=== Air groups ===
 
-==== Ground attack ====
+==== New mission ====
 
-==== Escort ====
+A new mission for a random air group are started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, these trigger a escort mission for another random air group.
 
-==== Intercept ====
+==== Ground attack mission ====
 
-==== Defensive patrol ====
+An air group on a ground attack mission flies to the target area and attack the target. If a escort air group is available, they meet a rendezvous point with the escort directly after the take-off. The rendezvous point is located between the take-off airfields of the participating air groups. 
+
+==== Escort mission ====
+
+An air group on a escort mission meets with the escorted air group at a rendezvous point. The accompany the other air group until it has returned close to the landing airfield and then they return to their own landing airfield.
+
+==== Intercept mission ====
+
+==== Defensive patrol mission ====
 
 === Persistent world ===
-
-==== Actor destroyed ====
 
 === Campaign types ===
 
