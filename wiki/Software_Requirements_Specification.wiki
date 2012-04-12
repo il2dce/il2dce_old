@@ -39,7 +39,7 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 
 ==== Server end ====
 
-The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
+The host stops the battle, the current state is stored as a save-game. Then the the dedicated server application can be closed. 
 
 === Headquarters ===
 
