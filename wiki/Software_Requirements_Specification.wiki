@@ -52,6 +52,10 @@ The host stops the battle and closes the dedicated server application. The curre
 
 ==== Defensive Patrol ====
 
+=== Persistent world ===
+
+==== Actor destroyed ====
+
 === Campaign creation ===
 
 ==== Dynamic campaign ====
