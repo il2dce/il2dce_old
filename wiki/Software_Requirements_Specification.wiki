@@ -41,11 +41,13 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 
 The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
 
-=== Air groups ===
+=== Headquarters ===
 
-==== New mission ====
+==== New air mission ====
 
 A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, these trigger a escort mission for another random air group.
+
+=== Air missions ===
 
 ==== Ground attack mission ====
 
