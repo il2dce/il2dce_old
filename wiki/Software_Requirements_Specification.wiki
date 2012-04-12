@@ -36,7 +36,7 @@ The player disconnects from the server running IL2DCE. If the mission is not fin
 
 ==== Server start ====
 
-The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game of an existing campaign. The campaign progress continues as soon as the battle is started.
+The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_ and either loads the initial campaign template to start a new campaign or any save-game to continue an existing campaign. The campaign progress continues as soon as the battle is started.
 
 ==== Server end ====
 
