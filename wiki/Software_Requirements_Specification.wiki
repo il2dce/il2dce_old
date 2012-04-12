@@ -3,21 +3,23 @@
 
 = Introduction =
 
-This document contains the vision, examples for different campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
+This document contains the vision, examples for campaign scenarios and user stories that should help to identify the requirements for IL2DCE.
+
+Note that this document only considers the current development stage and may change considerably in later stages.
 
 = Details =
 
 == Vision ==
 
-The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE simulates a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign.
+The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE simulates a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign. The persistent world is hosted on a server and only progresses while it running. It features a cooperative gameplay that concentrates on aircraft groups, contrary to the dogfight gameplay that concentrates on individual aircraft.
 
 == Examples for campaign scenarios ==
 
-=== Adlerangriff (13th August - 6th September 1940) ===
+=== Adlerangriff (13 August - 6 September 1940) ===
 
-The bombers of the Luftwaffe attack airfields and radar stations, fighters provide escort.
+The Luftwaffe tries to crush Fighter Command. Their bombers attack the airfields and radar stations, while their fighters provide escort. Fighter Command undertakes intercept and patrol operations.
 
-Fighter Command undertakes intercept and patrol operations.
+The main goal for both sides is to reduce the amount of aircraft of the opposing side.
 
 == User stories ==
 
@@ -29,7 +31,7 @@ The player starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplay
 
 ==== Client logout ====
 
-The player disconnects from the server running IL2DCE. His aircraft continues the mission under AI control.
+The player disconnects from the server running IL2DCE. If the mission is not finished his aircraft will continue under AI control.
 
 ==== Server start ====
 
@@ -38,6 +40,19 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 ==== Server end ====
 
 The host stops the battle and closes the dedicated server application. The current state is stored as a save-game.
+
+=== Air operations ===
+
+==== Ground attack ====
+
+==== Escort ====
+
+==== Intercept ====
+
+==== Defensive Patrol ====
+
+
+----
 
 === Campaign types ===
 
@@ -54,6 +69,8 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 This campaign type is recommended for historical campaigns.
 
 === Persistent world ===
+
+----
 
 == Non-functional Requirments ==
 
