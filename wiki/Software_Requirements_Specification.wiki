@@ -67,6 +67,14 @@ An air group on a defensive patrol protects an area or route over own territory 
 
 === Persistent world ===
 
+==== Create savegame ====
+
+==== Load savegame ====
+
+==== Load template ====
+
+==== Aircraft loss ====
+
 === Campaign types ===
 
 ==== Dynamic campaign ====
