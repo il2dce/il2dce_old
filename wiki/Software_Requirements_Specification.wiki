@@ -48,10 +48,7 @@ The host stops the battle and closes the dedicated server application. The curre
 
 ==== Defensive Patrol ====
 
-
-----
-
-=== Campaign types ===
+=== Campaign creation ===
 
 ==== Dynamic campaign ====
 
@@ -65,22 +62,22 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 
 This campaign type is recommended for historical campaigns.
 
-=== Persistent world ===
-
-----
-
 == Non-functional Requirments ==
 
 === Campaign Creation ===
+
 New campaigns can be created with little effort. A campaign template file is created within the _Full Mission Builder_ that defines the initial situation of the campaign. Configuration files can be provided optionally to overwrite the global configuration.
 
 === Rapid release cycles ===
+
 New versions are released frequently.
 
 === Scalability ===
 
 ==== Performance ====
+
 Only the units that are involved in an operation are visible in the 3D engine. The amount of operations in each battle can be scaled to the available hardware.
 
-==== Content ====
-New game content (Aircraft, vehicles, statics, and maps) can be added without changes in the source code.
+==== Game content ====
+
+New game content (e.g. Aircraft, vehicles, statics, maps, ...) can be added without changes in the source code.
