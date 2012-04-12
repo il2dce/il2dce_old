@@ -88,5 +88,10 @@ namespace IL2DCE
         {
             get;
         }
+
+        int ArmyIndex
+        {
+            get;
+        }
     }
 }
