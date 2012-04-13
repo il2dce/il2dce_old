@@ -17,7 +17,7 @@ This document contains a overview and a description of the software components.
 
 The `IPersistentWorld` represents the current campaign state. The state contains different unit types (i.e. `AirUnit`, `GroundUnit`, `NavalUnit` and `SupplyUnit`). The `IPersistentWorld` also contains a list of `IHeadquarters`. Any change of the campaign state has to be propagated to the contained `IHeadquarters`, which then can interact with the `IPersistentWorld` to react on the change. 
 
-The `IPersistentWorld` provides a interface to receive a `ICommand` for the contained groups. The `ICommand` will then be executed by the group in the persistent world.
+The `IPersistentWorld` provides a interface to receive a `ICommand` for the contained units. The `ICommand` will then be executed by the unit in the persistent world.
 
 There are two different implementations for the `IPersistentWorld`. The `Mission` represents the real-time progress the campaign. The real-time progress is provided by the engine of _IL-2 Sturmovik: Cliffs of Dover_. The `Mission` listens to the events that are fired by the _IL-2 Sturmovik: Cliffs of Dover_ and applies them on the campaign state. To execute a `ICommand` it will be translated into calls to the engine.
 
