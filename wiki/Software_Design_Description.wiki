@@ -1,4 +1,4 @@
-#summary Overview and component design.
+#summary Overview and design.
 #labels Phase-Design,Draft
 
 = Introduction =
