@@ -5,6 +5,9 @@
 
 = System Architectural Design =
 
+<img src="https://docs.google.com/drawings/pub?id=1Dk3_m9XILOTuZTa_7jI6pWIUrrTEsYu1IeEyvNRqN3Y&amp;w=1342&amp;h=737">
+
+
 = Detail Description of Components =
 
 = User Interface Design =
