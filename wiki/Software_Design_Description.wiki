@@ -3,17 +3,27 @@
 
 = Introduction =
 
-This document contains a description of the software architecture and a description of the participating component. 
+This document contains a overview and a description of the software components. 
 
 = Details =
 
-== Architecture ==
+== Overview ==
 
 [https://docs.google.com/drawings/pub?id=1Dk3_m9XILOTuZTa_7jI6pWIUrrTEsYu1IeEyvNRqN3Y&w=1342&h=737&nonsense=something_that_ends_with.png]
 
-The `IPersistentWorld` 
-
 == Components ==
+
+=== `IPersistentWorld` ===
+
+The `IPersistentWorld` represents the current campaign state. The state contains different types of group (e.g. `AirGroup`, `GroundGroup`, `NavalGroup`, `SupplyGroup` and `ReinforcementGroup`). The `IPersistentWorld` also contains a list of `IHeadquarters`. Any change of the campaign state has to be propagated to the contained `IHeadquarters`, which then can interact with the `IPersistentWorld` to react on the change. 
+
+The `IPersistentWorld` provides a interface to send a `Command` to the contained groups. The `Command` will then be executed by the group in the persistent world.
+
+There are two different implementations for the `IPersistentWorld`. The `Mission` represents the real-time progress the campaign. The real-time progress is provided by the engine of _IL-2 Sturmovik: Cliffs of Dover_. The `Mission` listens to the events that are fired by the _IL-2 Sturmovik: Cliffs of Dover_ and applies them on the campaign state. To execute a `Command` it will be translated into calls to the engine.
+
+The `Simulator` represents the time-compressed progress of the campaign that is used to skip time spans that should not progress in real-time. The time-compressed progress is not provided by the engine of _IL-2 Sturmovik: Cliffs of Dover_. Hence a simplified simulation the `Command` calls must be used to change the campaign state.
+
+=== `IHeadquarters` ===
 
 == Component details ==
 
