@@ -3,10 +3,18 @@
 
 = Introduction =
 
+This document contains a description of the software architecture and a description of the participating component. 
+
 = Details =
 
-== Overview ==
+== Architecture ==
 
 [https://docs.google.com/drawings/pub?id=1Dk3_m9XILOTuZTa_7jI6pWIUrrTEsYu1IeEyvNRqN3Y&w=1342&h=737&nonsense=something_that_ends_with.png]
 
+The `IPersistentWorld` 
+
 == Components ==
+
+== Component details ==
+
+See source code documentation.
