@@ -1,4 +1,4 @@
-#summary This document contains a overview and a description of the software components.
+#summary Design overview and component description.
 #labels Phase-Design,Draft
 
 = Introduction =
