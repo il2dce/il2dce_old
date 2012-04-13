@@ -11,7 +11,7 @@ Note that this document only considers the current development stage and may cha
 
 == Vision ==
 
-The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE features a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign. The persistent world is hosted on a server and only progresses while it is running. It has a cooperative gameplay that concentrates on aircraft groups, contrary to a dogfight gameplay that concentrates on individual aircraft.
+The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE features a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign. It has a cooperative gameplay that concentrates on aircraft groups, contrary to a dogfight gameplay that concentrates on individual aircraft.
 
 == Examples for campaign scenarios ==
 
