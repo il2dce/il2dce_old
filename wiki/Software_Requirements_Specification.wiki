@@ -21,7 +21,7 @@ The Luftwaffe tries to crush Fighter Command. Their bombers attack the airfields
 
 The main goal for both sides is to reduce the amount of aircraft of the opposing side.
 
-== Use cases ==
+== Functional requirements ==
 
 === General ===
 
@@ -93,7 +93,7 @@ This campaign type is recommended for historical campaigns.
 
 See [http://code.google.com/p/il2dce/issues/list Issues].
 
-== Non-functional Requirments ==
+== Non-functional requirments ==
 
 === Campaign creation ===
 
