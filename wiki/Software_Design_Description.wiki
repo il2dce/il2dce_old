@@ -3,13 +3,10 @@
 
 = Introduction =
 
-= System Architectural Design =
+= Details =
+
+== Overview ==
 
 [https://docs.google.com/drawings/pub?id=1Dk3_m9XILOTuZTa_7jI6pWIUrrTEsYu1IeEyvNRqN3Y&w=1342&h=737&nonsense=something_that_ends_with.png]
 
-
-= Detail Description of Components =
-
-= User Interface Design =
-
-= Additional Material =
+== Components ==
