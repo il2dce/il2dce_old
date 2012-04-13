@@ -5,8 +5,6 @@
 
 This document contains the vision, examples for campaign scenarios and use cases. These considerations should help to identify the requirements for IL2DCE.
 
-Note that this document only considers the current development stage and may change considerably in later stages.
-
 = Details =
 
 == Vision ==
