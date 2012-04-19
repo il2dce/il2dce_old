@@ -21,6 +21,7 @@ The main goal for both sides is to reduce the amount of aircraft of the opposing
 
 == Functional requirements (Use cases) ==
 
+The following diagram contains the actors and the high level use cases of IL2DCE.
 [https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=none.png]
 
 === General ===
