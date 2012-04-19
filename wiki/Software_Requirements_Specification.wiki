@@ -19,7 +19,7 @@ The main goal for both sides is to reduce the amount of aircraft of the opposing
 
 = Details =
 
-== Use cases ==
+== Functional requirements (Use cases) ==
 
 [https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=none.png]
 
@@ -46,10 +46,6 @@ The host stops the battle, the current state is stored as a save-game. Then the 
 ==== New air mission ====
 
 A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, they trigger a escort mission for another random air group.
-
-== Functional Requirments ==
-
-See [http://code.google.com/p/il2dce/issues/list Issues].
 
 == Non-functional requirments ==
 
