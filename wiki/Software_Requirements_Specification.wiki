@@ -5,8 +5,6 @@
 
 This document contains the vision, examples for campaign scenarios and use cases. These considerations should help to identify the requirements for IL2DCE.
 
-= Details =
-
 == Vision ==
 
 The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE features a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign. It has a cooperative gameplay that concentrates on aircraft groups, contrary to a dogfight gameplay that concentrates on individual aircraft.
@@ -19,7 +17,11 @@ The Luftwaffe tries to crush Fighter Command. Their bombers attack the airfields
 
 The main goal for both sides is to reduce the amount of aircraft of the opposing side.
 
-== Functional requirements ==
+= Details =
+
+== Use cases ==
+
+[https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=none.png]
 
 === General ===
 
@@ -39,11 +41,17 @@ The host starts the dedicated server application of _IL-2 Sturmovik: Cliffs of D
 
 The host stops the battle, the current state is stored as a save-game. Then the the dedicated server application can be closed. 
 
-=== Headquarters ===
+=== Commander-in-chief ===
 
 ==== New air mission ====
 
 A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, they trigger a escort mission for another random air group.
+
+== Functional Requirments ==
+
+See [http://code.google.com/p/il2dce/issues/list Issues].
+
+== Non-functional requirments ==
 
 === Radar, Acoustics detectors, Observer Corps ===
 
@@ -65,16 +73,6 @@ An air group on an intercept mission attacks an incoming opposing air group. The
 
 An air group on a defensive patrol protects an area or route over own territory against incoming opposing air groups. After a specific time it returns to the landing airfield.
 
-=== Persistent world ===
-
-==== Create savegame ====
-
-==== Load savegame ====
-
-==== Load template ====
-
-==== Aircraft loss ====
-
 === Campaign types ===
 
 ==== Dynamic campaign ====
@@ -89,11 +87,9 @@ For a semi-dynamic campaign the strategic and tactical situation for ground unit
 
 This campaign type is recommended for historical campaigns.
 
-== Functional Requirments ==
+=== Persistent world ===
 
-See [http://code.google.com/p/il2dce/issues/list Issues].
-
-== Non-functional requirments ==
+Create savegame, Load savegame, Load template, Aircraft loss, ...
 
 === Campaign creation ===
 
