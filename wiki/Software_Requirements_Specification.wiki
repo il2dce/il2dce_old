@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This document contains the vision, examples for campaign scenarios and use cases. These considerations should help to identify the requirements for IL2DCE.
+This document contains the vision, examples for campaign scenarios, the functional requirements in form of use cases and the non-functional requirements.
 
 == Vision ==
 
