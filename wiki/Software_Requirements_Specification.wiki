@@ -30,11 +30,11 @@ Actor: Server admin
 
 Steps:
 
- # Open server: The actor launches the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_.
- # Load mission: The actor loads the mission, either a initial campaign template to start a new campaign or a save-game to continue an existing campaign.
+ # Open server: The actor launches the server application.
+ # Load mission: The actor selects and loads the mission, either a initial campaign template to start a new campaign or a save-game to continue an existing campaign.
  # Start battle: The campaign progress continues as soon as the battle is started.
  # Stop battle: The campaign progress is stopped and a save-game is created.
- # Close server: The dedicated server application can be closed. 
+ # Close server: The server application is closed. 
 
 === Attend mission ===
 
@@ -42,13 +42,19 @@ Actor: Squadron pilot, squadron commander
 
 Steps:
 
- # Login server: The actor starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplayer_ and then _Client_ in the menu, browses the server list and then connects to the server running IL2DCE.
- # Select army: Once the mission has loaded the actor selects the army. 
- # Select aircraft: The actor is informed over the current state and task of each active air group. He can then select one of the aircraft in the aircraft list. 
- # Read briefing:
- # Fly mission:
- # Read debriefing:
- # Logout server: The actor disconnects from the server running IL2DCE. If the mission is not finished his aircraft will continue under AI control.
+ # Login server: The actor launches the client application
+ # Connect server: The actor connects to the server running IL2DCE.
+ # Select army: Once connected the actor selects his army. 
+ # Get aircraft information: The actor can get information over the current state and task for each of the available aircrafts. 
+ # Select aircraft: He can then select one of the aircraft available aircraft. 
+ # Read briefing: The actor can read the briefing that contains the mission goal, mission parameter and flight plan.
+ # Fly mission: The actor flies the mission as the pilot of the selected aircraft.
+ # Read debriefing: After the actor has finished the mission he can read the debriefing containing the mission result, achievements and statistics. 
+ # Logout server: The actor disconnects from the server.
+
+Variations:
+ * If the actor disconnects before the mission is finished his aircraft will continue under AI control.
+ * After selecting a aircraft the actor may switch to a different aircraft. 
 
 === Commander-in-chief ===
 
