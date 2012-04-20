@@ -3,13 +3,13 @@
 
 = Introduction =
 
-This document contains the vision, examples for campaign scenarios, the functional requirements in form of use cases and the non-functional requirements.
+This document specifies the vision and the requirements of IL2DCE. The introduction contains the vision statement and examples for possible campaigns. The details contain the functional requirements in form of use cases and the non-functional requirements.
 
 == Vision ==
 
-The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. IL2DCE features a persistent world where the actions of the participating player and AI actors have a permanent effect and influence the outcome of a campaign. It has a cooperative gameplay that concentrates on aircraft groups, contrary to a dogfight gameplay that concentrates on individual aircraft.
+The vision of IL2DCE is to provide a dynamic campaign engine for IL-2 _Sturmovik: Cliffs of Dover_. The core feature of IL2DCE is a persistent world where the actions of the participating human and AI actors have a permanent effect and influence the outcome of a campaign. It has a cooperative gameplay that concentrates on aircraft groups, contrary to a dogfight gameplay that concentrates on individual aircraft. It has a single-player and multiplayer mode. The target audience are individual players in single-player, one or more virtual squadrons in closed cooperative campaigns, several virtual squadrons in a closed competitive campaign and individual players and several virtual squadrons in a open campaign.
 
-== Examples for campaign scenarios ==
+== Examples for campaigns ==
 
 === Adlerangriff (13 August - 6 September 1940) ===
 
@@ -21,8 +21,13 @@ The main goal for both sides is to reduce the amount of aircraft of the opposing
 
 == Functional requirements (Use cases) ==
 
-The following diagram contains the actors and the high level use cases of IL2DCE.
-[https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=none.png]
+The following diagram contains the actors and the high level use cases of the multiplayer mode of IL2DCE.
+
+[https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=null.png]
+
+The following diagram contains the actors and the high level use cases for the single-player mode of IL2DCE.
+
+[https://docs.google.com/drawings/pub?id=1hdD5yHPC5_K_CSHHCF_JTdvMPu2tgRCZWWALWESS2jc&w=1123&h=877&nonsense=null.png]
 
 === Host world ===
 
