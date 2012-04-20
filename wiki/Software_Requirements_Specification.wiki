@@ -29,21 +29,26 @@ The following diagram contains the actors and the high level use cases of IL2DCE
 Actor: Server admin
 
 Steps:
- # Open server: The host launches the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_.
- # Load mission: The host loads the mission, either a initial campaign template to start a new campaign or a save-game to continue an existing campaign.
+
+ # Open server: The actor launches the dedicated server application of _IL-2 Sturmovik: Cliffs of Dover_.
+ # Load mission: The actor loads the mission, either a initial campaign template to start a new campaign or a save-game to continue an existing campaign.
  # Start battle: The campaign progress continues as soon as the battle is started.
  # Stop battle: The campaign progress is stopped and a save-game is created.
  # Close server: The dedicated server application can be closed. 
 
-=== General ===
+=== Attend mission ===
 
-==== Client login ====
+Actor: Squadron pilot, squadron commander
 
-The player starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplayer_ and then _Client_ in the menu, browses the server list and then connects to the server running IL2DCE. Once the mission has loaded he selects an army. He is informed over the current state and task of each active air group. He can then select one of the aircraft in the aircraft list.
+Steps:
 
-==== Client logout ====
-
-The player disconnects from the server running IL2DCE. If the mission is not finished his aircraft will continue under AI control.
+ # Login server: The actor starts the game _IL-2 Sturmovik: Cliffs of Dover_, selects _Multiplayer_ and then _Client_ in the menu, browses the server list and then connects to the server running IL2DCE.
+ # Select army: Once the mission has loaded the actor selects the army. 
+ # Select aircraft: The actor is informed over the current state and task of each active air group. He can then select one of the aircraft in the aircraft list. 
+ # Read briefing:
+ # Fly mission:
+ # Read debriefing:
+ # Logout server: The actor disconnects from the server running IL2DCE. If the mission is not finished his aircraft will continue under AI control.
 
 === Commander-in-chief ===
 
