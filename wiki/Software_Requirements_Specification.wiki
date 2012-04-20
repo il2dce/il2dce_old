@@ -43,7 +43,7 @@ Steps:
 
 === Attend mission ===
 
-Actor: Squadron pilot, squadron commander
+Actor: Multiplayer pilot, single-player pilot, squadron commander
 
 Steps:
 
@@ -61,7 +61,12 @@ Variations:
  * If the actor disconnects before the mission is finished his aircraft will continue under AI control.
  * After selecting a aircraft the actor may switch to a different aircraft. 
 
-=== Commander-in-chief ===
+=== Issue order ===
+
+Actor: Commander-in-chief
+
+Steps:
+ # ...
 
 ==== New air mission ====
 
