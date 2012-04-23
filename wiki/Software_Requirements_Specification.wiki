@@ -21,8 +21,6 @@ The main goal for both sides is to reduce the amount of aircraft of the opposing
 
 == Functional requirements (Use cases) ==
 
-=== High level ===
-
 The following diagram contains the actors and the high level use cases of the multiplayer mode of IL2DCE.
 
 [https://docs.google.com/drawings/pub?id=1anvH6yd0M7m6vCF5E12WWAKNYHxmKpWbr3MKWR6EGAc&w=1146&h=777&nonsense=null.png]
@@ -31,7 +29,7 @@ The following diagram contains the actors and the high level use cases for the s
 
 [https://docs.google.com/drawings/pub?id=1hdD5yHPC5_K_CSHHCF_JTdvMPu2tgRCZWWALWESS2jc&w=1123&h=877&nonsense=null.png]
 
-==== Host world ====
+=== Host world ===
 
 Actor: Server admin
 
@@ -43,7 +41,7 @@ Steps:
  # Stop battle: The campaign progress is stopped and a save-game is created.
  # Close server: The server application is closed. 
 
-==== Attend mission ====
+=== Attend mission ===
 
 Actor: Multiplayer pilot, single-player pilot, squadron commander
 
@@ -63,7 +61,7 @@ Variations:
  * If the actor disconnects before the mission is finished his aircraft will continue under AI control.
  * After selecting a aircraft the actor may switch to a different aircraft. 
 
-==== Issue order ====
+=== Issue order ===
 
 Actor: Commander-in-chief
 
@@ -74,10 +72,15 @@ Variations:
 
  * New air mission: A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, they trigger a escort mission for another random air group.
 
+=== Update world ===
 
-=== Sub function level ===
+Actor: AMission, Simulator
 
-==== Update world ===
+Steps:
+
+Variations:
+
+Sub-functions:
 
 [https://docs.google.com/drawings/pub?id=1ujtwiTWJDwEHHxKLYg45lm0cH4o-Uy0fcRb2NccleSo&w=1123&h=877&nonesense=null.png]
 
