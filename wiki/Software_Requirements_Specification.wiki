@@ -72,6 +72,19 @@ Variations:
 
  * New air mission: A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, they trigger a escort mission for another random air group.
 
+=== Create campaign ===
+
+Actor: Campaign author
+
+Steps:
+ # Define front line
+ # Define points of interest
+ # Define initial position of air and ground units
+ # Optionally adjust configuration files
+
+Variations:
+ * Define front line and position of air and ground units for certain dates
+
 === Update world ===
 
 Actor: AMission, Simulator
