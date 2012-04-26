@@ -85,6 +85,14 @@ Steps:
 Variations:
  * Define front line and position of air and ground units for certain dates
 
+=== Update unit ===
+
+Actor: AMission, Simulator
+
+Steps:
+
+Variations:
+
 === Update world ===
 
 Actor: AMission, Simulator
