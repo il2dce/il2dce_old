@@ -89,9 +89,18 @@ Variations:
 
 Actor: AMission, Simulator
 
-Steps:
+[https://docs.google.com/drawings/pub?id=1ujtwiTWJDwEHHxKLYg45lm0cH4o-Uy0fcRb2NccleSo&w=1123&h=877&nonesense=null.png]
 
-Variations:
+Steps:
+ # The actor notifies the system
+ # The system reacts
+
+UnitTaskCompleted:
+ # The actor notifies the system that a unit completed the last task
+ # The system gives a new order to the unit
+UnitDestroyed:
+ # The actor notifies the system
+
 
 === Update world ===
 
@@ -100,10 +109,6 @@ Actor: AMission, Simulator
 Steps:
 
 Variations:
-
-Sub-functions:
-
-[https://docs.google.com/drawings/pub?id=1ujtwiTWJDwEHHxKLYg45lm0cH4o-Uy0fcRb2NccleSo&w=1123&h=877&nonesense=null.png]
 
 == Non-functional requirments ==
 
