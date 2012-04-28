@@ -63,6 +63,28 @@ Variations:
  * If the actor disconnects before the mission is finished his aircraft will continue under AI control.
  * After selecting a aircraft the actor may switch to a different aircraft. 
 
+=== Adjust mission ===
+
+Actor: Squadron commander, single-player pilot
+
+Steps:
+ # ...
+
+Variations:
+
+ * ...
+
+=== Manage squadron ===
+
+Actor: Squadron commander, single-player pilot
+
+Steps:
+ # ...
+
+Variations:
+
+ * ...
+
 === Issue order ===
 
 Actor: Commander-in-chief
@@ -73,6 +95,18 @@ Steps:
 Variations:
 
  * New air mission: A new mission for a random air group is started periodically. The mission type depends on the capabilities of the air group's aircraft. The air group must remain idle for a certain time to allow players to select an aircraft, read the briefing and prepare for the flight. Some mission types are escorted, they trigger a escort mission for another random air group.
+
+=== Advance world ===
+
+Actor: AMission, Simulator
+
+Steps:
+
+ # ...
+
+Variations:
+
+ * ...
 
 === Create campaign ===
 
@@ -87,31 +121,6 @@ Steps:
 Variations:
 
  * Define events: The actor defines events that are triggered by certain conditions (e.g. date or front line) and may influence front line, position of air and ground units.
-
-=== Update unit ===
-
-Actor: AMission, Simulator
-
-[https://docs.google.com/drawings/pub?id=1ujtwiTWJDwEHHxKLYg45lm0cH4o-Uy0fcRb2NccleSo&w=1123&h=877&nonesense=null.png]
-
-Steps:
- # The actor notifies the system
- # The system reacts
-
-UnitTaskCompleted:
- # The actor notifies the system that a unit completed the last task
- # The system gives a new order to the unit
-UnitDestroyed:
- # The actor notifies the system
-
-
-=== Update world ===
-
-Actor: AMission, Simulator
-
-Steps:
-
-Variations:
 
 == Non-functional requirments ==
 
