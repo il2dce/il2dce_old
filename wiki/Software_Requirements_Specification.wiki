@@ -38,8 +38,9 @@ Steps:
  # Open server: The actor launches the server application.
  # Load mission: The actor selects and loads the mission, either a initial campaign template to start a new campaign or a save-game to continue an existing campaign.
  # Start battle: The campaign progress continues as soon as the battle is started.
+ # Auto save: The save-game is created periodically to recover the progress in case of a server crash.
  # Stop battle: The campaign progress is stopped and a save-game is created.
- # Close server: The server application is closed. 
+ # Close server: The server application is closed.
 
 === Attend mission ===
 
@@ -58,6 +59,7 @@ Steps:
  # Logout server: The actor disconnects from the server.
 
 Variations:
+
  * If the actor disconnects before the mission is finished his aircraft will continue under AI control.
  * After selecting a aircraft the actor may switch to a different aircraft. 
 
@@ -77,13 +79,14 @@ Variations:
 Actor: Campaign author
 
 Steps:
- # Define front line
- # Define points of interest
- # Define initial position of air and ground units
- # Optionally adjust configuration files
+ # Define strategic points: The actor defines strategic points on the map such as cities, harbours, airfields, ... .
+ # Define front line: The actor defines the initial front of the campaign.
+ # Define unit position: The actor defines the initial position of air, ground and sea units.
+ # Adjust configuration: The actor adjusts the default values in configuration files to fit the requirements of the particular campaign.
 
 Variations:
- * Define front line and position of air and ground units for certain dates
+
+ * Define events: The actor defines events that are triggered by certain conditions (e.g. date or front line) and may influence front line, position of air and ground units.
 
 === Update unit ===
 
@@ -131,20 +134,6 @@ An air group on an intercept mission attacks an incoming opposing air group. The
 ==== Defensive patrol mission ====
 
 An air group on a defensive patrol protects an area or route over own territory against incoming opposing air groups. After a specific time it returns to the landing airfield.
-
-=== Campaign types ===
-
-==== Dynamic campaign ====
-
-For a dynamic campaign only the initial strategic and tactical situation is defined for ground units, air units, supplies and reinforcements. The progress and outcome of the campaign is not defined and evolves completely dynamic depending on the past events.
-
-This campaign type is recommended for fictional and semi-historical campaigns.
-
-==== Semi-dynamic campaign ====
-
-For a semi-dynamic campaign the strategic and tactical situation for ground units, air units, supplies and reinforcements is defined for various stages of the campaign. The interval between these stages may vary. Between two defined stages the progress of the campaign evolves dynamic. At the end of one stage the definitions of the following stage are applied, however certain information are propagated forward, like strength, supplies and experience of the units. To reduce the inflicted conflicts between the dynamic progress and the defined situation of the following stage the intervals between two stages should be small.
-
-This campaign type is recommended for historical campaigns.
 
 === Persistent world ===
 
