@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\ICareer.cs" />
     <Compile Include="Interfaces\ICampaignInfo.cs" />
     <Compile Include="Interfaces\IGenerator.cs" />
+    <Compile Include="IStrategicPoint.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Mission.cs" />
