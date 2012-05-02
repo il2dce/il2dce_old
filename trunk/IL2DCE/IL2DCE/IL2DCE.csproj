@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\ICampaignInfo.cs" />
     <Compile Include="Interfaces\IGenerator.cs" />
     <Compile Include="IUnit.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
