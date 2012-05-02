@@ -7,7 +7,7 @@ using maddox.game;
 
 namespace IL2DCE
 {
-    class Map
+    public class Map
     {
         public Map(ISectionFile missionFile)
         {
