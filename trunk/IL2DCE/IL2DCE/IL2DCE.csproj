@@ -44,6 +44,8 @@
     <Compile Include="AirGroup.cs" />
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
+    <Compile Include="AirHeadquarters.cs" />
+    <Compile Include="AirUnit.cs" />
     <Compile Include="BriefingFile.cs" />
     <Compile Include="Career.cs" />
     <Compile Include="CampaignInfo.cs" />
@@ -51,6 +53,11 @@
     <Compile Include="FrontMarker.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="GroundGroupSubWaypoint.cs" />
+    <Compile Include="IBuilding.cs" />
+    <Compile Include="IOrder.cs" />
+    <Compile Include="IDetector.cs" />
+    <Compile Include="IHeadquarters.cs" />
+    <Compile Include="IPersistentWorld.cs" />
     <Compile Include="Interfaces\IAircraftLoadoutInfo.cs" />
     <Compile Include="Interfaces\IAircraftParametersInfo.cs" />
     <Compile Include="Interfaces\IAirGroupInfo.cs" />
@@ -58,6 +65,8 @@
     <Compile Include="Interfaces\ICareer.cs" />
     <Compile Include="Interfaces\ICampaignInfo.cs" />
     <Compile Include="Interfaces\IGenerator.cs" />
+    <Compile Include="IUnit.cs" />
+    <Compile Include="Mission.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />
