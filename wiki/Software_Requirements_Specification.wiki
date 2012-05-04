@@ -98,11 +98,12 @@ Actor: AMission, Simulator
 
 Steps:
 
- # ...
+ # Notify change: The actor notifies the system about a change.
+ # React on change: The system calls the actor to react on a change.
 
 Variations:
 
- * ...
+ * Request data: The system requests additional data from the actor to impose the proper reaction.
 
 === Create campaign ===
 
