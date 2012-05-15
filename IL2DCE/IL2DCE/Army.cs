@@ -5,8 +5,10 @@ using System.Text;
 
 namespace IL2DCE
 {
-    public interface IHeadquarters
+    public enum Army
     {
-        
+        None = 0,
+        Red = 1,
+        Blue = 2,
     }
 }

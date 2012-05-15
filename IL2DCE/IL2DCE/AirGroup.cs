@@ -30,6 +30,11 @@ namespace IL2DCE
 
         #region Public constructors
 
+        public AirGroup()
+        {
+            Waypoints = new List<AirGroupWaypoint>();
+        }
+
         public AirGroup(ICore core, ISectionFile sectionFile, string id)
         {
             _core = core;
@@ -235,20 +240,32 @@ namespace IL2DCE
         {
             get
             {
-                int flightMask = 0x0;
-
-                foreach (int flightIndex in Flights.Keys)
+                if (this.id == null)
                 {
-                    if (Flights[flightIndex].Count > 0)
-                    {
-                        int bit = (0x1 << flightIndex);
-                        flightMask = (flightMask | bit);
-                    }
-                }
+                    int flightMask = 0x0;
 
-                return AirGroupKey + "." + SquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + flightMask.ToString("X");
+                    foreach (int flightIndex in Flights.Keys)
+                    {
+                        if (Flights[flightIndex].Count > 0)
+                        {
+                            int bit = (0x1 << flightIndex);
+                            flightMask = (flightMask | bit);
+                        }
+                    }
+
+                    return AirGroupKey + "." + SquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + flightMask.ToString("X");
+                }
+                else
+                {
+                    return this.id;
+                }
+            }
+            set
+            {
+                this.id = value;
             }
         }
+        private string id;
 
         public int ArmyIndex
         {
@@ -454,7 +471,7 @@ namespace IL2DCE
                     }
                 }
                 
-                if (_core.SpawnParked == true)
+                if (_core != null && _core.SpawnParked == true)
                 {
                     sectionFile.add(Id, "SetOnPark", "1");
                 }

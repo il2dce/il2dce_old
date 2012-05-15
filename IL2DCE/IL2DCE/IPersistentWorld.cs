@@ -5,8 +5,10 @@ using System.Text;
 
 namespace IL2DCE
 {
-    interface IPersistentWorld
+    public interface IPersistentWorld
     {
+        event EventHandler NextPhase;
+
         Map Map
         {
             get;
@@ -17,6 +19,18 @@ namespace IL2DCE
             get;
         }
 
+        Random Random
+        {
+            get;
+        }
+
+        maddox.game.ISectionFile AircraftInfoFile
+        {
+            get;
+        }
+
         void Debug(string line);
-    }    
+
+        void NewMission(IUnit unit);
+    }
 }

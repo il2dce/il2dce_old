@@ -5,9 +5,14 @@ using System.Text;
 
 namespace IL2DCE
 {
-    interface IStrategicPoint
+    public interface IStrategicPoint
     {
         string Id
+        {
+            get;
+        }
+
+        Army Army
         {
             get;
         }

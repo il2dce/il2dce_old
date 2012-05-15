@@ -5,8 +5,11 @@ using System.Text;
 
 namespace IL2DCE
 {
-    public interface IHeadquarters
+    public interface IVehicle
     {
-        
+        string Id
+        {
+            get;
+        }
     }
 }

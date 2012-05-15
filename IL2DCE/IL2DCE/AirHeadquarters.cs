@@ -7,6 +7,15 @@ namespace IL2DCE
 {
     class AirHeadquarters : IHeadquarters
     {
+        private Army Army
+        {
+            get
+            {
+                return this.army;
+            }
+        }
+        private Army army;
+
         private List<IUnit> Units
         {
             get
@@ -16,9 +25,28 @@ namespace IL2DCE
         }
         private List<IUnit> units = new List<IUnit>();
 
-        public AirHeadquarters(IPersistentWorld persistentWorld)
+        private List<IUnit> IdleUnits
+        {
+            get
+            {
+                List<IUnit> idleUnits = new List<IUnit>();
+                foreach (IUnit unit in Units)
+                {
+                    if(unit.State == UnitState.Idle)
+                    {
+                        idleUnits.Add(unit);
+                    }
+                }
+                return idleUnits;
+            }
+        }
+
+        public AirHeadquarters(IPersistentWorld persistentWorld, Army army)
         {
             PersistentWorld = persistentWorld;
+            PersistentWorld.NextPhase += new EventHandler(OnNextPhase);
+
+            this.army = army;
         }
 
         public IPersistentWorld PersistentWorld
@@ -39,7 +67,6 @@ namespace IL2DCE
             if (unit is AirUnit && !Units.Contains(unit))
             {
                 Units.Add(unit);
-                unit.Idle += new UnitEventHandler(OnUnitIdle);
 
                 PersistentWorld.Debug(unit.Id + " is now under control of AirHeadquarters.");
             }
@@ -50,16 +77,18 @@ namespace IL2DCE
             if (Units.Contains(unit))
             {
                 Units.Remove(unit);
-                unit.Idle -= new UnitEventHandler(OnUnitIdle);
 
                 PersistentWorld.Debug(unit.Id + " is now release from control of AirHeadquarters.");
             }
         }
 
-        void OnUnitIdle(object sender, UnitEventArgs e)
+        void OnNextPhase(object sender, EventArgs e)
         {
-            // TODO: Give new order
-            PersistentWorld.Debug(e.Unit.Id + " is idle.");
+            if(IdleUnits.Count > 0)
+            {
+                int i = PersistentWorld.Random.Next(IdleUnits.Count());
+                PersistentWorld.NewMission(IdleUnits[i]);
+            }
         }
     }
 }
