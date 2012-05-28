@@ -157,7 +157,10 @@ namespace IL2DCE
         {
             this.state = UnitState.Idle;
 
-            Idle(this, new UnitEventArgs(this));
+            if (Idle != null)
+            {
+                Idle(this, new UnitEventArgs(this));
+            }
 
             PersistentWorld.Debug(Id + " idle.");
         }
@@ -166,7 +169,10 @@ namespace IL2DCE
         {
             this.state = UnitState.Pending;
 
-            Pending(this, new UnitEventArgs(this));
+            if (Pending != null)
+            {
+                Pending(this, new UnitEventArgs(this));
+            }
 
             PersistentWorld.Debug(Id + " pending.");
         }
@@ -175,7 +181,10 @@ namespace IL2DCE
         {
             this.state = UnitState.Busy;
 
-            Busy(this, new UnitEventArgs(this));
+            if (Busy != null)
+            {
+                Busy(this, new UnitEventArgs(this));
+            }
 
             PersistentWorld.Debug(Id + " busy.");
         }
@@ -184,7 +193,10 @@ namespace IL2DCE
         {
             this.state = UnitState.Destroyed;
 
-            Destroyed(this, new UnitEventArgs(this));
+            if (Destroyed != null)
+            {
+                Destroyed(this, new UnitEventArgs(this));
+            }
 
             PersistentWorld.Debug(Id + " destroyed.");
         }
