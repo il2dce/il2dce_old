@@ -83,7 +83,10 @@ namespace IL2DCE
 
         private void RaiseNextPhase()
         {
-            NextPhase(this, new EventArgs());
+            if (NextPhase != null)
+            {
+                NextPhase(this, new EventArgs());
+            }
         }
 
         public void NewMission(IUnit unit)
@@ -91,7 +94,10 @@ namespace IL2DCE
             if (unit is AirUnit)
             {
                 AirUnit airUnit = unit as AirUnit;
+                
                 ISectionFile missionFile = GamePlay.gpCreateSectionFile();
+                Generator generator = new Generator(null);
+                
                 AirGroup airGroup = new AirGroup();
                 airGroup.Id = airUnit.Id;
                 airGroup.AirGroupKey = airUnit.Regiment;
@@ -103,6 +109,9 @@ namespace IL2DCE
                 airGroup.Position = new maddox.GP.Point3d(airUnit.Position.Item1, airUnit.Position.Item2, airUnit.Position.Item3);
 
                 airGroup.Flights[0] = new List<string>() {"1", "2"};
+
+
+
 
                 airGroup.Transfer(EMissionType.RECON, 1000);
 
@@ -119,8 +128,8 @@ namespace IL2DCE
         public override void OnBattleInit()
         {
             base.OnBattleInit();
-            
-            Debug("Initialize battle ...");
+
+            MissionNumberListener = -1;
 
             random = new System.Random();
 
@@ -168,8 +177,7 @@ namespace IL2DCE
         {
             base.OnActorCreated(missionNumber, shortName, actor);
 
-            string id = actor.Name().Replace(missionNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + ":", "");
-            Debug(id);
+            string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
                 if (Units[id] is AirUnit)
@@ -192,12 +200,12 @@ namespace IL2DCE
         {
             base.OnActorDestroyed(missionNumber, shortName, actor);
 
-            string id = actor.Name().Replace(missionNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + ":", "");
+            string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
                 if (Units[id] is AirUnit)
                 {
-                    Units[id].RaiseIdle();
+                    Units[id].RaiseDestroyed();
                 }
                 //else if (Units[id] is GroundUnit)
                 //{
@@ -209,10 +217,14 @@ namespace IL2DCE
         public override void OnActorTaskCompleted(int missionNumber, string shortName, maddox.game.world.AiActor actor)
         {
             base.OnActorTaskCompleted(missionNumber, shortName, actor);
-            
-            string id = actor.Name().Replace(missionNumber.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + ":", "");
+
+            string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
+                if (Units[id] is AirUnit)
+                {
+                    Units[id].RaiseIdle();
+                }
                 //if (Units[id] is GroundUnit)
                 //{
                 //    Units[id].RaiseIdle();

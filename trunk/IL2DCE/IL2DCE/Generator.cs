@@ -1201,7 +1201,7 @@ namespace IL2DCE
                 return true;
             }
         }
-        
+                
         private void createAirOperation(ISectionFile sectionFile, IBriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, AirGroup forcedEscortAirGroup)
         {
             if (isMissionTypeAvailable(airGroup, missionType))
@@ -1209,7 +1209,10 @@ namespace IL2DCE
                 availableAirGroups.Remove(airGroup);
                 operatingAirGroups.Add(airGroup);
 
-                this.Core.Debug(airGroup.Id + " is operating. (" + missionType + ")");
+                if (this.Core != null)
+                {
+                    this.Core.Debug(airGroup.Id + " is operating. (" + missionType + ")");
+                }
 
                 List<IAircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
                 int aircraftParametersInfoIndex = rand.Next(aircraftParametersInfos.Count);
@@ -1403,7 +1406,11 @@ namespace IL2DCE
                 {
                     availableAirGroups.Remove(escortAirGroup);
                     operatingAirGroups.Add(escortAirGroup);
-                    this.Core.Debug(escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")");
+
+                    if (this.Core != null)
+                    {
+                        this.Core.Debug(escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")");
+                    }
 
                     List<IAircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
                     int escortAircraftParametersInfoIndex = rand.Next(escortAircraftParametersInfos.Count);
