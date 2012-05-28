@@ -1,0 +1,145 @@
+﻿[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$Online_Map
+  BattleArea 0 0 40960 40960 10000
+  TIME 12
+  WeatherIndex 0
+  CloudsHeight 1000
+  BreezeActivity 10
+  ThermalActivity 10
+[GlobalWind_0]
+  Power 3.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 5
+  GustAngle 45
+[splines]
+[AirGroups]
+  BoB_LW_LG1_IV.13
+  BoB_LW_JG27_I.01
+  BoB_RAF_F_41Sqn_Late.01
+  BoB_RAF_B_82Sqn.01
+[BoB_LW_LG1_IV.13]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Class Aircraft.Ju-87B-2
+  Formation VIC
+  CallSign 26
+  Fuel 100
+  Weapons 1 1 1 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_LG1_IV.13_Way]
+  TAKEOFF 26321.47 30104.32 0 0
+[BoB_LW_JG27_I.01]
+  Flight0  1 2 3 4
+  Class Aircraft.Bf-109E-3
+  Formation FINGERFOUR
+  CallSign 30
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG27_I.01_Way]
+  TAKEOFF 29654.26 25939.63 0 0
+[BoB_RAF_F_41Sqn_Late.01]
+  Flight0  1 2 3 4
+  Class Aircraft.SpitfireMkIa
+  Formation FINGERFOUR
+  CallSign 27
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_41Sqn_Late.01_Way]
+  TAKEOFF 10404.16 15950.37 0 0
+[BoB_RAF_B_82Sqn.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.BlenheimMkIV
+  Formation LINEABREAST
+  CallSign 20
+  Fuel 100
+  Weapons 1 1 2 1 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_B_82Sqn.01_Way]
+  TAKEOFF 13865.10 10610.38 0 0
+[CustomChiefs]
+  Vehicle.Artillery$British_ATA_Column $core/icons/tank.mma
+  Vehicle.Artillery$German_ATA_Column $core/icons/tank.mma
+[Vehicle.Artillery$British_ATA_Column]
+  Car.Morris_CDSW
+  TrailerUnit.40mm_2pdr_transport 1
+  Car.Morris_CDSW
+  TrailerUnit.40mm_2pdr_transport 1
+  Car.Morris_CDSW
+  TrailerUnit.40mm_2pdr_transport 1
+  Car.Morris_CDSW
+  TrailerUnit.40mm_2pdr_transport 1
+[Vehicle.Artillery$German_ATA_Column]
+  Car.Krupp_L2H43_Protze_Kfz69
+  TrailerUnit.PaK_35_transport 1
+  Car.Krupp_L2H43_Protze_Kfz69
+  TrailerUnit.PaK_35_transport 1
+  Car.Krupp_L2H43_Protze_Kfz69
+  TrailerUnit.PaK_35_transport 1
+  Car.Krupp_L2H43_Protze_Kfz69
+  TrailerUnit.PaK_35_transport 1
+[Chiefs]
+  1_Chief Armor.Pz_IIIF de /num_units 4
+  2_Chief Armor.Cruiser_Mk_IVA gb /num_units 4
+  4_Chief Armor.Valentine_I gb /num_units 4
+  6_Chief Armor.Pz_IVD de /num_units 4
+  7_Chief Armor.SdKfz_232_8Rad de /num_units 4
+  9_Chief Vehicle.Artillery$British_ATA_Column gb 
+  10_Chief Vehicle.Artillery$German_ATA_Column de 
+  0_Chief Armor.Guy_Mk_IA gb /num_units 4
+[1_Chief_Road]
+  25820.51 27703.26 38.40  0 2 7.14
+  25823.25 27620.39 38.40
+[2_Chief_Road]
+  13801.38 12174.40 38.40  0 2 6.39
+  13804.86 12224.95 38.40
+[4_Chief_Road]
+  12211.33 15571.03 38.40  0 2 4.17
+  12256.91 15565.76 38.40
+[6_Chief_Road]
+  28552.17 26325.98 38.40  0 2 5.56
+  28493.46 26338.61 38.40
+[7_Chief_Road]
+  26795.16 26447.09 38.40  0 2 4.17
+  26713.08 26469.27 38.40
+[9_Chief_Road]
+  12335.14 15699.43 38.40  0 2 1.00
+  12361.54 15664.50 38.40
+[10_Chief_Road]
+  28651.05 26498.82 38.40  0 2 1.00
+  28648.01 26458.12 38.40
+[0_Chief_Road]
+  13589.65 14751.88 38.40  0 2 6.94
+  13633.31 14725.25 38.40
+[Stationary]
+  Static0 Stationary.Radar.EnglishRadar1 gb 9670.79 17289.01 0.00 
+  Static1 Stationary.Radar.EnglishRadar1 de 30900.90 21723.35 0.00 
+[Buildings]
+  0_bld buildings.House$GermanyMotorPool01 1 11704.60 15564.28 -75.00
+  1_bld buildings.House$GermanyMotorPool01 1 29239.03 26746.30 -50.00
+[BuildingsLinks]
+[FrontMarker]
+  FrontMarker0 23073.54 23737.44 0
+  FrontMarker1 17235.12 18056.19 0
+  FrontMarker2 19833.98 20379.90 0
+  FrontMarker3 11665.80 15764.74 1
+  FrontMarker4 29318.02 26947.34 2
+  FrontMarker5 21162.22 21661.87 0
+  FrontMarker6 13391.27 11650.77 1
+  FrontMarker7 26404.62 28789.98 2
+[BirthPlace]
+  BirthPlace_0 1 11019 15720 0 20 1 1 . . .
+  BirthPlace_1 2 30236 26211 0 20 1 1 . . .
