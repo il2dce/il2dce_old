@@ -29,7 +29,6 @@ namespace IL2DCE
         public GroundGroup(ISectionFile sectionFile, string id)
         {
             _id = id;
-
             string value = sectionFile.get("Chiefs", id);
 
             // Class
@@ -38,10 +37,10 @@ namespace IL2DCE
 
             // Army
             Country = (EGroundGroupCountry)Enum.Parse(typeof(EGroundGroupCountry), value.Substring(0, 2));
-            value = value.Remove(0, 3);
+            value = value.Remove(0, 2);
 
             // Options
-            Options = value;
+            Options = value.Trim();
 
             // Waypoints
             GroundGroupWaypoint lastWaypoint = null;
@@ -81,6 +80,10 @@ namespace IL2DCE
                 {
                     return EGroundGroupType.Vehicle;
                 }
+                if (Class.StartsWith("Train"))
+                {
+                    return EGroundGroupType.Train;
+                }
                 else if (Class.StartsWith("Armor"))
                 {
                     return EGroundGroupType.Armor;
@@ -93,27 +96,6 @@ namespace IL2DCE
                 {
                     throw new System.FormatException("Unknown EType of GroundGroup");
                 }
-            }
-        }
-
-        public EGroundGroupSubType SubType
-        {
-            get
-            {
-                string subType = Class.Remove(0, Type.ToString().Length + 1);
-                // Type
-                if (subType.StartsWith("Artillery$"))
-                {
-                    return EGroundGroupSubType.Artillery;
-                }
-                else if (Class.StartsWith("Supply$"))
-                {
-                    return EGroundGroupSubType.Supply;
-                }
-                else
-                {
-                    return EGroundGroupSubType.None;
-                }                
             }
         }
 
@@ -138,6 +120,24 @@ namespace IL2DCE
             }
         }
         public string _id;
+
+        public string Isd
+        {
+            get
+            {
+                return _isd;
+            }
+        }
+        public string _isd;
+
+        public string Iad
+        {
+            get
+            {
+                return _iad;
+            }
+        }
+        public string _iad;
 
         public string Class
         {
@@ -229,102 +229,5 @@ namespace IL2DCE
                 sectionFile.add(Id + "_Road", Waypoints[Waypoints.Count - 1].X.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), Waypoints[Waypoints.Count - 1].Y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Waypoints[Waypoints.Count - 1].Z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             }
         }
-
-        public Point2d? Target
-        {
-            get
-            {
-                return this.target;
-            }
-            set
-            {
-                this.target = value;
-            }
-        }
-        private Point2d? target = null;
-
-        public Point2d LastPosition
-        {
-            get;
-            set;
-        }
-
-        public int Fails
-        {
-            get
-            {
-                return this.fails;
-            }
-            set
-            {
-                this.fails = value;
-            }
-        }
-        private int fails = 0;
-
-        public bool Stuck
-        {
-            get
-            {
-                return this.stuck;
-            }
-            set
-            {
-                this.stuck= value;
-            }
-        }
-        private bool stuck = false;
-
-        public IRecalcPathParams PathParams
-        {
-            get
-            {
-                return this.pathParams;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    this.Waypoints.Clear();
-                    GroundGroupWaypoint lastGroundGroupWaypoint = null;
-                    foreach (maddox.game.world.AiWayPoint aiWayPoint in this.pathParams.Path)
-                    {
-                        if (aiWayPoint is maddox.game.world.AiGroundWayPoint)
-                        {
-                            maddox.game.world.AiGroundWayPoint aiGroundWayPoint = aiWayPoint as maddox.game.world.AiGroundWayPoint;
-
-                            if (aiGroundWayPoint.P.z == -1)
-                            {
-                                GroundGroupWaypoint groundGroupWaypoint = new GroundGroupWaypoint(aiGroundWayPoint.P.x, aiGroundWayPoint.P.y, aiGroundWayPoint.roadWidth, aiGroundWayPoint.Speed);
-                                lastGroundGroupWaypoint = groundGroupWaypoint;
-                                this.Waypoints.Add(groundGroupWaypoint);
-                            }
-                            else if (lastGroundGroupWaypoint != null)
-                            {
-                                string s = aiGroundWayPoint.P.x.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.P.y.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.P.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + aiGroundWayPoint.roadWidth.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                                GroundGroupSubWaypoint groundGroupSubWaypoint = new GroundGroupSubWaypoint(s, null);
-                                lastGroundGroupWaypoint.SubWaypoints.Add(groundGroupSubWaypoint);
-                            }
-                        }
-                    }
-                }
-                this.pathParams = value;
-            }
-        }
-        private IRecalcPathParams pathParams = null;
-
-        public AiGroup AiGroup
-        {
-            get
-            {
-                return this.aiGroup;
-            }
-            set
-            {
-                this.aiGroup = value;
-                LastPosition = new Point2d(aiGroup.Pos().x, aiGroup.Pos().y);
-            }
-        }
-        private AiGroup aiGroup = null;
     }
 }

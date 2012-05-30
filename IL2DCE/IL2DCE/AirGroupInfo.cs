@@ -28,11 +28,6 @@ namespace IL2DCE
     {
         #region Public properties
 
-        public abstract List<string> Formations
-        {
-            get;
-        }
-
         public abstract List<string> Aircrafts
         {
             get;
@@ -58,25 +53,9 @@ namespace IL2DCE
             get;
         }
 
-        public virtual int DefaultFormationIndex
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
         public int AircraftMaxCount
         {
             get { return FlightCount * FlightSize; }
-        }
-
-        public string DefaultFormation
-        {
-            get
-            {
-                return Formations[DefaultFormationIndex];
-            }
         }
 
         #endregion
@@ -162,15 +141,6 @@ namespace IL2DCE
     public class RafFighterCommandEarlyAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
 
         public List<string> aircrafts = new List<string>
         {
@@ -261,14 +231,6 @@ namespace IL2DCE
 
         #region Public properties
 
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
-
         public override List<string> Aircrafts
         {
             get
@@ -306,17 +268,6 @@ namespace IL2DCE
     public class RafFighterCommandLateAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -407,14 +358,6 @@ namespace IL2DCE
 
         #region Public properties
 
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
-
         public override List<string> Aircrafts
         {
             get
@@ -452,15 +395,6 @@ namespace IL2DCE
     public class RafBomberCommandAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "LINEABREAST",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEASTERN",
-            "VIC",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -530,14 +464,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -570,26 +496,12 @@ namespace IL2DCE
             get { return 6; }
         }
 
-        public override int DefaultFormationIndex
-        {
-            get { return formations.IndexOf("VIC"); }
-        }
-
         #endregion
     }
 
     public class RafFlyingTrainingSchoolEarlyAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -605,14 +517,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -652,17 +556,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.AnsonMkI",
@@ -677,14 +570,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -716,24 +601,13 @@ namespace IL2DCE
         {
             get { return 4; }
         }
-        
+
         #endregion
     }
 
     public class LwFighterStabAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -756,14 +630,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -795,24 +661,13 @@ namespace IL2DCE
         {
             get { return 4; }
         }
-        
+
         #endregion
     }
 
     public class LwFighterAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
 
         private List<string> fighterAircrafts = new List<string>
         {
@@ -858,14 +713,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -905,17 +752,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.Bf-110C-4",
@@ -931,14 +767,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -978,17 +806,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "FINGERFOUR",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-            "DIAMOND",
-            "VIC",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.Bf-110C-4",
@@ -1010,14 +827,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1049,22 +858,13 @@ namespace IL2DCE
         {
             get { return 4; }
         }
-        
+
         #endregion
     }
 
     public class LwStukaStabAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "VIC",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -1082,14 +882,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1129,15 +921,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "VIC",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.Ju-87B-2",
@@ -1163,14 +946,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1210,15 +985,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.Do-17Z-1",
@@ -1254,14 +1020,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1300,15 +1058,6 @@ namespace IL2DCE
     public class LwBomberAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -1375,14 +1124,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1421,15 +1162,6 @@ namespace IL2DCE
     public class LwTransportAirGroupInfo : AirGroupInfo
     {
         #region Private members
-        
-        private List<string> formations = new List<string>
-        {
-            "LINEABREAST",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEASTERN",
-            "VIC",
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -1447,14 +1179,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1487,23 +1211,12 @@ namespace IL2DCE
             get { return 3; }
         }
 
-        public override int DefaultFormationIndex
-        {
-            get { return formations.IndexOf("VIC"); }
-        }
-
         #endregion
     }
 
     public class LwReconAirGroupInfo : AirGroupInfo
     {
         #region Private members
-
-        private List<string> formations = new List<string>
-        {
-            "LINEABREAST",            
-            "LINEASTERN",            
-        };
 
         private List<string> aircrafts = new List<string>
         {
@@ -1535,14 +1248,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1582,15 +1287,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.CR42",
@@ -1611,14 +1307,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-        
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1658,15 +1346,6 @@ namespace IL2DCE
     {
         #region Private members
 
-        private List<string> formations = new List<string>
-        {
-            "VIC3",
-            "ECHELONLEFT",
-            "ECHELONRIGHT",
-            "LINEABREAST",            
-            "LINEASTERN",
-        };
-
         private List<string> aircrafts = new List<string>
         {
             "Aircraft.BR-20M",         
@@ -1688,14 +1367,6 @@ namespace IL2DCE
         #endregion
 
         #region Public properties
-
-        public override List<string> Formations
-        {
-            get
-            {
-                return formations;
-            }
-        }
 
         public override List<string> Aircrafts
         {
@@ -1727,7 +1398,7 @@ namespace IL2DCE
         {
             get { return 3; }
         }
-        
+
         #endregion
     }
 }

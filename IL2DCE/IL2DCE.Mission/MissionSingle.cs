@@ -24,7 +24,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace MissionOld
+    namespace Mission
     {
         public class MissionSingle : Mission
         {

@@ -22,12 +22,7 @@ namespace IL2DCE
 {
     public interface ICore
     {
-        maddox.game.IGamePlay GamePlay
-        {
-            get;
-        }
-
-        ICareer CurrentCareer
+        ICareer Career
         {
             get;
             set;
@@ -43,16 +38,6 @@ namespace IL2DCE
             get;
         }
 
-        IGenerator Generator
-        {
-            get;
-        }
-
-        maddox.game.ISectionFile GlobalAircraftInfoFile
-        {
-            get;
-        }
-
         void DeleteCareer(ICareer career);
 
         void InitCampaign();
@@ -63,36 +48,54 @@ namespace IL2DCE
 
         void AdvanceCampaign(IGame game);
 
-        void Debug(string text);
-
         bool SpawnParked
         {
             get;
             set;
         }
 
-        int IsDebug
+        int Debug
         {
             get;
             set;
         }
 
-        double FlightSize
+        System.Collections.Generic.IList<maddox.GP.Point3d> RedFrontMarkers
         {
             get;
         }
 
-        double FlightCount
+        System.Collections.Generic.IList<maddox.GP.Point3d> BlueFrontMarkers
+        {
+            get;
+        }
+        
+        System.Collections.Generic.IList<IAirGroup> AirGroups
         {
             get;
         }
 
-        int AdditionalAirOperations
+        System.Collections.Generic.IList<IAirGroup> RedAirGroups
         {
             get;
         }
 
-        int AdditionalGroundOperations
+        System.Collections.Generic.IList<IAirGroup> BlueAirGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> GroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> RedGroundGroups
+        {
+            get;
+        }
+
+        System.Collections.Generic.IList<IGroundGroup> BlueGroundGroups
         {
             get;
         }

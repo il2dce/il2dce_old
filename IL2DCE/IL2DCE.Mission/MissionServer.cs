@@ -24,7 +24,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    namespace MissionOld
+    namespace Mission
     {
         public class MissionServer : Mission
         {
@@ -38,6 +38,49 @@ namespace IL2DCE
                 }
             }
 
+
+            //private void setMainMenu(Player player)
+            //{
+            //    GamePlay.gpSetOrderMissionMenu(player, false, 0, new string[] { "Select career", "", "3" }, new bool[] { true, false, false });
+            //}
+            //private void setSubMenu(Player player)
+            //{
+            //    GamePlay.gpSetOrderMissionMenu(player, true, 1, new string[] { "1-1", "1-2", "1-3" }, new bool[] { false, false, false });
+            //}
+
+            //public override void OnOrderMissionMenuSelected(Player player, int ID, int menuItemIndex)
+            //{
+            //    if (ID == 0)
+            //    { // main menu
+            //        if (menuItemIndex == 1)
+            //        {
+            //            GamePlay.gpHUDLogCenter("Menu selected Loading mission aaa2.mis");
+            //            //GamePlay.gpPostMissionLoad("missions\\aaa2.mis");
+            //            setSubMenu(player);
+            //        }
+            //    }
+            //    else if (ID == 1)
+            //    { // sub menu
+            //        setMainMenu(player);
+            //    }
+            //}
+
+            //public override void OnPlayerConnected(Player player)
+            //{
+            //    /*if (MissionNumber == 0)
+            //    {
+            //        setMainMenu(player);
+            //    }*/
+            //}
+
+            //public override void Inited()
+            //{
+            //    if (MissionNumber == 0)
+            //    {
+            //        setMainMenu(GamePlay.gpPlayer());
+            //    }
+            //}
+
             public override void OnBattleStarted()
             {
                 base.OnBattleStarted();
@@ -50,12 +93,12 @@ namespace IL2DCE
 
                 this.core = new Core(GamePlay, confFile, campaignsFolderSystemPath, careersFolderSystemPath, debugFolderSystemPath);
 
-                core.CurrentCareer = core.Careers[0];
+                core.Career = core.Careers[0];
                 core.InitCampaign();
                 
                 ISectionFile missionFile = null;
                 IBriefingFile briefingFile = null;
-                core.Generate(core.CurrentCareer.CampaignInfo.TemplateFilePath, "test", out missionFile, out briefingFile);
+                core.Generate(core.Career.CampaignInfo.TemplateFilePath, "test", out missionFile, out briefingFile);
 
                 GamePlay.gpBattleStop();
 

@@ -26,6 +26,7 @@ namespace IL2DCE
 {
     public class Career : ICareer
     {
+        public static int _difficult;
         public static List<string> RafRanks = new List<string> {
             "Pilot Officer",
             "Flying Officer",
@@ -47,15 +48,22 @@ namespace IL2DCE
         public Career(string pilotName, int armyIndex, int rankIndex)
         {
             _pilotName = pilotName;
-            _armyIndex = armyIndex;            
+            _armyIndex = armyIndex;
             _rankIndex = rankIndex;
             _experience = 0;
+            _medal = 100000000;
+
+            _difficulty = 5;
+            _difficult = _difficulty;
+            _missions = 0;
+            _phase = 0;
 
             _campaignInfo = null;
             _date = null;
             _airGroup = null;
             _missionFileName = null;
 
+            
         }
 
         public Career(string pilotName, List<ICampaignInfo> campaignInfos, ISectionFile careerFile)
@@ -64,11 +72,20 @@ namespace IL2DCE
 
             if (careerFile.exist("Main", "armyIndex")
                 && careerFile.exist("Main", "rankIndex")
-                && careerFile.exist("Main", "experience"))
+                && careerFile.exist("Main", "experience")
+                && careerFile.exist("Main", "medal")
+                && careerFile.exist("Main", "difficulty")
+                && careerFile.exist("Main", "missions")
+                && careerFile.exist("Main", "phase"))
             {
                 _armyIndex = int.Parse(careerFile.get("Main", "armyIndex"));
                 _rankIndex = int.Parse(careerFile.get("Main", "rankIndex"));
                 _experience = int.Parse(careerFile.get("Main", "experience"));
+                _difficulty = int.Parse(careerFile.get("Main", "difficulty"));
+                _difficult = int.Parse(careerFile.get("Main", "difficulty"));
+                _medal = int.Parse(careerFile.get("Main", "medal"));
+                _missions = int.Parse(careerFile.get("Main", "missions"));
+                _phase = int.Parse(careerFile.get("Main", "phase"));
             }
             else
             {
@@ -98,20 +115,24 @@ namespace IL2DCE
                 throw new FormatException();
             }
         }
-
+        
         public override string ToString()
         {
-            if(ArmyIndex == 1)
+            if (ArmyIndex == 1)
             {
-                return RafRanks[RankIndex] + " " + PilotName;
+                //return RafRanks[RankIndex] + " " + PilotName;
+                return RafRanks[RankIndex] + " " + PilotName + " ," + Medal + "," + Difficulty;
             }
             else if (ArmyIndex == 2)
             {
-                return LwRanks[RankIndex] + " " + PilotName;
+                //return LwRanks[RankIndex] + " " + PilotName;
+                return LwRanks[RankIndex] + " " + PilotName + " ," + Medal + "," + Difficulty;
             }
             else
             {
-                return PilotName;
+                return PilotName + " ," + Medal + "," + Difficulty;
+                // return PilotName;
+
             }
         }
 
@@ -170,6 +191,75 @@ namespace IL2DCE
         }
         private int _experience;
 
+        public int Medal             // vP
+        {
+            get
+            {
+                return _medal;
+            }
+            set
+            {
+                _medal = value;
+            }
+        }
+        private int _medal;
+
+        public int Missions             // vP
+        {
+            get
+            {
+                return _missions;
+            }
+            set
+            {
+                _missions = value;
+            }
+        }
+        private int _missions;
+
+        public int Phase             // vP
+        {
+            get
+            {
+                return _phase;
+            }
+            set
+            {
+                _phase = value;
+            }
+        }
+        private int _phase;
+
+        public int Difficulty
+        {
+            get
+            {
+                if (_difficulty > 9)
+                {
+                    return 9;
+                }
+                if (_difficulty < 1)
+                {
+                    return 1;
+                }
+                return _difficulty;
+            }
+            set
+            {
+                if (_difficulty > 9)
+                {
+                    _difficulty = 9;
+                }
+                if (_difficulty < 1)
+                {
+                    _difficulty = 1;
+                }
+                _difficulty = value;
+            }
+        }
+        private int _difficulty;
+
+
         public ICampaignInfo CampaignInfo
         {
             get
@@ -227,11 +317,18 @@ namespace IL2DCE
             careerFile.add("Main", "armyIndex", ArmyIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             careerFile.add("Main", "rankIndex", RankIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             careerFile.add("Main", "experience", Experience.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            //
+            careerFile.add("Main", "medal", Medal.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            careerFile.add("Main", "difficulty", Difficulty.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            careerFile.add("Main", "missions", Missions.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            careerFile.add("Main", "phase", Phase.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+            //
 
             careerFile.add("Campaign", "date", Date.Value.Year.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Date.Value.Month.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + "-" + Date.Value.Day.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
             careerFile.add("Campaign", "airGroup", AirGroup);
             careerFile.add("Campaign", "missionFile", MissionFileName);
             careerFile.add("Campaign", "id", CampaignInfo.Id);
+
         }
     }
 }

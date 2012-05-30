@@ -33,8 +33,9 @@ namespace IL2DCE
         ATTACK_VEHICLE,
         //ATTACK_ARTILLERY,
         ATTACK_RADAR,
+        ATTACK_DEPOT,       // attack fuel depots
         ATTACK_SHIP,
-        ATTACK_AIRCRAFT,
+        ATTACK_AIRBASE,
 
         INTERCEPT,
         //MARITIME_INTERCEPT,

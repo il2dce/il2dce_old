@@ -8,8 +8,8 @@
     <ProjectGuid>{22442D49-0A77-4CBE-A1F3-9806958C10AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IL2DCE</RootNamespace>
-    <AssemblyName>IL2DCE</AssemblyName>
+    <RootNamespace>BoBDCE</RootNamespace>
+    <AssemblyName>BoBDCE</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -19,7 +19,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\IL2DCE\</OutputPath>
+    <OutputPath>..\..\..\..\BoBDCE\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\parts\IL2DCE\</OutputPath>
+    <OutputPath>..\Release\parts\BoBDCE\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -38,41 +38,28 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Aircraft.cs" />
+    <Compile Include="AIRandom.cs" />
+    <Compile Include="Airbase.cs" />
     <Compile Include="AircraftInfo.cs" />
     <Compile Include="AircraftLoadoutInfo.cs" />
     <Compile Include="AircraftParametersInfo.cs" />
     <Compile Include="AirGroup.cs" />
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
-    <Compile Include="AirHeadquarters.cs" />
-    <Compile Include="AirUnit.cs" />
-    <Compile Include="Army.cs" />
+    <Compile Include="AITweak.cs" />
     <Compile Include="BriefingFile.cs" />
     <Compile Include="Career.cs" />
     <Compile Include="CampaignInfo.cs" />
-    <Compile Include="City.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="FrontMarker.cs" />
-    <Compile Include="Generator.cs" />
+    <Compile Include="Depot.cs" />
     <Compile Include="GroundGroupSubWaypoint.cs" />
-    <Compile Include="IBuilding.cs" />
-    <Compile Include="IOrder.cs" />
-    <Compile Include="IDetector.cs" />
-    <Compile Include="IHeadquarters.cs" />
-    <Compile Include="IPersistentWorld.cs" />
     <Compile Include="Interfaces\IAircraftLoadoutInfo.cs" />
     <Compile Include="Interfaces\IAircraftParametersInfo.cs" />
     <Compile Include="Interfaces\IAirGroupInfo.cs" />
     <Compile Include="Interfaces\IBriefingFile.cs" />
     <Compile Include="Interfaces\ICareer.cs" />
     <Compile Include="Interfaces\ICampaignInfo.cs" />
-    <Compile Include="Interfaces\IGenerator.cs" />
-    <Compile Include="IStrategicPoint.cs" />
-    <Compile Include="IUnit.cs" />
-    <Compile Include="IVehicle.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Mission.cs" />
+    <Compile Include="PlaneType.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="GroundGroup.cs" />
     <Compile Include="GroundGroupWaypoint.cs" />
@@ -85,8 +72,6 @@
     <Compile Include="Interfaces\IGroundGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stationary.cs" />
-    <Compile Include="UnitEventArgs.cs" />
-    <Compile Include="UnitState.cs" />
     <Compile Include="Waterway.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,8 +102,8 @@
     <None Include="conf.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="IL2DCE.Inst.nsi" />
-    <None Include="IL2DCE.Inst.template" />
+    <None Include="BoBDCE.Inst.nsi" />
+    <None Include="BoBDCE.Inst.template" />
     <None Include="Properties\GlobalAssemblyInfo.template" />
   </ItemGroup>
   <ItemGroup>
@@ -128,13 +113,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release copy "$(ProjectDir)IL2DCE.Inst.nsi" "$(TargetDir)..\..\IL2DCE.Inst.nsi"
+    <PostBuildEvent>if $(ConfigurationName) == Release copy "$(ProjectDir)BoBDCE.Inst.nsi" "$(TargetDir)..\..\BoBDCE.Inst.nsi"
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>SubWcRev "$(SolutionDir)." "$(ProjectDir)Properties\GlobalAssemblyInfo.template" "$(ProjectDir)Properties\GlobalAssemblyInfo.cs"
 
-SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCE.Inst.template" "$(ProjectDir)IL2DCE.Inst.nsi"</PreBuildEvent>
+SubWcRev "$(SolutionDir)." "$(ProjectDir)Il2DCE.Inst.template" "$(ProjectDir)BoBDCE.Inst.nsi"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
