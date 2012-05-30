@@ -46,6 +46,30 @@ namespace IL2DCE
             set;
         }
 
+        int Medal
+        {
+            get;
+            set;
+        }
+
+        int Difficulty
+        {
+            get;
+            set;
+        }
+
+        int Missions
+        {
+            get;
+            set;
+        }
+
+        int Phase
+        {
+            get;
+            set;
+        }
+
         ICampaignInfo CampaignInfo
         {
             get;

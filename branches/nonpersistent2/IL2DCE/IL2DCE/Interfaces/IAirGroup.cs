@@ -74,6 +74,16 @@ namespace IL2DCE
             get;
         }
 
+        Depot TargetDepot
+        {
+            get;
+        }
+
+        Airbase TargetAirbase
+        {
+            get;
+        }
+
         GroundGroup TargetGroundGroup
         {
             get;
@@ -85,11 +95,6 @@ namespace IL2DCE
         }
 
         maddox.GP.Point2d? TargetArea
-        {
-            get;
-        }
-
-        int ArmyIndex
         {
             get;
         }

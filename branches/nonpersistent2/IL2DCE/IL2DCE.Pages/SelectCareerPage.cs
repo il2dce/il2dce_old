@@ -98,7 +98,7 @@ namespace IL2DCE
 
             private void bContinue_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                if (Game.Core.CurrentCareer.CampaignInfo != null)
+                if (Game.Core.Career.CampaignInfo != null)
                 {
                     Game.Core.InitCampaign();
                     Game.gameInterface.PageChange(new BattleIntroPage(), null);
@@ -111,7 +111,7 @@ namespace IL2DCE
 
             void Delete_Click(object sender, System.Windows.RoutedEventArgs e)
             {
-                Game.Core.DeleteCareer(Game.Core.CurrentCareer);
+                Game.Core.DeleteCareer(Game.Core.Career);
                 FrameworkElement.ListCareer.Items.RemoveAt(FrameworkElement.ListCareer.SelectedIndex);
 
                 FrameworkElement.ListCareer.Items.Refresh();
@@ -122,10 +122,10 @@ namespace IL2DCE
                 if (e.AddedItems.Count > 0)
                 {
                     ICareer careerSelected = e.AddedItems[0] as ICareer;
-                    Game.Core.CurrentCareer = careerSelected;
+                    Game.Core.Career = careerSelected;
                 }
 
-                if (Game.Core.CurrentCareer != null)
+                if (Game.Core.Career != null)
                 {
                     FrameworkElement.Continue.IsEnabled = true;
                     FrameworkElement.Delete.IsEnabled = true;

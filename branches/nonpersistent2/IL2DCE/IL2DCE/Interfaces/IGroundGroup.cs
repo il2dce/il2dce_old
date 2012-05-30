@@ -32,21 +32,11 @@ namespace IL2DCE
         Vehicle,
         Armor,
         Ship,
-    }
-
-    public enum EGroundGroupSubType
-    {
-        Artillery,
-        Supply,
-        None,
+        Train,
     }
 
     public interface IGroundGroup
     {
-        maddox.game.IRecalcPathParams PathParams
-        {
-            get;
-            set;
-        }
+        
     }
 }

@@ -157,7 +157,7 @@ namespace IL2DCE
                 int rankIndex = (int)rankSelected.Tag;
 
                 Career career = new Career(pilotName, armyIndex, rankIndex);
-                Game.Core.CurrentCareer = career;
+                Game.Core.Career = career;
                 Game.Core.Careers.Add(career);
 
                 Game.gameInterface.PageChange(new SelectCampaignPage(), null);
