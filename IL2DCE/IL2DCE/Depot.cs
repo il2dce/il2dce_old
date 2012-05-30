@@ -14,16 +14,44 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//$reference parts/IL2DCE/IL2DCE.dll
-//$reference parts/IL2DCE/IL2DCE.Mission.dll
-//-$reference parts/core/gamePlay.dll
-//$debug
-
 using System;
+using System.Collections;
+using System.Collections.Generic;
+
 using maddox.game;
 using maddox.game.world;
+using maddox.GP;
 
-public class Mission : IL2DCE.Mission.MissionServer
+namespace IL2DCE
 {
-    
+    public class Depot
+    {
+        public Depot(string isd, double x, double y)
+        {
+            _isd = isd;
+            X = x;
+            Y = y;
+        }
+
+        public string Isd
+        {
+            get
+            {
+                return _isd;
+            }
+        }
+        private string _isd;
+
+        public double X;
+
+        public double Y;
+
+        public Point2d Position
+        {
+            get
+            {
+                return new Point2d(this.X, this.Y);
+            }
+        }
+    }
 }

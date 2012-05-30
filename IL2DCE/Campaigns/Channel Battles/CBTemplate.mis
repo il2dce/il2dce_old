@@ -1,0 +1,1261 @@
+﻿[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  BattleArea 166130 195011 144493 98048 10000
+  TIME 12
+  WeatherIndex 0
+  CloudsHeight 1000
+  BreezeActivity 10
+  ThermalActivity 10
+[GlobalWind_0]
+  Power 3.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 5
+  GustAngle 45
+[splines]
+[AirGroups]
+  BoB_LW_LG1_IV.37
+  BoB_LW_ErprGr210.11
+  BoB_RAF_F_41Sqn_Early.01
+  BoB_RAF_F_32Sqn_Early.01
+  BoB_LW_KG51_III.37
+  BoB_LW_JG51_II.31
+  BoB_LW_KG53_II.17
+  BoB_RAF_B_88Sqn.03
+  BoB_LW_JG2_I.07
+  BoB_LW_ZG26_I.13
+  BoB_RAF_F_266Sqn_Early.01
+  BoB_LW_StG77_Stab.07
+[BoB_LW_LG1_IV.37]
+  Flight0  A B C
+  Flight1  D E F
+  Flight2  21 22 23
+  Class Aircraft.Ju-87B-2
+  Formation VIC
+  CallSign 3
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_LG1_IV.37_Way]
+  TAKEOFF 278866.09 207351.75 0 0
+[BoB_LW_ErprGr210.11]
+  Flight0  A B C D
+  Class Aircraft.Bf-110C-7
+  Formation FINGERFOUR
+  CallSign 21
+  Fuel 100
+  Weapons 1 1 1 2
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_ErprGr210.11_Way]
+  TAKEOFF 275980.59 207376.73 0 0
+[BoB_RAF_F_41Sqn_Early.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.SpitfireMkIa
+  Formation VIC3
+  CallSign 27
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_41Sqn_Early.01_Way]
+  TAKEOFF 248048.43 259000.26 0 0
+[BoB_RAF_F_32Sqn_Early.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.HurricaneMkI
+  Formation VIC3
+  CallSign 31
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_32Sqn_Early.01_Way]
+  TAKEOFF 234918.76 232613.24 0 0
+[BoB_LW_KG51_III.37]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.Ju-88A-1
+  Formation VIC3
+  CallSign 33
+  Fuel 100
+  Weapons 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_KG51_III.37_Way]
+  TAKEOFF 296285.72 217259.51 0 0
+[BoB_LW_JG51_II.31]
+  Flight0  1 2 3 4
+  Class Aircraft.Bf-109E-1
+  Formation FINGERFOUR
+  CallSign 26
+  Fuel 100
+  Weapons 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG51_II.31_Way]
+  TAKEOFF 276971.34 209427.57 0 0
+[BoB_LW_KG53_II.17]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.He-111H-2
+  Formation VIC3
+  CallSign 26
+  Fuel 100
+  Weapons 1 1 1 1 1 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_KG53_II.17_Way]
+  TAKEOFF 291075.91 216228.27 0 0
+[BoB_RAF_B_88Sqn.03]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.BlenheimMkIV
+  Formation LINEABREAST
+  CallSign 30
+  Fuel 100
+  Weapons 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_B_88Sqn.03_Way]
+  TAKEOFF 225120.93 228006.16 0 0
+[BoB_LW_JG2_I.07]
+  Flight0  1 2 3 4
+  Flight1  11 12 13 14
+  Flight2  21 22 23 24
+  Class Aircraft.Bf-109E-4B
+  Formation FINGERFOUR
+  CallSign 20
+  Fuel 100
+  Weapons 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG2_I.07_Way]
+  TAKEOFF 284010.46 205122.95 0 0
+[BoB_LW_ZG26_I.13]
+  Flight0  1 2 3 4
+  Flight1  11 12 13 14
+  Class Aircraft.Bf-110C-4
+  Formation FINGERFOUR
+  CallSign 26
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_ZG26_I.13_Way]
+  TAKEOFF 281154.25 212993.50 0 0
+[BoB_RAF_F_266Sqn_Early.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.SpitfireMkIa
+  Formation VIC3
+  CallSign 15
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_266Sqn_Early.01_Way]
+  TAKEOFF 212283.85 262825.84 0 0
+[BoB_LW_StG77_Stab.07]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.Ju-87B-2
+  Formation VIC3
+  CallSign 4
+  Fuel 100
+  Weapons 1 1 1 1
+  SetOnPark 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_StG77_Stab.07_Way]
+  TAKEOFF 281748.36 203312.05 0 0
+[CustomChiefs]
+[Chiefs]
+  0_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  1_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  2_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  3_Chief Ship.Tanker_Medium1 gb /sleep 0/skill 2/slowfire 1
+  4_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
+  5_Chief Ship.Minensuchboote de /sleep 0/skill 2/slowfire 1
+[0_Chief_Road]
+  204996.14 203541.05 38.40  0 2 5.56
+  206147.45 203789.34 38.40
+[1_Chief_Road]
+  235543.20 216314.50 38.40  0 2 5.56
+  236675.25 217635.22 38.40
+[2_Chief_Road]
+  257429.53 235182.03 38.40  0 2 5.56
+  255825.80 233672.63 38.40
+[3_Chief_Road]
+  222815.42 268629.06 38.40  0 2 5.56
+  224641.44 268629.06 38.40
+[4_Chief_Road]
+  264962.09 210835.45 38.40  0 2 5.56
+  267822.41 212442.80 38.40
+[5_Chief_Road]
+  297523.91 225061.11 38.40  0 2 5.56
+  294732.28 224691.14 38.40
+[Stationary]
+  Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77 
+  Static1 Stationary.Radar.EnglishRadar1 gb 217627.77 251506.53 71 
+  Static2 Stationary.Radar.EnglishRadar1 gb 206100.7 212405.8 94 
+  Static3 Stationary.Radar.EnglishRadar1 gb 178847.83 197272.98 100 
+  Static4 Stationary.Radar.EnglishRadar1 gb 70506.68 171685.75 93 
+  Static5 Stationary.Radar.EnglishRadar1 gb 240479.5 249608.66 124 
+  Static6 Stationary.Radar.EnglishRadar1 gb 118589.34 199340.84 -90 
+  Static7 Stationary.Radar.EnglishRadar2 gb 118348.4 199322.13 -45 
+  Static8 Stationary.Radar.EnglishRadar2 gb 118310.6 199359.3 -45 
+  Static9 Stationary.Radar.EnglishRadar2 gb 118345.22 199390.86 -45 
+  Static10 Stationary.Radar.EnglishRadar2 gb 118378.41 199355.13 -45 
+  Static11 Stationary.Radar.EnglishRadar1 gb 203391.09 287593.25 125 
+  Static12 Artillery.Bofors gb 248067.63 259669.5 -240 /timeout 0/radius_hide 2500 
+  Static13 Artillery.Bofors gb 233666.13 228784.98 -95 /timeout 0/radius_hide 2500 
+  Static14 Artillery.Bofors gb 233681.06 228849.13 -95 /timeout 0/radius_hide 2500 
+  Static15 Artillery.Bofors gb 223694.02 222943.53 -95 /timeout 0/radius_hide 2500 
+  Static16 Artillery.Bofors gb 223745.05 222988.67 -95 /timeout 0/radius_hide 2500 
+  Static17 Artillery.Bofors gb 223806.86 223028.91 -95 /timeout 0/radius_hide 2500 
+  Static18 Artillery.Krupp_L2H43_Protze_Flak30 de 264872.31 188879.45 0 /timeout 0/radius_hide 2500 
+  Static19 Artillery.Krupp_L2H43_Protze_Flak30 de 264866.47 188814.63 0 /timeout 0/radius_hide 2500 
+  Static20 Artillery.Krupp_L2H43_Protze_Flak30 de 265529.81 205922.98 0 /timeout 0/radius_hide 2500 
+  Static21 Artillery.Krupp_L2H43_Protze_Flak30 de 265630.5 205987.66 0 /timeout 0/radius_hide 2500 
+  Static22 Artillery.Krupp_L2H43_Protze_Flak30 de 283145.5 215899.98 0 /timeout 0/radius_hide 2500 
+  Static23 Artillery.Krupp_L2H43_Protze_Flak30 de 283203.66 215917.44 0 /timeout 0/radius_hide 2500 
+  Static24 Artillery.Krupp_L2H43_Protze_Flak30 de 285806.94 217150.22 0 /timeout 0/radius_hide 2500 
+  Static25 Artillery.Krupp_L2H43_Protze_Flak30 de 285795.63 217221.88 0 /timeout 0/radius_hide 2500 
+  Static26 Artillery.Krupp_L2H43_Protze_Flak30 de 298368.94 220763.53 0 /timeout 0/radius_hide 2500 
+  Static27 Artillery.Krupp_L2H43_Protze_Flak30 de 298497.22 220786.86 0 /timeout 0/radius_hide 2500 
+  Static28 Artillery.Krupp_L2H43_Protze_Flak30 de 305573.69 221639.03 0 /timeout 0/radius_hide 2500 
+  Static29 Artillery.Krupp_L2H43_Protze_Flak30 de 305697.06 221752.91 0 /timeout 0/radius_hide 2500 
+  Static30 Artillery.Krupp_L2H43_Protze_Flak30 de 317892.03 225027.69 0 /timeout 0/radius_hide 2500 
+  Static31 Artillery.Krupp_L2H43_Protze_Flak30 de 318001.88 225039.28 0 /timeout 0/radius_hide 2500 
+  Static32 Artillery.Krupp_L2H43_Protze_Flak30 de 339907.13 234175.95 0 /timeout 0/radius_hide 2500 
+  Static33 Artillery.Krupp_L2H43_Protze_Flak30 de 339949.28 234365.72 0 /timeout 0/radius_hide 2500 
+  Static34 Artillery.Krupp_L2H43_Protze_Flak30 de 267109.59 167208.11 0 /timeout 0/radius_hide 2500 
+  Static35 Artillery.Krupp_L2H43_Protze_Flak30 de 267200 167257.08 0 /timeout 0/radius_hide 2500 
+  Static36 Artillery.Krupp_L2H43_Protze_Flak30 de 268510.31 165576.58 0 /timeout 0/radius_hide 2500 
+  Static37 Artillery.Krupp_L2H43_Protze_Flak30 de 311649.44 190875.05 0 /timeout 0/radius_hide 2500 
+  Static38 Artillery.Krupp_L2H43_Protze_Flak30 de 264966.38 165825.67 0 /timeout 0/radius_hide 2500 
+  Static39 Artillery.Krupp_L2H43_Protze_Flak30 de 281771.78 213708.78 0 /timeout 0/radius_hide 2500 
+  Static40 Artillery.4_cm_Flak_28 de 281857.94 213626.42 0 /timeout 0/radius_hide 2500 
+  Static41 Artillery.Hotchkiss_H39 de 277721.63 211541.61 0 /timeout 0/radius_hide 2500 
+  Static42 Artillery.Hotchkiss_H39 de 277692.78 211598.48 0 /timeout 0/radius_hide 2500 
+  Static43 Artillery.Hotchkiss_H39 de 277629.13 211675.66 0 /timeout 0/radius_hide 2500 
+  Static44 Artillery.Hotchkiss_H39 de 267457.53 193096.36 0 /timeout 0/radius_hide 2500 
+  Static45 Artillery.Hotchkiss_H39 de 267431.78 193157.3 0 /timeout 0/radius_hide 2500 
+  Static46 Artillery.Hotchkiss_H39 de 267388.72 193199.02 0 /timeout 0/radius_hide 2500 
+  Static47 Stationary.Austin_K2_Ambulance gb 251212.2 261525.78 -45 
+  Static48 Stationary.HurricaneMkI_dH5-20 gb 248679.77 259439.75 -150 
+  Static49 Stationary.BlenheimMkI gb 248853.34 258819.31 -240 
+  Static50 Stationary.BlenheimMkI gb 248823.94 258790.58 -240 
+  Static51 Stationary.Austin_K2_Ambulance gb 247775.08 259364.64 -285 
+  Static52 Stationary.BlenheimMkI gb 248812.8 258764.17 -240 
+  Static53 Artillery.Bofors gb 248902.08 258813 -240 /timeout 0/radius_hide 2500 
+  Static54 Stationary.Austin_K2_ATV gb 248846.08 258910.83 -165 
+  Static55 Stationary.Austin_K2_ATV gb 248842.44 258905.67 -180 
+  Static56 Stationary.Austin_K2_Ambulance gb 248843.5 258900.66 -195 
+  Static57 Stationary.Fordson_Sussex_w_o_ballon gb 248850.47 258931.86 -195 
+  Static58 Stationary.Fire_pump_UK1_Transport gb 248856.09 258930.44 -314.1 
+  Static59 Stationary.Fire_pump_UK1_Transport gb 248854.67 258920.09 -165 
+  Static60 Stationary.Fordson_Sussex_w_ballon gb 248848.81 258920.69 -195 
+  Static61 Stationary.HurricaneMkI_dH5-20 gb 248887.14 259089.47 -120 
+  Static62 Stationary.HurricaneMkI_dH5-20 gb 247548.27 259255.45 -375 
+  Static63 Stationary.HurricaneMkI_dH5-20 gb 248747.64 259346.5 -120 
+  Static64 Stationary.BlenheimMkI gb 248785.86 259338.17 -120 
+  Static65 Stationary.HurricaneMkI_dH5-20 gb 248701.63 259401.94 -135 
+  Static66 Stationary.Austin_K2_ATV gb 251210.63 261520.91 -30 
+  Static67 Stationary.Austin_K2_ATV gb 251204.89 261518.27 -15 
+  Static68 Stationary.Fordson_Sussex_w_ballon gb 251197.59 261511.09 -45 
+  Static69 Stationary.Fire_pump_UK1_Transport gb 251192.81 261514.53 -15 
+  Static70 Stationary.Fordson_Sussex_w_o_ballon gb 251190.58 261502.25 -45 
+  Static71 Stationary.Fire_pump_UK1_Transport gb 251186.42 261506.28 -164.1 
+  Static72 Stationary.Morris_CDSW gb 251102.72 261525.23 -150 
+  Static73 Stationary.Environment.CamoNetCrates nn 251094.52 261527.61 -420 
+  Static74 Stationary.Environment.Oil_Cart_UK1 gb 251099.38 261528.41 -390 
+  Static75 Stationary.Environment.FuelDrum_UK1_2 nn 251093.2 261527.19 -420 
+  Static76 Stationary.Environment.Chear_UK-GER_1 nn 251097.2 261525.95 -420 
+  Static77 Stationary.Environment.Chear_UK-GER_1 nn 251096.61 261525.58 -420 
+  Static78 Stationary.Environment.FireBucket_UK1_full nn 251097.77 261526.09 -420 
+  Static79 Stationary.Environment.SandBagWall_Arch nn 237720.84 229683.69 -135 
+  Static80 Stationary.Environment.SandBagWall_Arch nn 237727.28 229689.63 45 
+  Static81 Stationary.Environment.SandBagWall_Arch nn 237727.33 229683.75 -45 
+  Static82 Stationary.Environment.SandBagWall_Arch nn 237720.59 229689.45 135 
+  Static83 Artillery.3_7_inch_QF_Mk_I gb 237724.44 229686.53 -405 /timeout 0/radius_hide 2500 
+  Static84 Stationary.Environment.SandBagWall_Arch nn 237735.83 229714.55 -135 
+  Static85 Stationary.Environment.SandBagWall_Arch nn 237742.27 229720.48 45 
+  Static86 Stationary.Environment.SandBagWall_Arch nn 237742.31 229714.59 -45 
+  Static87 Stationary.Environment.SandBagWall_Arch nn 237735.56 229720.31 135 
+  Static88 Artillery.3_7_inch_QF_Mk_I gb 237739.41 229717.39 -405 /timeout 0/radius_hide 2500 
+  Static89 Stationary.Environment.SandBagWall_Arch nn 234022.66 228373.89 -135 
+  Static90 Stationary.Environment.SandBagWall_Arch nn 234029.09 228379.83 45 
+  Static91 Stationary.Environment.SandBagWall_Arch nn 234029.14 228373.94 -45 
+  Static92 Stationary.Environment.SandBagWall_Arch nn 234022.41 228379.64 135 
+  Static93 Artillery.3_7_inch_QF_Mk_I gb 234026.25 228376.72 -405 /timeout 0/radius_hide 2500 
+  Static94 Stationary.Environment.SandBagWall_Arch nn 234131.73 228397.63 -135 
+  Static95 Stationary.Environment.SandBagWall_Arch nn 234138.17 228403.56 45 
+  Static96 Stationary.Environment.SandBagWall_Arch nn 234138.22 228397.69 -45 
+  Static97 Stationary.Environment.SandBagWall_Arch nn 234131.47 228403.39 135 
+  Static98 Artillery.3_7_inch_QF_Mk_I gb 234135.31 228400.47 -405 /timeout 0/radius_hide 2500 
+  Static99 Searchlight.150_cm_SearchLight_UK1 gb 237742.78 229871.41 90 
+  Static100 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 237744.11 229865.84 90 /target AIChief_2 
+  Static101 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 237429.59 230078.61 90 /target AIChief_2 
+  Static102 Searchlight.150_cm_SearchLight_UK1 gb 237434.72 230072.66 90 
+  Static103 Searchlight.150_cm_SearchLight_UK1 gb 236583.27 230274.97 0 
+  Static104 Searchlight.150_cm_SearchLight_UK1 gb 247643.03 259454.25 90 
+  Static105 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 247647.38 259455.11 90 /target AIChief_0 
+  Static106 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 247969.5 259418.02 90 /target AIChief_0 
+  Static107 Searchlight.150_cm_SearchLight_UK1 gb 247969.67 259414.92 90 
+  Static108 Searchlight.150_cm_SearchLight_UK1 gb 167329.09 198882.98 90 
+  Static109 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 167333.44 198883.83 90 /target AIChief_1 
+  Static110 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 167607.95 199081.33 90 /target AIChief_1 
+  Static111 Searchlight.150_cm_SearchLight_UK1 gb 167603.34 199084.16 90 
+  Static112 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 236583.7 230269.77 0 /target AIChief_2 
+  Static113 Searchlight.150_cm_SearchLight_UK1 gb 236585.89 228929.39 0 
+  Static114 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 236586.73 228925.05 0 /target AIChief_2 
+  Static115 Searchlight.150_cm_SearchLight_UK1 gb 234558.95 232078.38 0 
+  Static116 Artillery.Bofors gb 235208.75 232174.89 -195 /timeout 0/radius_hide 2500 
+  Static117 Stationary.HurricaneMkI_dH5-20 gb 235149 232199.83 135 
+  Static118 Stationary.BlenheimMkI gb 234429.48 232188.3 45 
+  Static119 Stationary.BlenheimMkI gb 234486.16 232160.28 45 
+  Static120 Stationary.Austin_K2_Ambulance gb 234616.06 232853.52 45 
+  Static121 Stationary.BlenheimMkI gb 234460.38 232165.72 105 
+  Static122 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 234559.81 232074.03 0 /target AIChief_5 
+  Static123 Stationary.Austin_K2_ATV gb 234731.63 232052.41 135 
+  Static124 Searchlight.150_cm_SearchLight_UK1 gb 234630.77 233093.58 90 
+  Static125 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 234635.13 233094.44 90 /target AIChief_5 
+  Static126 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 234727.69 233117.8 90 /target AIChief_5 
+  Static127 Searchlight.150_cm_SearchLight_UK1 gb 234723.33 233116.95 90 
+  Static128 Searchlight.150_cm_SearchLight_UK1 gb 224715.52 228493.33 90 
+  Static129 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 224712.78 228488.86 90 /target AIChief_6 
+  Static130 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 224805.34 228350.7 90 /target AIChief_6 
+  Static131 Searchlight.150_cm_SearchLight_UK1 gb 224800.98 228349.86 90 
+  Static132 Searchlight.150_cm_SearchLight_UK1 gb 187728.98 258129.78 90 
+  Static133 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 187733.33 258130.64 90 /target AIChief_7 
+  Static134 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 187825.89 258154 90 /target AIChief_7 
+  Static135 Searchlight.150_cm_SearchLight_UK1 gb 187821.55 258153.16 90 
+  Static136 Searchlight.150_cm_SearchLight_UK1 gb 246118.34 235397.11 90 
+  Static137 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 246122.08 235394.33 90 /target AIChief_8 
+  Static138 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 246472.17 235309.06 90 /target AIChief_8 
+  Static139 Searchlight.150_cm_SearchLight_UK1 gb 246473.17 235314.63 90 
+  Static140 Searchlight.150_cm_SearchLight_UK1 gb 244713.89 234697.94 90 
+  Static141 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 244718.23 234698.78 90 /target AIChief_9 
+  Static142 Searchlight.150_cm_SearchLight_UK1 gb 244729.59 234643.89 90 
+  Static143 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 244733.95 234644.73 90 /target AIChief_9 
+  Static144 Searchlight.150_cm_SearchLight_UK1 gb 155586.28 275291 90 
+  Static145 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 155590.63 275291.84 90 /target AIChief_10 
+  Static146 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 155683.19 275315.22 90 /target AIChief_10 
+  Static147 Searchlight.150_cm_SearchLight_UK1 gb 155678.84 275314.34 90 
+  Static148 Searchlight.150_cm_SearchLight_UK1 gb 153285.03 276207.69 90 
+  Static149 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 153289.39 276208.53 90 /target AIChief_11 
+  Static150 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 153381.95 276231.91 90 /target AIChief_11 
+  Static151 Searchlight.150_cm_SearchLight_UK1 gb 153377.59 276231.06 90 
+  Static152 Searchlight.150_cm_SearchLight_UK1 gb 155961.34 270058.31 90 
+  Static153 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 155965.69 270059.16 90 /target AIChief_12 
+  Static154 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 156058.25 270082.53 90 /target AIChief_12 
+  Static155 Searchlight.150_cm_SearchLight_UK1 gb 156053.91 270081.69 90 
+  Static156 Searchlight.150_cm_SearchLight_UK1 gb 154157.69 269254.84 90 
+  Static157 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 154162.05 269255.69 90 /target AIChief_13 
+  Static158 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 154254.61 269279.06 90 /target AIChief_13 
+  Static159 Searchlight.150_cm_SearchLight_UK1 gb 154250.25 269278.19 90 
+  Static160 Searchlight.150_cm_SearchLight_UK1 gb 150855.38 268438.03 90 
+  Static161 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 150859.73 268438.88 90 /target AIChief_14 
+  Static162 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 150952.3 268462.25 90 /target AIChief_14 
+  Static163 Searchlight.150_cm_SearchLight_UK1 gb 150947.94 268461.41 90 
+  Static164 Searchlight.150_cm_SearchLight_UK1 gb 148257.08 268337.81 90 
+  Static165 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 148261.42 268338.66 90 /target AIChief_15 
+  Static166 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 148353.98 268362.03 90 /target AIChief_15 
+  Static167 Searchlight.150_cm_SearchLight_UK1 gb 148349.64 268361.19 90 
+  Static168 Searchlight.150_cm_SearchLight_UK1 gb 153564.56 272464.28 90 
+  Static169 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 153568.91 272465.13 90 /target AIChief_16 
+  Static170 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 153661.47 272488.5 90 /target AIChief_16 
+  Static171 Searchlight.150_cm_SearchLight_UK1 gb 153657.13 272487.66 90 
+  Static172 Searchlight.150_cm_SearchLight_UK1 gb 146383.97 266603.34 90 
+  Static173 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 146388.31 266604.22 90 /target AIChief_17 
+  Static174 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 146480.88 266627.56 90 /target AIChief_17 
+  Static175 Searchlight.150_cm_SearchLight_UK1 gb 146476.53 266626.72 90 
+  Static176 Searchlight.150_cm_SearchLight_UK1 gb 151555.16 278330.19 90 
+  Static177 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 151559.5 278331.03 90 /target AIChief_18 
+  Static178 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 151684.34 278359.34 90 /target AIChief_18 
+  Static179 Searchlight.150_cm_SearchLight_UK1 gb 151679.98 278358.5 90 
+  Static180 Searchlight.150_cm_SearchLight_UK1 gb 151536.5 278499.47 0 
+  Static181 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 151537.36 278495.13 0 /target AIChief_18 
+  Static182 Searchlight.150_cm_SearchLight_UK1 gb 142772.84 259643.13 90 
+  Static183 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 142777.19 259643.97 90 /target AIChief_19 
+  Static184 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 142869.75 259667.34 90 /target AIChief_19 
+  Static185 Searchlight.150_cm_SearchLight_UK1 gb 142865.39 259666.48 90 
+  Static186 Stationary.Environment.SandBagWall_Arch nn 222873.06 210023.11 -30 
+  Static187 Stationary.Environment.SandBagWall_Arch nn 222868.94 210021.94 -120 
+  Static188 Stationary.Environment.SandBagWall_Arch nn 222872.39 210025.75 60 
+  Static189 Stationary.Environment.SandBagWall_Arch nn 222868.22 210024.61 150 
+  Static190 Stationary.Environment.SandBagWall_Arch nn 222854.52 210018.08 -20 
+  Static191 Stationary.Environment.SandBagWall_Arch nn 222850.05 210016.55 -120 
+  Static192 Stationary.Environment.SandBagWall_Arch nn 222853.34 210020.66 70 
+  Static193 Stationary.Environment.SandBagWall_Arch nn 222849.16 210019.25 155 
+  Static194 Stationary.Environment.SandBagWall_Arch nn 222826.86 210015.53 -30 
+  Static195 Stationary.Environment.SandBagWall_Arch nn 222822.38 210014.31 -120 
+  Static196 Stationary.Environment.SandBagWall_Arch nn 222826.09 210018.09 65 
+  Static197 Stationary.Environment.SandBagWall_Arch nn 222821.77 210017 145 
+  Static198 Stationary.Environment.SandBagWall_Line_4m nn 222870.41 210028.17 -165 
+  Static199 Stationary.Environment.SandBagWall_Line_4m nn 222868.67 210027.72 -165 
+  Static200 Stationary.Environment.SandBagWall_Line_4m nn 222851.31 210022.86 -165 
+  Static201 Stationary.Environment.SandBagWall_Line_4m nn 222849.42 210022.38 -165 
+  Static202 Stationary.Environment.SandBagWall_Line_4m nn 222824.09 210020.64 -165 
+  Static203 Stationary.Environment.SandBagWall_Line_4m nn 222822.3 210020.19 -165 
+  Static204 Stationary.Environment.SandBagWall_Line_4m nn 222848.97 210022.2 -165 
+  Static205 Stationary.Environment.SandBagWall_Line_4m nn 222851.75 210023.02 -165 
+  Static206 Stationary.Environment.SandBagWall_Line_4m nn 222821.83 210020.08 -165 
+  Static207 Stationary.Environment.SandBagWall_Line_4m nn 222824.59 210020.83 -165 
+  Static208 Stationary.Environment.SandBagWall_Line_4m nn 222868.28 210027.61 -165 
+  Static209 Stationary.Environment.SandBagWall_Line_4m nn 222870.88 210028.3 -165 
+  Static210 Stationary.Ammo_Vehicles.CargoCrate nn 222848.67 210050.89 -135 /hstart -0.8 
+  Static211 Stationary.Ammo_Vehicles.CargoCrate nn 222848.33 210051.3 -135 /hstart -0.8 
+  Static212 Stationary.Ammo_Vehicles.CargoCrate nn 222847.91 210051.66 -135 /hstart -0.8 
+  Static213 Stationary.Ammo_Vehicles.CargoCrate nn 222847.63 210052.14 -135 /hstart -0.8 
+  Static214 Stationary.Environment.Bench_UK-GER_1 nn 222826.77 210021.38 -195 
+  Static215 Stationary.Environment.CamoNetAT nn 222847.19 210050.86 -45 
+  Static216 Stationary.Environment.Stool_UK-GER_1 nn 222856.94 210032 -75 /hstart -1 
+  Static217 Stationary.Environment.Stool_UK-GER_1 nn 222857 210031.8 -75 /hstart -0.7 
+  Static218 Stationary.Environment.Stool_UK-GER_1 nn 222857.05 210031.66 -75 /hstart -0.4 
+  Static219 Stationary.Environment.HeightFinder_UK1 gb 222857.05 210031.02 195 
+  Static220 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 222851.64 210018.58 -70 /timeout 0/radius_hide 2500 
+  Static221 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 222824.2 210015.97 -70 /timeout 0/radius_hide 2500 
+  Static222 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 222870.67 210023.86 -70 /timeout 0/radius_hide 2500 
+  Static223 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 222870.66 210023.84 -250 
+  Static224 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 222823.88 210016.31 -70 
+  Static225 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 222851.36 210018.53 -100 
+  Static226 Searchlight.150_cm_Flakscheinwerfer_GER1 de 305261.91 222011.61 0 
+  Static227 Stationary.Environment.Maschinensatz_15_KW_GER1 de 305263.78 222003.94 0 /target AIChief_20 
+  Static228 Searchlight.150_cm_Flakscheinwerfer_GER1 de 304872.66 221862.69 0 
+  Static229 Stationary.Environment.Maschinensatz_15_KW_GER1 de 304880.78 221864.75 0 /target AIChief_20 
+  Static230 Searchlight.150_cm_Flakscheinwerfer_GER1 de 305127.16 221792.08 0 
+  Static231 Stationary.Environment.Maschinensatz_15_KW_GER1 de 305132.41 221791.64 0 /target AIChief_20 
+  Static232 Searchlight.150_cm_Flakscheinwerfer_GER1 de 316120.34 224725.36 0 
+  Static233 Stationary.Environment.Maschinensatz_15_KW_GER1 de 316122.22 224717.69 0 /target AIChief_21 
+  Static234 Searchlight.150_cm_Flakscheinwerfer_GER1 de 315731.09 224576.44 0 
+  Static235 Stationary.Environment.Maschinensatz_15_KW_GER1 de 315739.22 224578.5 0 /target AIChief_21 
+  Static236 Searchlight.150_cm_Flakscheinwerfer_GER1 de 315985.56 224505.83 0 
+  Static237 Stationary.Environment.Maschinensatz_15_KW_GER1 de 315990.84 224505.39 0 /target AIChief_21 
+  Static238 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 244906.02 233984.81 90 /target AIChief_9 
+  Static239 Searchlight.150_cm_SearchLight_UK1 gb 244915.67 233973.48 90 
+  Static240 Stationary.Environment.SandBagWall_Arch nn 244834.33 234784.41 180 
+  Static241 Stationary.Environment.SandBagWall_Arch nn 244841.91 234784.45 360 
+  Static242 Stationary.Environment.SandBagWall_Arch nn 244841.28 234815.67 30 
+  Static243 Artillery.Bofors gb 244838.84 234814.41 -420 /timeout 0/radius_hide 2500 
+  Static244 Stationary.Environment.SandBagWall_Arch nn 244836.47 234813.22 -150 
+  Static245 Artillery.Bofors gb 244838.2 234784.36 270 /timeout 0/radius_hide 2500 
+  Static246 Artillery.Bofors gb 244783.61 234799.97 -405 /timeout 0/radius_hide 2500 
+  Static247 Stationary.Environment.SandBagWall_Arch nn 244781.27 234797.88 -135 
+  Static248 Stationary.Environment.SandBagWall_Arch nn 244785.67 234801.88 45 
+  Static249 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 244838.17 234784.03 270 
+  Static250 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 244783.28 234799.73 300 
+  Static251 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 244840.17 234817.52 405 
+  Static252 Artillery.3_7_inch_QF_Mk_I gb 245505.97 235685.14 -80 /timeout 0/radius_hide 2500 
+  Static253 Artillery.3_7_inch_QF_Mk_I gb 245541.31 235667.88 -60 /timeout 0/radius_hide 2500 
+  Static254 Artillery.3_7_inch_QF_Mk_I gb 245470.52 235670.69 -95 /timeout 0/radius_hide 2500 
+  Static255 Stationary.Environment.SandBagWall_Arch nn 234549.66 232093.75 180 
+  Static256 Artillery.3_7_inch_QF_Mk_I gb 244645.17 233492.42 -60 /timeout 0/radius_hide 2500 
+  Static257 Artillery.3_7_inch_QF_Mk_I gb 244574.38 233495.22 -95 /timeout 0/radius_hide 2500 
+  Static258 Stationary.Environment.SandBagWall_Arch nn 234557.23 232093.8 360 
+  Static259 Stationary.Environment.SandBagWall_Arch nn 234556.63 232125.02 30 
+  Static260 Artillery.Bofors gb 234554.19 232123.77 -420 /timeout 0/radius_hide 2500 
+  Static261 Stationary.Environment.SandBagWall_Arch nn 234551.8 232122.58 -150 
+  Static262 Artillery.Bofors gb 234553.55 232093.7 270 /timeout 0/radius_hide 2500 
+  Static263 Artillery.Bofors gb 234498.95 232109.31 -405 /timeout 0/radius_hide 2500 
+  Static264 Stationary.Environment.SandBagWall_Arch nn 234496.59 232107.22 -135 
+  Static265 Stationary.Environment.SandBagWall_Arch nn 234501.02 232111.22 45 
+  Static266 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234553.52 232093.38 270 
+  Static267 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234498.63 232109.09 300 
+  Static268 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234555.52 232126.86 405 
+  Static269 Stationary.Environment.SandBagWall_Arch nn 224629.67 228631.67 180 
+  Static270 Stationary.Environment.SandBagWall_Arch nn 224637.25 228631.72 360 
+  Static271 Stationary.Environment.SandBagWall_Arch nn 224636.64 228662.94 30 
+  Static272 Artillery.Bofors gb 224634.2 228661.67 -420 /timeout 0/radius_hide 2500 
+  Static273 Stationary.Environment.SandBagWall_Arch nn 224631.81 228660.48 -150 
+  Static274 Artillery.Bofors gb 224633.55 228631.63 270 /timeout 0/radius_hide 2500 
+  Static275 Artillery.Bofors gb 224578.95 228647.23 -405 /timeout 0/radius_hide 2500 
+  Static276 Stationary.Environment.SandBagWall_Arch nn 224576.61 228645.14 -135 
+  Static277 Stationary.Environment.SandBagWall_Arch nn 224581.03 228649.14 45 
+  Static278 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 224633.53 228631.3 270 
+  Static279 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 224578.63 228647 300 
+  Static280 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 224635.53 228664.78 405 
+  Static281 Artillery.3_7_inch_QF_Mk_I gb 221255.42 214194.27 -80 /timeout 0/radius_hide 2500 
+  Static282 Artillery.3_7_inch_QF_Mk_I gb 221290.77 214177 -60 /timeout 0/radius_hide 2500 
+  Static283 Artillery.3_7_inch_QF_Mk_I gb 221302.67 214138.45 -95 /timeout 0/radius_hide 2500 
+  Static284 Artillery.3_7_inch_QF_Mk_I gb 216820.98 210678.55 -80 /timeout 0/radius_hide 2500 
+  Static285 Artillery.3_7_inch_QF_Mk_I gb 216856.31 210661.28 -60 /timeout 0/radius_hide 2500 
+  Static286 Artillery.3_7_inch_QF_Mk_I gb 216785.53 210664.08 -95 /timeout 0/radius_hide 2500 
+  Static287 Stationary.Environment.SandBagWall_Arch nn 192739.28 202717.75 180 
+  Static288 Stationary.Environment.SandBagWall_Arch nn 192746.86 202717.8 360 
+  Static289 Searchlight.150_cm_Flakscheinwerfer_GER1 de 319829.13 222569.69 0 
+  Static290 Stationary.Environment.Maschinensatz_15_KW_GER1 de 319830.97 222562.03 0 /target AIChief_22 
+  Static291 Searchlight.150_cm_Flakscheinwerfer_GER1 de 319439.84 222420.78 0 
+  Static292 Stationary.Environment.Maschinensatz_15_KW_GER1 de 319447.97 222422.83 0 /target AIChief_22 
+  Static293 Searchlight.150_cm_Flakscheinwerfer_GER1 de 319694.34 222350.16 0 
+  Static294 Stationary.Environment.Maschinensatz_15_KW_GER1 de 319699.63 222349.72 0 /target AIChief_22 
+  Static295 Searchlight.150_cm_Flakscheinwerfer_GER1 de 321512.47 225562.45 0 
+  Static296 Stationary.Environment.Maschinensatz_15_KW_GER1 de 321514.34 225554.8 0 /target AIChief_23 
+  Static297 Stationary.Environment.Maschinensatz_15_KW_GER1 de 295963.5 217953.13 0 /target AIChief_24 
+  Static298 Searchlight.150_cm_Flakscheinwerfer_GER1 de 295961.63 217960.78 0 
+  Static299 Searchlight.150_cm_Flakscheinwerfer_GER1 de 321377.72 225342.92 0 
+  Static300 Stationary.Environment.Maschinensatz_15_KW_GER1 de 321383 225342.48 0 /target AIChief_23 
+  Static301 Searchlight.150_cm_Flakscheinwerfer_GER1 de 295826.88 217741.25 0 
+  Static302 Stationary.Environment.Maschinensatz_15_KW_GER1 de 295832.13 217740.81 0 /target AIChief_24 
+  Static303 Searchlight.150_cm_Flakscheinwerfer_GER1 de 281718.66 212427.55 0 
+  Static304 Stationary.Environment.Maschinensatz_15_KW_GER1 de 281720.53 212419.89 0 /target AIChief_26 
+  Static305 Searchlight.150_cm_Flakscheinwerfer_GER1 de 281329.41 212278.64 0 
+  Static306 Stationary.Environment.Maschinensatz_15_KW_GER1 de 281337.53 212280.69 0 /target AIChief_26 
+  Static307 Searchlight.150_cm_Flakscheinwerfer_GER1 de 281583.88 212208.02 0 
+  Static308 Stationary.Environment.Maschinensatz_15_KW_GER1 de 281589.16 212207.58 0 /target AIChief_26 
+  Static309 Stationary.Environment.Maschinensatz_15_KW_GER1 de 277963.88 207452.89 0 /target AIChief_27 
+  Static310 Searchlight.150_cm_Flakscheinwerfer_GER1 de 277962.03 207460.56 0 
+  Static311 Searchlight.150_cm_Flakscheinwerfer_GER1 de 277827.25 207241.03 0 
+  Static312 Stationary.Environment.Maschinensatz_15_KW_GER1 de 277832.53 207240.59 0 /target AIChief_27 
+  Static313 Searchlight.150_cm_Flakscheinwerfer_GER1 de 275746.25 208230.73 0 
+  Static314 Stationary.Environment.Maschinensatz_15_KW_GER1 de 275748.13 208223.08 0 /target AIChief_29 
+  Static315 Searchlight.150_cm_Flakscheinwerfer_GER1 de 275357 208081.83 0 
+  Static316 Stationary.Environment.Maschinensatz_15_KW_GER1 de 275365.13 208083.88 0 /target AIChief_29 
+  Static317 Searchlight.150_cm_Flakscheinwerfer_GER1 de 275611.5 208011.2 0 
+  Static318 Stationary.Environment.Maschinensatz_15_KW_GER1 de 275616.75 208010.77 0 /target AIChief_29 
+  Static319 Stationary.Environment.Maschinensatz_15_KW_GER1 de 265054.72 189266.72 0 /target AIChief_30 
+  Static320 Searchlight.150_cm_Flakscheinwerfer_GER1 de 265041.41 189272.09 0 
+  Static321 Searchlight.150_cm_Flakscheinwerfer_GER1 de 264906.66 189052.56 0 
+  Static322 Stationary.Environment.Maschinensatz_15_KW_GER1 de 264907.25 189047.44 0 /target AIChief_30 
+  Static323 Searchlight.150_cm_Flakscheinwerfer_GER1 de 312624.31 196010.75 0 
+  Static324 Stationary.Environment.SandBagWall_Arch nn 192746.25 202749.02 30 
+  Static325 Searchlight.150_cm_Flakscheinwerfer_GER1 de 312235.06 195861.83 0 
+  Static326 Stationary.Environment.Maschinensatz_15_KW_GER1 de 312243.19 195863.89 0 /target AIChief_32 
+  Static327 Searchlight.150_cm_Flakscheinwerfer_GER1 de 312489.53 195791.22 0 
+  Static328 Stationary.Environment.Maschinensatz_15_KW_GER1 de 312494.81 195790.78 0 /target AIChief_32 
+  Static329 Stationary.Environment.SandBagWall_Arch nn 247368.22 259246.88 180 
+  Static330 Stationary.Environment.SandBagWall_Arch nn 247375.8 259246.92 360 
+  Static331 Stationary.Environment.SandBagWall_Arch nn 247375.17 259278.13 30 
+  Static332 Artillery.Bofors gb 247372.73 259276.88 -420 /timeout 0/radius_hide 2500 
+  Static333 Stationary.Environment.SandBagWall_Arch nn 247370.36 259275.69 -150 
+  Static334 Artillery.Bofors gb 247372.09 259246.83 270 /timeout 0/radius_hide 2500 
+  Static335 Artillery.Bofors gb 247317.5 259262.42 -405 /timeout 0/radius_hide 2500 
+  Static336 Stationary.Environment.SandBagWall_Arch nn 247315.16 259260.33 -135 
+  Static337 Stationary.Environment.SandBagWall_Arch nn 247319.56 259264.33 45 
+  Static338 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 247372.06 259246.48 270 
+  Static339 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 247317.17 259262.2 300 
+  Static340 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 247374.06 259279.97 405 
+  Static341 Stationary.Environment.SandBagWall_Arch nn 251137.11 261562.11 180 
+  Static342 Stationary.Environment.SandBagWall_Arch nn 251144.69 261562.16 360 
+  Static343 Stationary.Environment.SandBagWall_Arch nn 251144.06 261593.38 30 
+  Static344 Artillery.Bofors gb 251141.63 261592.11 -420 /timeout 0/radius_hide 2500 
+  Static345 Stationary.Environment.SandBagWall_Arch nn 251139.25 261590.92 -150 
+  Static346 Artillery.Bofors gb 251140.98 261562.06 270 /timeout 0/radius_hide 2500 
+  Static347 Artillery.Bofors gb 251086.39 261577.67 -405 /timeout 0/radius_hide 2500 
+  Static348 Stationary.Environment.SandBagWall_Arch nn 251084.05 261575.58 -135 
+  Static349 Stationary.Environment.SandBagWall_Arch nn 251088.45 261579.58 45 
+  Static350 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 251140.95 261561.73 270 
+  Static351 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 251086.06 261577.44 300 
+  Static352 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 251142.95 261595.22 405 
+  Static353 Stationary.Environment.SandBagWall_Arch nn 234342.39 248054.83 180 
+  Static354 Stationary.Environment.SandBagWall_Arch nn 234349.97 248054.88 360 
+  Static355 Stationary.Environment.SandBagWall_Arch nn 234349.36 248086.09 30 
+  Static356 Artillery.Bofors gb 234346.92 248084.83 -420 /timeout 0/radius_hide 2500 
+  Static357 Stationary.Environment.SandBagWall_Arch nn 234344.53 248083.64 -150 
+  Static358 Artillery.Bofors gb 234346.27 248054.78 270 /timeout 0/radius_hide 2500 
+  Static359 Artillery.Bofors gb 234291.67 248070.39 -405 /timeout 0/radius_hide 2500 
+  Static360 Stationary.Environment.SandBagWall_Arch nn 234289.33 248068.3 -135 
+  Static361 Stationary.Environment.SandBagWall_Arch nn 234293.75 248072.3 45 
+  Static362 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234346.25 248054.45 270 
+  Static363 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234291.34 248070.17 300 
+  Static364 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 234348.25 248087.94 405 
+  Static365 Artillery.Bofors gb 192743.81 202747.75 -420 /timeout 0/radius_hide 2500 
+  Static366 Stationary.Environment.SandBagWall_Arch nn 192741.42 202746.56 -150 
+  Static367 Artillery.Bofors gb 192743.16 202717.7 270 /timeout 0/radius_hide 2500 
+  Static368 Artillery.Bofors gb 192688.56 202733.31 -405 /timeout 0/radius_hide 2500 
+  Static369 Stationary.Environment.SandBagWall_Arch nn 192686.22 202731.22 -135 
+  Static370 Stationary.Environment.SandBagWall_Arch nn 192690.64 202735.22 45 
+  Static371 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 192743.14 202717.38 270 
+  Static372 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 192688.23 202733.08 300 
+  Static373 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 192745.14 202750.86 405 
+  Static374 Artillery.3_7_inch_QF_Mk_I gb 192267.42 202469.56 -80 /timeout 0/radius_hide 2500 
+  Static375 Artillery.3_7_inch_QF_Mk_I gb 192302.77 202452.3 -60 /timeout 0/radius_hide 2500 
+  Static376 Artillery.3_7_inch_QF_Mk_I gb 192231.97 202455.09 -95 /timeout 0/radius_hide 2500 
+  Static377 Stationary.Environment.SandBagWall_Arch nn 167526.91 198982.77 180 
+  Static378 Stationary.Environment.SandBagWall_Arch nn 167534.48 198982.83 360 
+  Static379 Stationary.Environment.SandBagWall_Arch nn 167533.88 199014.05 30 
+  Static380 Artillery.Bofors gb 167531.44 199012.77 -420 /timeout 0/radius_hide 2500 
+  Static381 Stationary.Environment.SandBagWall_Arch nn 167529.05 199011.61 -150 
+  Static382 Artillery.Bofors gb 167530.8 198982.75 270 /timeout 0/radius_hide 2500 
+  Static383 Artillery.Bofors gb 167476.19 198998.36 -405 /timeout 0/radius_hide 2500 
+  Static384 Stationary.Environment.SandBagWall_Arch nn 167473.86 198996.25 -135 
+  Static385 Stationary.Environment.SandBagWall_Arch nn 167478.27 199000.25 45 
+  Static386 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167530.77 198982.39 270 
+  Static387 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167475.86 198998.11 300 
+  Static388 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167532.77 199015.89 405 
+  Static389 Stationary.Environment.SandBagWall_Arch nn 133298.58 198491.36 180 
+  Static390 Stationary.Environment.SandBagWall_Arch nn 133306.16 198491.41 360 
+  Static391 Stationary.Environment.SandBagWall_Arch nn 133305.55 198522.63 30 
+  Static392 Artillery.Bofors gb 133303.11 198521.36 -420 /timeout 0/radius_hide 2500 
+  Static393 Stationary.Environment.SandBagWall_Arch nn 133300.72 198520.17 -150 
+  Static394 Artillery.Bofors gb 133302.45 198491.31 270 /timeout 0/radius_hide 2500 
+  Static395 Artillery.Bofors gb 133247.86 198506.92 -405 /timeout 0/radius_hide 2500 
+  Static396 Stationary.Environment.SandBagWall_Arch nn 133245.52 198504.83 -135 
+  Static397 Stationary.Environment.SandBagWall_Arch nn 133249.94 198508.83 45 
+  Static398 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 133302.44 198490.98 270 
+  Static399 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 133247.53 198506.7 300 
+  Static400 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 133304.44 198524.47 405 
+  Static401 Stationary.Austin_K2_ATV gb 234725.34 232052.97 120 
+  Static402 Stationary.Austin_K2_Ambulance gb 234721.53 232049.55 120 
+  Static403 Stationary.Fordson_Sussex_w_o_ballon gb 234752.05 232059.11 105 
+  Static404 Stationary.Fire_pump_UK1_Transport gb 234753.61 232053.53 105 
+  Static405 Stationary.Fire_pump_UK1_Transport gb 234743.95 232049.58 135 
+  Static406 Stationary.Fordson_Sussex_w_ballon gb 234741.53 232054.95 105 
+  Static407 Stationary.HurricaneMkI_dH5-20 gb 235211.36 232255.45 -225 
+  Static408 Stationary.HurricaneMkI_dH5-20 gb 235222.47 232270.25 -225 
+  Static409 Stationary.HurricaneMkI_dH5-20 gb 235248.69 232303.97 -225 
+  Static410 Stationary.BlenheimMkI gb 234326.22 232524.05 -240 
+  Static411 Stationary.HurricaneMkI_dH5-20 gb 235162.86 232218.86 135 
+  Static412 Stationary.Morris_CDSW gb 234624.5 232054.88 -150 
+  Static413 Stationary.Environment.CamoNetCrates nn 234616.28 232057.27 -420 
+  Static414 Stationary.Environment.Oil_Cart_UK1 gb 234621.14 232058.05 -390 
+  Static415 Stationary.Environment.FuelDrum_UK1_2 nn 234614.97 232056.83 -420 
+  Static416 Stationary.Environment.Chear_UK-GER_1 nn 234618.97 232055.61 -420 
+  Static417 Stationary.Environment.Chear_UK-GER_1 nn 234618.38 232055.23 -420 
+  Static418 Stationary.Environment.FireBucket_UK1_full nn 234619.55 232055.75 -420 
+  Static419 Stationary.Environment.SandBagWall_Arch nn 236275.95 228685.48 15 
+  Static420 Stationary.Environment.SandBagWall_Arch nn 236268.64 228683.47 -165 
+  Static421 Stationary.Environment.SandBagWall_Arch nn 236277.31 228653.48 -135 
+  Static422 Artillery.Bofors gb 236279.34 228655.33 -225 /timeout 0/radius_hide 2500 
+  Static423 Stationary.Environment.SandBagWall_Arch nn 236281.34 228657.09 -315 
+  Static424 Artillery.Bofors gb 236272.19 228684.52 105 /timeout 0/radius_hide 2500 
+  Static425 Artillery.Bofors gb 236328.97 228683.58 -210 /timeout 0/radius_hide 2500 
+  Static426 Stationary.Environment.SandBagWall_Arch nn 236330.69 228686.2 -300 
+  Static427 Stationary.Environment.SandBagWall_Arch nn 236327.45 228681.2 -120 
+  Static428 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 236272.13 228684.84 105 
+  Static429 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 236329.22 228683.88 135 
+  Static430 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 236278.86 228651.98 -120 
+  Static431 Stationary.Austin_K2_Ambulance gb 167267.72 198645.92 -30 
+  Static432 Stationary.Austin_K2_ATV gb 167267.45 198640.81 -15 
+  Static433 Stationary.Austin_K2_ATV gb 167262.59 198636.77 0 
+  Static434 Stationary.Fordson_Sussex_w_ballon gb 167257.41 198627.95 -30 
+  Static435 Stationary.Fire_pump_UK1_Transport gb 167251.91 198630.05 0 
+  Static436 Stationary.Fordson_Sussex_w_o_ballon gb 167252.91 198617.59 -60 
+  Static437 Stationary.Environment.SandBagWall_Arch nn 180740.78 269066.22 -30 
+  Static438 Stationary.Environment.SandBagWall_Arch nn 187832.13 258023.45 360 
+  Static439 Stationary.Environment.SandBagWall_Arch nn 187831.5 258054.67 30 
+  Static440 Artillery.Bofors gb 187829.06 258053.41 -420 /timeout 0/radius_hide 2500 
+  Static441 Stationary.Environment.SandBagWall_Arch nn 187826.69 258052.22 -150 
+  Static442 Artillery.Bofors gb 187828.42 258023.36 270 /timeout 0/radius_hide 2500 
+  Static443 Artillery.Bofors gb 187773.83 258038.97 -405 /timeout 0/radius_hide 2500 
+  Static444 Stationary.Environment.SandBagWall_Arch nn 187771.48 258036.88 -135 
+  Static445 Stationary.Environment.SandBagWall_Arch nn 187775.89 258040.88 45 
+  Static446 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 187828.39 258023.03 270 
+  Static447 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 187773.5 258038.73 300 
+  Static448 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 187830.39 258056.52 405 
+  Static449 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 190188.11 263884.72 -60 /timeout 0/radius_hide 2500 
+  Static450 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 190195.02 263889.63 -90 
+  Static451 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 190194.72 263888.56 -60 /timeout 0/radius_hide 2500 
+  Static452 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 190199.98 263894.94 -255 
+  Static453 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 190201.23 263891.97 -60 /timeout 0/radius_hide 2500 
+  Static454 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 190206.95 263898.06 -75 
+  Static455 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 190208.59 263897.66 -60 /timeout 0/radius_hide 2500 
+  Static456 Stationary.Environment.SandBagWall_Arch nn 180736.66 269065.03 -120 
+  Static457 Stationary.Environment.SandBagWall_Arch nn 180740.11 269068.88 60 
+  Static458 Stationary.Environment.SandBagWall_Arch nn 180735.94 269067.72 150 
+  Static459 Stationary.Environment.SandBagWall_Arch nn 180722.22 269061.19 -20 
+  Static460 Stationary.Environment.SandBagWall_Arch nn 180717.75 269059.66 -120 
+  Static461 Stationary.Environment.SandBagWall_Arch nn 180721.05 269063.75 70 
+  Static462 Stationary.Environment.SandBagWall_Arch nn 180716.88 269062.34 155 
+  Static463 Stationary.Environment.SandBagWall_Arch nn 180694.58 269058.66 -30 
+  Static464 Stationary.Environment.SandBagWall_Arch nn 180690.09 269057.44 -120 
+  Static465 Stationary.Environment.SandBagWall_Arch nn 180693.8 269061.22 65 
+  Static466 Stationary.Environment.SandBagWall_Arch nn 180689.48 269060.13 145 
+  Static467 Stationary.Environment.SandBagWall_Line_4m nn 180738.13 269071.28 -165 
+  Static468 Stationary.Environment.SandBagWall_Line_4m nn 180736.39 269070.81 -165 
+  Static469 Stationary.Environment.SandBagWall_Line_4m nn 180719.03 269065.97 -165 
+  Static470 Stationary.Environment.SandBagWall_Line_4m nn 180717.14 269065.47 -165 
+  Static471 Stationary.Environment.SandBagWall_Line_4m nn 180691.81 269063.75 -165 
+  Static472 Stationary.Environment.SandBagWall_Line_4m nn 180690.02 269063.31 -165 
+  Static473 Stationary.Environment.SandBagWall_Line_4m nn 180716.69 269065.31 -165 
+  Static474 Stationary.Environment.SandBagWall_Line_4m nn 180719.47 269066.13 -165 
+  Static475 Stationary.Environment.SandBagWall_Line_4m nn 180689.55 269063.19 -165 
+  Static476 Stationary.Environment.SandBagWall_Line_4m nn 180692.31 269063.94 -165 
+  Static477 Stationary.Environment.SandBagWall_Line_4m nn 180736 269070.72 -165 
+  Static478 Stationary.Environment.SandBagWall_Line_4m nn 180738.59 269071.41 -165 
+  Static479 Stationary.Ammo_Vehicles.CargoCrate nn 180716.39 269094 -135 /hstart -0.8 
+  Static480 Stationary.Ammo_Vehicles.CargoCrate nn 180716.03 269094.41 -135 /hstart -0.8 
+  Static481 Stationary.Ammo_Vehicles.CargoCrate nn 180715.63 269094.75 -135 /hstart -0.8 
+  Static482 Stationary.Ammo_Vehicles.CargoCrate nn 180715.33 269095.25 -135 /hstart -0.8 
+  Static483 Stationary.Environment.Bench_UK-GER_1 nn 180694.47 269064.5 -195 
+  Static484 Stationary.Environment.CamoNetAT nn 180714.91 269093.97 -45 
+  Static485 Stationary.Environment.Stool_UK-GER_1 nn 180724.64 269075.09 -75 /hstart -1 
+  Static486 Stationary.Environment.Stool_UK-GER_1 nn 180724.7 269074.91 -75 /hstart -0.7 
+  Static487 Stationary.Environment.Stool_UK-GER_1 nn 180724.75 269074.75 -75 /hstart -0.4 
+  Static488 Stationary.Environment.HeightFinder_UK1 gb 180724.75 269074.13 195 
+  Static489 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 180719.36 269061.69 -70 /timeout 0/radius_hide 2500 
+  Static490 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 180691.91 269059.09 -70 /timeout 0/radius_hide 2500 
+  Static491 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 180738.39 269066.97 -70 /timeout 0/radius_hide 2500 
+  Static492 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 180738.38 269066.94 -250 
+  Static493 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 180691.58 269059.44 -70 
+  Static494 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 180719.06 269061.63 -100 
+  Static495 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 174269.91 269868.25 -60 /timeout 0/radius_hide 2500 
+  Static496 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 174276.81 269873.16 -90 
+  Static497 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 174276.52 269872.09 -60 /timeout 0/radius_hide 2500 
+  Static498 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 174281.78 269878.47 -255 
+  Static499 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 174283.03 269875.5 -60 /timeout 0/radius_hide 2500 
+  Static500 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 174288.75 269881.59 -75 
+  Static501 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 174290.39 269881.16 -60 /timeout 0/radius_hide 2500 
+  Static502 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 160773.69 275586.38 -60 /timeout 0/radius_hide 2500 
+  Static503 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 160780.59 275591.28 -90 
+  Static504 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 160780.3 275590.22 -60 /timeout 0/radius_hide 2500 
+  Static505 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 160785.56 275596.59 -255 
+  Static506 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 160786.81 275593.63 -60 /timeout 0/radius_hide 2500 
+  Static507 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 160792.53 275599.72 -75 
+  Static508 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 160794.17 275599.28 -60 /timeout 0/radius_hide 2500 
+  Static509 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155325.17 275480.72 -60 /timeout 0/radius_hide 2500 
+  Static510 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155332.08 275485.66 -90 
+  Static511 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155331.77 275484.56 -60 /timeout 0/radius_hide 2500 
+  Static512 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155337.03 275490.94 -255 
+  Static513 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155338.3 275488 -60 /timeout 0/radius_hide 2500 
+  Static514 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155344.02 275494.09 -75 
+  Static515 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155345.64 275493.66 -60 /timeout 0/radius_hide 2500 
+  Static516 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155421.5 274916.41 -60 /timeout 0/radius_hide 2500 
+  Static517 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155428.41 274921.31 -90 
+  Static518 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155428.11 274920.25 -60 /timeout 0/radius_hide 2500 
+  Static519 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155433.38 274926.63 -255 
+  Static520 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155434.63 274923.66 -60 /timeout 0/radius_hide 2500 
+  Static521 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155440.36 274929.75 -75 
+  Static522 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155441.98 274929.31 -60 /timeout 0/radius_hide 2500 
+  Static523 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152602.34 275890.81 -60 /timeout 0/radius_hide 2500 
+  Static524 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152609.25 275895.72 -90 
+  Static525 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152608.95 275894.63 -60 /timeout 0/radius_hide 2500 
+  Static526 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152614.22 275901.03 -255 
+  Static527 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152615.47 275898.06 -60 /timeout 0/radius_hide 2500 
+  Static528 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152621.19 275904.16 -75 
+  Static529 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152622.83 275903.72 -60 /timeout 0/radius_hide 2500 
+  Static530 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 151633.08 278170.63 -60 /timeout 0/radius_hide 2500 
+  Static531 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 151639.98 278175.56 -90 
+  Static532 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 151639.69 278174.47 -60 /timeout 0/radius_hide 2500 
+  Static533 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 151644.95 278180.84 -255 
+  Static534 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 151646.2 278177.91 -60 /timeout 0/radius_hide 2500 
+  Static535 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 151651.92 278184 -75 
+  Static536 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 151653.56 278183.56 -60 /timeout 0/radius_hide 2500 
+  Static537 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 153494.77 272177.28 -60 /timeout 0/radius_hide 2500 
+  Static538 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 153501.67 272182.19 -90 
+  Static539 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 153501.38 272181.13 -60 /timeout 0/radius_hide 2500 
+  Static540 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 153506.64 272187.5 -255 
+  Static541 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 153507.89 272184.53 -60 /timeout 0/radius_hide 2500 
+  Static542 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 153513.63 272190.63 -75 
+  Static543 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 153515.25 272190.19 -60 /timeout 0/radius_hide 2500 
+  Static544 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155766.91 270001.66 -60 /timeout 0/radius_hide 2500 
+  Static545 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155773.81 270006.56 -90 
+  Static546 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155773.52 270005.5 -60 /timeout 0/radius_hide 2500 
+  Static547 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155778.78 270011.88 -255 
+  Static548 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155780.03 270008.91 -60 /timeout 0/radius_hide 2500 
+  Static549 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 155785.75 270015 -75 
+  Static550 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 155787.39 270014.56 -60 /timeout 0/radius_hide 2500 
+  Static551 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 154366.78 269439.94 -60 /timeout 0/radius_hide 2500 
+  Static552 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 154373.69 269444.84 -90 
+  Static553 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 154373.39 269443.75 -60 /timeout 0/radius_hide 2500 
+  Static554 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 154378.66 269450.16 -255 
+  Static555 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 154379.91 269447.19 -60 /timeout 0/radius_hide 2500 
+  Static556 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 154385.64 269453.28 -75 
+  Static557 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 154387.27 269452.84 -60 /timeout 0/radius_hide 2500 
+  Static558 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150446.97 268291.5 -60 /timeout 0/radius_hide 2500 
+  Static559 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150453.88 268296.41 -90 
+  Static560 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150453.58 268295.34 -60 /timeout 0/radius_hide 2500 
+  Static561 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150458.84 268301.72 -255 
+  Static562 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150460.09 268298.75 -60 /timeout 0/radius_hide 2500 
+  Static563 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150465.81 268304.84 -75 
+  Static564 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150467.45 268304.41 -60 /timeout 0/radius_hide 2500 
+  Static565 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150773.55 268581.84 -60 /timeout 0/radius_hide 2500 
+  Static566 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150780.45 268586.75 -90 
+  Static567 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150780.16 268585.69 -60 /timeout 0/radius_hide 2500 
+  Static568 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150785.42 268592.06 -255 
+  Static569 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150786.67 268589.09 -60 /timeout 0/radius_hide 2500 
+  Static570 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 150792.39 268595.19 -75 
+  Static571 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 150794.03 268594.78 -60 /timeout 0/radius_hide 2500 
+  Static572 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 148816.22 268671.13 -60 /timeout 0/radius_hide 2500 
+  Static573 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 148823.13 268676.06 -90 
+  Static574 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 148822.83 268674.97 -60 /timeout 0/radius_hide 2500 
+  Static575 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 148828.09 268681.34 -255 
+  Static576 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 148829.34 268678.41 -60 /timeout 0/radius_hide 2500 
+  Static577 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 148835.06 268684.5 -75 
+  Static578 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 148836.7 268684.06 -60 /timeout 0/radius_hide 2500 
+  Static579 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146588.67 266882.53 -60 /timeout 0/radius_hide 2500 
+  Static580 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146595.58 266887.44 -90 
+  Static581 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146595.28 266886.34 -60 /timeout 0/radius_hide 2500 
+  Static582 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146600.55 266892.75 -255 
+  Static583 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146601.8 266889.78 -60 /timeout 0/radius_hide 2500 
+  Static584 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146607.52 266895.88 -75 
+  Static585 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146609.16 266895.44 -60 /timeout 0/radius_hide 2500 
+  Static586 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146604.09 266217.13 -60 /timeout 0/radius_hide 2500 
+  Static587 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146611 266222.03 -90 
+  Static588 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146610.7 266220.97 -60 /timeout 0/radius_hide 2500 
+  Static589 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146615.97 266227.34 -255 
+  Static590 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146617.22 266224.38 -60 /timeout 0/radius_hide 2500 
+  Static591 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 146622.95 266230.47 -75 
+  Static592 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 146624.58 266230.03 -60 /timeout 0/radius_hide 2500 
+  Static593 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142431.55 259526.2 -60 /timeout 0/radius_hide 2500 
+  Static594 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142438.45 259531.11 -90 
+  Static595 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142438.16 259530.03 -60 /timeout 0/radius_hide 2500 
+  Static596 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142443.42 259536.42 -255 
+  Static597 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142444.67 259533.45 -60 /timeout 0/radius_hide 2500 
+  Static598 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142450.39 259539.55 -75 
+  Static599 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142452.03 259539.13 -60 /timeout 0/radius_hide 2500 
+  Static600 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 143102.78 259792.31 -60 /timeout 0/radius_hide 2500 
+  Static601 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 143109.69 259797.23 -90 
+  Static602 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 143109.38 259796.16 -60 /timeout 0/radius_hide 2500 
+  Static603 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 143114.66 259802.53 -255 
+  Static604 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 143115.91 259799.58 -60 /timeout 0/radius_hide 2500 
+  Static605 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 143121.63 259805.67 -75 
+  Static606 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 143123.25 259805.23 -60 /timeout 0/radius_hide 2500 
+  Static607 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142756.58 268049.44 -60 /timeout 0/radius_hide 2500 
+  Static608 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142763.48 268054.38 -90 
+  Static609 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142763.19 268053.28 -60 /timeout 0/radius_hide 2500 
+  Static610 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142768.45 268059.66 -255 
+  Static611 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142769.7 268056.72 -60 /timeout 0/radius_hide 2500 
+  Static612 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142775.42 268062.81 -75 
+  Static613 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142777.06 268062.38 -60 /timeout 0/radius_hide 2500 
+  Static614 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152264.45 262632.44 -60 /timeout 0/radius_hide 2500 
+  Static615 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152271.36 262637.34 -90 
+  Static616 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152271.06 262636.25 -60 /timeout 0/radius_hide 2500 
+  Static617 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152276.33 262642.66 -255 
+  Static618 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152277.58 262639.69 -60 /timeout 0/radius_hide 2500 
+  Static619 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 152283.31 262645.78 -75 
+  Static620 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 152284.94 262645.34 -60 /timeout 0/radius_hide 2500 
+  Static621 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142306.72 273072.66 -60 /timeout 0/radius_hide 2500 
+  Static622 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142313.63 273077.56 -90 
+  Static623 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142313.33 273076.5 -60 /timeout 0/radius_hide 2500 
+  Static624 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142318.59 273082.88 -255 
+  Static625 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142319.84 273079.91 -60 /timeout 0/radius_hide 2500 
+  Static626 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142325.56 273086 -75 
+  Static627 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142327.2 273085.59 -60 /timeout 0/radius_hide 2500 
+  Static628 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140732.39 273180.31 -60 /timeout 0/radius_hide 2500 
+  Static629 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140739.3 273185.25 -90 
+  Static630 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140739 273184.16 -60 /timeout 0/radius_hide 2500 
+  Static631 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140744.27 273190.56 -255 
+  Static632 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140745.52 273187.59 -60 /timeout 0/radius_hide 2500 
+  Static633 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140751.25 273193.69 -75 
+  Static634 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140752.88 273193.25 -60 /timeout 0/radius_hide 2500 
+  Static635 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 139469.14 273840.59 -60 /timeout 0/radius_hide 2500 
+  Static636 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 139476.05 273845.5 -90 
+  Static637 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 139475.75 273844.44 -60 /timeout 0/radius_hide 2500 
+  Static638 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 139481.02 273850.81 -255 
+  Static639 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 139482.27 273847.84 -60 /timeout 0/radius_hide 2500 
+  Static640 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 139488 273853.94 -75 
+  Static641 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 139489.63 273853.5 -60 /timeout 0/radius_hide 2500 
+  Static642 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142132.41 276436.75 -60 /timeout 0/radius_hide 2500 
+  Static643 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142139.31 276441.66 -90 
+  Static644 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142139 276440.56 -60 /timeout 0/radius_hide 2500 
+  Static645 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142144.27 276446.97 -255 
+  Static646 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142145.53 276444 -60 /timeout 0/radius_hide 2500 
+  Static647 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 142151.25 276450.09 -75 
+  Static648 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 142152.88 276449.66 -60 /timeout 0/radius_hide 2500 
+  Static649 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140640.56 279448.78 -60 /timeout 0/radius_hide 2500 
+  Static650 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140647.47 279453.69 -90 
+  Static651 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140647.17 279452.63 -60 /timeout 0/radius_hide 2500 
+  Static652 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140652.44 279459 -255 
+  Static653 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140653.69 279456.03 -60 /timeout 0/radius_hide 2500 
+  Static654 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 140659.42 279462.13 -75 
+  Static655 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 140661.05 279461.69 -60 /timeout 0/radius_hide 2500 
+  Static656 Stationary.Fire_pump_UK1_Transport gb 167247.86 198620.42 -149.1 
+  Static657 Stationary.Morris_CDSW gb 168053.06 198287.84 -300 
+  Static658 Stationary.Environment.CamoNetCrates nn 168061.36 198289.89 -210 
+  Static659 Stationary.Environment.Oil_Cart_UK1 gb 168057.55 198286.77 -180 
+  Static660 Stationary.Environment.FuelDrum_UK1_2 nn 168062.28 198290.92 -210 
+  Static661 Stationary.Environment.Chear_UK-GER_1 nn 168058.2 198289.98 -210 
+  Static662 Stationary.Environment.Chear_UK-GER_1 nn 168058.53 198290.59 -210 
+  Static663 Stationary.Environment.FireBucket_UK1_full nn 168057.78 198289.56 -210 
+  Static664 Stationary.Environment.SandBagWall_Arch nn 167380.13 197895.45 180 
+  Static665 Stationary.Environment.SandBagWall_Arch nn 167387.7 197895.5 360 
+  Static666 Stationary.Environment.SandBagWall_Arch nn 167387.08 197926.72 30 
+  Static667 Artillery.Bofors gb 167384.64 197925.47 -420 /timeout 0/radius_hide 2500 
+  Static668 Stationary.Environment.SandBagWall_Arch nn 167382.27 197924.28 -150 
+  Static669 Artillery.Bofors gb 167384 197895.41 270 /timeout 0/radius_hide 2500 
+  Static670 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 171628.55 234376.17 -60 /timeout 0/radius_hide 2500 
+  Static671 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 171635.45 234381.09 -90 
+  Static672 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 171635.16 234380.02 -60 /timeout 0/radius_hide 2500 
+  Static673 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 171640.42 234386.39 -255 
+  Static674 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 171641.67 234383.44 -60 /timeout 0/radius_hide 2500 
+  Static675 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 171647.41 234389.53 -75 
+  Static676 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 171649.03 234389.09 -60 /timeout 0/radius_hide 2500 
+  Static677 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194808.05 204155.69 -60 /timeout 0/radius_hide 2500 
+  Static678 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194814.95 204160.59 -90 
+  Static679 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194814.64 204159.52 -60 /timeout 0/radius_hide 2500 
+  Static680 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194819.92 204165.91 -255 
+  Static681 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194821.17 204162.94 -60 /timeout 0/radius_hide 2500 
+  Static682 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194826.89 204169.03 -75 
+  Static683 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194828.52 204168.61 -60 /timeout 0/radius_hide 2500 
+  Static684 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 187219.31 201238.06 -60 /timeout 0/radius_hide 2500 
+  Static685 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 187226.22 201242.98 -90 
+  Static686 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 187225.92 201241.91 -60 /timeout 0/radius_hide 2500 
+  Static687 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 187231.19 201248.28 -255 
+  Static688 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 187232.44 201245.33 -60 /timeout 0/radius_hide 2500 
+  Static689 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 187238.16 201251.42 -75 
+  Static690 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 187239.8 201250.98 -60 /timeout 0/radius_hide 2500 
+  Static691 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 136914.39 198372.09 -60 /timeout 0/radius_hide 2500 
+  Static692 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 136921.3 198377 -90 
+  Static693 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 136921 198375.94 -60 /timeout 0/radius_hide 2500 
+  Static694 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 136926.27 198382.31 -255 
+  Static695 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 136927.52 198379.34 -60 /timeout 0/radius_hide 2500 
+  Static696 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 136933.23 198385.44 -75 
+  Static697 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 136934.88 198385.02 -60 /timeout 0/radius_hide 2500 
+  Static698 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 147465.14 197679.86 -60 /timeout 0/radius_hide 2500 
+  Static699 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 147472.05 197684.78 -90 
+  Static700 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 147471.75 197683.7 -60 /timeout 0/radius_hide 2500 
+  Static701 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 147477.02 197690.08 -255 
+  Static702 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 147478.27 197687.13 -60 /timeout 0/radius_hide 2500 
+  Static703 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 147483.98 197693.22 -75 
+  Static704 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 147485.63 197692.78 -60 /timeout 0/radius_hide 2500 
+  Static705 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 193707.77 272220.72 -60 /timeout 0/radius_hide 2500 
+  Static706 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 193714.67 272225.66 -90 
+  Static707 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 193714.38 272224.56 -60 /timeout 0/radius_hide 2500 
+  Static708 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 193719.64 272230.94 -255 
+  Static709 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 193720.89 272228 -60 /timeout 0/radius_hide 2500 
+  Static710 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 193726.61 272234.09 -75 
+  Static711 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 193728.25 272233.66 -60 /timeout 0/radius_hide 2500 
+  Static712 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 185884.19 272015.5 -60 /timeout 0/radius_hide 2500 
+  Static713 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 185891.09 272020.41 -90 
+  Static714 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 185890.8 272019.34 -60 /timeout 0/radius_hide 2500 
+  Static715 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 185896.06 272025.72 -255 
+  Static716 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 185897.31 272022.75 -60 /timeout 0/radius_hide 2500 
+  Static717 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 185903.03 272028.84 -75 
+  Static718 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 185904.67 272028.41 -60 /timeout 0/radius_hide 2500 
+  Static719 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 198077.88 280718.75 -60 /timeout 0/radius_hide 2500 
+  Static720 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 198084.78 280723.66 -90 
+  Static721 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 198084.48 280722.59 -60 /timeout 0/radius_hide 2500 
+  Static722 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 198089.75 280728.97 -255 
+  Static723 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 198091 280726 -60 /timeout 0/radius_hide 2500 
+  Static724 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 198096.73 280732.09 -75 
+  Static725 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 198098.36 280731.69 -60 /timeout 0/radius_hide 2500 
+  Static726 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194728.53 278714.28 -60 /timeout 0/radius_hide 2500 
+  Static727 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194735.44 278719.19 -90 
+  Static728 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194735.14 278718.13 -60 /timeout 0/radius_hide 2500 
+  Static729 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194740.41 278724.5 -255 
+  Static730 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194741.66 278721.53 -60 /timeout 0/radius_hide 2500 
+  Static731 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 194747.38 278727.63 -75 
+  Static732 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 194749.02 278727.19 -60 /timeout 0/radius_hide 2500 
+  Static733 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 239056.22 262250.75 -60 /timeout 0/radius_hide 2500 
+  Static734 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 239063.13 262255.66 -90 
+  Static735 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 239062.81 262254.59 -60 /timeout 0/radius_hide 2500 
+  Static736 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 239068.09 262260.97 -255 
+  Static737 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 239069.34 262258 -60 /timeout 0/radius_hide 2500 
+  Static738 Stationary.Ammo_Vehicles.3inch_QF_AA_composition3_UK1 nn 239075.06 262264.09 -75 
+  Static739 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone2 gb 239076.69 262263.69 -60 /timeout 0/radius_hide 2500 
+  Static740 Artillery.Bofors gb 167329.41 197911.02 -405 /timeout 0/radius_hide 2500 
+  Static741 Stationary.Environment.SandBagWall_Arch nn 167327.06 197908.92 -135 
+  Static742 Stationary.Environment.SandBagWall_Arch nn 167331.47 197912.92 45 
+  Static743 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167383.97 197895.08 270 
+  Static744 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167329.08 197910.8 300 
+  Static745 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 167385.97 197928.56 405 
+  Static746 Searchlight.150_cm_SearchLight_UK1 gb 229987.97 260950.75 90 
+  Static747 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 229989.17 260944.77 90 /target AIChief_3 
+  Static748 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 228833.94 260760.06 90 /target AIChief_3 
+  Static749 Searchlight.150_cm_SearchLight_UK1 gb 228829.59 260759.22 90 
+  Static750 Searchlight.150_cm_SearchLight_UK1 gb 230596.17 260282.44 90 
+  Static751 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 230592.97 260293.69 90 /target AIChief_4 
+  Static752 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 231120.84 260878.16 90 /target AIChief_4 
+  Static753 Searchlight.150_cm_SearchLight_UK1 gb 231116.48 260877.31 90 
+  Static754 Stationary.Environment.SandBagWall_Arch nn 228659.09 260718.39 165 
+  Static755 Stationary.Environment.SandBagWall_Arch nn 228662.78 260720.59 75 
+  Static756 Stationary.Environment.SandBagWall_Arch nn 228660.42 260716 255 
+  Static757 Stationary.Environment.SandBagWall_Arch nn 228664.17 260718.2 345 
+  Static758 Stationary.Environment.SandBagWall_Arch nn 228675.72 260728.05 175 
+  Static759 Stationary.Environment.SandBagWall_Arch nn 228679.64 260730.69 75 
+  Static760 Stationary.Environment.SandBagWall_Arch nn 228677.52 260725.88 265 
+  Static761 Stationary.Environment.SandBagWall_Arch nn 228681.19 260728.3 350 
+  Static762 Stationary.Environment.SandBagWall_Arch nn 228701.77 260737.66 165 
+  Static763 Stationary.Environment.SandBagWall_Arch nn 228705.78 260740 75 
+  Static764 Stationary.Environment.SandBagWall_Arch nn 228703.17 260735.39 260 
+  Static765 Stationary.Environment.SandBagWall_Arch nn 228707.06 260737.56 340 
+  Static766 Stationary.Environment.SandBagWall_Line_4m nn 228662.97 260714.19 30 
+  Static767 Stationary.Environment.SandBagWall_Line_4m nn 228664.53 260715.08 30 
+  Static768 Stationary.Environment.SandBagWall_Line_4m nn 228680.05 260724.25 30 
+  Static769 Stationary.Environment.SandBagWall_Line_4m nn 228681.73 260725.22 30 
+  Static770 Stationary.Environment.SandBagWall_Line_4m nn 228705.77 260733.45 30 
+  Static771 Stationary.Environment.SandBagWall_Line_4m nn 228707.38 260734.34 30 
+  Static772 Stationary.Environment.SandBagWall_Line_4m nn 228682.14 260725.5 30 
+  Static773 Stationary.Environment.SandBagWall_Line_4m nn 228679.66 260724 30 
+  Static774 Stationary.Environment.SandBagWall_Line_4m nn 228707.8 260734.58 30 
+  Static775 Stationary.Environment.SandBagWall_Line_4m nn 228705.33 260733.14 30 
+  Static776 Stationary.Environment.SandBagWall_Line_4m nn 228664.88 260715.28 30 
+  Static777 Stationary.Environment.SandBagWall_Line_4m nn 228662.55 260713.95 30 
+  Static778 Stationary.Ammo_Vehicles.CargoCrate nn 228689.86 260697.86 60 /hstart -0.8 
+  Static779 Stationary.Ammo_Vehicles.CargoCrate nn 228690.3 260697.56 60 /hstart -0.8 
+  Static780 Stationary.Ammo_Vehicles.CargoCrate nn 228690.78 260697.33 60 /hstart -0.8 
+  Static781 Stationary.Ammo_Vehicles.CargoCrate nn 228691.19 260696.94 60 /hstart -0.8 
+  Static782 Stationary.Environment.Bench_UK-GER_1 nn 228703.38 260732.05 0 
+  Static783 Stationary.Environment.CamoNetAT nn 228691.27 260698.28 150 
+  Static784 Stationary.Environment.Stool_UK-GER_1 nn 228676.98 260713.98 120 /hstart -1 
+  Static785 Stationary.Environment.Stool_UK-GER_1 nn 228676.86 260714.16 120 /hstart -0.7 
+  Static786 Stationary.Environment.Stool_UK-GER_1 nn 228676.78 260714.28 120 /hstart -0.4 
+  Static787 Stationary.Environment.HeightFinder_UK1 gb 228676.63 260714.91 30 
+  Static788 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 228678.61 260728.31 125 /timeout 0/radius_hide 2500 
+  Static789 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 228704.45 260737.92 125 /timeout 0/radius_hide 2500 
+  Static790 Artillery.3_inch_20_CWT_QF_Mk_I_StandAlone1 gb 228661.59 260718.28 125 /timeout 0/radius_hide 2500 
+  Static791 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 228661.61 260718.3 -55 
+  Static792 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 228704.86 260737.69 125 
+  Static793 Stationary.Ammo_Vehicles.3inch_QF_AA_StandAlone_composition1_UK1 nn 228678.88 260728.44 95 
+  Static794 Stationary.Environment.SandBagWall_Arch nn 240399.02 249206.42 180 
+  Static795 Stationary.Environment.SandBagWall_Arch nn 240406.59 249206.47 360 
+  Static796 Stationary.Environment.SandBagWall_Arch nn 240405.98 249237.69 30 
+  Static797 Artillery.Bofors gb 240403.55 249236.42 -420 /timeout 0/radius_hide 2500 
+  Static798 Stationary.Environment.SandBagWall_Arch nn 240401.16 249235.23 -150 
+  Static799 Artillery.Bofors gb 240402.89 249206.38 270 /timeout 0/radius_hide 2500 
+  Static800 Artillery.Bofors gb 240348.3 249221.98 -405 /timeout 0/radius_hide 2500 
+  Static801 Stationary.Environment.SandBagWall_Arch nn 240345.95 249219.89 -135 
+  Static802 Stationary.Environment.SandBagWall_Arch nn 240350.38 249223.89 45 
+  Static803 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 240402.88 249206.03 270 
+  Static804 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 240347.97 249221.75 300 
+  Static805 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 240404.88 249239.52 405 
+  Static806 Stationary.Morris_CDSW gb 240365 249444.27 45 
+  Static807 Stationary.Environment.CamoNetCrates nn 240373.56 249444.09 135 
+  Static808 Stationary.Environment.Oil_Cart_UK1 gb 240369.06 249442.08 165 
+  Static809 Stationary.Environment.FuelDrum_UK1_2 nn 240374.7 249444.84 135 
+  Static810 Stationary.Environment.Chear_UK-GER_1 nn 240370.53 249445 135 
+  Static811 Stationary.Environment.Chear_UK-GER_1 nn 240371 249445.52 135 
+  Static812 Stationary.Environment.FireBucket_UK1_full nn 240370.02 249444.72 135 
+  Static813 Stationary.Morris_CDSW gb 246681.89 235716.95 -150 
+  Static814 Stationary.Environment.CamoNetCrates nn 246673.69 235719.34 -420 
+  Static815 Stationary.Environment.Oil_Cart_UK1 gb 246678.55 235720.13 -390 
+  Static816 Stationary.Environment.FuelDrum_UK1_2 nn 246672.38 235718.91 -420 
+  Static817 Stationary.Environment.Chear_UK-GER_1 nn 246676.38 235717.69 -420 
+  Static818 Stationary.Environment.Chear_UK-GER_1 nn 246675.78 235717.31 -420 
+  Static819 Stationary.Environment.FireBucket_UK1_full nn 246676.94 235717.83 -420 
+  Static820 Stationary.Environment.SandBagWall_Arch nn 246754.5 235108.59 180 
+  Static821 Stationary.Environment.SandBagWall_Arch nn 246762.08 235108.64 360 
+  Static822 Stationary.Environment.SandBagWall_Arch nn 246761.47 235139.84 30 
+  Static823 Artillery.Bofors gb 246759.03 235138.59 -420 /timeout 0/radius_hide 2500 
+  Static824 Stationary.Environment.SandBagWall_Arch nn 246756.64 235137.41 -150 
+  Static825 Artillery.Bofors gb 246758.39 235108.55 270 /timeout 0/radius_hide 2500 
+  Static826 Artillery.Bofors gb 246703.78 235124.14 -405 /timeout 0/radius_hide 2500 
+  Static827 Stationary.Environment.SandBagWall_Arch nn 246701.45 235122.05 -135 
+  Static828 Stationary.Environment.SandBagWall_Arch nn 246705.86 235126.05 45 
+  Static829 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 246758.36 235108.2 270 
+  Static830 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 246703.45 235123.92 300 
+  Static831 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 246760.36 235141.69 405 
+  Static832 Stationary.Environment.SandBagWall_Arch nn 222562.42 221146.38 180 
+  Static833 Stationary.Environment.SandBagWall_Arch nn 222570.02 221146.42 360 
+  Static834 Stationary.Environment.SandBagWall_Arch nn 222569.39 221177.64 30 
+  Static835 Artillery.Bofors gb 222566.95 221176.38 -420 /timeout 0/radius_hide 2500 
+  Static836 Stationary.Environment.SandBagWall_Arch nn 222564.56 221175.19 -150 
+  Static837 Artillery.Bofors gb 222566.31 221146.33 270 /timeout 0/radius_hide 2500 
+  Static838 Artillery.Bofors gb 222511.7 221161.94 -405 /timeout 0/radius_hide 2500 
+  Static839 Stationary.Environment.SandBagWall_Arch nn 222509.38 221159.84 -135 
+  Static840 Stationary.Environment.SandBagWall_Arch nn 222513.78 221163.84 45 
+  Static841 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 222566.28 221145.98 270 
+  Static842 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 222511.39 221161.7 300 
+  Static843 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 222568.28 221179.47 405 
+  Static844 Stationary.Austin_K2_Ambulance gb 222437.91 221169.2 -270 
+  Static845 Stationary.Austin_K2_ATV gb 222442.47 221171.53 -255 
+  Static846 Searchlight.150_cm_SearchLight_UK1 gb 191506.31 201955.06 90 
+  Static847 Stationary.Fordson_Sussex_w_ballon gb 222458.63 221169.27 -270 
+  Static848 Stationary.Fire_pump_UK1_Transport gb 222459.56 221163.45 -240 
+  Static849 Stationary.Fordson_Sussex_w_o_ballon gb 222469.84 221170.55 -270 
+  Static850 Stationary.Fire_pump_UK1_Transport gb 222469.92 221164.75 -29.1 
+  Static851 Stationary.Environment.CamoNetCrates nn 222391.06 221161.16 -225 
+  Static852 Stationary.Environment.FieldKitchen_UK1 gb 222382.78 221160.48 -270 
+  Static853 Stationary.Ammo_Vehicles.2cmFlack38_composition2 nn 222390.89 221163.48 -270 
+  Static854 Stationary.Environment.TentSmall_UK1 gb 222394.55 221166.72 -240 
+  Static855 Stationary.Environment.Chear_UK-GER_1 nn 222391.28 221164.16 -240 
+  Static856 Stationary.Environment.SandBagWall_Arch nn 221329.48 221047.58 180 
+  Static857 Stationary.Environment.SandBagWall_Arch nn 221337.06 221047.63 360 
+  Static858 Stationary.Environment.SandBagWall_Arch nn 221336.44 221078.84 30 
+  Static859 Artillery.Bofors gb 221334 221077.58 -420 /timeout 0/radius_hide 2500 
+  Static860 Stationary.Environment.SandBagWall_Arch nn 221331.63 221076.39 -150 
+  Static861 Artillery.Bofors gb 221333.36 221047.53 270 /timeout 0/radius_hide 2500 
+  Static862 Artillery.Bofors gb 221278.77 221063.14 -405 /timeout 0/radius_hide 2500 
+  Static863 Stationary.Environment.SandBagWall_Arch nn 221276.42 221061.05 -135 
+  Static864 Stationary.Environment.SandBagWall_Arch nn 221280.83 221065.05 45 
+  Static865 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 221333.33 221047.19 270 
+  Static866 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 221278.44 221062.91 300 
+  Static867 Stationary.Ammo_Vehicles.40mm_Bofors_composition1_UK1 nn 221335.33 221080.67 405 
+  Static868 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 191501.11 201970.97 90 /target AIChief_25 
+  Static869 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 192533.94 202214.34 90 /target AIChief_25 
+  Static870 Searchlight.150_cm_SearchLight_UK1 gb 192539.16 202197.78 90 
+  Static871 Stationary.Environment.CamoNetCrates nn 192084.45 201984.19 -225 
+  Static872 Stationary.Environment.FieldKitchen_UK1 gb 192076.17 201983.52 -270 
+  Static873 Stationary.Ammo_Vehicles.2cmFlack38_composition2 nn 192084.28 201986.52 -270 
+  Static874 Stationary.Environment.TentSmall_UK1 gb 192087.95 201989.77 -240 
+  Static875 Stationary.Environment.Chear_UK-GER_1 nn 192084.69 201987.19 -240 
+  Static876 Artillery.Bofors_StandAlone gb 246099.03 234550.69 -90 /timeout 0/radius_hide 0/hstart -0.2
+  Static877 Stationary.Environment.Maschinensatz_15_KW_GER1 de 312625.84 196005.98 0 /target AIChief_32 
+  Static878 Stationary.Environment.FuelDrum_UK1_1 gb 176687.89 269327.94 30 
+  Static879 Stationary.Environment.FuelDrum_UK1_1 gb 176710.52 269340 30 
+  Static880 Stationary.Environment.TentBell_UK1 gb 176753.72 269310.28 -125 
+  Static881 Stationary.Environment.FuelDrum_UK1_1 gb 176741.45 269343.41 30 
+  Static882 Stationary.Environment.FuelDrum_UK1_1 gb 176722.2 269322.28 30 
+  Static883 Stationary.Environment.FuelDrum_UK1_1 gb 176702.97 269307.94 30 
+  Static884 Stationary.Environment.Chear_UK-GER_1 nn 176749.48 269303.66 185 
+  Static885 Stationary.Environment.Chear_UK-GER_1 nn 176748.66 269307.09 -30 
+  Static886 Stationary.Environment.Chear_UK-GER_1 nn 176748.39 269302.59 75 
+  Static887 Artillery.20_mm_Flak_38 de 312504.66 195420.73 30 /timeout 0/radius_hide 0 
+  Static888 Artillery.20_mm_Flak_38 de 311737.31 195840.77 30 /timeout 0/radius_hide 0 
+  Static889 Artillery.20_mm_Flak_38 de 312656.13 196343.09 30 /timeout 0/radius_hide 0 
+  Static890 Artillery.20_mm_Flak_38 de 312410.84 195363.31 30 /timeout 0/radius_hide 0 
+  Static891 Stationary.Environment.Table_w_dinner_UK-GER_1 nn 176749.73 269306.66 -30 
+  Static892 Stationary.Environment.Chear_UK-GER_1 nn 176750.52 269306.19 -210 
+  Static893 Stationary.Environment.Chear_UK-GER_1 nn 176749.16 269305.81 -300 
+  Static894 Stationary.Environment.Table_empty_UK-GER_1 nn 176748.5 269303.66 -90 
+  Static895 Stationary.Environment.Chear_UK-GER_1 nn 176747.42 269303.5 -10 
+  Static896 Stationary.Environment.Chear_UK-GER_1 nn 176748.52 269304.63 -95 
+  Static897 Stationary.Environment.Chear_UK-GER_1 nn 176750.45 269307.5 235 
+  Static898 Stationary.Environment.Table_w_chess_UK-GER_1 nn 176745.72 269306.28 -60 
+  Static899 Stationary.Environment.Chear_UK-GER_1 nn 176746.2 269305.28 -225 
+  Static900 Stationary.Environment.Chear_UK-GER_1 nn 176745.19 269307.31 -90 
+  Static901 Stationary.Environment.TentBell_UK1 gb 176742.73 269302.28 -260 
+  Static902 Aeroanchored.Balloon_winch_UK1 gb 176543.06 268906.16 360 
+  Static903 Stationary.Bedford_MW_open gb 176755.19 269408.31 -165 
+  Static904 Stationary.Environment.TentBell_UK1 gb 176754.13 269413.81 5 
+  Static905 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 176756.77 269397.56 0 
+  Static906 Searchlight.150_cm_SearchLight_UK1 gb 177201.53 269497.34 90 
+  Static907 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 177202.55 269492.09 90 /target AIChief_28 
+  Static908 Stationary.Environment.JP3_Generator_15_KW_UK1 gb 176932.48 269084.44 90 /target AIChief_28 
+  Static909 Searchlight.150_cm_SearchLight_UK1 gb 176932 269089.09 90 
+  Static910 Stationary.Environment.SandBagWall_Arch nn 177055.67 268917.34 180 
+  Static911 Artillery.Bofors_StandAlone gb 177057.73 268917.41 -90 /timeout 0/radius_hide 0 
+  Static912 Stationary.Environment.SandBagWall_Arch nn 177057.64 268919.31 90 
+  Static913 Stationary.Environment.SandBagWall_Arch nn 177059.59 268917.38 360 
+  Static914 Stationary.Ammo_Vehicles.40mm_Bofors_composition2_UK1 gb 177058.17 268919.59 75 
+  Static915 Stationary.Environment.SandBagWall_Arch nn 177057.64 268915.41 270 
+  Static916 Stationary.Environment.SandBagWall_Arch nn 177949.48 269134.03 180 
+  Static917 Artillery.Bofors_StandAlone gb 177951.55 269134.09 -90 /timeout 0/radius_hide 0 
+  Static918 Stationary.Environment.SandBagWall_Arch nn 177951.45 269136 90 
+  Static919 Stationary.Environment.SandBagWall_Arch nn 177953.41 269134.09 360 
+  Static920 Stationary.Ammo_Vehicles.40mm_Bofors_composition2_UK1 gb 177951.98 269136.28 75 
+  Static921 Stationary.Environment.SandBagWall_Arch nn 177951.45 269132.13 270 
+  Static922 Stationary.Environment.SandBagWall_Arch nn 177152.08 269657.72 180 
+  Static923 Artillery.Bofors_StandAlone gb 177154.14 269657.78 -90 /timeout 0/radius_hide 0 
+  Static924 Stationary.Environment.SandBagWall_Arch nn 177154.05 269659.69 90 
+  Static925 Stationary.Environment.SandBagWall_Arch nn 177156 269657.78 360 
+  Static926 Stationary.Ammo_Vehicles.40mm_Bofors_composition2_UK1 gb 177154.58 269659.97 75 
+  Static927 Stationary.Environment.SandBagWall_Arch nn 177154.05 269655.78 270 
+  Static928 Stationary.Environment.FuelDrum_UK1_1 gb 187741.17 248013.81 0 
+  Static929 Stationary.Environment.FuelDrum_UK1_1 gb 187742.83 247988.94 0 
+  Static930 Stationary.Environment.FuelDrum_UK1_1 gb 187768.13 248013.19 0 
+  Static931 Stationary.Environment.FuelDrum_UK1_1 gb 187769.14 247987.63 0 
+  Static932 Stationary.Environment.FuelDrum_UK1_1 gb 187793.44 248000.39 0 
+  Static933 Stationary.Environment.Chaise_longue_UK-GER_1 nn 176757.27 269413.28 -30 
+  Static934 Stationary.Environment.Chear_UK-GER_1 nn 176757.13 269412 330 
+  Static935 Stationary.Environment.Chear_UK-GER_1 nn 176756.38 269411.31 315 
+  Static936 Stationary.Ammo_Vehicles.CargoCrate nn 176758.63 269395.38 270 
+  Static937 Stationary.Ammo_Vehicles.CargoCrate nn 176758.77 269396.28 180 
+  Static938 Stationary.Ammo_Vehicles.CargoCrate_Composition1 nn 176760.47 269395.47 180 
+  Static939 Stationary.Environment.FireBucket_UK1_full nn 176759.02 269397.13 0 
+  Static940 Stationary.Ammo_Vehicles.CargoCrate_Composition2 nn 176760.84 269393.28 -90 
+  Static941 Stationary.Environment.Table_empty_UK-GER_1 nn 176759.55 269398.5 180 
+  Static942 Stationary.Ammo_Vehicles.CargoCrate nn 176760.75 269397.47 315 
+  Static943 Stationary.Environment.TentTroopLarge_GER1 gb 176760.8 269402.84 0 
+  Static944 Stationary.Ammo_Vehicles.CargoCrate nn 176763.66 269395.88 195 
+  Static945 Stationary.Ammo_Vehicles.CargoCrate_Composition2 nn 176762.69 269395.81 0 
+  Static946 Stationary.Environment.Chaise_longue_UK-GER_1 nn 176763.13 269411.75 -120 
+  Static947 Stationary.Environment.JerryCan_UK1_2-Gallon_20 gb 176763.94 269394.63 90 
+  Static948 Stationary.Environment.Chaise_longue_UK-GER_1 nn 176761.89 269406.75 105 
+  Static949 Stationary.Ammo_Vehicles.CargoCrate nn 176763.94 269411.09 240 
+  Static950 Stationary.Environment.Chaise_longue_UK-GER_1 nn 176764.94 269410.53 -120 
+  Static951 Stationary.Environment.TentBell_UK1 gb 176764.45 269414.97 0 
+  Static952 Stationary.Environment.TentTroopLarge_GER1 gb 176766.8 269402.88 0 
+  Static953 Stationary.Ammo_Vehicles.CargoCrate nn 176768.19 269399.16 180 
+  Static954 Stationary.Ammo_Vehicles.CargoCrate nn 176768.3 269399.84 180 
+  Static955 Stationary.Environment.FieldKitchen_UK1 nn 176767.38 269396.41 -20 
+  Static956 Stationary.Ammo_Vehicles.CargoCrate_Composition3 nn 176770.36 269399.72 -90 
+  Static957 Stationary.Ammo_Vehicles.CargoCrate_Composition3 nn 176770.34 269404 0 
+  Static958 Stationary.Ammo_Vehicles.CargoCrate nn 176770.38 269406.06 0 
+  Static959 Stationary.Environment.TentBell_UK1 gb 176770.73 269412.56 10 
+  Static960 Stationary.Ammo_Vehicles.CargoCrate_Composition1 nn 176770.69 269401.47 360 
+  Static961 Stationary.Ammo_Vehicles.CargoCrate nn 176771.98 269400.91 180 
+  Static962 Stationary.Ammo_Vehicles.CargoCrate nn 176771.97 269402.06 90 
+  Static963 Stationary.Ford_V8_E917_CargoCrate13 gb 176772.61 269397.06 -30 /hstart 1 
+  Static964 Stationary.Ford_V8_E917_open gb 176774.02 269396.44 -30 
+  Static965 Stationary.Austin_10_Tilly gb 176775.75 269405.84 -35 
+  Static966 Stationary.Environment.Table_empty_UK-GER_1 nn 176766.47 269408.5 180 
+  Static967 Stationary.Environment.Table_empty_UK-GER_1 nn 176765.73 269408.5 180 
+  Static968 Stationary.Environment.Table_empty_UK-GER_1 nn 176764.97 269408.5 180 
+  Static969 Stationary.Environment.Bench_UK-GER_1 gb 176766.08 269409.31 -90 
+  Static970 Stationary.Environment.Bench_UK-GER_1 gb 176766.11 269407.69 -90 
+  Static971 Stationary.Environment.Table_empty_UK-GER_1 nn 176767.27 269408.5 180 
+  Static972 Stationary.Guy_Quad-Ant gb 176748.48 269296.13 -35 
+  Static973 Stationary.Guy_Mk_I gb 176749.77 269279.66 -35 
+  Static974 Stationary.Guy_Mk_I gb 176743.8 269277.38 -50 
+  Static975 Stationary.Guy_Mk_I gb 176738.11 269274.25 -35 
+  Static976 Stationary.Guy_Mk_I gb 176732.28 269270.84 -50 
+  Static977 Stationary.Valentine_I gb 176736.98 269256.47 -35 
+  Static978 Stationary.Valentine_I gb 176748.34 269260 -50 
+  Static979 Stationary.Valentine_I gb 176759.2 269266.75 -50 
+  Static980 Stationary.Valentine_I gb 176727.42 269249.03 -50 
+  Static981 Stationary.Environment.SandBagWall_Arch nn 176687.53 269393.56 180 
+  Static982 Artillery.Bofors_StandAlone gb 176689.59 269393.63 -90 /timeout 0/radius_hide 0 
+  Static983 Stationary.Environment.SandBagWall_Arch nn 176689.5 269395.53 90 
+  Static984 Stationary.Environment.SandBagWall_Arch nn 176691.45 269393.59 360 
+  Static985 Stationary.Ammo_Vehicles.40mm_Bofors_composition2_UK1 nn 176690.03 269395.81 75 
+  Static986 Stationary.Environment.SandBagWall_Arch nn 176689.5 269391.63 270 
+  Static987 Stationary.Environment.FuelDrum_GER1_1 de 312374.81 195611.66 0 
+  Static988 Stationary.Environment.FuelDrum_GER1_1 de 312345.56 195585.36 0 
+  Static989 Stationary.Environment.FuelDrum_GER1_1 de 312371.03 195586.05 0 
+  Static990 Stationary.Environment.FuelDrum_GER1_1 de 312405.41 195599.66 0 
+  Static991 Stationary.Environment.FuelDrum_GER1_1 de 312348.53 195610.58 0 
+  Static992 Stationary.Panhard_178_25 de 312343.94 195639.56 0 
+  Static993 Stationary.Panhard_178_25 de 312358.06 195632.48 30 
+  Static994 Stationary.Panhard_178_25 de 312382.75 195625.97 45 
+[Buildings]
+  0_bld buildings.House$Trench01-30 1 228702.15 260723.58 120.00
+  1_bld buildings.House$Trench02-T 1 228684.88 260717.94 300.00
+  2_bld buildings.House$Trench02-T 1 228710.50 260727.18 -60.00
+  3_bld buildings.House$Trench01-30 1 228693.93 260721.89 -60.00
+  4_bld buildings.House$Trench00-Front 1 228714.39 260729.43 120.00
+  5_bld buildings.House$Trench03-D3 1 228691.33 260698.13 60.00
+  6_bld buildings.House$Trench02-T 1 228676.27 260712.92 120.00
+  7_bld buildings.House$Trench02-T 1 228667.63 260707.94 -60.00
+  8_bld buildings.House$Trench01-30 1 228681.94 260704.79 60.00
+  9_bld buildings.House$Trench00-Front 1 228660.94 260704.07 -60.00
+  10_bld buildings.House$Trench01-30 1 222830.13 210029.24 -75.00
+  11_bld buildings.House$Trench02-T 1 222848.27 210030.22 105.00
+  12_bld buildings.House$Trench02-T 1 222821.13 210027.93 -255.00
+  13_bld buildings.House$Trench01-30 1 222838.51 210028.74 -255.00
+  14_bld buildings.House$Trench00-Front 1 222816.80 210026.76 -75.00
+  15_bld buildings.House$Trench03-D3 1 222847.17 210051.02 -135.00
+  16_bld buildings.House$Trench02-T 1 222857.89 210032.84 -75.00
+  17_bld buildings.House$Trench02-T 1 222867.52 210035.41 -255.00
+  18_bld buildings.House$Trench01-30 1 222854.51 210042.16 -135.00
+  19_bld buildings.House$Trench00-Front 1 222874.99 210037.41 -255.00
+[BuildingsLinks]
+[FrontMarker]
+  FrontMarker0 246249.31 234205.68 1
+  FrontMarker1 237639.14 229168.58 1
+  FrontMarker2 177580.49 268505.19 1
+  FrontMarker3 192161.87 201595.90 1
+  FrontMarker4 229265.99 261395.10 1
+  FrontMarker5 189029.99 261455.02 1
+  FrontMarker6 265724.53 190303.22 2
+  FrontMarker7 283658.10 217310.47 2
+  FrontMarker8 307152.61 224075.37 2
+  FrontMarker9 216111.80 74306.32 2
+[AIChiefs]
+  AIChief_0 0 247851 259208/script powerOn.cpp/r 1000
+  AIChief_1 0 167643 198724/script powerOn.cpp/r 1000
+  AIChief_5 0 234842 232638/script powerOn.cpp/r 1000
+  AIChief_6 0 225103 228738/script powerOn.cpp/r 1000
+  AIChief_7 0 187777 258136/script powerOn.cpp/r 1000
+  AIChief_8 0 246269 235379/script powerOn.cpp/r 1000
+  AIChief_9 0 244775 234681/script powerOn.cpp/r 1000
+  AIChief_10 0 155635 275297/script powerOn.cpp/r 1000
+  AIChief_11 0 153333 276239/script powerOn.cpp/r 1000
+  AIChief_12 0 156010 270065/script powerOn.cpp/r 1000
+  AIChief_13 0 154206 269261/script powerOn.cpp/r 1000
+  AIChief_14 0 150904 268445/script powerOn.cpp/r 1000
+  AIChief_15 0 148305 268344/script powerOn.cpp/r 1000
+  AIChief_16 0 153613 272471/script powerOn.cpp/r 1000
+  AIChief_17 0 146432 266610/script powerOn.cpp/r 1000
+  AIChief_18 0 151645 278377/script powerOn.cpp/r 1000
+  AIChief_19 0 142821 259650/script powerOn.cpp/r 1000
+  AIChief_20 0 305090 221887/script powerOn.cpp/r 1000
+  AIChief_21 0 315948 224601/script powerOn.cpp/r 1000
+  AIChief_22 0 319657 222446/script powerOn.cpp/r 1000
+  AIChief_23 0 321427 225481/script powerOn.cpp/r 1000
+  AIChief_24 0 296025 217779/script powerOn.cpp/r 1000
+  AIChief_26 0 281429 212472/script powerOn.cpp/r 1000
+  AIChief_27 0 278224 207350/script powerOn.cpp/r 1000
+  AIChief_29 0 275574 208107/script powerOn.cpp/r 1000
+  AIChief_30 0 264983 189169/script powerOn.cpp/r 1000
+  AIChief_32 0 312452 195887/script powerOn.cpp/r 1000
+  AIChief_2 0 237188 229586/script powerOn.cpp/r 1000
+  AIChief_3 0 229269 261042/script powerOn.cpp/r 1000
+  AIChief_4 0 231035 261108/script powerOn.cpp/r 1000
+  AIChief_25 0 192106 201952/script powerOn.cpp/r 1000
+

@@ -31,6 +31,20 @@ using maddox.GP;
 //public class Mission : IL2DCE.Mission.MissionSingle
 public class Mission : AMission
 {
+
+    public override void OnAircraftDamaged(int missionNumber, string shortName, AiAircraft Aircraft, AiDamageInitiator DamageFrom, part.NamedDamageTypes WhatDamaged)
+    {
+        base.OnAircraftDamaged(missionNumber, shortName, Aircraft, DamageFrom, WhatDamaged);
+
+        if (DamageFrom.Player != null)
+        {
+            GamePlay.gpHUDLogCenter(null, "{0} hits {1} : {2} \n", new object[] { DamageFrom.Player, shortName, WhatDamaged });//Test
+            GamePlay.gpLogServer(null, "{0} hits {1} : {2} \n", new object[] { DamageFrom.Player, shortName, WhatDamaged });//Test
+        }
+
+    }
+
+
     public override void OnBattleStarted()
     {
         base.OnBattleStarted();
