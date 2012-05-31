@@ -17,6 +17,10 @@ namespace IL2DCE
 
         public event UnitEventHandler Destroyed;
 
+        public event UnitEventHandler Covered;
+
+        public event UnitEventHandler Discovered;
+
         public string Id
         {
             get
@@ -69,8 +73,7 @@ namespace IL2DCE
             }
         }
         private IPersistentWorld persistentWorld;
-
-
+        
         public Tuple<double, double, double> Position
         {
             get
@@ -79,7 +82,7 @@ namespace IL2DCE
             }
         }
         private Tuple<double, double, double> position;
-
+        
         public UnitState State
         {
             get
@@ -199,6 +202,16 @@ namespace IL2DCE
             }
 
             PersistentWorld.Debug(Id + " destroyed.");
+        }
+
+        public void RaiseCovered()
+        {
+
+        }
+
+        public void RaiseDiscovered()
+        {
+
         }
     }
 }

@@ -41,12 +41,27 @@ namespace IL2DCE
             }
         }
 
+        private List<IUnit> Enemies
+        {
+            get
+            {
+                return this.enemies;
+            }
+        }
+        private List<IUnit> enemies = new List<IUnit>();
+
         public AirHeadquarters(IPersistentWorld persistentWorld, Army army)
         {
             PersistentWorld = persistentWorld;
             PersistentWorld.NextPhase += new EventHandler(OnNextPhase);
+            PersistentWorld.UnitDiscovered += new UnitEventHandler(OnUnitDiscovered);
 
             this.army = army;
+        }
+
+        void OnUnitDiscovered(object sender, UnitEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public IPersistentWorld PersistentWorld
@@ -86,8 +101,10 @@ namespace IL2DCE
         {
             if(IdleUnits.Count > 0)
             {
-                int i = PersistentWorld.Random.Next(IdleUnits.Count());
-                PersistentWorld.NewMission(IdleUnits[i]);
+                int unitIndex = PersistentWorld.Random.Next(IdleUnits.Count);
+                int strategicPointIndex = PersistentWorld.Random.Next(PersistentWorld.Map.StrategicPoints.Count);
+
+                PersistentWorld.TakeOrder(new AirOrder(IdleUnits[unitIndex], PersistentWorld.Map.StrategicPoints[strategicPointIndex]));
             }
         }
     }

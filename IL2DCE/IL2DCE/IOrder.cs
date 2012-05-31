@@ -5,8 +5,16 @@ using System.Text;
 
 namespace IL2DCE
 {
-    interface IOrder
+    public interface IOrder
     {
+        IUnit Unit
+        {
+            get;
+        }
 
+        IStrategicPoint Target
+        {
+            get;
+        }
     }
 }

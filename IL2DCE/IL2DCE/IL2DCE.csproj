@@ -38,6 +38,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Aerodrome.cs" />
     <Compile Include="Aircraft.cs" />
     <Compile Include="AircraftInfo.cs" />
     <Compile Include="AircraftLoadoutInfo.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="AirGroupInfo.cs" />
     <Compile Include="AirGroupWaypoint.cs" />
     <Compile Include="AirHeadquarters.cs" />
+    <Compile Include="AirOrder.cs" />
     <Compile Include="AirUnit.cs" />
     <Compile Include="Army.cs" />
     <Compile Include="BriefingFile.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Interfaces\IGameSingle.cs" />
     <Compile Include="Interfaces\IGroundGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Radar.cs" />
     <Compile Include="Stationary.cs" />
     <Compile Include="UnitEventArgs.cs" />
     <Compile Include="UnitState.cs" />

@@ -10,10 +10,15 @@ namespace IL2DCE
 {
     public class Mission : AMission, IPersistentWorld
     {
-        protected string airUnitFileName = "";
+        protected string unitFileName = "";
+        protected string missionFileName = "";
         protected string aircraftInfoFileName = "";
 
         public event EventHandler NextPhase;
+
+        public event UnitEventHandler UnitDiscovered;
+
+        public event UnitEventHandler UnitCovered;
         
         public Dictionary<string, IUnit> Units
         {
@@ -89,38 +94,38 @@ namespace IL2DCE
             }
         }
 
-        public void NewMission(IUnit unit)
+        public void TakeOrder(IOrder order)
         {
-            if (unit is AirUnit)
+            if (order is AirOrder)
             {
-                AirUnit airUnit = unit as AirUnit;
-                
-                ISectionFile missionFile = GamePlay.gpCreateSectionFile();
-                Generator generator = new Generator(null);
-                
-                AirGroup airGroup = new AirGroup();
-                airGroup.Id = airUnit.Id;
-                airGroup.AirGroupKey = airUnit.Regiment;
-                airGroup.Class = airUnit.AircraftType;
-                airGroup.CallSign = 1;
-                airGroup.Fuel = 100;
-                airGroup.Formation = airUnit.AirGroupInfo.DefaultFormation;
-                airGroup.Airstart = false;
-                airGroup.Position = new maddox.GP.Point3d(airUnit.Position.Item1, airUnit.Position.Item2, airUnit.Position.Item3);
+                if (order.Unit is AirUnit)
+                {
+                    AirUnit airUnit = order.Unit as AirUnit;
 
-                airGroup.Flights[0] = new List<string>() {"1", "2"};
+                    ISectionFile missionFile = GamePlay.gpCreateSectionFile();
+                    Generator generator = new Generator(null);
 
+                    AirGroup airGroup = new AirGroup();
+                    airGroup.Id = airUnit.Id;
+                    airGroup.AirGroupKey = airUnit.Regiment;
+                    airGroup.Class = airUnit.AircraftType;
+                    airGroup.CallSign = 1;
+                    airGroup.Fuel = 100;
+                    airGroup.Formation = airUnit.AirGroupInfo.DefaultFormation;
+                    airGroup.Airstart = false;
+                    airGroup.Position = new maddox.GP.Point3d(airUnit.Position.Item1, airUnit.Position.Item2, airUnit.Position.Item3);
 
+                    airGroup.Flights[0] = new List<string>() { "1", "2" };
+                    
+                    airGroup.Recon(EMissionType.RECON, new maddox.GP.Point2d(order.Target.Position.Item1, order.Target.Position.Item2), 1000.0);
 
+                    airGroup.writeTo(missionFile);
 
-                airGroup.Transfer(EMissionType.RECON, 1000);
-
-                airGroup.writeTo(missionFile);
-
-                GamePlay.gpPostMissionLoad(missionFile);
+                    GamePlay.gpPostMissionLoad(missionFile);
+                }
             }
 
-            Debug(unit.Id + " new mission.");
+            Debug(order.Unit.Id + " new order.");
         }
         
         #region AMission
@@ -134,9 +139,10 @@ namespace IL2DCE
             random = new System.Random();
 
             // Parse mission file and fill the unit dictionary.
-            ISectionFile missionFile = GamePlay.gpLoadSectionFile(airUnitFileName);
+            ISectionFile unitFile = GamePlay.gpLoadSectionFile(unitFileName);
+            ISectionFile missionFile = GamePlay.gpLoadSectionFile(missionFileName);
             this.aircraftInfoFile = GamePlay.gpLoadSectionFile(aircraftInfoFileName);
-            
+
             this.map = new IL2DCE.Map(this, missionFile);
 
             AirHeadquarters redAirHeadquarters = new AirHeadquarters(this, Army.Red);
@@ -145,12 +151,12 @@ namespace IL2DCE
             AirHeadquarters blueAirHeadquarters = new AirHeadquarters(this, Army.Blue);
             Headquarters.Add(blueAirHeadquarters);
             
-            for (int i = 0; i < missionFile.lines("AirUnits"); i++)
+            for (int i = 0; i < unitFile.lines("AirUnits"); i++)
             {
                 string key;
                 string value;
-                missionFile.get("AirUnits", i, out key, out value);
-                AirUnit airUnit = new AirUnit(this, key, missionFile);
+                unitFile.get("AirUnits", i, out key, out value);
+                AirUnit airUnit = new AirUnit(this, key, unitFile);
                 Units.Add(key, airUnit);
 
                 if (airUnit.Army == Army.Red)
@@ -163,6 +169,18 @@ namespace IL2DCE
                 }
 
                 //airUnit.RaiseIdle();
+            }
+
+            for (int i = 0; i < missionFile.lines("Stationary"); i++)
+            {
+                string key;
+                string value;
+                missionFile.get("Stationary", i, out key, out value);
+
+                if(value.StartsWith("Stationary.Radar.EnglishRadar1"))
+                {
+                    Radar radar = new Radar(this, key, missionFile);
+                }               
             }
         }
 
