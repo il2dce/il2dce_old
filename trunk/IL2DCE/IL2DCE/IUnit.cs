@@ -15,6 +15,10 @@ namespace IL2DCE
 
         event UnitEventHandler Destroyed;
 
+        event UnitEventHandler Covered;
+
+        event UnitEventHandler Discovered;
+
         string Id
         {
             get;
@@ -42,5 +46,9 @@ namespace IL2DCE
         void RaiseBusy();
 
         void RaiseDestroyed();
+
+        void RaiseCovered();
+
+        void RaiseDiscovered();
     }
 }

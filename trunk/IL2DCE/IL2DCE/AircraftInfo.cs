@@ -28,6 +28,42 @@ namespace IL2DCE
     {
         ISectionFile _aircraftInfoFile;
 
+        public static bool IsMissionTypeEscorted(EMissionType missionType)
+        {
+            if (missionType == EMissionType.ATTACK_ARMOR
+                || missionType == EMissionType.ATTACK_RADAR
+                || missionType == EMissionType.ATTACK_AIRCRAFT
+                || missionType == EMissionType.ATTACK_SHIP
+                || missionType == EMissionType.ATTACK_VEHICLE)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool IsMissionTypeOffensive(EMissionType missionType)
+        {
+            if (missionType == EMissionType.ARMED_MARITIME_RECON
+                || missionType == EMissionType.MARITIME_RECON
+                || missionType == EMissionType.ARMED_RECON
+                || missionType == EMissionType.RECON
+                || missionType == EMissionType.ATTACK_ARMOR
+                || missionType == EMissionType.ATTACK_RADAR
+                || missionType == EMissionType.ATTACK_AIRCRAFT
+                || missionType == EMissionType.ATTACK_SHIP
+                || missionType == EMissionType.ATTACK_VEHICLE)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public AircraftInfo(ISectionFile aircraftInfoFile, string aircraft)
         {
             _aircraftInfoFile = aircraftInfoFile;

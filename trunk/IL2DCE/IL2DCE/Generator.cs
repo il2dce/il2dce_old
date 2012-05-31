@@ -730,7 +730,7 @@ namespace IL2DCE
                 {
                     foreach (EMissionType missionType in airGroup.AircraftInfo.MissionTypes)
                     {
-                        if (isMissionTypeOffensive(missionType) && isMissionTypeAvailable(airGroup, missionType))
+                        if (AircraftInfo.IsMissionTypeOffensive(missionType) && isMissionTypeAvailable(airGroup, missionType))
                         {
                             airGroups.Add(airGroup);
                             break;
@@ -767,7 +767,7 @@ namespace IL2DCE
                 {
                     foreach (EMissionType missionType in airGroup.AircraftInfo.MissionTypes)
                     {
-                        if (isMissionTypeEscorted(missionType) && isMissionTypeAvailable(airGroup, missionType))
+                        if (AircraftInfo.IsMissionTypeEscorted(missionType) && isMissionTypeAvailable(airGroup, missionType))
                         {
                             airGroups.Add(airGroup);
                             break;
@@ -911,43 +911,7 @@ namespace IL2DCE
                 return null;
             }
         }
-
-        private bool isMissionTypeEscorted(EMissionType missionType)
-        {
-            if (missionType == EMissionType.ATTACK_ARMOR
-                || missionType == EMissionType.ATTACK_RADAR
-                || missionType == EMissionType.ATTACK_AIRCRAFT
-                || missionType == EMissionType.ATTACK_SHIP
-                || missionType == EMissionType.ATTACK_VEHICLE)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool isMissionTypeOffensive(EMissionType missionType)
-        {
-            if (missionType == EMissionType.ARMED_MARITIME_RECON                
-                || missionType == EMissionType.MARITIME_RECON
-                || missionType == EMissionType.ARMED_RECON
-                || missionType == EMissionType.RECON
-                || missionType == EMissionType.ATTACK_ARMOR
-                || missionType == EMissionType.ATTACK_RADAR
-                || missionType == EMissionType.ATTACK_AIRCRAFT
-                || missionType == EMissionType.ATTACK_SHIP
-                || missionType == EMissionType.ATTACK_VEHICLE)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        
         private bool isMissionTypeAvailable(AirGroup airGroup, EMissionType missionType)
         {
             if (missionType == EMissionType.COVER)
@@ -1222,7 +1186,7 @@ namespace IL2DCE
                 airGroup.Detonator = aircraftLoadoutInfo.Detonator;
 
                 AirGroup escortAirGroup = null;
-                if (isMissionTypeEscorted(missionType))
+                if (AircraftInfo.IsMissionTypeEscorted(missionType))
                 {
                     if (forcedEscortAirGroup == null)
                     {
@@ -1242,7 +1206,7 @@ namespace IL2DCE
                         List<EMissionType> availableOffensiveMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in offensiveAirGroup.AircraftInfo.MissionTypes)
                         {
-                            if (isMissionTypeAvailable(offensiveAirGroup, targetMissionType) && isMissionTypeOffensive(targetMissionType))
+                            if (isMissionTypeAvailable(offensiveAirGroup, targetMissionType) && AircraftInfo.IsMissionTypeOffensive(targetMissionType))
                             {
                                 availableOffensiveMissionTypes.Add(targetMissionType);
                             }
@@ -1341,7 +1305,7 @@ namespace IL2DCE
                         List<EMissionType> availableEscortedMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in escortedAirGroup.AircraftInfo.MissionTypes)
                         {
-                            if (isMissionTypeAvailable(escortedAirGroup, targetMissionType) && isMissionTypeEscorted(targetMissionType))
+                            if (isMissionTypeAvailable(escortedAirGroup, targetMissionType) && AircraftInfo.IsMissionTypeEscorted(targetMissionType))
                             {
                                 availableEscortedMissionTypes.Add(targetMissionType);
                             }
@@ -1365,7 +1329,7 @@ namespace IL2DCE
                         List<EMissionType> availableOffensiveMissionTypes = new List<EMissionType>();
                         foreach (EMissionType targetMissionType in interceptedAirGroup.AircraftInfo.MissionTypes)
                         {
-                            if (isMissionTypeAvailable(interceptedAirGroup, targetMissionType) && isMissionTypeOffensive(targetMissionType))
+                            if (isMissionTypeAvailable(interceptedAirGroup, targetMissionType) && AircraftInfo.IsMissionTypeOffensive(targetMissionType))
                             {
                                 availableOffensiveMissionTypes.Add(targetMissionType);
                             }
@@ -1425,7 +1389,7 @@ namespace IL2DCE
                     escortAirGroup.writeTo(sectionFile);
                 }
 
-                if (isMissionTypeOffensive(missionType))
+                if (AircraftInfo.IsMissionTypeOffensive(missionType))
                 {
                     if (allowIntercept)
                     {

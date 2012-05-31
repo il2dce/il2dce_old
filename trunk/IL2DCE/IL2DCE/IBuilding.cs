@@ -5,7 +5,21 @@ using System.Text;
 
 namespace IL2DCE
 {
-    interface IBuilding : IUnit
+    interface IBuilding : IDetector
     {
+        string Id
+        {
+            get;
+        }
+
+        Army Army
+        {
+            get;
+        }
+
+        Tuple<double, double, double> Position
+        {
+            get;
+        }
     }
 }

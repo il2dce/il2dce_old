@@ -9,6 +9,10 @@ namespace IL2DCE
     {
         event EventHandler NextPhase;
 
+        event UnitEventHandler UnitDiscovered;
+
+        event UnitEventHandler UnitCovered;
+
         Map Map
         {
             get;
@@ -31,6 +35,6 @@ namespace IL2DCE
 
         void Debug(string line);
 
-        void NewMission(IUnit unit);
+        void TakeOrder(IOrder order);
     }
 }
