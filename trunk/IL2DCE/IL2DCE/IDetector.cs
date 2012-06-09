@@ -7,6 +7,6 @@ namespace IL2DCE
 {
     public interface IDetector
     {
-        void DetectUnit(IUnit unit);
+        
     }
 }

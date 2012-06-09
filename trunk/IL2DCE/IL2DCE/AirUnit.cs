@@ -78,10 +78,26 @@ namespace IL2DCE
         {
             get
             {
-                return this.position;
+                Tuple<double, double, double> position = PersistentWorld.GetPositionOf(this);
+                if (position != null)
+                {
+                    return position;
+                }
+                else
+                {
+                    return Airfield;
+                }
             }
         }
-        private Tuple<double, double, double> position;
+
+        public Tuple<double, double, double> Airfield
+        {
+            get
+            {
+                return this.airfield;
+            }
+        }
+        private Tuple<double, double, double> airfield;
         
         public UnitState State
         {
@@ -107,7 +123,7 @@ namespace IL2DCE
             double x = double.Parse(positionList[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             double y = double.Parse(positionList[1], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             double z = double.Parse(positionList[2], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.position = new Tuple<double, double, double>(x, y, z);
+            this.airfield = new Tuple<double, double, double>(x, y, z);
 
             PersistentWorld.Debug(id + " created.");
         }
@@ -150,12 +166,7 @@ namespace IL2DCE
                 }
             }
         }
-
-        public void DetectUnit(IUnit unit)
-        {
-            
-        }
-
+        
         public void RaiseIdle()
         {
             this.state = UnitState.Idle;
@@ -206,12 +217,22 @@ namespace IL2DCE
 
         public void RaiseCovered()
         {
+            if (Covered != null)
+            {
+                Covered(this, new UnitEventArgs(this));
+            }
 
+            PersistentWorld.Debug(Id + " covered.");
         }
 
         public void RaiseDiscovered()
         {
+            if (Discovered != null)
+            {
+                Discovered(this, new UnitEventArgs(this));
+            }
 
+            PersistentWorld.Debug(Id + " discovered.");
         }
     }
 }

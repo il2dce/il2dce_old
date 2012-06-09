@@ -16,21 +16,30 @@ namespace IL2DCE
         }
         private Army army;
 
-        private List<IUnit> Units
+        private List<IUnit> FriendlyUnits
         {
             get
             {
-                return this.units;
+                return this.friendlyUnits;
             }
         }
-        private List<IUnit> units = new List<IUnit>();
+        private List<IUnit> friendlyUnits = new List<IUnit>();
+
+        private List<IUnit> EnemyUnits
+        {
+            get
+            {
+                return this.enemyUnits;
+            }
+        }
+        private List<IUnit> enemyUnits = new List<IUnit>();
 
         private List<IUnit> IdleUnits
         {
             get
             {
                 List<IUnit> idleUnits = new List<IUnit>();
-                foreach (IUnit unit in Units)
+                foreach (IUnit unit in FriendlyUnits)
                 {
                     if(unit.State == UnitState.Idle)
                     {
@@ -40,28 +49,26 @@ namespace IL2DCE
                 return idleUnits;
             }
         }
-
-        private List<IUnit> Enemies
-        {
-            get
-            {
-                return this.enemies;
-            }
-        }
-        private List<IUnit> enemies = new List<IUnit>();
-
+        
         public AirHeadquarters(IPersistentWorld persistentWorld, Army army)
         {
             PersistentWorld = persistentWorld;
-            PersistentWorld.NextPhase += new EventHandler(OnNextPhase);
+            PersistentWorld.MissionSlice += new EventHandler(OnMissionSlice);
+
             PersistentWorld.UnitDiscovered += new UnitEventHandler(OnUnitDiscovered);
+            PersistentWorld.UnitCovered += new UnitEventHandler(OnUnitCovered);
 
             this.army = army;
         }
 
         void OnUnitDiscovered(object sender, UnitEventArgs e)
         {
-            throw new NotImplementedException();
+            PersistentWorld.Debug(e.Unit.Id + " detected. Intercept!");
+        }
+
+        void OnUnitCovered(object sender, UnitEventArgs e)
+        {
+            PersistentWorld.Debug(e.Unit.Id + " lost. RTB!");
         }
 
         public IPersistentWorld PersistentWorld
@@ -79,9 +86,9 @@ namespace IL2DCE
 
         public void Register(IUnit unit)
         {
-            if (unit is AirUnit && !Units.Contains(unit))
+            if (unit is AirUnit && !FriendlyUnits.Contains(unit))
             {
-                Units.Add(unit);
+                FriendlyUnits.Add(unit);
 
                 PersistentWorld.Debug(unit.Id + " is now under control of AirHeadquarters.");
             }
@@ -89,15 +96,15 @@ namespace IL2DCE
 
         public void Deregister(IUnit unit)
         {
-            if (Units.Contains(unit))
+            if (FriendlyUnits.Contains(unit))
             {
-                Units.Remove(unit);
+                FriendlyUnits.Remove(unit);
 
                 PersistentWorld.Debug(unit.Id + " is now release from control of AirHeadquarters.");
             }
         }
 
-        void OnNextPhase(object sender, EventArgs e)
+        void OnMissionSlice(object sender, EventArgs e)
         {
             if(IdleUnits.Count > 0)
             {

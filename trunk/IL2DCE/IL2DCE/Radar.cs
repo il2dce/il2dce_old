@@ -35,9 +35,20 @@ namespace IL2DCE
             }
         }
         private Army army;
+        
+        private IPersistentWorld PersistentWorld
+        {
+            get
+            {
+                return this.persistentWorld;
+            }
+        }
+        private IPersistentWorld persistentWorld;
 
         public Radar(IPersistentWorld persistentWorld, string id, ISectionFile missionFile)
         {
+            this.persistentWorld = persistentWorld;
+
             this.id = id;
             string value = missionFile.get("Stationary", id);
             string[] valueParts = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -60,11 +71,27 @@ namespace IL2DCE
                 double y = double.Parse(valueParts[3], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.position = new Tuple<double,double,double>(x, y, 0.0);
             }
+
+            persistentWorld.DetectionSlice += new EventHandler(OnDetectionSlice);
         }
 
-        public void DetectUnit(IUnit unit)
+        void OnDetectionSlice(object sender, EventArgs e)
         {
-
+            foreach (IUnit unit in PersistentWorld.Units.Values)
+            {
+                if (unit.Army != Army && unit is AirUnit)
+                {
+                    double distance = Math.Sqrt(Math.Pow(unit.Position.Item1 - this.Position.Item1, 2) + Math.Pow(unit.Position.Item2 - this.Position.Item2, 2) + Math.Pow(unit.Position.Item3 - this.Position.Item3, 2));
+                    if (distance < 50000.0)
+                    {
+                        unit.RaiseDiscovered();
+                    }
+                    else
+                    {
+                        unit.RaiseCovered();
+                    }
+                }
+            }
         }
     }
 }
