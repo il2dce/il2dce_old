@@ -7,7 +7,9 @@ namespace IL2DCE
 {
     public interface IPersistentWorld
     {
-        event EventHandler NextPhase;
+        event EventHandler MissionSlice;
+
+        event EventHandler DetectionSlice;
 
         event UnitEventHandler UnitDiscovered;
 
@@ -36,5 +38,7 @@ namespace IL2DCE
         void Debug(string line);
 
         void TakeOrder(IOrder order);
+
+        Tuple<double, double, double> GetPositionOf(IUnit unit);
     }
 }

@@ -14,7 +14,9 @@ namespace IL2DCE
         protected string missionFileName = "";
         protected string aircraftInfoFileName = "";
 
-        public event EventHandler NextPhase;
+        public event EventHandler MissionSlice;
+
+        public event EventHandler DetectionSlice;
 
         public event UnitEventHandler UnitDiscovered;
 
@@ -76,21 +78,39 @@ namespace IL2DCE
             GamePlay.gpLogServer(players.ToArray(), line, null);
         }
         
-        private void RaisePeriodicPhase()
+        private void RaisePeriodicMissionSlice()
         {
-            RaiseNextPhase();
+            RaiseMissionSlice();
 
             Timeout(5 * 60, () => 
             {
-                RaisePeriodicPhase();
+                RaisePeriodicMissionSlice();
             });
         }
 
-        private void RaiseNextPhase()
+        private void RaiseMissionSlice()
         {
-            if (NextPhase != null)
+            if (MissionSlice != null)
             {
-                NextPhase(this, new EventArgs());
+                MissionSlice(this, new EventArgs());
+            }
+        }
+
+        private void RaisePeriodicDetectionSlice()
+        {
+            RaiseDetectionSlice();
+
+            Timeout(1 * 60, () =>
+            {
+                RaisePeriodicDetectionSlice();
+            });
+        }
+
+        private void RaiseDetectionSlice()
+        {
+            if (DetectionSlice != null)
+            {
+                DetectionSlice(this, new EventArgs());
             }
         }
 
@@ -113,7 +133,7 @@ namespace IL2DCE
                     airGroup.Fuel = 100;
                     airGroup.Formation = airUnit.AirGroupInfo.DefaultFormation;
                     airGroup.Airstart = false;
-                    airGroup.Position = new maddox.GP.Point3d(airUnit.Position.Item1, airUnit.Position.Item2, airUnit.Position.Item3);
+                    airGroup.Position = new maddox.GP.Point3d(airUnit.Airfield.Item1, airUnit.Airfield.Item2, airUnit.Airfield.Item3);
 
                     airGroup.Flights[0] = new List<string>() { "1", "2" };
                     
@@ -126,6 +146,28 @@ namespace IL2DCE
             }
 
             Debug(order.Unit.Id + " new order.");
+        }
+
+        public Tuple<double, double, double> GetPositionOf(IUnit unit)
+        {
+            if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
+            {
+                foreach (int armyIndex in GamePlay.gpArmies())
+                {
+                    if (GamePlay.gpAirGroups(armyIndex) != null && GamePlay.gpAirGroups(armyIndex).Length > 0)
+                    {
+                        foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(armyIndex))
+                        {
+                            string id = airGroup.Name().Remove(0, airGroup.Name().IndexOf(":") + 1);
+                            if (unit.Id == id)
+                            {
+                                return new Tuple<double, double, double>(airGroup.Pos().x, airGroup.Pos().y, airGroup.Pos().z);
+                            }
+                        }
+                    }
+                }                
+            }
+            return null;
         }
         
         #region AMission
@@ -168,7 +210,10 @@ namespace IL2DCE
                     blueAirHeadquarters.Register(airUnit);
                 }
 
-                //airUnit.RaiseIdle();
+                airUnit.Discovered += new UnitEventHandler(OnDiscovered);
+                airUnit.Covered += new UnitEventHandler(OnCovered);
+
+                airUnit.RaiseIdle();
             }
 
             for (int i = 0; i < missionFile.lines("Stationary"); i++)
@@ -180,15 +225,32 @@ namespace IL2DCE
                 if(value.StartsWith("Stationary.Radar.EnglishRadar1"))
                 {
                     Radar radar = new Radar(this, key, missionFile);
-                }               
+                }
+            }
+        }
+
+        void OnDiscovered(object sender, UnitEventArgs e)
+        {
+            if (UnitDiscovered != null)
+            {
+                UnitDiscovered(this, e);
+            }
+        }
+
+        void OnCovered(object sender, UnitEventArgs e)
+        {
+            if (UnitCovered != null)
+            {
+                UnitCovered(this, e);
             }
         }
 
         public override void OnBattleStarted()
         {
             base.OnBattleStarted();
-            
-            RaisePeriodicPhase();
+
+            RaisePeriodicDetectionSlice();
+            RaisePeriodicMissionSlice();            
         }
 
         public override void OnActorCreated(int missionNumber, string shortName, maddox.game.world.AiActor actor)
