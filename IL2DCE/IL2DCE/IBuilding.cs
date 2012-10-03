@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IL2DCE
 {
-    interface IBuilding : IDetector
+    public interface IBuilding : IDetector
     {
         string Id
         {

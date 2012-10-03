@@ -88,6 +88,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radar.cs" />
     <Compile Include="Stationary.cs" />
+    <Compile Include="StationaryAircraft.cs" />
     <Compile Include="UnitEventArgs.cs" />
     <Compile Include="UnitState.cs" />
     <Compile Include="Waterway.cs" />

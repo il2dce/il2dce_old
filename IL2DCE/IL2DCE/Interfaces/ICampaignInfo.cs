@@ -52,6 +52,6 @@ namespace IL2DCE
             get;
         }
 
-        IAircraftInfo GetAircraftInfo(string aircraft);
+        AircraftInfo GetAircraftInfo(string aircraft);
     }
 }

@@ -97,12 +97,12 @@ namespace IL2DCE
             }
         }
 
-        static public AirGroupInfo GetAirGroupInfo(int armyIndex, string airGroupKey)
+        static public AirGroupInfo GetAirGroupInfo(int armyIndex, string regiment)
         {
             foreach (AirGroupInfo airGroupInfo in GetAirGroupInfos(armyIndex))
             {
                 List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                if (airGroupKeys.Contains(airGroupKey))
+                if (airGroupKeys.Contains(regiment))
                 {
                     return airGroupInfo;
                 }
@@ -111,12 +111,12 @@ namespace IL2DCE
             return null;
         }
 
-        static public AirGroupInfo GetAirGroupInfo(string airGroupKey)
+        static public AirGroupInfo GetAirGroupInfo(string regiment)
         {
             foreach (AirGroupInfo airGroupInfo in RedAirGroupInfos)
             {
                 List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                if (airGroupKeys.Contains(airGroupKey))
+                if (airGroupKeys.Contains(regiment))
                 {
                     return airGroupInfo;
                 }
@@ -124,13 +124,13 @@ namespace IL2DCE
             foreach (AirGroupInfo airGroupInfo in BlueAirGroupInfos)
             {
                 List<string> airGroupKeys = new List<string>(airGroupInfo.AirGroupKeys);
-                if (airGroupKeys.Contains(airGroupKey))
+                if (airGroupKeys.Contains(regiment))
                 {
                     return airGroupInfo;
                 }
             }
 
-            return null;
+            throw new ArgumentException("Unknown regiment.");
         }
 
         static public AirGroupInfo[] RedAirGroupInfos = new AirGroupInfo[]

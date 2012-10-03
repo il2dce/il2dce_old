@@ -10,7 +10,6 @@ namespace IL2DCE
 {
     public class Mission : AMission, IPersistentWorld
     {
-        protected string unitFileName = "";
         protected string missionFileName = "";
         protected string aircraftInfoFileName = "";
 
@@ -30,6 +29,15 @@ namespace IL2DCE
             }
         }
         private Dictionary<string, IUnit> units = new Dictionary<string, IUnit>();
+
+        public Dictionary<string, IBuilding> Buildings
+        {
+            get
+            {
+                return this.buildings;
+            }
+        }
+        private Dictionary<string, IBuilding> buildings = new Dictionary<string, IBuilding>();
 
         public IList<IHeadquarters> Headquarters
         {
@@ -118,34 +126,21 @@ namespace IL2DCE
         {
             if (order is AirOrder)
             {
-                if (order.Unit is AirUnit)
+                if (order.Unit is AirGroup)
                 {
-                    AirUnit airUnit = order.Unit as AirUnit;
+                    AirGroup airGroup = order.Unit as AirGroup;
 
                     ISectionFile missionFile = GamePlay.gpCreateSectionFile();
-                    Generator generator = new Generator(null);
+                    airGroup.WriteTo(missionFile);
 
-                    AirGroup airGroup = new AirGroup();
-                    airGroup.Id = airUnit.Id;
-                    airGroup.AirGroupKey = airUnit.Regiment;
-                    airGroup.Class = airUnit.AircraftType;
-                    airGroup.CallSign = 1;
-                    airGroup.Fuel = 100;
-                    airGroup.Formation = airUnit.AirGroupInfo.DefaultFormation;
-                    airGroup.Airstart = false;
-                    airGroup.Position = new maddox.GP.Point3d(airUnit.Airfield.Item1, airUnit.Airfield.Item2, airUnit.Airfield.Item3);
-
-                    airGroup.Flights[0] = new List<string>() { "1", "2" };
-                    
-                    airGroup.Recon(EMissionType.RECON, new maddox.GP.Point2d(order.Target.Position.Item1, order.Target.Position.Item2), 1000.0);
-
-                    airGroup.writeTo(missionFile);
+                    // Force idle.
+                    missionFile.add(airGroup.Id, "Idle", "1");
 
                     GamePlay.gpPostMissionLoad(missionFile);
+
+                    Debug(order.Unit.Id + " new order: " + airGroup.MissionType + "@" + airGroup.Altitude);
                 }
             }
-
-            Debug(order.Unit.Id + " new order.");
         }
 
         public Tuple<double, double, double> GetPositionOf(IUnit unit)
@@ -181,7 +176,6 @@ namespace IL2DCE
             random = new System.Random();
 
             // Parse mission file and fill the unit dictionary.
-            ISectionFile unitFile = GamePlay.gpLoadSectionFile(unitFileName);
             ISectionFile missionFile = GamePlay.gpLoadSectionFile(missionFileName);
             this.aircraftInfoFile = GamePlay.gpLoadSectionFile(aircraftInfoFileName);
 
@@ -192,28 +186,29 @@ namespace IL2DCE
 
             AirHeadquarters blueAirHeadquarters = new AirHeadquarters(this, Army.Blue);
             Headquarters.Add(blueAirHeadquarters);
-            
-            for (int i = 0; i < unitFile.lines("AirUnits"); i++)
+
+            for (int i = 0; i < missionFile.lines("AirGroups"); i++)
             {
                 string key;
                 string value;
-                unitFile.get("AirUnits", i, out key, out value);
-                AirUnit airUnit = new AirUnit(this, key, unitFile);
-                Units.Add(key, airUnit);
+                missionFile.get("AirGroups", i, out key, out value);
 
-                if (airUnit.Army == Army.Red)
+                AirGroup airGroup = new AirGroup(this, key, missionFile);
+                Units.Add(key, airGroup);
+
+                if (airGroup.Army == Army.Red)
                 {
-                    redAirHeadquarters.Register(airUnit);
+                    redAirHeadquarters.Register(airGroup);
                 }
-                else if (airUnit.Army == Army.Blue)
+                else if (airGroup.Army == Army.Blue)
                 {
-                    blueAirHeadquarters.Register(airUnit);
+                    blueAirHeadquarters.Register(airGroup);
                 }
 
-                airUnit.Discovered += new UnitEventHandler(OnDiscovered);
-                airUnit.Covered += new UnitEventHandler(OnCovered);
+                airGroup.Discovered += new UnitEventHandler(OnDiscovered);
+                airGroup.Covered += new UnitEventHandler(OnCovered);
 
-                airUnit.RaiseIdle();
+                airGroup.RaiseIdle();
             }
 
             for (int i = 0; i < missionFile.lines("Stationary"); i++)
@@ -225,6 +220,12 @@ namespace IL2DCE
                 if(value.StartsWith("Stationary.Radar.EnglishRadar1"))
                 {
                     Radar radar = new Radar(this, key, missionFile);
+                    Buildings.Add(key, radar);
+                }
+                else if (value.StartsWith("Stationary"))
+                {
+                    StationaryAircraft stationaryAircraft = new StationaryAircraft(this, key, missionFile);
+                    Buildings.Add(key, stationaryAircraft);
                 }
             }
         }
@@ -260,12 +261,13 @@ namespace IL2DCE
             string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
-                if (Units[id] is AirUnit)
+                if (Units[id] is AirGroup)
                 {
                     Units[id].RaisePending();
-
+                    
                     Timeout(1 * 60, () =>
                     {
+                        (actor as AiGroup).Idle = false;
                         Units[id].RaiseBusy();
                     });
                 }
@@ -283,7 +285,7 @@ namespace IL2DCE
             string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
-                if (Units[id] is AirUnit)
+                if (Units[id] is AirGroup)
                 {
                     Units[id].RaiseDestroyed();
                 }
@@ -301,7 +303,7 @@ namespace IL2DCE
             string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
-                if (Units[id] is AirUnit)
+                if (Units[id] is AirGroup)
                 {
                     Units[id].RaiseIdle();
                 }
