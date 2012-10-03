@@ -269,6 +269,18 @@ namespace IL2DCE
                     {
                         (actor as AiGroup).Idle = false;
                         Units[id].RaiseBusy();
+
+                        // Destroy birth places.
+                        if (GamePlay.gpBirthPlaces() != null && GamePlay.gpBirthPlaces().Length > 0)
+                        {
+                            foreach (AiBirthPlace birthPlace in GamePlay.gpBirthPlaces())
+                            {
+                                if (birthPlace.Name() == id)
+                                {
+                                    birthPlace.destroy();
+                                }
+                            }
+                        }
                     });
                 }
                 //else if (Units[id] is GroundUnit)
