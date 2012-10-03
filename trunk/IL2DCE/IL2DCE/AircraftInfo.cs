@@ -24,7 +24,7 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    public class AircraftInfo : IAircraftInfo
+    public class AircraftInfo
     {
         ISectionFile _aircraftInfoFile;
 
@@ -121,9 +121,9 @@ namespace IL2DCE
             set;
         }
 
-        public List<IAircraftParametersInfo> GetAircraftParametersInfo(EMissionType missionType)
+        public List<AircraftParametersInfo> GetAircraftParametersInfo(EMissionType missionType)
         {
-            List<IAircraftParametersInfo> missionParameters = new List<IAircraftParametersInfo>();
+            List<AircraftParametersInfo> missionParameters = new List<AircraftParametersInfo>();
             string value = _aircraftInfoFile.get(Aircraft, missionType.ToString());
             string[] valueParts = value.Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
             if (valueParts != null && valueParts.Length > 0)
@@ -142,7 +142,7 @@ namespace IL2DCE
             return missionParameters;
         }
 
-        public IAircraftLoadoutInfo GetAircraftLoadoutInfo(string loadoutId)
+        public AircraftLoadoutInfo GetAircraftLoadoutInfo(string loadoutId)
         {
             return new AircraftLoadoutInfo(this._aircraftInfoFile, Aircraft, loadoutId);
         }

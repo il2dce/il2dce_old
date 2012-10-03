@@ -122,7 +122,7 @@ namespace IL2DCE
         }
         private DateTime _endDate;
 
-        public IAircraftInfo GetAircraftInfo(string aircraft)
+        public AircraftInfo GetAircraftInfo(string aircraft)
         {
             if(_localAircraftInfoFile != null && _localAircraftInfoFile.exist("Main", aircraft))
             {

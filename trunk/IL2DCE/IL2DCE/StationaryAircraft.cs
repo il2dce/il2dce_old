@@ -7,7 +7,7 @@ using maddox.game;
 
 namespace IL2DCE
 {
-    public class Radar : IBuilding
+    public class StationaryAircraft : IBuilding
     {
         public string Id
         {
@@ -45,7 +45,7 @@ namespace IL2DCE
         }
         private IPersistentWorld persistentWorld;
 
-        public Radar(IPersistentWorld persistentWorld, string id, ISectionFile missionFile)
+        public StationaryAircraft(IPersistentWorld persistentWorld, string id, ISectionFile missionFile)
         {
             this.persistentWorld = persistentWorld;
 
@@ -72,26 +72,26 @@ namespace IL2DCE
                 this.position = new Tuple<double,double,double>(x, y, 0.0);
             }
 
-            persistentWorld.DetectionSlice += new EventHandler(OnDetectionSlice);
+            //persistentWorld.DetectionSlice += new EventHandler(OnDetectionSlice);
         }
 
         void OnDetectionSlice(object sender, EventArgs e)
         {
-            foreach (IUnit unit in PersistentWorld.Units.Values)
-            {
-                if (unit.Army != Army && unit is AirGroup)
-                {
-                    double distance = Math.Sqrt(Math.Pow(unit.Position.Item1 - this.Position.Item1, 2) + Math.Pow(unit.Position.Item2 - this.Position.Item2, 2) + Math.Pow(unit.Position.Item3 - this.Position.Item3, 2));
-                    if (distance < 50000.0)
-                    {
-                        unit.RaiseDiscovered();
-                    }
-                    else
-                    {
-                        unit.RaiseCovered();
-                    }
-                }
-            }
+            //foreach (IUnit unit in PersistentWorld.Units.Values)
+            //{
+            //    if (unit.Army != Army && unit is AirGroup)
+            //    {
+            //        double distance = Math.Sqrt(Math.Pow(unit.Position.Item1 - this.Position.Item1, 2) + Math.Pow(unit.Position.Item2 - this.Position.Item2, 2) + Math.Pow(unit.Position.Item3 - this.Position.Item3, 2));
+            //        if (distance < 50000.0)
+            //        {
+            //            unit.RaiseDiscovered();
+            //        }
+            //        else
+            //        {
+            //            unit.RaiseCovered();
+            //        }
+            //    }
+            //}
         }
     }
 }

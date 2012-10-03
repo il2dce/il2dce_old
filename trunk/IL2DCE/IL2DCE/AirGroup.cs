@@ -24,133 +24,191 @@ using maddox.GP;
 
 namespace IL2DCE
 {
-    public class AirGroup : IAirGroup
+    public class AirGroup : IUnit
     {
-        ICore _core;
+        #region Events
 
-        #region Public constructors
+        public event UnitEventHandler Idle;
 
-        public AirGroup()
+        public event UnitEventHandler Pending;
+
+        public event UnitEventHandler Busy;
+
+        public event UnitEventHandler Destroyed;
+
+        public event UnitEventHandler Covered;
+
+        public event UnitEventHandler Discovered;
+
+        public void RaiseIdle()
         {
-            Waypoints = new List<AirGroupWaypoint>();
+            this.state = UnitState.Idle;
+
+            if (Idle != null)
+            {
+                Idle(this, new UnitEventArgs(this));
+            }
+
+            PersistentWorld.Debug(Id + " idle.");
         }
 
-        public AirGroup(ICore core, ISectionFile sectionFile, string id)
+        public void RaisePending()
         {
-            _core = core;
+            this.state = UnitState.Pending;
 
-            // airGroupId = <airGroupKey>.<squadronIndex><flightMask>
-
-            // AirGroupKey
-            AirGroupKey = id.Substring(0, id.IndexOf("."));
-
-            // SquadronIndex
-            int.TryParse(id.Substring(id.LastIndexOf(".") + 1, 1), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out squadronIndex);
-
-            // Flight
-            for (int i = 0; i < 4; i++)
+            if (Pending != null)
             {
-                if (sectionFile.exist(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat)))
-                {
-                    string acNumberLine = sectionFile.get(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
-                    string[] acNumberList = acNumberLine.Split(new char[] { ' ' });
-                    if (acNumberList != null && acNumberList.Length > 0)
-                    {
-                        List<string> acNumbers = new List<string>();
-                        Flights.Add(i, acNumbers);
-                        for (int j = 0; j < acNumberList.Length; j++)
-                        {
-                            acNumbers.Add(acNumberList[j]);
-                        }
-                    }
-                }
+                Pending(this, new UnitEventArgs(this));
             }
 
-            // Class
-            Class = sectionFile.get(id, "Class");
+            PersistentWorld.Debug(Id + " pending.");
+        }
 
-            // Formation
-            Formation = sectionFile.get(id, "Formation");
+        public void RaiseBusy()
+        {
+            this.state = UnitState.Busy;
 
-            // CallSign
-            int.TryParse(sectionFile.get(id, "CallSign"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out CallSign);
-
-            // Fuel
-            int.TryParse(sectionFile.get(id, "Fuel"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Fuel);
-
-            // Weapons
-            string weaponsLine = sectionFile.get(id, "Weapons");
-            string[] weaponsList = weaponsLine.Split(new char[] { ' ' });
-            if (weaponsList != null && weaponsList.Length > 0)
+            if (Busy != null)
             {
-                Weapons = new int[weaponsList.Length];
-                for (int i = 0; i < weaponsList.Length; i++)
-                {
-                    int.TryParse(weaponsList[i], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Weapons[i]);
-                }
+                Busy(this, new UnitEventArgs(this));
             }
 
-            for (int i = 0; i < sectionFile.lines(id); i++)
+            PersistentWorld.Debug(Id + " busy.");
+        }
+
+        public void RaiseDestroyed()
+        {
+            this.state = UnitState.Destroyed;
+
+            if (Destroyed != null)
             {
-                string key;
-                string value;
-                sectionFile.get(id, i, out key, out value);
-                if (key == "Detonator")
-                {
-                    this.detonator.Add(value);
-                }
+                Destroyed(this, new UnitEventArgs(this));
             }
 
-            // Belt
-            // TODO: Parse belt
+            PersistentWorld.Debug(Id + " destroyed.");
+        }
 
-            // Skill
-            // TODO: Parse skill
-
-            // Waypoints
-            Waypoints = new List<AirGroupWaypoint>();
-            for (int i = 0; i < sectionFile.lines(Id + "_Way"); i++)
+        public void RaiseCovered()
+        {
+            if (Covered != null)
             {
-                AirGroupWaypoint waypoint = new AirGroupWaypoint(sectionFile, Id, i);
-                Waypoints.Add(waypoint);
+                Covered(this, new UnitEventArgs(this));
             }
 
-            if (Waypoints.Count > 0)
+            //PersistentWorld.Debug(Id + " covered.");
+        }
+
+        public void RaiseDiscovered()
+        {
+            if (Discovered != null)
             {
-                Position = new Point3d(Waypoints[0].X, Waypoints[0].Y, Waypoints[0].Z);
-                if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF)
-                {
-                    Airstart = false;
-                }
-                else if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY)
-                {
-                    Airstart = true;
-                }
+                Discovered(this, new UnitEventArgs(this));
             }
+
+            //PersistentWorld.Debug(Id + " discovered.");
         }
 
         #endregion
+        
+        #region Properties
 
-        #region Public properties
-
-        public string AirGroupKey
+        private IPersistentWorld PersistentWorld
         {
-            get;
-            set;
+            get
+            {
+                return this.persistentWorld;
+            }
         }
+        private IPersistentWorld persistentWorld;
+
+        public string Id
+        {
+            get
+            {
+                return this.id;
+            }
+        }
+        private string id;
+
+        public UnitState State
+        {
+            get
+            {
+                return this.state;
+            }
+        }
+        public UnitState state;
+        
+        public Tuple<double, double, double> Position
+        {
+            get
+            {
+                Tuple<double, double, double> position = PersistentWorld.GetPositionOf(this);
+                if (position != null)
+                {
+                    return position;
+                }
+                else
+                {
+                    return new Tuple<double,double,double>(Aerodrome.x, Aerodrome.y, Aerodrome.z);
+                }
+            }
+        }
+
+        public string Regiment
+        {
+            get
+            {
+                return this.regiment;
+            }
+        }
+        private string regiment;
 
         public int SquadronIndex
         {
             get
             {
-                return squadronIndex;
-            }
-            set
-            {
-                squadronIndex = value;
+                return this.squadronIndex;
             }
         }
-        public int squadronIndex;
+        private int squadronIndex;
+
+        public int FlightIndex
+        {
+            get
+            {
+                return this.flightIndex;
+            }
+        }
+        private int flightIndex;
+        
+        public string Class
+        {
+            get
+            {
+                return this.aircraftClass;
+            }
+        }
+        private string aircraftClass;
+
+        public string Formation
+        {
+            get
+            {
+                return this.formation;
+            }
+        }
+        private string formation;
+
+        public int CallSign
+        {
+            get
+            {
+                return this.callSign;
+            }
+        }
+        private int callSign;
+
 
         public System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> Flights
         {
@@ -161,27 +219,28 @@ namespace IL2DCE
         }
         System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> flights = new Dictionary<int, List<string>>();
 
-        public string Class
+
+        public int Fuel
         {
-            get;
-            set;
+            get
+            {
+                return this.fuel;
+            }
         }
-
-        public string Formation
-        {
-            get;
-            set;
-        }
-
-        public int CallSign;
-
-        public int Fuel;
+        private int fuel;
 
         public int[] Weapons
         {
-            get;
-            set;
+            get
+            {
+                return this.weapons;
+            }
+            set
+            {
+                this.weapons = value;
+            }
         }
+        private int[] weapons;
 
         public List<string> Detonator
         {
@@ -196,18 +255,167 @@ namespace IL2DCE
         }
         private List<string> detonator = new List<string>();
 
-        public Point3d Position
+        public AirGroupInfo AirGroupInfo
         {
             get
             {
-                return _position;
-            }
-            set
-            {
-                _position = value;
+                return IL2DCE.AirGroupInfo.GetAirGroupInfo(Regiment);
             }
         }
-        private Point3d _position;
+
+        public AircraftInfo AircraftInfo
+        {
+            get
+            {
+                return new AircraftInfo(PersistentWorld.AircraftInfoFile, Class);
+            }
+        }
+
+        public Army Army
+        {
+            get
+            {
+                if (IL2DCE.AirGroupInfo.GetAirGroupInfo(1, Regiment) != null)
+                {
+                    return IL2DCE.Army.Red;
+                }
+                else if (IL2DCE.AirGroupInfo.GetAirGroupInfo(2, Regiment) != null)
+                {
+                    return IL2DCE.Army.Blue;
+                }
+                else
+                {
+                    return IL2DCE.Army.None;
+                }
+            }
+        }
+
+        public List<AirGroupWaypoint> Waypoints
+        {
+            get
+            {
+                return this.waypoints;
+            }
+        }
+        private List<AirGroupWaypoint> waypoints = new List<AirGroupWaypoint>();
+
+        public List<Aircraft> Aircrafts
+        {
+            get
+            {
+                return this.aircrafts;
+            }
+        }
+        private List<Aircraft> aircrafts = new List<Aircraft>();
+
+        #endregion
+
+        public AirGroup(IPersistentWorld persistentWorld, string id, ISectionFile missionFile)
+        {
+            this.persistentWorld = persistentWorld;
+
+            // Id
+            this.id = id;
+
+            // Regiment
+            this.regiment = id.Substring(0, id.IndexOf("."));
+
+            // SquadronIndex
+            this.squadronIndex = int.Parse(id.Substring(id.IndexOf(".") + 1, 1), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+            // FlightIndex
+            this.flightIndex = int.Parse(id.Substring(id.IndexOf(".") + 2, 1), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+            // Flight
+            for (int i = 0; i < 4; i++)
+            {
+                if (missionFile.exist(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat)))
+                {
+                    string acNumberLine = missionFile.get(id, "Flight" + i.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
+                    string[] acNumberList = acNumberLine.Split(new char[] { ' ' });
+                    if (acNumberList != null && acNumberList.Length > 0)
+                    {
+                        List<string> acNumbers = new List<string>();
+                        Flights.Add(i, acNumbers);
+                        for (int j = 0; j < acNumberList.Length; j++)
+                        {
+                            acNumbers.Add(acNumberList[j]);
+                        }
+                    }
+                }
+            }
+
+            // Class
+            this.aircraftClass = missionFile.get(id, "Class");
+
+            // Formation
+            this.formation = missionFile.get(id, "Formation");
+
+            // CallSign
+            this.callSign = int.Parse(missionFile.get(id, "CallSign"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+            // Fuel
+            this.fuel = int.Parse(missionFile.get(id, "Fuel"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+            // Weapons
+            string weaponsLine = missionFile.get(id, "Weapons");
+            string[] weaponsList = weaponsLine.Split(new char[] { ' ' });
+            if (weaponsList != null && weaponsList.Length > 0)
+            {
+                Weapons = new int[weaponsList.Length];
+                for (int i = 0; i < weaponsList.Length; i++)
+                {
+                    int.TryParse(weaponsList[i], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture.NumberFormat, out Weapons[i]);
+                }
+            }
+
+            // Detonator
+            for (int i = 0; i < missionFile.lines(id); i++)
+            {
+                string key;
+                string value;
+                missionFile.get(id, i, out key, out value);
+                if (key == "Detonator")
+                {
+                    this.detonator.Add(value);
+                }
+            }
+
+            // Belt
+            // TODO: Parse belt
+
+            // Skill
+            // TODO: Parse skill
+
+            // Waypoints
+            for (int i = 0; i < missionFile.lines(Id + "_Way"); i++)
+            {
+                AirGroupWaypoint waypoint = new AirGroupWaypoint(missionFile, Id, i);
+                Waypoints.Add(waypoint);
+            }
+
+            if (Waypoints.Count > 0)
+            {
+                this.aerodrome = new Point3d(Waypoints[0].X, Waypoints[0].Y, Waypoints[0].Z);
+                if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF)
+                {
+                    Airstart = false;
+                }
+                else if (Waypoints[0].Type == AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY)
+                {
+                    Airstart = true;
+                }
+            }
+        }
+
+        public Point3d Aerodrome
+        {
+            get
+            {
+                return this.aerodrome;
+            }            
+        }
+        private Point3d aerodrome;
 
         public double Speed
         {
@@ -235,83 +443,6 @@ namespace IL2DCE
             get;
             set;
         }
-
-        public string Id
-        {
-            get
-            {
-                if (this.id == null)
-                {
-                    int flightMask = 0x0;
-
-                    foreach (int flightIndex in Flights.Keys)
-                    {
-                        if (Flights[flightIndex].Count > 0)
-                        {
-                            int bit = (0x1 << flightIndex);
-                            flightMask = (flightMask | bit);
-                        }
-                    }
-
-                    return AirGroupKey + "." + SquadronIndex.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + flightMask.ToString("X");
-                }
-                else
-                {
-                    return this.id;
-                }
-            }
-            set
-            {
-                this.id = value;
-            }
-        }
-        private string id;
-
-        public int ArmyIndex
-        {
-            get
-            {
-                if (IL2DCE.AirGroupInfo.GetAirGroupInfo(1, AirGroupKey) != null)
-                {
-                    return 1;
-                }
-                else if (IL2DCE.AirGroupInfo.GetAirGroupInfo(2, AirGroupKey) != null)
-                {
-                    return 2;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-        
-        public IAircraftInfo AircraftInfo
-        {
-            get
-            {
-                if (_core.CurrentCareer == null || _core.CurrentCareer.CampaignInfo == null)
-                {
-                    return new AircraftInfo(_core.GlobalAircraftInfoFile, Class);
-                }
-                else
-                {
-                    return _core.CurrentCareer.CampaignInfo.GetAircraftInfo(Class);
-                }
-            }
-        }
-
-        public IAirGroupInfo AirGroupInfo
-        {
-            get
-            {
-                return IL2DCE.AirGroupInfo.GetAirGroupInfo(AirGroupKey);
-            }
-        }
-
-        public List<AirGroupWaypoint> Waypoints;
-
-        #endregion
 
         #region Private methods
 
@@ -355,11 +486,11 @@ namespace IL2DCE
         {
             if (!Airstart)
             {
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF, Position, 0.0));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.TAKEOFF, Aerodrome, 0.0));
             }
             else
             {
-                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Position, Speed));
+                Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Aerodrome, Speed));
             }
         }
 
@@ -373,11 +504,11 @@ namespace IL2DCE
             {
                 if (!Airstart)
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.LANDING, Position, 0.0));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.LANDING, Aerodrome, 0.0));
                 }
                 else
                 {
-                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Position, Speed));
+                    Waypoints.Add(new AirGroupWaypoint(AirGroupWaypoint.AirGroupWaypointTypes.NORMFLY, Aerodrome, Speed));
                 }
             }
         }
@@ -395,7 +526,7 @@ namespace IL2DCE
 
         private void createStartInbetweenPoints(Point3d target)
         {
-            createInbetweenWaypoints(Position, target);
+            createInbetweenWaypoints(Aerodrome, target);
         }
 
         private void createEndInbetweenPoints(Point3d target, AiAirport landingAirport = null)
@@ -407,7 +538,7 @@ namespace IL2DCE
             }
             else
             {
-                Point3d point = new Point3d(Position.x, Position.y, target.z);
+                Point3d point = new Point3d(Aerodrome.x, Aerodrome.y, target.z);
                 createInbetweenWaypoints(target, point);
             }
         }
@@ -429,7 +560,7 @@ namespace IL2DCE
 
         #region Public methods
 
-        public void writeTo(ISectionFile sectionFile)
+        public void WriteTo(ISectionFile sectionFile)
         {
             if (Waypoints.Count > 0)
             {
@@ -470,15 +601,15 @@ namespace IL2DCE
                         sectionFile.add(Id, "Detonator", detonator);
                     }
                 }
-                
-                if (_core != null && _core.SpawnParked == true)
+
+                //if (SetOnParked == true)
                 {
                     sectionFile.add(Id, "SetOnPark", "1");
                 }
-                else
-                {
-                    sectionFile.add(Id, "Scramble", "1");
-                }
+                //else
+                //{
+                //    sectionFile.add(Id, "Scramble", "1");
+                //}
                 
                 sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
 
@@ -500,7 +631,7 @@ namespace IL2DCE
 
         public override string ToString()
         {
-            return AirGroupKey + "." + SquadronIndex;
+            return Regiment + "." + SquadronIndex;
         }
 
         public void Transfer(EMissionType missionType, double altitude, AiAirport landingAirport = null)
@@ -511,7 +642,7 @@ namespace IL2DCE
 
             createStartWaypoints();
 
-            Point3d target = new Point3d(Position.x, Position.y, altitude);
+            Point3d target = new Point3d(Aerodrome.x, Aerodrome.y, altitude);
             createEndInbetweenPoints(target, landingAirport);
 
             createEndWaypoints(landingAirport);
@@ -633,7 +764,7 @@ namespace IL2DCE
             Point3d? rendevouzPosition = null;
             if (escortAirGroup != null)
             {
-                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                rendevouzPosition = new Point3d(Aerodrome.x + 0.50 * (escortAirGroup.Aerodrome.x - Aerodrome.x), Aerodrome.y + 0.50 * (escortAirGroup.Aerodrome.y - Aerodrome.y), altitude);
             }
 
             createStartWaypoints();
@@ -675,7 +806,7 @@ namespace IL2DCE
             Point3d? rendevouzPosition = null;
             if (escortAirGroup != null)
             {
-                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                rendevouzPosition = new Point3d(Aerodrome.x + 0.50 * (escortAirGroup.Aerodrome.x - Aerodrome.x), Aerodrome.y + 0.50 * (escortAirGroup.Aerodrome.y - Aerodrome.y), altitude);
             }
 
             Waypoints.Clear();
@@ -711,7 +842,7 @@ namespace IL2DCE
             Point3d? rendevouzPosition = null;
             if (escortAirGroup != null)
             {
-                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                rendevouzPosition = new Point3d(Aerodrome.x + 0.50 * (escortAirGroup.Aerodrome.x - Aerodrome.x), Aerodrome.y + 0.50 * (escortAirGroup.Aerodrome.y - Aerodrome.y), altitude);
             }
             
             createStartWaypoints();
@@ -753,7 +884,7 @@ namespace IL2DCE
                 Point3d? rendevouzPosition = null;
                 if (escortAirGroup != null)
                 {
-                    rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                    rendevouzPosition = new Point3d(Aerodrome.x + 0.50 * (escortAirGroup.Aerodrome.x - Aerodrome.x), Aerodrome.y + 0.50 * (escortAirGroup.Aerodrome.y - Aerodrome.y), altitude);
                 }
 
                 if (targetGroundGroup.Waypoints.Count > 0)
@@ -831,7 +962,7 @@ namespace IL2DCE
             Point3d? rendevouzPosition = null;
             if (escortAirGroup != null)
             {
-                rendevouzPosition = new Point3d(Position.x + 0.50 * (escortAirGroup.Position.x - Position.x), Position.y + 0.50 * (escortAirGroup.Position.y - Position.y), altitude);
+                rendevouzPosition = new Point3d(Aerodrome.x + 0.50 * (escortAirGroup.Aerodrome.x - Aerodrome.x), Aerodrome.y + 0.50 * (escortAirGroup.Aerodrome.y - Aerodrome.y), altitude);
             }
 
             Waypoints.Clear();
@@ -914,7 +1045,7 @@ namespace IL2DCE
             AirGroupWaypoint closestInterceptWaypoint = null;
             foreach (AirGroupWaypoint waypoint in targetAirGroup.Waypoints)
             {
-                Point3d p = Position;
+                Point3d p = Aerodrome;
                 if (targetAirGroup.distanceTo(waypoint) > waypoint.Position.distance(ref p))
                 {
                     interceptWaypoint = waypoint;
@@ -1004,7 +1135,7 @@ namespace IL2DCE
         }
         private double? altitude = null;
 
-        public IAirGroup EscortAirGroup
+        public AirGroup EscortAirGroup
         {
             get
             {
@@ -1015,7 +1146,7 @@ namespace IL2DCE
                 this.escortAirGroup = value;
             }
         }
-        private IAirGroup escortAirGroup = null;
+        private AirGroup escortAirGroup = null;
 
         public Stationary TargetStationary
         {
@@ -1043,7 +1174,7 @@ namespace IL2DCE
         }
         private GroundGroup targetGroundGroup = null;
 
-        public IAirGroup TargetAirGroup
+        public AirGroup TargetAirGroup
         {
             get
             {
@@ -1054,7 +1185,7 @@ namespace IL2DCE
                 this.targetAirGroup = value;
             }
         }
-        private IAirGroup targetAirGroup = null;
+        private AirGroup targetAirGroup = null;
 
         public Point2d? TargetArea
         {

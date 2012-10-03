@@ -25,6 +25,11 @@ namespace IL2DCE
             get;
         }
 
+        Dictionary<string, IBuilding> Buildings
+        {
+            get;
+        }
+
         Random Random
         {
             get;

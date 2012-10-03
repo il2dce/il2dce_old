@@ -365,9 +365,11 @@ namespace IL2DCE
         {
             get
             {
+                return null;
+
                 if (this.generator == null)
                 {
-                    this.generator = new Generator(this);
+                    //this.generator = new Generator(this);
                 }
                 return this.generator;
             }

@@ -44,7 +44,7 @@ namespace IL2DCE
                     System.Windows.Controls.ComboBoxItem itemAirGroup = e.AddedItems[0] as System.Windows.Controls.ComboBoxItem;
                     AirGroup airGroup = (AirGroup)itemAirGroup.Tag;
 
-                    Game.Core.CurrentCareer.AirGroup = airGroup.AirGroupKey + "." + airGroup.SquadronIndex;
+                    Game.Core.CurrentCareer.AirGroup = airGroup.Regiment + "." + airGroup.SquadronIndex;
                 }
             }
 
