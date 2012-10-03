@@ -15,19 +15,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //$reference parts/IL2DCE/IL2DCE.dll
-//$reference parts/IL2DCE/IL2DCE.Mission.dll
-//-$reference parts/core/gamePlay.dll
 //$debug
 
 using System;
 using maddox.game;
 using maddox.game.world;
 
-public class Mission : IL2DCE.Mission.MissionPersistent
+public class Mission : IL2DCE.Mission
 {
 	public override void OnBattleInit()
-    {
-		this.missionFileName = "$user/missions/IL2DCE/Campaigns/IL2DCE.Persistent.mis";
+	{
+		this.missionFileName = "$user/missions/IL2DCE/Campaigns/Adlertag/mission.mis";
+		this.aircraftInfoFileName = "$user/missions/IL2DCE/Campaigns/AircraftInfo.ini";
+
 		base.OnBattleInit();
 	}    
 }

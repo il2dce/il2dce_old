@@ -1,0 +1,366 @@
+﻿[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  BattleArea 166130 195011 144493 98048 10000
+  TIME 6
+  WeatherIndex 1
+  CloudsHeight 1000
+  BreezeActivity 1
+  ThermalActivity 1
+[GlobalWind_0]
+  Power 0.000 1.000 0.000
+  BottomBound 0.00
+  TopBound 0.00
+  GustPower 5
+  GustAngle 44
+[splines]
+[AirGroups]
+  BoB_LW_LG1_IV.37
+  BoB_LW_ErprGr210.11
+  BoB_RAF_F_41Sqn_Early.01
+  BoB_RAF_F_32Sqn_Early.01
+  BoB_LW_KG51_III.37
+  BoB_LW_JG51_II.31
+  BoB_LW_KG53_II.17
+  BoB_RAF_B_88Sqn.03
+  BoB_LW_JG2_I.07
+  BoB_LW_ZG26_I.13
+  BoB_RAF_B_21Sqn.03
+  BoB_RAF_F_74Sqn_Early.03
+  BoB_RAF_F_3Sqn_Early.13
+[BoB_LW_LG1_IV.37]
+  Flight0  A B C
+  Flight1  D E F
+  Flight2  21 22 23
+  Class Aircraft.Ju-87B-2
+  Formation VIC
+  CallSign 3
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_LG1_IV.37_Way]
+  TAKEOFF 278866.09 207351.75 0 0
+[BoB_LW_ErprGr210.11]
+  Flight0  A B C D
+  Class Aircraft.Bf-110C-7
+  Formation FINGERFOUR
+  CallSign 21
+  Fuel 100
+  Weapons 1 1 1 2
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_ErprGr210.11_Way]
+  TAKEOFF 275980.59 207376.73 0 0
+[BoB_RAF_F_41Sqn_Early.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.SpitfireMkIa_oct
+  Formation VIC3
+  CallSign 27
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_41Sqn_Early.01_Way]
+  TAKEOFF 248048.43 259000.26 0 0
+[BoB_RAF_F_32Sqn_Early.01]
+  Flight0  1 2 3 4 5 6
+  Class Aircraft.HurricaneMkI_100oct
+  Formation VIC3
+  CallSign 31
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_32Sqn_Early.01_Way]
+  TAKEOFF 234918.76 232613.24 0 0
+[BoB_LW_KG51_III.37]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.Ju-88A-1
+  Formation VIC3
+  CallSign 33
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_KG51_III.37_Way]
+  TAKEOFF 296285.72 217259.51 0 0
+[BoB_LW_JG51_II.31]
+  Flight0  1 2 3 4
+  Class Aircraft.Bf-109E-1
+  Formation FINGERFOUR
+  CallSign 26
+  Fuel 100
+  Weapons 1 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG51_II.31_Way]
+  TAKEOFF 276971.34 209427.57 0 0
+[BoB_LW_KG53_II.17]
+  Flight0  1 2 3
+  Flight1  11 12 13
+  Flight2  21 22 23
+  Class Aircraft.He-111H-2
+  Formation VIC3
+  CallSign 26
+  Fuel 100
+  Weapons 1 1 1 1 1 1 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_KG53_II.17_Way]
+  TAKEOFF 291075.91 216228.27 0 0
+[BoB_RAF_B_88Sqn.03]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.BlenheimMkIV
+  Formation LINEABREAST
+  CallSign 30
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_B_88Sqn.03_Way]
+  TAKEOFF 225030.58 228664.13 0 0
+[BoB_LW_JG2_I.07]
+  Flight0  1 2 3 4
+  Flight1  11 12 13 14
+  Flight2  21 22 23 24
+  Class Aircraft.Bf-109E-4B
+  Formation FINGERFOUR
+  CallSign 20
+  Fuel 100
+  Weapons 1 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_JG2_I.07_Way]
+  TAKEOFF 284010.46 205122.95 0 0
+[BoB_LW_ZG26_I.13]
+  Flight0  1 2 3 4
+  Flight1  11 12 13 14
+  Class Aircraft.Bf-110C-4
+  Formation FINGERFOUR
+  CallSign 26
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_LW_ZG26_I.13_Way]
+  TAKEOFF 281154.25 212993.50 0 0
+[BoB_RAF_B_21Sqn.03]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.BlenheimMkIV
+  Formation LINEABREAST
+  CallSign 26
+  Fuel 100
+  Weapons 1
+  Belt _Gun00 Gun.Browning303MkII MainBelt 2
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_B_21Sqn.03_Way]
+  TAKEOFF 251091.35 261049.03 0 0
+[BoB_RAF_F_74Sqn_Early.03]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.SpitfireMkIa_oct
+  Formation VIC3
+  CallSign 26
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_74Sqn_Early.03_Way]
+  TAKEOFF 221951.33 221450.97 0 0
+[BoB_RAF_F_3Sqn_Early.13]
+  Flight0  1 2 3 4 5 6
+  Flight1  11 12 13 14 15 16
+  Class Aircraft.HurricaneMkI_100oct
+  Formation VIC3
+  CallSign 30
+  Fuel 100
+  Weapons 1
+  SetOnPark 1
+  SpawnFromScript 1
+  Skill 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+[BoB_RAF_F_3Sqn_Early.13_Way]
+  TAKEOFF 234573.12 248413.65 0 0
+[CustomChiefs]
+[Stationary]
+  Static103 Stationary.Bf-109E-4B de 283805.97 205068.34 -60.00 
+  Static104 Stationary.Bf-109E-4B de 283828.13 205094.91 -45.00 
+  Static105 Stationary.Bf-109E-4B de 283856.75 205115.02 -60.00 
+  Static106 Stationary.Bf-109E-4B de 283888.75 205130.00 -75.00 
+  Static111 Stationary.Bf-109E-4B de 283999.78 205237.23 -60.00 
+  Static112 Stationary.Bf-109E-4B de 284019.22 205252.91 -75.00 
+  Static113 Stationary.Bf-109E-4B de 284041.00 205261.09 -60.00 
+  Static114 Stationary.Bf-109E-4B de 284065.88 205272.33 -75.00 
+  Static110 Stationary.Bf-109E-4B de 284521.81 205289.80 -195.00 
+  Static109 Stationary.Bf-109E-4B de 284526.91 205315.02 -195.00 
+  Static108 Stationary.Bf-109E-4B de 284539.19 205337.50 -210.00 
+  Static107 Stationary.Bf-109E-4B de 284548.38 205362.03 -195.00 
+  Static100 Stationary.Ju-87B-2 de 278013.06 207298.88 -30.00 
+  Static101 Stationary.Ju-87B-2 de 278047.47 207329.42 -45.00 
+  Static102 Stationary.Ju-87B-2 de 278079.97 207362.39 -45.00 
+  Static94 Stationary.Ju-87B-2 de 278220.91 207467.77 -45.00 
+  Static95 Stationary.Ju-87B-2 de 278246.13 207499.63 -45.00 
+  Static96 Stationary.Ju-87B-2 de 278290.41 207533.98 -60.00 
+  Static97 Stationary.Ju-87B-2 de 278396.00 207596.63 -30.00 
+  Static98 Stationary.Ju-87B-2 de 278439.75 207647.81 -45.00 
+  Static93 Stationary.Bf-110C-7 de 276500.84 207733.09 -165.00 
+  Static99 Stationary.Ju-87B-2 de 278487.00 207697.98 -45.00 
+  Static91 Stationary.Bf-110C-7 de 276461.72 207779.00 -150.00 
+  Static92 Stationary.Bf-110C-7 de 276483.31 207756.05 -135.00 
+  Static90 Stationary.Bf-110C-7 de 276451.34 207826.70 -165.00 
+  Static89 Stationary.Bf-110C-7 de 276438.75 207855.50 -150.00 
+  Static82 Stationary.Bf-110C-7 de 275790.22 207930.38 -60.00 
+  Static88 Stationary.Bf-110C-7 de 276430.66 207882.95 -165.00 
+  Static83 Stationary.Bf-110C-7 de 275819.84 207955.97 -45.00 
+  Static84 Stationary.Bf-110C-7 de 275845.53 207982.52 -60.00 
+  Static85 Stationary.Bf-110C-7 de 275879.06 208004.34 -75.00 
+  Static86 Stationary.Bf-110C-7 de 275911.72 208026.19 -45.00 
+  Static87 Stationary.Bf-110C-7 de 275942.09 208043.83 -60.00 
+  Static76 Stationary.Bf-109E-1 de 276633.78 209392.19 -20.00 
+  Static77 Stationary.Bf-109E-1 de 276639.06 209412.88 -5.00 
+  Static78 Stationary.Bf-109E-1 de 276639.63 209438.27 10.00 
+  Static79 Stationary.Bf-109E-1 de 276630.78 209468.91 40.00 
+  Static81 Stationary.Bf-109E-1 de 276593.16 209505.95 30.00 
+  Static80 Stationary.Bf-109E-1 de 276608.97 209484.52 45.00 
+  Static72 Stationary.Bf-109E-1 de 277109.78 209598.52 -155.00 
+  Static73 Stationary.Bf-109E-1 de 277129.53 209574.63 -140.00 
+  Static74 Stationary.Bf-109E-1 de 277161.88 209553.75 -110.00 
+  Static75 Stationary.Bf-109E-1 de 277199.69 209536.27 -125.00 
+  Static71 Stationary.Bf-109E-1 de 277099.06 209625.97 -155.00 
+  Static70 Stationary.Bf-109E-1 de 277099.81 209651.16 -200.00 
+  Static69 Stationary.Bf-109E-1 de 277103.47 209675.77 -170.00 
+  Static2 Stationary.Radar.EnglishRadar1 gb 206100.70 212405.80 94.00 
+  Static68 Stationary.Bf-110C-4 de 281762.00 213328.06 -140.00 
+  Static67 Stationary.Bf-110C-4 de 281733.50 213361.91 -145.00 
+  Static66 Stationary.Bf-110C-4 de 281704.34 213400.70 -175.00 
+  Static65 Stationary.Bf-110C-4 de 281678.53 213460.95 -145.00 
+  Static62 Stationary.Bf-110C-4 de 281513.94 213565.58 -95.00 
+  Static63 Stationary.Bf-110C-4 de 281562.38 213554.11 -110.00 
+  Static64 Stationary.Bf-110C-4 de 281632.91 213511.66 -130.00 
+  Static59 Stationary.Bf-110C-4 de 281357.06 213584.73 -105.00 
+  Static60 Stationary.Bf-110C-4 de 281414.63 213580.61 -110.00 
+  Static61 Stationary.Bf-110C-4 de 281459.63 213571.23 -100.00 
+  Static41 Stationary.He-111H-2 de 291621.22 215776.98 120.00 
+  Static51 Stationary.He-111H-2 de 291656.63 215796.36 120.00 
+  Static52 Stationary.He-111H-2 de 290478.91 216603.98 -15.00 
+  Static53 Stationary.He-111H-2 de 290498.22 216672.83 -30.00 
+  Static54 Stationary.He-111H-2 de 290554.28 216734.31 -45.00 
+  Static55 Stationary.He-111H-2 de 290992.88 216863.78 -75.00 
+  Static56 Stationary.He-111H-2 de 291068.94 216865.38 -90.00 
+  Static57 Stationary.He-111H-2 de 291148.75 216867.50 -90.00 
+  Static58 Stationary.He-111H-2 de 291220.03 216865.91 -105.00 
+  Static47 Stationary.Ju-88A-1 de 296572.44 217074.52 130.00 
+  Static48 Stationary.Ju-88A-1 de 296602.19 217101.53 130.00 
+  Static46 Stationary.Ju-88A-1 de 296012.16 217381.02 -15.00 
+  Static44 Stationary.Ju-88A-1 de 295982.53 217451.83 60.00 
+  Static45 Stationary.Ju-88A-1 de 296018.69 217423.20 30.00 
+  Static43 Stationary.Ju-88A-1 de 295904.69 217530.69 30.00 
+  Static42 Stationary.Ju-88A-1 de 295887.09 217571.86 15.00 
+  Static49 Stationary.Ju-88A-1 de 295869.34 217672.36 -30.00 
+  Static50 Stationary.Ju-88A-1 de 295888.78 217700.03 -20.00 
+  Static11 Stationary.SpitfireMkIa gb 221993.56 221168.92 120.00 
+  Static127 Stationary.SpitfireMkIa gb 222031.41 221173.67 90.00 
+  Static128 Stationary.SpitfireMkIa gb 222067.00 221175.36 105.00 
+  Static129 Stationary.SpitfireMkIa gb 222140.98 221182.38 90.00 
+  Static130 Stationary.SpitfireMkIa gb 222182.75 221182.64 75.00 
+  Static131 Stationary.SpitfireMkIa gb 222229.27 221165.55 60.00 
+  Static132 Stationary.SpitfireMkIa gb 221395.13 221410.52 -30.00 
+  Static133 Stationary.SpitfireMkIa gb 221423.42 221436.02 -45.00 
+  Static134 Stationary.SpitfireMkIa gb 221469.11 221448.64 -90.00 
+  Static135 Stationary.SpitfireMkIa gb 221624.94 221490.11 -45.00 
+  Static136 Stationary.SpitfireMkIa gb 221664.45 221520.66 -75.00 
+  Static137 Stationary.SpitfireMkIa gb 221722.75 221526.27 -105.00 
+  Static3 Stationary.BlenheimMkIV gb 225420.42 228208.05 120.00 
+  Static4 Stationary.BlenheimMkIV gb 225467.78 228229.05 105.00 
+  Static6 Stationary.BlenheimMkIV gb 225534.42 228239.52 120.00 
+  Static7 Stationary.BlenheimMkIV gb 225575.88 228283.06 165.00 
+  Static8 Stationary.BlenheimMkIV gb 225591.77 228351.38 150.00 
+  Static9 Stationary.BlenheimMkIV gb 225638.47 228408.63 150.00 
+  Static10 Stationary.BlenheimMkIV gb 224957.47 229346.91 270.00 
+  Static12 Stationary.BlenheimMkIV gb 224995.41 229350.03 285.00 
+  Static13 Stationary.BlenheimMkIV gb 225037.94 229360.44 255.00 
+  Static14 Stationary.BlenheimMkIV gb 225114.02 229344.73 255.00 
+  Static15 Stationary.BlenheimMkIV gb 225168.28 229342.80 270.00 
+  Static16 Stationary.BlenheimMkIV gb 225238.77 229354.81 300.00 
+  Static28 Stationary.HurricaneMkI gb 235240.38 232244.81 120.00 
+  Static27 Stationary.HurricaneMkI gb 235277.81 232256.83 105.00 
+  Static26 Stationary.HurricaneMkI gb 235310.86 232285.25 120.00 
+  Static24 Stationary.HurricaneMkI gb 235374.36 232361.03 210.00 
+  Static25 Stationary.HurricaneMkI gb 235398.34 232342.73 195.00 
+  Static23 Stationary.HurricaneMkI gb 235367.72 232404.81 180.00 
+  Static17 Stationary.HurricaneMkI gb 234743.73 233032.75 300.00 
+  Static18 Stationary.HurricaneMkI gb 234763.45 233047.28 315.00 
+  Static19 Stationary.HurricaneMkI gb 234790.81 233061.77 300.00 
+  Static20 Stationary.HurricaneMkI gb 234879.50 233090.89 270.00 
+  Static21 Stationary.HurricaneMkI gb 234910.92 233098.20 285.00 
+  Static22 Stationary.HurricaneMkI gb 234957.23 233111.69 300.00 
+  Static0 Stationary.Radar.EnglishRadar1 gb 246758.55 235781.94 -77.00 
+  Static138 Stationary.HurricaneMkI gb 234751.38 248170.16 -255.00 
+  Static139 Stationary.HurricaneMkI gb 234814.30 248167.45 -285.00 
+  Static140 Stationary.HurricaneMkI gb 234850.11 248149.55 -315.00 
+  Static141 Stationary.HurricaneMkI gb 234958.06 248143.31 -225.00 
+  Static142 Stationary.HurricaneMkI gb 234996.31 248162.03 -255.00 
+  Static143 Stationary.HurricaneMkI gb 235039.72 248168.53 -270.00 
+  Static149 Stationary.HurricaneMkI gb 234164.98 248683.16 -495.00 
+  Static144 Stationary.HurricaneMkI gb 233977.28 248756.39 -450.00 
+  Static145 Stationary.HurricaneMkI gb 234012.55 248759.38 -465.00 
+  Static146 Stationary.HurricaneMkI gb 234039.13 248739.30 -495.00 
+  Static147 Stationary.HurricaneMkI gb 234087.95 248708.64 -435.00 
+  Static148 Stationary.HurricaneMkI gb 234136.78 248713.53 -465.00 
+  Static5 Stationary.Radar.EnglishRadar1 gb 240479.50 249608.66 124.00 
+  Static1 Stationary.Radar.EnglishRadar1 gb 217627.77 251506.53 71.00 
+  Static40 Stationary.SpitfireMkIa gb 248853.48 258671.55 -180.00 
+  Static39 Stationary.SpitfireMkIa gb 248846.41 258698.16 -150.00 
+  Static38 Stationary.SpitfireMkIa gb 248834.39 258724.33 -165.00 
+  Static37 Stationary.SpitfireMkIa gb 248826.02 258768.77 -180.00 
+  Static36 Stationary.SpitfireMkIa gb 248824.52 258793.02 -165.00 
+  Static35 Stationary.SpitfireMkIa gb 248825.16 258820.25 -210.00 
+  Static29 Stationary.SpitfireMkIa gb 247501.02 259134.92 -15.00 
+  Static32 Stationary.SpitfireMkIa gb 247506.48 259160.88 0.00 
+  Static30 Stationary.SpitfireMkIa gb 247513.19 259184.78 -30.00 
+  Static33 Stationary.SpitfireMkIa gb 247520.09 259212.67 -15.00 
+  Static31 Stationary.SpitfireMkIa gb 247528.11 259236.22 -15.00 
+  Static34 Stationary.SpitfireMkIa gb 247543.09 259264.94 -30.00 
+  Static126 Stationary.BlenheimMkIV gb 251119.00 260469.72 15.00 
+  Static125 Stationary.BlenheimMkIV gb 251101.00 260518.73 30.00 
+  Static123 Stationary.BlenheimMkIV gb 251065.89 260597.72 15.00 
+  Static124 Stationary.BlenheimMkIV gb 251084.05 260553.00 15.00 
+  Static122 Stationary.BlenheimMkIV gb 251054.09 260627.23 30.00 
+  Static121 Stationary.BlenheimMkIV gb 251040.92 260657.64 15.00 
+  Static119 Stationary.BlenheimMkIV gb 251070.47 261565.17 -105.00 
+  Static120 Stationary.BlenheimMkIV gb 251100.45 261556.91 -120.00 
+  Static116 Stationary.BlenheimMkIV gb 251002.86 261621.05 -135.00 
+  Static117 Stationary.BlenheimMkIV gb 251019.58 261601.52 -120.00 
+  Static118 Stationary.BlenheimMkIV gb 251048.66 261583.80 -135.00 
+  Static115 Stationary.BlenheimMkIV gb 250976.83 261640.08 -105.00 
+[Buildings]
+[BuildingsLinks]
+[FrontMarker]
+  FrontMarker0 246249.31 234205.68 1
+  FrontMarker1 237639.14 229168.58 1
+  FrontMarker2 177580.49 268505.19 1
+  FrontMarker3 192161.87 201595.90 1
+  FrontMarker4 229265.99 261395.10 1
+  FrontMarker5 189029.99 261455.02 1
+  FrontMarker6 265724.53 190303.22 2
+  FrontMarker7 283658.10 217310.47 2
+  FrontMarker8 307152.61 224075.37 2
