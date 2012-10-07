@@ -197,6 +197,10 @@ namespace IL2DCE
             {
                 return this.formation;
             }
+            set
+            {
+                this.formation = value;
+            }
         }
         private string formation;
 
@@ -214,7 +218,7 @@ namespace IL2DCE
         {
             get
             {
-                return flights;
+                return this.flights;
             }
         }
         System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<string>> flights = new Dictionary<int, List<string>>();
@@ -602,15 +606,15 @@ namespace IL2DCE
                     }
                 }
 
-                //if (SetOnParked == true)
+                if (SetOnParked == true)
                 {
                     sectionFile.add(Id, "SetOnPark", "1");
                 }
-                //else
-                //{
-                //    sectionFile.add(Id, "Scramble", "1");
-                //}
-                
+                else
+                {
+                    sectionFile.add(Id, "Scramble", "1");
+                }
+                                
                 sectionFile.add(Id, "Skill", "0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3");
 
                 foreach (AirGroupWaypoint waypoint in Waypoints)
@@ -627,38 +631,37 @@ namespace IL2DCE
 
                 sectionFile.add(Id, "Briefing", Id);
 
+                //if (AircraftInfo.IsFlyable)
+                //{
+                //    string birthPlaceKey = "BirthPlace" + sectionFile.lines("BirthPlace").ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                //    string birthPlaceValue = ((int)Army).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].X).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Y).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Z).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " ";
+                //    birthPlaceValue += "12 1 1 ";
+                //    if (Army == Army.Red && Regiment.StartsWith("BoB_RAF_"))
+                //    {
+                //        birthPlaceValue += "gb ";
+                //        if (Regiment.StartsWith("BoB_RAF_F_") && Regiment.EndsWith("_Early"))
+                //        {
+                //            birthPlaceValue += "RAF_Fighter_1939 ";
+                //        }
+                //        else if (Regiment.StartsWith("BoB_RAF_F_") && Regiment.EndsWith("_Late"))
+                //        {
+                //            birthPlaceValue += "RAF_Fighter_1940 ";
+                //        }
+                //        else if (Regiment.StartsWith("BoB_RAF_B_"))
+                //        {
+                //            birthPlaceValue += "RAF_Bomber_1940 ";
+                //        }
+                //        birthPlaceValue += Regiment;
+                //    }
+                //    else if (Army == Army.Blue && Regiment.StartsWith("BoB_LW_"))
+                //    {
+                //        birthPlaceValue += "de . .";
+                //        // TODO: Limit available regiments
+                //    }
 
-                if (AircraftInfo.IsFlyable)
-                {
-                    string birthPlaceKey = "BirthPlace" + sectionFile.lines("BirthPlace").ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                    string birthPlaceValue = ((int)Army).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].X).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Y).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " " + Math.Round(Waypoints[0].Z).ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat) + " ";
-                    birthPlaceValue += "12 1 1 ";
-                    if (Army == Army.Red && Regiment.StartsWith("BoB_RAF_"))
-                    {
-                        birthPlaceValue += "gb ";
-                        if (Regiment.StartsWith("BoB_RAF_F_") && Regiment.EndsWith("_Early"))
-                        {
-                            birthPlaceValue += "RAF_Fighter_1939 ";
-                        }
-                        else if (Regiment.StartsWith("BoB_RAF_F_") && Regiment.EndsWith("_Late"))
-                        {
-                            birthPlaceValue += "RAF_Fighter_1940 ";
-                        }
-                        else if (Regiment.StartsWith("BoB_RAF_B_"))
-                        {
-                            birthPlaceValue += "RAF_Bomber_1940 ";
-                        }
-                        birthPlaceValue += Regiment;
-                    }
-                    else if (Army == Army.Blue && Regiment.StartsWith("BoB_LW_"))
-                    {
-                        birthPlaceValue += "de . .";
-                        // TODO: Limit available regiments
-                    }
-
-                    sectionFile.add("BirthPlace", Id, birthPlaceValue);
-                    sectionFile.add(birthPlaceKey, Class, "");
-                }
+                //    sectionFile.add("BirthPlace", Id, birthPlaceValue);
+                //    sectionFile.add(birthPlaceKey, Class, "");
+                //}
             }
         }
 

@@ -174,10 +174,11 @@ namespace IL2DCE
             {
                 int unitIndex = PersistentWorld.Random.Next(IdleUnits.Count);
                 AirGroup airGroup = IdleUnits[unitIndex] as AirGroup;
+                AirGroup escortAirGroup = null;
 
-                CreateRandomAirOperation(airGroup);
+                CreateRandomAirOperation(airGroup, ref escortAirGroup);
 
-                PersistentWorld.TakeOrder(new AirOrder(airGroup, null));
+                PersistentWorld.TakeOrder(new AirOrder(airGroup, escortAirGroup, null));
             }
         }
 
@@ -333,7 +334,7 @@ namespace IL2DCE
             }
         }
 
-        private void CreateRandomAirOperation(AirGroup airGroup)
+        private void CreateRandomAirOperation(AirGroup airGroup, ref AirGroup escortAirGroup)
         {
             List<EMissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
             if (missionTypes != null && missionTypes.Count > 0)
@@ -358,7 +359,7 @@ namespace IL2DCE
                     int randomMissionTypeIndex = PersistentWorld.Random.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
-                    CreateAirOperation(new BriefingFile(), airGroup, randomMissionType, true, null);
+                    CreateAirOperation(new BriefingFile(), airGroup, randomMissionType, true, ref escortAirGroup);
                 }
                 else
                 {
@@ -372,7 +373,7 @@ namespace IL2DCE
             // TODO: Implement
         }
 
-        private void CreateAirOperation(BriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, AirGroup forcedEscortAirGroup)
+        private void CreateAirOperation(BriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, ref AirGroup escortAirGroup)
         {
             List<AircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
             int aircraftParametersInfoIndex = PersistentWorld.Random.Next(aircraftParametersInfos.Count);
@@ -380,19 +381,31 @@ namespace IL2DCE
             AircraftLoadoutInfo aircraftLoadoutInfo = airGroup.AircraftInfo.GetAircraftLoadoutInfo(randomAircraftParametersInfo.LoadoutId);
             airGroup.Weapons = aircraftLoadoutInfo.Weapons;
             airGroup.Detonator = aircraftLoadoutInfo.Detonator;
+            airGroup.Formation = airGroup.AirGroupInfo.DefaultFormation;
 
-            AirGroup escortAirGroup = null;
-            //if (AircraftInfo.IsMissionTypeEscorted(missionType))
-            //{
-            //    if (forcedEscortAirGroup == null)
-            //    {
-            //        escortAirGroup = getAvailableRandomEscortAirGroup(airGroup);
-            //    }
-            //    else
-            //    {
-            //        escortAirGroup = forcedEscortAirGroup;
-            //    }
-            //}
+            bool forcedEscortAirGroup = true;
+            if (AircraftInfo.IsMissionTypeEscorted(missionType))
+            {
+                if (escortAirGroup == null)
+                {
+                    forcedEscortAirGroup = false;
+
+                    List<AirGroup> escortAirGroups = new List<AirGroup>();
+                    foreach (AirGroup availableAirGroup in IdleUnits)
+                    {
+                        if (availableAirGroup != airGroup && availableAirGroup.AircraftInfo.MissionTypes.Contains(EMissionType.ESCORT))
+                        {
+                            escortAirGroups.Add(availableAirGroup);
+                        }
+                    }
+
+                    if (escortAirGroups.Count > 0)
+                    {
+                        int unitIndex = PersistentWorld.Random.Next(escortAirGroups.Count);
+                        escortAirGroup = escortAirGroups[unitIndex];
+                    }
+                }
+            }
 
             if (missionType == EMissionType.COVER)
             {
@@ -536,24 +549,19 @@ namespace IL2DCE
             GetRandomFlightSize(airGroup, missionType);
             CreateBriefing(briefingFile, airGroup, escortAirGroup);
 
-            //if (forcedEscortAirGroup == null && escortAirGroup != null)
-            //{
-            //    availableAirGroups.Remove(escortAirGroup);
-            //    operatingAirGroups.Add(escortAirGroup);
+            if (forcedEscortAirGroup == false && escortAirGroup != null)
+            {
+                List<AircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
+                int escortAircraftParametersInfoIndex = PersistentWorld.Random.Next(escortAircraftParametersInfos.Count);
+                AircraftParametersInfo escortRandomAircraftParametersInfo = escortAircraftParametersInfos[escortAircraftParametersInfoIndex];
+                AircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
+                escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
 
-            //    PersistentWorld.Debug(escortAirGroup.Id + " is operating. (" + EMissionType.ESCORT + ")");
+                escortAirGroup.Escort(EMissionType.ESCORT, airGroup);
 
-            //    List<AircraftParametersInfo> escortAircraftParametersInfos = escortAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.ESCORT);
-            //    int escortAircraftParametersInfoIndex = PersistentWorld.Random.Next(escortAircraftParametersInfos.Count);
-            //    AircraftParametersInfo escortRandomAircraftParametersInfo = escortAircraftParametersInfos[escortAircraftParametersInfoIndex];
-            //    AircraftLoadoutInfo escortAircraftLoadoutInfo = escortAirGroup.AircraftInfo.GetAircraftLoadoutInfo(escortRandomAircraftParametersInfo.LoadoutId);
-            //    escortAirGroup.Weapons = escortAircraftLoadoutInfo.Weapons;
-
-            //    escortAirGroup.Escort(EMissionType.ESCORT, airGroup);
-
-            //    GetRandomFlightSize(escortAirGroup, EMissionType.ESCORT);
-            //    CreateBriefing(briefingFile, escortAirGroup, null);
-            //}
+                GetRandomFlightSize(escortAirGroup, EMissionType.ESCORT);
+                CreateBriefing(briefingFile, escortAirGroup, null);
+            }
 
             //if (AircraftInfo.IsMissionTypeOffensive(missionType))
             //{
@@ -585,12 +593,18 @@ namespace IL2DCE
         {
             if (missionParameters.MinAltitude != null && missionParameters.MinAltitude.HasValue && missionParameters.MaxAltitude != null && missionParameters.MaxAltitude.HasValue)
             {
-                return (double)PersistentWorld.Random.Next((int)missionParameters.MinAltitude.Value, (int)missionParameters.MaxAltitude.Value);
+                int maxAltitude = (int)missionParameters.MaxAltitude.Value;
+                if(maxAltitude > 4000)
+                {
+                    maxAltitude = 4000;
+                }
+
+                return (double)PersistentWorld.Random.Next((int)missionParameters.MinAltitude.Value, maxAltitude);
             }
             else
             {
                 // Use some default altitudes
-                return (double)PersistentWorld.Random.Next(300, 7000);
+                return (double)PersistentWorld.Random.Next(300, 4000);
             }
         }
 
@@ -599,8 +613,8 @@ namespace IL2DCE
             airGroup.Flights.Clear();
             int aircraftNumber = 1;
 
-            int flightCount = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightCount * 1.0 /*this.Core.FlightCount*/);
-            int flightSize = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightSize * 1.0 /*this.Core.FlightSize*/);
+            int flightCount = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightCount * PersistentWorld.FlightCountFactor);
+            int flightSize = (int)Math.Ceiling(airGroup.AirGroupInfo.FlightSize * PersistentWorld.FlightSizeFactor);
 
             if (missionType == EMissionType.RECON || missionType == EMissionType.MARITIME_RECON)
             {

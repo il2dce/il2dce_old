@@ -12,7 +12,11 @@ namespace IL2DCE
     {
         protected string missionFileName = "";
         protected string aircraftInfoFileName = "";
-
+        protected bool spawnParked = false;
+        protected uint pendingDuration = 1;
+        protected double flightSizeFactor = 1.0;
+        protected double flightCountFactor = 0.5;
+        
         public event EventHandler MissionSlice;
 
         public event EventHandler DetectionSlice;
@@ -20,7 +24,23 @@ namespace IL2DCE
         public event UnitEventHandler UnitDiscovered;
 
         public event UnitEventHandler UnitCovered;
-        
+
+        public double FlightSizeFactor
+        {
+            get
+            {
+                return flightSizeFactor;
+            }
+        }
+
+        public double FlightCountFactor
+        {
+            get
+            {
+                return flightCountFactor;
+            }
+        }
+
         public Dictionary<string, IUnit> Units
         {
             get
@@ -85,6 +105,14 @@ namespace IL2DCE
             }
             GamePlay.gpLogServer(players.ToArray(), line, null);
         }
+
+        public void Chat(string line, IPlayer to)
+        {
+            if (GamePlay is GameDef)
+            {
+                (GamePlay as GameDef).gameInterface.CmdExec("chat " + line + " TO " + to.Name());
+            }
+        }
         
         private void RaisePeriodicMissionSlice()
         {
@@ -126,19 +154,28 @@ namespace IL2DCE
         {
             if (order is AirOrder)
             {
-                if (order.Unit is AirGroup)
+                AirOrder airOrder = order as AirOrder;                
+                AirGroup airGroup = airOrder.AirGroup;
+                AirGroup escortAirGroup = airOrder.EscortAirGroup;
+
+                ISectionFile missionFile = GamePlay.gpCreateSectionFile();
+                airGroup.SetOnParked = spawnParked;
+                airGroup.WriteTo(missionFile);
+                missionFile.add(airGroup.Id, "Idle", "1");
+
+                if (escortAirGroup != null)
                 {
-                    AirGroup airGroup = order.Unit as AirGroup;
+                    escortAirGroup.SetOnParked = spawnParked;
+                    escortAirGroup.WriteTo(missionFile);
+                    missionFile.add(escortAirGroup.Id, "Idle", "1");
+                }
 
-                    ISectionFile missionFile = GamePlay.gpCreateSectionFile();
-                    airGroup.WriteTo(missionFile);
+                GamePlay.gpPostMissionLoad(missionFile);
 
-                    // Force idle.
-                    missionFile.add(airGroup.Id, "Idle", "1");
-
-                    GamePlay.gpPostMissionLoad(missionFile);
-
-                    Debug(order.Unit.Id + " new order: " + airGroup.MissionType + "@" + airGroup.Altitude);
+                Debug(airGroup.Id + " new order: " + airGroup.MissionType + "@" + airGroup.Altitude);
+                if (escortAirGroup != null)
+                {
+                    Debug(escortAirGroup.Id + " new order: " + escortAirGroup.MissionType + "@" + escortAirGroup.Altitude);
                 }
             }
         }
@@ -250,8 +287,148 @@ namespace IL2DCE
         {
             base.OnBattleStarted();
 
+            if (GamePlay is GameDef)
+            {
+                // Requires a special line in conf.ini or confs.ini:
+                //
+                // [rts]
+                // scriptAppDomain = 0
+                //
+                (GamePlay as GameDef).EventChat += new GameDef.Chat(Mission_EventChat);
+            }
+
+
             RaisePeriodicDetectionSlice();
-            RaisePeriodicMissionSlice();            
+            RaisePeriodicMissionSlice();
+        }
+
+        public override void OnAircraftTookOff(int missionNumber, string shortName, AiAircraft aircraft)
+        {
+            base.OnAircraftTookOff(missionNumber, shortName, aircraft);
+
+            if (aircraft.Player(0) != null)
+            {
+                Player player = aircraft.Player(0);
+
+                player.PlaceLeave(0);
+
+                Timeout(0.1, () =>
+                {
+                    player.PlaceEnter(aircraft, 0);
+                });
+            }
+        }
+
+        void Mission_EventChat(IPlayer from, string msg)
+        {
+            if(msg.StartsWith("!help"))
+            {
+                Chat("Commands: !aircraft, !select#", from);
+            }
+            if (msg.StartsWith("!aircraft") || msg.StartsWith("!select"))
+            {
+                List<Tuple<AiAircraft, int>> aircraftPlaces = new List<Tuple<AiAircraft, int>>();
+                if (GamePlay.gpArmies() != null && GamePlay.gpArmies().Length > 0)
+                {
+                    foreach (int army in GamePlay.gpArmies())
+                    {
+                        if (GamePlay.gpAirGroups(army) != null && GamePlay.gpAirGroups(army).Length > 0)
+                        {
+                            foreach (AiAirGroup airGroup in GamePlay.gpAirGroups(army))
+                            {
+                                if (airGroup.GetItems() != null && airGroup.GetItems().Length > 0)
+                                {
+                                    foreach (AiActor actor in airGroup.GetItems())
+                                    {
+                                        if (actor is AiAircraft)
+                                        {
+                                            AiAircraft Aircraft = actor as AiAircraft;
+                                            for (int place = 0; place < Aircraft.Places(); place++)
+                                            {
+                                                aircraftPlaces.Add(new Tuple<AiAircraft, int>(Aircraft, place));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (msg.StartsWith("!aircraft"))
+                {
+                    int i = 0;
+                    foreach (Tuple<AiAircraft, int> aircraftPlace in aircraftPlaces)
+                    {
+                        string playerName = "";
+                        Player player = aircraftPlace.Item1.Player(aircraftPlace.Item2);
+                        if (player != null)
+                        {
+                            playerName = " " + player.Name();                            
+                        }                        
+                        Chat("#" + i + ": " + aircraftPlace.Item1.Name() + " " + aircraftPlace.Item1.TypedName() + " " + aircraftPlace.Item1.CrewFunctionPlace(aircraftPlace.Item2) + " " + playerName, from);
+                        i++;
+                    }
+                }
+                else if (msg.StartsWith("!select"))
+                {
+                    msg = msg.Replace("!select", "");
+
+                    int i = -1;
+                    if (int.TryParse(msg, out i))
+                    {
+                        if (i < aircraftPlaces.Count)
+                        {
+                            Tuple<AiAircraft, int> aircraftPlace = aircraftPlaces[i];
+                            if (aircraftPlace.Item1.Player(aircraftPlace.Item2) == null)
+                            {
+                                from.PlaceEnter(aircraftPlace.Item1, aircraftPlace.Item2);
+                            }
+                            else
+                            {
+                                Chat("Place occupied.", from);
+                            }
+                        }
+                        else
+                        {
+                            Chat("Please enter a valid aircraft number, e.g. !select0, !select1, !select2, ...", from);
+                        }
+                    }
+                    else
+                    {
+                        Chat("Please enter a valid aircraft number, e.g. !select0, !select1, !select2, ...", from);
+                    }
+                }
+            }
+        }
+
+        public override void OnPlaceEnter(Player player, AiActor actor, int placeIndex)
+        {
+            base.OnPlaceEnter(player, actor, placeIndex);
+
+            if (actor is AiAircraft)
+            {
+                AiAircraft aiAircraft = actor as AiAircraft;
+                AiAirGroup aiAirGroup = aiAircraft.AirGroup();
+                if (aiAirGroup != null)
+                {
+                    string id = aiAirGroup.Name().Remove(0, actor.Name().IndexOf(":") + 1);
+                    if (Units.ContainsKey(id))
+                    {
+                        if (Units[id] is AirGroup)
+                        {   
+                            AirGroup airGroup = Units[id] as AirGroup;
+                            foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
+                            {
+                                GPUserLabel userLabel = GamePlay.gpMakeUserLabel(new maddox.GP.Point2d(waypoint.Position.x, waypoint.Position.y), player, waypoint.Type.ToString() + "@" + waypoint.Position.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), GamePlay.gpTimeofDay(), (int)GPUserIconType.Waypoint);
+                                GamePlay.gpDrawUserLabel(new Player[] { player }, userLabel);                               
+
+                                Debug("New UserLabel: " + waypoint.Position.x + " " + waypoint.Position.y + " " + waypoint.Type.ToString() + "@" + waypoint.Position.z);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void OnActorCreated(int missionNumber, string shortName, maddox.game.world.AiActor actor)
@@ -261,26 +438,26 @@ namespace IL2DCE
             string id = actor.Name().Remove(0, actor.Name().IndexOf(":") + 1);
             if (Units.ContainsKey(id))
             {
-                if (Units[id] is AirGroup)
-                {
+                if (Units[id] is AirGroup && actor is AiAirGroup)
+                {                    
                     Units[id].RaisePending();
-                    
-                    Timeout(1 * 60, () =>
+
+                    Timeout(pendingDuration * 60, () =>
                     {
                         (actor as AiGroup).Idle = false;
                         Units[id].RaiseBusy();
 
-                        // Destroy birth places.
-                        if (GamePlay.gpBirthPlaces() != null && GamePlay.gpBirthPlaces().Length > 0)
-                        {
-                            foreach (AiBirthPlace birthPlace in GamePlay.gpBirthPlaces())
-                            {
-                                if (birthPlace.Name() == id)
-                                {
-                                    birthPlace.destroy();
-                                }
-                            }
-                        }
+                        //// Destroy birth places.
+                        //if (GamePlay.gpBirthPlaces() != null && GamePlay.gpBirthPlaces().Length > 0)
+                        //{
+                        //    foreach (AiBirthPlace birthPlace in GamePlay.gpBirthPlaces())
+                        //    {
+                        //        if (birthPlace.Name() == id)
+                        //        {
+                        //            birthPlace.destroy();
+                        //        }
+                        //    }
+                        //}
                     });
                 }
                 //else if (Units[id] is GroundUnit)
