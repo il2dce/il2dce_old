@@ -48,7 +48,6 @@
     <Compile Include="AirGroupWaypoint.cs" />
     <Compile Include="AirHeadquarters.cs" />
     <Compile Include="AirOrder.cs" />
-    <Compile Include="AirUnit.cs" />
     <Compile Include="Army.cs" />
     <Compile Include="BriefingFile.cs" />
     <Compile Include="Career.cs" />

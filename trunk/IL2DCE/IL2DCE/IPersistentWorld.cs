@@ -15,6 +15,16 @@ namespace IL2DCE
 
         event UnitEventHandler UnitCovered;
 
+        double FlightSizeFactor
+        {
+            get;
+        }
+
+        double FlightCountFactor
+        {
+            get;
+        }
+
         Map Map
         {
             get;

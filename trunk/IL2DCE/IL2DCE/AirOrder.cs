@@ -11,10 +11,27 @@ namespace IL2DCE
         {
             get
             {
-                return this.unit;
+                return this.airGroup;
             }
         }
-        private IUnit unit;
+        private AirGroup airGroup;
+
+        public AirGroup AirGroup
+        {
+            get
+            {
+                return this.airGroup;
+            }
+        }
+        
+        public AirGroup EscortAirGroup
+        {
+            get
+            {
+                return this.escortAirGroup;
+            }
+        }
+        private AirGroup escortAirGroup;
 
         public IStrategicPoint Target
         {
@@ -25,9 +42,10 @@ namespace IL2DCE
         }
         private IStrategicPoint target;
 
-        public AirOrder(IUnit unit, IStrategicPoint target)
+        public AirOrder(AirGroup airGroup, AirGroup escortAirGroup, IStrategicPoint target)
         {
-            this.unit = unit;
+            this.airGroup = airGroup;
+            this.escortAirGroup = escortAirGroup;
             this.target = target;
         }
     }
