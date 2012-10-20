@@ -7,6 +7,8 @@ namespace IL2DCE
 {
     class AirHeadquarters : IHeadquarters
     {
+        private int maxAltitude = 4000;
+
         private Army Army
         {
             get
@@ -88,7 +90,7 @@ namespace IL2DCE
             }
         }
         private List<IUnit> friendlyUnits = new List<IUnit>();
-        
+
         private List<IUnit> EnemyUnits
         {
             get
@@ -114,6 +116,22 @@ namespace IL2DCE
             }
         }
 
+        private List<IUnit> IdleInterceptors
+        {
+            get
+            {
+                List<IUnit> idleInterceptors = new List<IUnit>();
+                foreach (IUnit unit in EnemyUnits)
+                {
+                    if (unit.State == UnitState.Idle && unit is AirGroup && ((unit as AirGroup).AircraftInfo.MissionTypes.Contains(EMissionType.INTERCEPT) || (unit as AirGroup).AircraftInfo.MissionTypes.Contains(EMissionType.COVER)))
+                    {
+                        idleInterceptors.Add(unit);
+                    }
+                }
+                return idleInterceptors;
+            }
+        }
+
         public AirHeadquarters(IPersistentWorld persistentWorld, Army army)
         {
             PersistentWorld = persistentWorld;
@@ -127,7 +145,41 @@ namespace IL2DCE
 
         void OnUnitDiscovered(object sender, UnitEventArgs e)
         {
-            //PersistentWorld.Debug(e.Unit.Id + " detected. Intercept!");
+            //if (e.Unit.Army != Army)
+            //{
+            //    if (!EnemyUnits.ContainsKey(e.Unit))
+            //    {
+            //        PersistentWorld.Debug(e.Unit.Id + " detected. Intercept!");
+
+            //        if (IdleUnits.Count > 0)
+            //        {
+            //            List<AirGroup> idleInterceptors = new List<AirGroup>();
+            //            foreach(IUnit idleUnit in IdleUnits)
+            //            {
+            //                if(idleUnit is AirGroup)
+            //                {
+            //                    if((idleUnit as AirGroup).AircraftInfo.MissionTypes.Contains(EMissionType.INTERCEPT))
+            //                    {
+            //                        idleInterceptors.Add(idleUnit as AirGroup);
+            //                    }
+            //                }
+            //            }
+                        
+            //            int unitIndex = PersistentWorld.Random.Next(idleInterceptors.Count);
+            //            AirGroup airGroup = idleInterceptors[unitIndex] as AirGroup;
+            //            EnemyUnits.Add(e.Unit, airGroup);
+
+            //            AirGroup escortAirGroup = null;
+            //            CreateAirOperation(new BriefingFile(), airGroup, EMissionType.INTERCEPT, false, ref escortAirGroup);
+
+            //            PersistentWorld.TakeOrder(new AirOrder(airGroup, escortAirGroup, null));
+            //        }
+            //    }
+            //    else
+            //    {
+            //        PersistentWorld.Debug(e.Unit.Id + " redetected. Update!");             
+            //    }
+            //}
         }
 
         void OnUnitCovered(object sender, UnitEventArgs e)
@@ -150,11 +202,13 @@ namespace IL2DCE
 
         public void Register(IUnit unit)
         {
-            if (unit is AirGroup && !FriendlyUnits.Contains(unit))
+            if (unit is AirGroup && unit.Army == Army && !FriendlyUnits.Contains(unit))
             {
                 FriendlyUnits.Add(unit);
-
-                PersistentWorld.Debug(unit.Id + " is now under control of AirHeadquarters.");
+            }
+            else if(unit is AirGroup && unit.Army != Army && !EnemyUnits.Contains(unit))
+            {
+                EnemyUnits.Add(unit);
             }
         }
 
@@ -163,8 +217,10 @@ namespace IL2DCE
             if (FriendlyUnits.Contains(unit))
             {
                 FriendlyUnits.Remove(unit);
-
-                PersistentWorld.Debug(unit.Id + " is now release from control of AirHeadquarters.");
+            }
+            else if(EnemyUnits.Contains(unit))
+            {
+                EnemyUnits.Remove(unit);
             }
         }
 
@@ -175,10 +231,11 @@ namespace IL2DCE
                 int unitIndex = PersistentWorld.Random.Next(IdleUnits.Count);
                 AirGroup airGroup = IdleUnits[unitIndex] as AirGroup;
                 AirGroup escortAirGroup = null;
+                AirGroup interceptAirGroup = null;
 
-                CreateRandomAirOperation(airGroup, ref escortAirGroup);
+                CreateRandomAirOperation(airGroup, ref escortAirGroup, ref interceptAirGroup);
 
-                PersistentWorld.TakeOrder(new AirOrder(airGroup, escortAirGroup, null));
+                PersistentWorld.TakeOrder(new AirOrder(airGroup, escortAirGroup, interceptAirGroup, null));
             }
         }
 
@@ -186,12 +243,12 @@ namespace IL2DCE
         {
             if (missionType == EMissionType.COVER)
             {
-                List<IStrategicPoint> strategicPoints = FriendlyStrategicPoints;
-                if (strategicPoints.Count > 0)
-                {
-                    return true;
-                }
-                else
+                //List<IStrategicPoint> strategicPoints = FriendlyStrategicPoints;
+                //if (strategicPoints.Count > 0)
+                //{
+                //    return true;
+                //}
+                //else
                 {
                     return false;
                 }
@@ -334,7 +391,7 @@ namespace IL2DCE
             }
         }
 
-        private void CreateRandomAirOperation(AirGroup airGroup, ref AirGroup escortAirGroup)
+        private void CreateRandomAirOperation(AirGroup airGroup, ref AirGroup escortAirGroup, ref AirGroup interceptAirGroup)
         {
             List<EMissionType> missionTypes = airGroup.AircraftInfo.MissionTypes;
             if (missionTypes != null && missionTypes.Count > 0)
@@ -345,13 +402,12 @@ namespace IL2DCE
                     if (IsMissionTypeAvailable(airGroup, missionType))
                     {
                         availableMissionTypes.Add(missionType);
-
-                        PersistentWorld.Debug(airGroup.Id + " is available for " + missionType);
+                        //PersistentWorld.Debug(airGroup.Id + " is available for " + missionType);
                     }
-                    else
-                    {
-                        PersistentWorld.Debug(airGroup.Id + " is unavailable for " + missionType);
-                    }
+                    //else
+                    //{
+                    //    PersistentWorld.Debug(airGroup.Id + " is unavailable for " + missionType);
+                    //}
                 }
 
                 if (availableMissionTypes.Count > 0)
@@ -359,7 +415,7 @@ namespace IL2DCE
                     int randomMissionTypeIndex = PersistentWorld.Random.Next(availableMissionTypes.Count);
                     EMissionType randomMissionType = availableMissionTypes[randomMissionTypeIndex];
 
-                    CreateAirOperation(new BriefingFile(), airGroup, randomMissionType, true, ref escortAirGroup);
+                    CreateAirOperation(new BriefingFile(), airGroup, randomMissionType, true, ref escortAirGroup, ref interceptAirGroup);
                 }
                 else
                 {
@@ -373,7 +429,7 @@ namespace IL2DCE
             // TODO: Implement
         }
 
-        private void CreateAirOperation(BriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, ref AirGroup escortAirGroup)
+        private void CreateAirOperation(BriefingFile briefingFile, AirGroup airGroup, EMissionType missionType, bool allowIntercept, ref AirGroup escortAirGroup, ref AirGroup interceptAirGroup)
         {
             List<AircraftParametersInfo> aircraftParametersInfos = airGroup.AircraftInfo.GetAircraftParametersInfo(missionType);
             int aircraftParametersInfoIndex = PersistentWorld.Random.Next(aircraftParametersInfos.Count);
@@ -409,15 +465,15 @@ namespace IL2DCE
 
             if (missionType == EMissionType.COVER)
             {
-                List<IStrategicPoint> strategicPoints = FriendlyStrategicPoints;
-                if (strategicPoints.Count > 0)
-                {
-                    int strategicPointIndex = PersistentWorld.Random.Next(strategicPoints.Count);
-                    IStrategicPoint strategicPoint = strategicPoints[strategicPointIndex];
-                    double altitude = GetRandomAltitude(randomAircraftParametersInfo);
+                //List<IStrategicPoint> strategicPoints = FriendlyStrategicPoints;
+                //if (strategicPoints.Count > 0)
+                //{
+                //    int strategicPointIndex = PersistentWorld.Random.Next(strategicPoints.Count);
+                //    IStrategicPoint strategicPoint = strategicPoints[strategicPointIndex];
+                //    double altitude = GetRandomAltitude(randomAircraftParametersInfo);
 
-                    airGroup.Cover(missionType, new maddox.GP.Point2d(strategicPoint.Position.Item1, strategicPoint.Position.Item2), altitude);
-                }
+                //    airGroup.Cover(missionType, new maddox.GP.Point2d(strategicPoint.Position.Item1, strategicPoint.Position.Item2), altitude);
+                //}
             }
             else if (missionType == EMissionType.ARMED_MARITIME_RECON)
             {
@@ -525,6 +581,20 @@ namespace IL2DCE
                 //        airGroup.Intercept(missionType, interceptedAirGroup);
                 //    }
                 //}
+
+                //AirGroup interceptedAirGroup = null;
+                //foreach (IUnit enemyUnit in EnemyUnits.Keys)
+                //{
+                //    if (EnemyUnits[enemyUnit] == airGroup)
+                //    {
+                //        interceptedAirGroup = enemyUnit as AirGroup;
+                //    }
+                //}
+
+                //if (interceptedAirGroup != null)
+                //{
+                //    airGroup.Intercept(missionType, interceptedAirGroup);
+                //}
             }
             else if (missionType == EMissionType.MARITIME_RECON)
             {
@@ -563,30 +633,48 @@ namespace IL2DCE
                 CreateBriefing(briefingFile, escortAirGroup, null);
             }
 
-            //if (AircraftInfo.IsMissionTypeOffensive(missionType))
-            //{
-            //    if (allowIntercept)
-            //    {
-            //        AirGroup interceptAirGroup = getAvailableRandomInterceptAirGroup(airGroup);
-            //        if (interceptAirGroup != null)
-            //        {
-            //            availableAirGroups.Remove(interceptAirGroup);
-            //            operatingAirGroups.Add(interceptAirGroup);
-            //            PersistentWorld.Debug(interceptAirGroup.Id + " is operating. (" + EMissionType.INTERCEPT + ")");
+            if (AircraftInfo.IsMissionTypeOffensive(missionType))
+            {
+                if (IdleInterceptors.Count > 0)
+                {
+                    int unitIndex = PersistentWorld.Random.Next(IdleInterceptors.Count);
+                    interceptAirGroup = IdleInterceptors[unitIndex] as AirGroup;
 
-            //            List<AircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(EMissionType.INTERCEPT);
-            //            int interceptAircraftParametersInfoIndex = PersistentWorld.Random.Next(interceptAircraftParametersInfos.Count);
-            //            AircraftParametersInfo interceptRandomAircraftParametersInfo = interceptAircraftParametersInfos[interceptAircraftParametersInfoIndex];
-            //            AircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
-            //            interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
+                    List<EMissionType> missionTypes = new List<EMissionType>();
+                    if (interceptAirGroup.AircraftInfo.MissionTypes.Contains(EMissionType.INTERCEPT))
+                    {
+                        missionTypes.Add(EMissionType.INTERCEPT);
+                    }
+                    if (interceptAirGroup.AircraftInfo.MissionTypes.Contains(EMissionType.COVER))
+                    {
+                        missionTypes.Add(EMissionType.COVER);
+                    }
 
-            //            interceptAirGroup.Intercept(EMissionType.INTERCEPT, airGroup);
+                    if (missionTypes.Count > 0)
+                    {
+                        int missionTypeIndex = PersistentWorld.Random.Next(missionTypes.Count);
+                        EMissionType interceptMissionType = missionTypes[missionTypeIndex];
 
-            //            GetRandomFlightSize(interceptAirGroup, EMissionType.INTERCEPT);
-            //            CreateBriefing(briefingFile, interceptAirGroup, null);
-            //        }
-            //    }
-            //}
+                        List<AircraftParametersInfo> interceptAircraftParametersInfos = interceptAirGroup.AircraftInfo.GetAircraftParametersInfo(interceptMissionType);
+                        int interceptAircraftParametersInfoIndex = PersistentWorld.Random.Next(interceptAircraftParametersInfos.Count);
+                        AircraftParametersInfo interceptRandomAircraftParametersInfo = interceptAircraftParametersInfos[interceptAircraftParametersInfoIndex];
+                        AircraftLoadoutInfo interceptAircraftLoadoutInfo = interceptAirGroup.AircraftInfo.GetAircraftLoadoutInfo(interceptRandomAircraftParametersInfo.LoadoutId);
+                        interceptAirGroup.Weapons = interceptAircraftLoadoutInfo.Weapons;
+
+                        if (interceptMissionType == EMissionType.INTERCEPT)
+                        {
+                            interceptAirGroup.Intercept(interceptMissionType, airGroup);
+                        }
+                        else if (interceptMissionType == EMissionType.COVER)
+                        {
+                            interceptAirGroup.Cover(interceptMissionType, airGroup.TargetArea.Value, airGroup.Altitude.Value);
+                        }
+
+                        GetRandomFlightSize(interceptAirGroup, interceptMissionType);
+                        CreateBriefing(briefingFile, interceptAirGroup, null);
+                    }
+                }
+            }
         }
 
         public double GetRandomAltitude(AircraftParametersInfo missionParameters)
@@ -594,9 +682,9 @@ namespace IL2DCE
             if (missionParameters.MinAltitude != null && missionParameters.MinAltitude.HasValue && missionParameters.MaxAltitude != null && missionParameters.MaxAltitude.HasValue)
             {
                 int maxAltitude = (int)missionParameters.MaxAltitude.Value;
-                if(maxAltitude > 4000)
+                if(maxAltitude > this.maxAltitude)
                 {
-                    maxAltitude = 4000;
+                    maxAltitude = this.maxAltitude;
                 }
 
                 return (double)PersistentWorld.Random.Next((int)missionParameters.MinAltitude.Value, maxAltitude);
@@ -604,7 +692,7 @@ namespace IL2DCE
             else
             {
                 // Use some default altitudes
-                return (double)PersistentWorld.Random.Next(300, 4000);
+                return (double)PersistentWorld.Random.Next(300, this.maxAltitude);
             }
         }
 

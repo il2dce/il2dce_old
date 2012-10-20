@@ -33,6 +33,15 @@ namespace IL2DCE
         }
         private AirGroup escortAirGroup;
 
+        public AirGroup InterceptAirGroup
+        {
+            get
+            {
+                return this.interceptAirGroup;
+            }
+        }
+        private AirGroup interceptAirGroup;
+
         public IStrategicPoint Target
         {
             get
@@ -42,10 +51,11 @@ namespace IL2DCE
         }
         private IStrategicPoint target;
 
-        public AirOrder(AirGroup airGroup, AirGroup escortAirGroup, IStrategicPoint target)
+        public AirOrder(AirGroup airGroup, AirGroup escortAirGroup, AirGroup interceptAirGroup, IStrategicPoint target)
         {
             this.airGroup = airGroup;
             this.escortAirGroup = escortAirGroup;
+            this.interceptAirGroup = interceptAirGroup;
             this.target = target;
         }
     }
