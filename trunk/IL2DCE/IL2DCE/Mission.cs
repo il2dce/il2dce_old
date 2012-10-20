@@ -157,25 +157,42 @@ namespace IL2DCE
                 AirOrder airOrder = order as AirOrder;                
                 AirGroup airGroup = airOrder.AirGroup;
                 AirGroup escortAirGroup = airOrder.EscortAirGroup;
+                AirGroup interceptAirGroup = airOrder.InterceptAirGroup;
 
                 ISectionFile missionFile = GamePlay.gpCreateSectionFile();
-                airGroup.SetOnParked = spawnParked;
-                airGroup.WriteTo(missionFile);
-                missionFile.add(airGroup.Id, "Idle", "1");
 
+                if (airGroup != null)
+                {
+                    airGroup.SetOnParked = spawnParked;
+                    airGroup.WriteTo(missionFile);
+                    missionFile.add(airGroup.Id, "Idle", "1");
+                }
                 if (escortAirGroup != null)
                 {
                     escortAirGroup.SetOnParked = spawnParked;
                     escortAirGroup.WriteTo(missionFile);
                     missionFile.add(escortAirGroup.Id, "Idle", "1");
                 }
+                if (interceptAirGroup != null)
+                {
+                    interceptAirGroup.SetOnParked = spawnParked;
+                    interceptAirGroup.WriteTo(missionFile);
+                    missionFile.add(interceptAirGroup.Id, "Idle", "1");
+                }
 
                 GamePlay.gpPostMissionLoad(missionFile);
 
-                Debug(airGroup.Id + " new order: " + airGroup.MissionType + "@" + airGroup.Altitude);
+                if (airGroup != null)
+                {
+                    Debug(airGroup.Id + " new order: " + airGroup.MissionType + "@" + airGroup.Altitude);
+                }
                 if (escortAirGroup != null)
                 {
                     Debug(escortAirGroup.Id + " new order: " + escortAirGroup.MissionType + "@" + escortAirGroup.Altitude);
+                }
+                if (interceptAirGroup != null)
+                {
+                    Debug(interceptAirGroup.Id + " new order: " + interceptAirGroup.MissionType + "@" + interceptAirGroup.Altitude);
                 }
             }
         }
@@ -208,9 +225,25 @@ namespace IL2DCE
         {
             base.OnBattleInit();
 
+            if (GamePlay is GameDef)
+            {
+                // The use of GameDef requires a special line in conf.ini or confs.ini:
+                //
+                // [rts]
+                // scriptAppDomain = 0
+                //
+                if (!GamePlay.gpConfigUserFile().exist("rts", "scriptAppDomain") || GamePlay.gpConfigUserFile().get("rts", "scriptAppDomain") != "0")
+                {
+                    Debug("Please add the following lines to your conf.ini and confs.ini:");
+                    Debug("[rts]");
+                    Debug("scriptAppDomain = 0");
+                }
+                (GamePlay as GameDef).EventChat += new GameDef.Chat(Mission_EventChat);
+            }
+
             MissionNumberListener = -1;
 
-            random = new System.Random();
+            random = new System.Random();            
 
             // Parse mission file and fill the unit dictionary.
             ISectionFile missionFile = GamePlay.gpLoadSectionFile(missionFileName);
@@ -233,14 +266,8 @@ namespace IL2DCE
                 AirGroup airGroup = new AirGroup(this, key, missionFile);
                 Units.Add(key, airGroup);
 
-                if (airGroup.Army == Army.Red)
-                {
-                    redAirHeadquarters.Register(airGroup);
-                }
-                else if (airGroup.Army == Army.Blue)
-                {
-                    blueAirHeadquarters.Register(airGroup);
-                }
+                redAirHeadquarters.Register(airGroup);
+                blueAirHeadquarters.Register(airGroup);
 
                 airGroup.Discovered += new UnitEventHandler(OnDiscovered);
                 airGroup.Covered += new UnitEventHandler(OnCovered);
@@ -267,61 +294,9 @@ namespace IL2DCE
             }
         }
 
-        void OnDiscovered(object sender, UnitEventArgs e)
-        {
-            if (UnitDiscovered != null)
-            {
-                UnitDiscovered(this, e);
-            }
-        }
-
-        void OnCovered(object sender, UnitEventArgs e)
-        {
-            if (UnitCovered != null)
-            {
-                UnitCovered(this, e);
-            }
-        }
-
-        public override void OnBattleStarted()
-        {
-            base.OnBattleStarted();
-
-            if (GamePlay is GameDef)
-            {
-                // Requires a special line in conf.ini or confs.ini:
-                //
-                // [rts]
-                // scriptAppDomain = 0
-                //
-                (GamePlay as GameDef).EventChat += new GameDef.Chat(Mission_EventChat);
-            }
-
-
-            RaisePeriodicDetectionSlice();
-            RaisePeriodicMissionSlice();
-        }
-
-        public override void OnAircraftTookOff(int missionNumber, string shortName, AiAircraft aircraft)
-        {
-            base.OnAircraftTookOff(missionNumber, shortName, aircraft);
-
-            if (aircraft.Player(0) != null)
-            {
-                Player player = aircraft.Player(0);
-
-                player.PlaceLeave(0);
-
-                Timeout(0.1, () =>
-                {
-                    player.PlaceEnter(aircraft, 0);
-                });
-            }
-        }
-
         void Mission_EventChat(IPlayer from, string msg)
         {
-            if(msg.StartsWith("!help"))
+            if (msg.StartsWith("!help"))
             {
                 Chat("Commands: !aircraft, !select#", from);
             }
@@ -364,8 +339,8 @@ namespace IL2DCE
                         Player player = aircraftPlace.Item1.Player(aircraftPlace.Item2);
                         if (player != null)
                         {
-                            playerName = " " + player.Name();                            
-                        }                        
+                            playerName = " " + player.Name();
+                        }
                         Chat("#" + i + ": " + aircraftPlace.Item1.Name() + " " + aircraftPlace.Item1.TypedName() + " " + aircraftPlace.Item1.CrewFunctionPlace(aircraftPlace.Item2) + " " + playerName, from);
                         i++;
                     }
@@ -375,23 +350,16 @@ namespace IL2DCE
                     msg = msg.Replace("!select", "");
 
                     int i = -1;
-                    if (int.TryParse(msg, out i))
+                    if (int.TryParse(msg, out i) && i < aircraftPlaces.Count)
                     {
-                        if (i < aircraftPlaces.Count)
+                        Tuple<AiAircraft, int> aircraftPlace = aircraftPlaces[i];
+                        if (aircraftPlace.Item1.Player(aircraftPlace.Item2) == null)
                         {
-                            Tuple<AiAircraft, int> aircraftPlace = aircraftPlaces[i];
-                            if (aircraftPlace.Item1.Player(aircraftPlace.Item2) == null)
-                            {
-                                from.PlaceEnter(aircraftPlace.Item1, aircraftPlace.Item2);
-                            }
-                            else
-                            {
-                                Chat("Place occupied.", from);
-                            }
+                            from.PlaceEnter(aircraftPlace.Item1, aircraftPlace.Item2);
                         }
                         else
                         {
-                            Chat("Please enter a valid aircraft number, e.g. !select0, !select1, !select2, ...", from);
+                            Chat("Place occupied.", from);
                         }
                     }
                     else
@@ -402,32 +370,73 @@ namespace IL2DCE
             }
         }
 
+        void OnDiscovered(object sender, UnitEventArgs e)
+        {
+            if (UnitDiscovered != null)
+            {
+                UnitDiscovered(this, e);
+            }
+        }
+
+        void OnCovered(object sender, UnitEventArgs e)
+        {
+            if (UnitCovered != null)
+            {
+                UnitCovered(this, e);
+            }
+        }
+
+        public override void OnBattleStarted()
+        {
+            base.OnBattleStarted();
+            
+            RaisePeriodicDetectionSlice();
+            RaisePeriodicMissionSlice();
+        }
+        
         public override void OnPlaceEnter(Player player, AiActor actor, int placeIndex)
         {
             base.OnPlaceEnter(player, actor, placeIndex);
 
-            if (actor is AiAircraft)
-            {
-                AiAircraft aiAircraft = actor as AiAircraft;
-                AiAirGroup aiAirGroup = aiAircraft.AirGroup();
-                if (aiAirGroup != null)
-                {
-                    string id = aiAirGroup.Name().Remove(0, actor.Name().IndexOf(":") + 1);
-                    if (Units.ContainsKey(id))
-                    {
-                        if (Units[id] is AirGroup)
-                        {   
-                            AirGroup airGroup = Units[id] as AirGroup;
-                            foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
-                            {
-                                GPUserLabel userLabel = GamePlay.gpMakeUserLabel(new maddox.GP.Point2d(waypoint.Position.x, waypoint.Position.y), player, waypoint.Type.ToString() + "@" + waypoint.Position.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), GamePlay.gpTimeofDay(), (int)GPUserIconType.Waypoint);
-                                GamePlay.gpDrawUserLabel(new Player[] { player }, userLabel);                               
+            //if (actor is AiAircraft)
+            //{
+            //    AiAircraft aiAircraft = actor as AiAircraft;
+            //    AiAirGroup aiAirGroup = aiAircraft.AirGroup();
+            //    if (aiAirGroup != null)
+            //    {
+            //        string id = aiAirGroup.Name().Remove(0, actor.Name().IndexOf(":") + 1);
+            //        if (Units.ContainsKey(id))
+            //        {
+            //            if (Units[id] is AirGroup)
+            //            {   
+            //                AirGroup airGroup = Units[id] as AirGroup;
+            //                foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
+            //                {
+            //                    GPUserLabel userLabel = GamePlay.gpMakeUserLabel(new maddox.GP.Point2d(waypoint.Position.x, waypoint.Position.y), player, waypoint.Type.ToString() + "@" + waypoint.Position.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), GamePlay.gpTimeofDay(), (int)GPUserIconType.Waypoint);
+            //                    GamePlay.gpDrawUserLabel((int)airGroup.Army, userLabel);
 
-                                Debug("New UserLabel: " + waypoint.Position.x + " " + waypoint.Position.y + " " + waypoint.Type.ToString() + "@" + waypoint.Position.z);
-                            }
-                        }
-                    }
-                }
+            //                    Debug("New UserLabel: " + userLabel.pos.x + " " + userLabel.pos.y + " " + userLabel.Text);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+        }
+        
+        public override void OnAircraftTookOff(int missionNumber, string shortName, AiAircraft aircraft)
+        {
+            base.OnAircraftTookOff(missionNumber, shortName, aircraft);
+
+            if (aircraft.Player(0) != null)
+            {
+                Player player = aircraft.Player(0);
+
+                player.PlaceLeave(0);
+
+                Timeout(0.1, () =>
+                {
+                    player.PlaceEnter(aircraft, 0);
+                });
             }
         }
 
@@ -502,7 +511,7 @@ namespace IL2DCE
                 //}
             }
         }
-
+        
         #endregion
     }
 }
