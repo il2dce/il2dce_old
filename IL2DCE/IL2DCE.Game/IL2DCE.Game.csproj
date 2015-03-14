@@ -48,6 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="core">
+      <HintPath>..\..\..\..\core\core.dll</HintPath>
+    </Reference>
     <Reference Include="gamePages">
       <HintPath>..\..\..\..\core\gamePages.dll</HintPath>
       <Private>False</Private>
