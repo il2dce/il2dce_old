@@ -226,10 +226,22 @@ namespace IL2DCE
 
         private void OnMissionSlice(object sender, EventArgs e)
         {
-            if (IdleUnits.Count > 0)
+            List<AirGroup> airGroups = new List<AirGroup>();
+            foreach (AirGroup availableAirGroup in IdleUnits)
             {
-                int unitIndex = PersistentWorld.Random.Next(IdleUnits.Count);
-                AirGroup airGroup = IdleUnits[unitIndex] as AirGroup;
+                foreach (EMissionType missionType in availableAirGroup.AircraftInfo.MissionTypes)
+                {
+                    if(AircraftInfo.IsMissionTypeOffensive(missionType))
+                    {
+                        airGroups.Add(availableAirGroup);
+                    }
+                }
+            }
+
+            if (airGroups.Count > 0)
+            {
+                int unitIndex = PersistentWorld.Random.Next(airGroups.Count);
+                AirGroup airGroup = airGroups[unitIndex];
                 AirGroup escortAirGroup = null;
                 AirGroup interceptAirGroup = null;
 

@@ -398,29 +398,29 @@ namespace IL2DCE
         {
             base.OnPlaceEnter(player, actor, placeIndex);
 
-            //if (actor is AiAircraft)
-            //{
-            //    AiAircraft aiAircraft = actor as AiAircraft;
-            //    AiAirGroup aiAirGroup = aiAircraft.AirGroup();
-            //    if (aiAirGroup != null)
-            //    {
-            //        string id = aiAirGroup.Name().Remove(0, actor.Name().IndexOf(":") + 1);
-            //        if (Units.ContainsKey(id))
-            //        {
-            //            if (Units[id] is AirGroup)
-            //            {   
-            //                AirGroup airGroup = Units[id] as AirGroup;
-            //                foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
-            //                {
-            //                    GPUserLabel userLabel = GamePlay.gpMakeUserLabel(new maddox.GP.Point2d(waypoint.Position.x, waypoint.Position.y), player, waypoint.Type.ToString() + "@" + waypoint.Position.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), GamePlay.gpTimeofDay(), (int)GPUserIconType.Waypoint);
-            //                    GamePlay.gpDrawUserLabel((int)airGroup.Army, userLabel);
+            if (actor is AiAircraft)
+            {
+                AiAircraft aiAircraft = actor as AiAircraft;
+                AiAirGroup aiAirGroup = aiAircraft.AirGroup();
+                if (aiAirGroup != null)
+                {
+                    string id = aiAirGroup.Name().Remove(0, actor.Name().IndexOf(":") + 1);
+                    if (Units.ContainsKey(id))
+                    {
+                        if (Units[id] is AirGroup)
+                        {
+                            AirGroup airGroup = Units[id] as AirGroup;
+                            foreach (AirGroupWaypoint waypoint in airGroup.Waypoints)
+                            {
+                                GPUserLabel userLabel = GamePlay.gpMakeUserLabel(new maddox.GP.Point2d(waypoint.Position.x, waypoint.Position.y), GamePlay.gpPlayer(), waypoint.Type.ToString() + "@" + waypoint.Position.z.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat), GamePlay.gpTimeofDay(), (int)GPUserIconType.Waypoint);
+                                GamePlay.gpDrawUserLabel(new Player[] { player }, userLabel);
 
-            //                    Debug("New UserLabel: " + userLabel.pos.x + " " + userLabel.pos.y + " " + userLabel.Text);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                                Debug("New UserLabel: " + userLabel.pos.x + " " + userLabel.pos.y + " " + userLabel.Text);
+                            }
+                        }
+                    }
+                }
+            }
         }
         
         public override void OnAircraftTookOff(int missionNumber, string shortName, AiAircraft aircraft)
